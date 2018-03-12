@@ -12,6 +12,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/javax.jar"/>
-	<classpathentry kind="lib" path="libs/jmetal4.5.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
