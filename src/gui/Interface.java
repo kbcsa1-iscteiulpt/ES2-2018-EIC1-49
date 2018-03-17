@@ -9,12 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
-
-import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.mail.MessagingException;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,15 +31,9 @@ import javax.swing.table.DefaultTableModel;
 import classes.Support;
 
 /**
-
  * This class represents the interface
- 
- * 
- 
  * @author diana
- 
  **/
- 
 
 public class Interface {
 
@@ -59,9 +50,9 @@ public class Interface {
 	private JButton addCriterionButton;
 	private JButton readJarButton;
 	private JTextField emailJTF;
-	
+
 	private Support support = new Support();
- 
+	private JButton messageSendButton;
 
 	public Interface() {
 		frame = new JFrame("Problem to be optimized");
@@ -71,7 +62,8 @@ public class Interface {
 	}
 
 	/**
-	 * The panels are added to the initial frame by calling methods that return JPanel.
+	 * The panels are added to the initial frame by calling methods that return
+	 * JPanel.
 	 **/
 	private void setContent(JFrame frame) {
 		JPanel initialPanel = new JPanel(new GridLayout(11, 0));
@@ -90,8 +82,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a question mark placed at the top-right of the frame.
-	 * When clicked, a new frame is displayed to show the FAQ.
+	 * Returns a panel with a question mark placed at the top-right of the
+	 * frame. When clicked, a new frame is displayed to show the FAQ.
 	 **/
 	private JPanel helpFAQPanel() {
 		JPanel helpFAQPanel = new JPanel(new BorderLayout());
@@ -119,8 +111,9 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JTextField for user to fill with the problem's name.
-	 **/	
+	 * Returns a panel with a JTextField for user to fill with the problem's
+	 * name.
+	 **/
 	private JPanel problemNamePanel() {
 		JPanel problemNamePanel = new JPanel();
 		JLabel problemNameL = new JLabel("Problem's Name:");
@@ -133,7 +126,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JTextField for user to fill with the problem's description.
+	 * Returns a panel with a JTextField for user to fill with the problem's
+	 * description.
 	 **/
 	private JPanel problemDescriptionPanel() {
 		JPanel problemDescriptionPanel = new JPanel(new FlowLayout());
@@ -148,16 +142,16 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JTextField to fill with user's email.
-	 * When the button is clicked, a new frame is displayed to write and send the email. 
-	 **/	
+	 * Returns a panel with a JTextField to fill with user's email. When the
+	 * button is clicked, a new frame is displayed to write and send the email.
+	 **/
 	private JPanel emailPanel() {
 		JPanel emailPanel = new JPanel(new FlowLayout());
 		JLabel emailL = new JLabel("Enter your Email:");
 		emailJTF = new JTextField();
 		emailJTF.setColumns(20);
-		JButton emailB = new JButton("Write Email");
-		emailB.addActionListener(new ActionListener() {
+		emailButton = new JButton("Write Email");
+		emailButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -166,14 +160,14 @@ public class Interface {
 		});
 		emailPanel.add(emailL);
 		emailPanel.add(emailJTF);
-		emailPanel.add(emailB);
-		emailPanel.setBackground(new Color(240,240,240));
+		emailPanel.add(emailButton);
+		emailPanel.setBackground(new Color(240, 240, 240));
 		return emailPanel;
 	}
 
 	/**
-	 * Returns a panel with a JSpinner for user to select the maximum time to wait
-	 * for the optimization.
+	 * Returns a panel with a JSpinner for user to select the maximum time to
+	 * wait for the optimization.
 	 **/
 	private JPanel maxTimePanel() {
 		JPanel maxTimePanel = new JPanel(new FlowLayout());
@@ -201,7 +195,7 @@ public class Interface {
 	/**
 	 * Returns a panel with a JSpinner for user to select the ideal time to wait
 	 * for the optimization.
-	 **/	
+	 **/
 	private JPanel idealTimePanel() {
 		JPanel idealTimePanel = new JPanel(new FlowLayout());
 		JLabel idealTimeL = new JLabel("Ideal time for optimization:");
@@ -226,9 +220,11 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JSpinner to select the number of decision variables and button.
-	 * When clicked, a new frame is displayed to write the decision variable group name and to fill the table of the variable decision.
-	 * **/
+	 * Returns a panel with a JSpinner to select the number of decision
+	 * variables and button. When clicked, a new frame is displayed to write the
+	 * decision variable group name and to fill the table of the variable
+	 * decision.
+	 **/
 	private JPanel decisionVarPanel() {
 		JPanel decisionVarPanel = new JPanel(new FlowLayout());
 		JLabel numberOfDecisionVarL = new JLabel("Number of Decision Variables");
@@ -253,7 +249,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JTextField to fill by the user or to be filled automatically with the file path (to read XML) through the button.
+	 * Returns a panel with a JTextField to fill by the user or to be filled
+	 * automatically with the file path (to read XML) through the button.
 	 **/
 	private JPanel readPanel() {
 		JPanel readPanel = new JPanel(new FlowLayout());
@@ -281,7 +278,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JTextField to fill by the user or to be filled automatically with the file path (to save into XML) through the button.
+	 * Returns a panel with a JTextField to fill by the user or to be filled
+	 * automatically with the file path (to save into XML) through the button.
 	 **/
 	private JPanel savePanel() {
 		JPanel savePanel = new JPanel();
@@ -308,9 +306,9 @@ public class Interface {
 		return savePanel;
 	}
 
-	
 	/**
-	 * Returns a panel with a button. When clicked, a new frame is displayed to specify the criterion.
+	 * Returns a panel with a button. When clicked, a new frame is displayed to
+	 * specify the criterion.
 	 **/
 	private JPanel criterionPanel() {
 		JPanel criterionPanel = new JPanel();
@@ -341,8 +339,9 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a frame with two JTextField to fill and a button to send the email.
-	 * One with the subject of the email and the other with the email body.
+	 * Returns a frame with two JTextField to fill and a button to send the
+	 * email. One with the subject of the email and the other with the email
+	 * body.
 	 **/
 	private JFrame setEmailFrame() {
 		JFrame sendEmailFrame = new JFrame("Email");
@@ -351,53 +350,54 @@ public class Interface {
 		JPanel messageTitlePanel = new JPanel(new BorderLayout());
 		JPanel messageBodyPanel = new JPanel(new BorderLayout());
 		JPanel messageSendPanel = new JPanel();
-		
+
 		JLabel messageTitleL = new JLabel("Subject:");
 		JTextField messageTitleJTF = new JTextField();
 		messageTitleJTF.setColumns(30);
-		
+
 		messageTitlePanel.add(messageTitleL, BorderLayout.NORTH);
 		messageTitlePanel.add(messageTitleJTF, BorderLayout.CENTER);
-		
+
 		JLabel messageBodyL = new JLabel("Message:");
 		JTextArea messageBodyJTA = new JTextArea();
 		messageBodyJTA.setLineWrap(true);
 		JScrollPane messageBodyScroll = new JScrollPane(messageBodyJTA);
-		
+
 		messageBodyPanel.add(messageBodyL, BorderLayout.NORTH);
 		messageBodyPanel.add(messageBodyScroll, BorderLayout.CENTER);
-		
-		JButton messageSendButton = new JButton("Send Message");
+
+		messageSendButton = new JButton("Send Message");
 		messageSendButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					sendEmailFrame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-					String subject = "From: "+emailJTF.getText()+messageTitleJTF.getText();
-					support.SendEmail(emailJTF.getText(), messageTitleJTF.getText(),subject );
+					String subject = "From: " + emailJTF.getText() + messageTitleJTF.getText();
+					support.SendEmail(emailJTF.getText(), messageTitleJTF.getText(), subject);
 				} catch (MessagingException e1) {
 					JOptionPane.showMessageDialog(sendEmailPanel, "Error sending email, connection issue!", "Warning",
-					        JOptionPane.WARNING_MESSAGE);
+							JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
 
-
 		messageSendPanel.add(messageSendButton);
-		
+
 		sendEmailPanel.add(messageTitlePanel, BorderLayout.NORTH);
 		sendEmailPanel.add(messageBodyPanel, BorderLayout.CENTER);
 		sendEmailPanel.add(messageSendPanel, BorderLayout.SOUTH);
-		
+
 		sendEmailFrame.add(sendEmailPanel);
 		sendEmailFrame.setVisible(true);
 		return sendEmailFrame;
 	}
-	
+
 	/**
-	 * Adds content to the frame given with a table to write the decision variable group name and to fill the table of the variable decision.
-	 * Each decision variable has a name, type, and potential intervals and restrictions.
+	 * Adds content to the frame given with a table to write the decision
+	 * variable group name and to fill the table of the variable decision. Each
+	 * decision variable has a name, type, and potential intervals and
+	 * restrictions.
 	 **/
 	private void setDecisionFrame(JFrame decisionVarFrame, Object numberOfVariableDecisionGroup) {
 		JPanel decisionPanel = new JPanel(new BorderLayout());
@@ -410,7 +410,7 @@ public class Interface {
 		DefaultTableModel model = new DefaultTableModel();
 		JTable decisionVarT = new JTable();
 		decisionVarT.setModel(model);
-		
+
 		model.addColumn("Name");
 		model.addColumn("Type");
 		model.addColumn("Interval");
@@ -434,7 +434,8 @@ public class Interface {
 	}
 
 	/**
-	 * Adds content to the frame with a JTextField to define the criterion(s), a button to add a new criterion and a button to upload the .jar file.
+	 * Adds content to the frame with a JTextField to define the criterion(s), a
+	 * button to add a new criterion and a button to upload the .jar file.
 	 **/
 	private void setCriterionFrame(JFrame criterionFrame) {
 		JPanel criterionPanel = new JPanel();
@@ -454,7 +455,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a JPanel with a JTextField to define the criterion(s) and a button to upload the .jar file.
+	 * Returns a JPanel with a JTextField to define the criterion(s) and a
+	 * button to upload the .jar file.
 	 **/
 	private JPanel addCriterion() {
 		JPanel criterionPanel = new JPanel(new FlowLayout());
@@ -500,7 +502,8 @@ public class Interface {
 	}
 
 	/**
-	 * Defines the size of the given frame. The second parameter indicates the number that the screen is divided by.
+	 * Defines the size of the given frame. The second parameter indicates the
+	 * number that the screen is divided by.
 	 **/
 	private void setFrame(JFrame frame, double size) {
 		double frameWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -517,6 +520,10 @@ public class Interface {
 
 	public JButton getEmailButton() {
 		return emailButton;
+	}
+	
+	public JButton getMessageSendButton() {
+		return messageSendButton;
 	}
 
 	public JButton getDecisionVarButton() {
@@ -542,6 +549,5 @@ public class Interface {
 	public JButton getReadJarButton() {
 		return readJarButton;
 	}
-	
-	
+
 }

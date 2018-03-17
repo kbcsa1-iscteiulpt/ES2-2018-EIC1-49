@@ -11,6 +11,7 @@ import classes.*;
 public class Main {
 
 	public static void main(String[] args) {
+		new Interface();
 /*		Support support = new Support();
 		try {
 			support.SendEmail("projetodees7", "ogustavoegay", "ricardojoaosantos0@gmail.com", "", "test 4", "e agora");

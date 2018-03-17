@@ -21,6 +21,9 @@ public class InterfaceTest {
 		JButton emailButton = interfaceTest.getEmailButton();
 		emailButton.doClick();
 
+		JButton messageSendButton = interfaceTest.getMessageSendButton();
+		messageSendButton.doClick();
+		
 		JButton decisionVarButton = interfaceTest.getDecisionVarButton();
 		decisionVarButton.doClick();
 		
