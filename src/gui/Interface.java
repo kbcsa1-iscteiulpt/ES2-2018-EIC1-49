@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -33,9 +35,17 @@ import javax.swing.table.DefaultTableModel;
 public class Interface {
 
 	private JFrame frame;
-	private JFrame decisionVarFrame;
-	private JFrame criterionFrame;
 	private JFrame helpFrame;
+	private JButton helpButton;
+	private JButton emailButton;
+	private JFrame decisionVarFrame;
+	private JButton decisionVarButton;
+	private JFrame criterionFrame;
+	private JButton criterionButton;
+	private JButton saveButton;
+	private JButton readButton;
+	private JButton addCriterionButton;
+	private JButton readJarButton;
 
 	public Interface() {
 		frame = new JFrame("Problem to be optimized");
@@ -55,7 +65,7 @@ public class Interface {
 		initialPanel.add(emailPanel());
 		initialPanel.add(maxTimePanel());
 		initialPanel.add(idealTimePanel());
-		initialPanel.add(numberOfDecisionVarPanel());
+		initialPanel.add(decisionVarPanel());
 		initialPanel.add(readPanel());
 		initialPanel.add(savePanel());
 		initialPanel.add(criterionPanel());
@@ -69,7 +79,7 @@ public class Interface {
 	 **/
 	private JPanel helpFAQPanel() {
 		JPanel helpFAQPanel = new JPanel(new BorderLayout());
-		JButton helpButton = new JButton();
+		helpButton = new JButton();
 		ImageIcon question_mark = new ImageIcon(((new ImageIcon("./src/images/question_mark.png")).getImage())
 				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
 		helpButton.setIcon(question_mark);
@@ -130,8 +140,8 @@ public class Interface {
 		JLabel emailL = new JLabel("Enter your Email:");
 		JTextField emailJTF = new JTextField();
 		emailJTF.setColumns(20);
-		JButton emailB = new JButton("Write Email");
-		emailB.addActionListener(new ActionListener() {
+		emailButton = new JButton("Write Email");
+		emailButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -140,7 +150,7 @@ public class Interface {
 		});
 		emailPanel.add(emailL);
 		emailPanel.add(emailJTF);
-		emailPanel.add(emailB);
+		emailPanel.add(emailButton);
 		emailPanel.setBackground(new Color(240, 240, 240));
 		return emailPanel;
 	}
@@ -203,11 +213,11 @@ public class Interface {
 	 * Returns a panel with a JSpinner to select the number of decision variables and button.
 	 * When clicked, a new frame is displayed to write the decision variable group name and to fill the table of the variable decision.
 	 * **/
-	private JPanel numberOfDecisionVarPanel() {
-		JPanel numberOfDecisionVarPanel = new JPanel(new FlowLayout());
+	private JPanel decisionVarPanel() {
+		JPanel decisionVarPanel = new JPanel(new FlowLayout());
 		JLabel numberOfDecisionVarL = new JLabel("Number of Decision Variables");
 		JSpinner numberOfDecisionVarSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-		JButton decisionVarButton = new JButton("Decision Variables");
+		decisionVarButton = new JButton("Decision Variables");
 		decisionVarButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -219,11 +229,11 @@ public class Interface {
 			}
 
 		});
-		numberOfDecisionVarPanel.add(numberOfDecisionVarL);
-		numberOfDecisionVarPanel.add(numberOfDecisionVarSpinner);
-		numberOfDecisionVarPanel.add(decisionVarButton);
-		numberOfDecisionVarPanel.setBackground(new Color(240, 240, 240));
-		return numberOfDecisionVarPanel;
+		decisionVarPanel.add(numberOfDecisionVarL);
+		decisionVarPanel.add(numberOfDecisionVarSpinner);
+		decisionVarPanel.add(decisionVarButton);
+		decisionVarPanel.setBackground(new Color(240, 240, 240));
+		return decisionVarPanel;
 	}
 
 	/**
@@ -234,8 +244,8 @@ public class Interface {
 		JLabel readL = new JLabel("Read from XML (path):");
 		JTextField readJTF = new JTextField();
 		readJTF.setColumns(40);
-		JButton readB = new JButton("Read XML File");
-		readB.addActionListener(new ActionListener() {
+		readButton = new JButton("Read XML File");
+		readButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -249,7 +259,7 @@ public class Interface {
 		});
 		readPanel.add(readL);
 		readPanel.add(readJTF);
-		readPanel.add(readB);
+		readPanel.add(readButton);
 		readPanel.setBackground(new Color(240, 240, 240));
 		return readPanel;
 	}
@@ -262,8 +272,8 @@ public class Interface {
 		JLabel saveL = new JLabel("Save into XML (path):");
 		JTextField saveJTF = new JTextField();
 		saveJTF.setColumns(40);
-		JButton saveB = new JButton("Save XML File");
-		saveB.addActionListener(new ActionListener() {
+		saveButton = new JButton("Save XML File");
+		saveButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -277,7 +287,7 @@ public class Interface {
 		});
 		savePanel.add(saveL);
 		savePanel.add(saveJTF);
-		savePanel.add(saveB);
+		savePanel.add(saveButton);
 		savePanel.setBackground(new Color(240, 240, 240));
 		return savePanel;
 	}
@@ -288,8 +298,8 @@ public class Interface {
 	 **/
 	private JPanel criterionPanel() {
 		JPanel criterionPanel = new JPanel();
-		JButton criterionB = new JButton("Criterion to be optimized");
-		criterionB.addActionListener(new ActionListener() {
+		criterionButton = new JButton("Criterion to be optimized");
+		criterionButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -299,7 +309,7 @@ public class Interface {
 				criterionFrame.setVisible(true);
 			}
 		});
-		criterionPanel.add(criterionB);
+		criterionPanel.add(criterionButton);
 		return criterionPanel;
 	}
 
@@ -398,8 +408,8 @@ public class Interface {
 	private void setCriterionFrame(JFrame criterionFrame) {
 		JPanel criterionPanel = new JPanel();
 		criterionPanel.setLayout(new BoxLayout(criterionPanel, BoxLayout.Y_AXIS));
-		JButton addCriterionB = new JButton("Add Criterion");
-		addCriterionB.addActionListener(new ActionListener() {
+		addCriterionButton = new JButton("Add Criterion");
+		addCriterionButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -407,7 +417,7 @@ public class Interface {
 				criterionPanel.revalidate();
 			}
 		});
-		criterionPanel.add(addCriterionB);
+		criterionPanel.add(addCriterionButton);
 		criterionPanel.add(addCriterion());
 		criterionFrame.add(new JScrollPane(criterionPanel));
 	}
@@ -427,9 +437,8 @@ public class Interface {
 		JLabel jarPathL = new JLabel("Jar Path");
 		JTextField jarPathJTF = new JTextField();
 		jarPathJTF.setColumns(25);
-
-		JButton readJar = new JButton("Add jar");
-		readJar.addActionListener(new ActionListener() {
+		readJarButton = new JButton("Add jar");
+		readJarButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -446,7 +455,7 @@ public class Interface {
 		criterionNamePanel.add(criterionNameJTF);
 		criterionJarPanel.add(jarPathL);
 		criterionJarPanel.add(jarPathJTF);
-		criterionJarPanel.add(readJar);
+		criterionJarPanel.add(readJarButton);
 		criterionPanel.add(criterionNamePanel);
 		criterionPanel.add(criterionJarPanel);
 		return criterionPanel;
@@ -470,4 +479,38 @@ public class Interface {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
+
+	public JButton getHelpButton() {
+		return helpButton;
+	}
+
+	public JButton getEmailButton() {
+		return emailButton;
+	}
+
+	public JButton getDecisionVarButton() {
+		return decisionVarButton;
+	}
+
+	public JButton getCriterionButton() {
+		return criterionButton;
+	}
+
+	public JButton getSaveButton() {
+		return saveButton;
+	}
+
+	public JButton getReadButton() {
+		return readButton;
+	}
+
+	public JButton getAddCriterionButton() {
+		return addCriterionButton;
+	}
+
+	public JButton getReadJarButton() {
+		return readJarButton;
+	}
+	
+	
 }
