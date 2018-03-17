@@ -7,17 +7,21 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.mail.MessagingException;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -27,25 +31,9 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
-/**
- * This class represents the interface
- * 
- * @author diana
- **/
 public class Interface {
 
 	private JFrame frame;
-	private JFrame helpFrame;
-	private JButton helpButton;
-	private JButton emailButton;
-	private JFrame decisionVarFrame;
-	private JButton decisionVarButton;
-	private JFrame criterionFrame;
-	private JButton criterionButton;
-	private JButton saveButton;
-	private JButton readButton;
-	private JButton addCriterionButton;
-	private JButton readJarButton;
 
 	public Interface() {
 		frame = new JFrame("Problem to be optimized");
@@ -140,8 +128,8 @@ public class Interface {
 		JLabel emailL = new JLabel("Enter your Email:");
 		JTextField emailJTF = new JTextField();
 		emailJTF.setColumns(20);
-		emailButton = new JButton("Write Email");
-		emailButton.addActionListener(new ActionListener() {
+		JButton emailB = new JButton("Write Email");
+		emailB.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -150,8 +138,8 @@ public class Interface {
 		});
 		emailPanel.add(emailL);
 		emailPanel.add(emailJTF);
-		emailPanel.add(emailButton);
-		emailPanel.setBackground(new Color(240, 240, 240));
+		emailPanel.add(emailB);
+		emailPanel.setBackground(new Color(240,240,240));
 		return emailPanel;
 	}
 
@@ -352,7 +340,7 @@ public class Interface {
 		messageBodyPanel.add(messageBodyScroll, BorderLayout.CENTER);
 		
 		JButton messageSendButton = new JButton("Send Message");
-		
+
 		messageSendPanel.add(messageSendButton);
 		
 		sendEmailPanel.add(messageTitlePanel, BorderLayout.NORTH);
