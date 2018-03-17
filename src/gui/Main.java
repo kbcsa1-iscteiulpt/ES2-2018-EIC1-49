@@ -6,7 +6,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-import Classes.*;
+import classes.*;
 
 public class Main {
 

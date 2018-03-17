@@ -1,4 +1,4 @@
-package Classes;
+package classes;
 
 /**
  * Class that represents time, used for max and ideal duration of waiting for a problem

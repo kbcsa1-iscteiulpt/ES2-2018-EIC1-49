@@ -31,7 +31,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
-import Classes.Support;
+import classes.Support;
 
 /**
 
