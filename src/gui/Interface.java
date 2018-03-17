@@ -31,9 +31,37 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
+import Classes.Support;
+
+/**
+
+ * This class represents the interface
+ 
+ * 
+ 
+ * @author diana
+ 
+ **/
+ 
+
 public class Interface {
 
 	private JFrame frame;
+	private JFrame helpFrame;
+	private JButton helpButton;
+	private JButton emailButton;
+	private JFrame decisionVarFrame;
+	private JButton decisionVarButton;
+	private JFrame criterionFrame;
+	private JButton criterionButton;
+	private JButton saveButton;
+	private JButton readButton;
+	private JButton addCriterionButton;
+	private JButton readJarButton;
+	private JTextField emailJTF;
+	
+	private Support support = new Support();
+ 
 
 	public Interface() {
 		frame = new JFrame("Problem to be optimized");
@@ -126,7 +154,7 @@ public class Interface {
 	private JPanel emailPanel() {
 		JPanel emailPanel = new JPanel(new FlowLayout());
 		JLabel emailL = new JLabel("Enter your Email:");
-		JTextField emailJTF = new JTextField();
+		emailJTF = new JTextField();
 		emailJTF.setColumns(20);
 		JButton emailB = new JButton("Write Email");
 		emailB.addActionListener(new ActionListener() {
@@ -340,6 +368,21 @@ public class Interface {
 		messageBodyPanel.add(messageBodyScroll, BorderLayout.CENTER);
 		
 		JButton messageSendButton = new JButton("Send Message");
+		messageSendButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					sendEmailFrame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+					String subject = "From: "+emailJTF.getText()+messageTitleJTF.getText();
+					support.SendEmail(emailJTF.getText(), messageTitleJTF.getText(),subject );
+				} catch (MessagingException e1) {
+					JOptionPane.showMessageDialog(sendEmailPanel, "Error sending email, connection issue!", "Warning",
+					        JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+
 
 		messageSendPanel.add(messageSendButton);
 		

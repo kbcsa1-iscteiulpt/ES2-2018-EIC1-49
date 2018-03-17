@@ -37,7 +37,7 @@ public class Support {
      * @throws AddressException if the email address parse failed
      * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
      */
-    public void SendEmail(   String fromEmail,String title, String message) throws AddressException, MessagingException {
+    public void SendEmail(   String fromEmail ,String title, String message) throws AddressException, MessagingException {
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
