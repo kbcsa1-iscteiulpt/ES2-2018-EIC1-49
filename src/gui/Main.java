@@ -1,7 +1,12 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+
+import Classes.*;
 
 public class Main {
 
@@ -19,8 +24,26 @@ public class Main {
 			e.printStackTrace();
 		}
 	*/
-		new Interface();
-
+	//	new Interface();
+	
+		/*
+		XML_Editor xml = new XML_Editor();
+		
+		List<Variable> l = new ArrayList<Variable>();
+		Variable v1= new Variable("v1","int","-1","5","0");
+		Variable v2= new Variable("v2","double","0.5","2.5","0;1.0");
+		l.add(v1);l.add(v2);
+		
+		Problem p = new Problem("n","d","e","d",
+				new Time(2,2,2),
+				new Time(3,3,3),
+				"g",2,l);
+		
+		xml.write("src/test.xml", p);
+	 
+		Problem problem = xml.read("src/test.xml");
+		System.out.println(problem.toString());
+		*/
 	}
 
 }
