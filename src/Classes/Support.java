@@ -1,4 +1,4 @@
-package gui;
+package Classes;
 
 import java.util.Properties;
 
@@ -26,59 +26,18 @@ public class Support {
 		
 	}
 	
-//	public void sendEmail(String to,String from,String subject,String text) {
-//	      // Assuming you are sending email from localhost
-//	      String host = "smtp.gmail.com";
-//
-//	      // Get system properties
-//	      Properties properties = System.getProperties();
-//
-//	      // Setup mail server
-//	      properties.setProperty("mail.smtp.host", host);
-//
-//	      // Get the default Session object.
-//	      Session session = Session.getDefaultInstance(properties);
-//
-//	      try{
-//	         // Create a default MimeMessage object.
-//	         MimeMessage message = new MimeMessage(session);
-//
-//	         // Set From: header field of the header.
-//	         message.setFrom(new InternetAddress(from));
-//
-//	         // Set To: header field of the header.
-//	         message.addRecipient(Message.RecipientType.TO,
-//	                                  new InternetAddress(to));
-//
-//	         // Set Subject: header field
-//	         message.setSubject(subject);
-//
-//	         // Now set the actual message
-//	         message.setText(text);
-//
-//	         // Send message
-//	         Transport.send(message);
-//	         System.out.println("Sent message successfully....");
-//	      }catch (MessagingException mex) {
-//	    	 System.out.println(mex);
-//	         mex.printStackTrace();
-//	      }
-//	  
-//	}
+
 	
 	/**
      * Send email using GMail SMTP server.
      *
-     * @param username GMail username
-     * @param password GMail password
-     * @param recipientEmail TO recipient
-     * @param ccEmail CC recipient. Can be empty if there is no CC recipient
+     * @param fromEmail the email to put in the tag FROM
      * @param title title of the message
-     * @param message message to be sent
+     * @param  message to be sent
      * @throws AddressException if the email address parse failed
      * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
      */
-    public void SendEmail(String username, String password, String recipientEmail, String ccEmail, String title, String message) throws AddressException, MessagingException {
+    public void SendEmail(   String fromEmail,String title, String message) throws AddressException, MessagingException {
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
@@ -107,12 +66,12 @@ public class Support {
         final MimeMessage msg = new MimeMessage(session);
 
         // -- Set the FROM and TO fields --
-        msg.setFrom(new InternetAddress(username + "@gmail.com"));
-        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
+        msg.setFrom(new InternetAddress(fromEmail));
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("projetodees7@gmail.com", false));
 
-        if (ccEmail.length() > 0) {
-            msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
-        }
+//        if (ccEmail.length() > 0) {
+//            msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
+//        }
 
         msg.setSubject(title);
         msg.setText(message, "utf-8");
@@ -120,7 +79,7 @@ public class Support {
 
         SMTPTransport t = (SMTPTransport)session.getTransport("smtps");
 
-        t.connect("smtp.gmail.com", username, password);
+        t.connect("smtp.gmail.com", "projetodees7", "ogustavoegay");
         t.sendMessage(msg, msg.getAllRecipients());      
         t.close();
     }
