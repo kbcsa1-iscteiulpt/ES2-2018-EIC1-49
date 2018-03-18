@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
 import javax.mail.MessagingException;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -34,6 +33,8 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 
 import classes.Problem;
@@ -45,11 +46,11 @@ import classes.XML_Editor;
 /**
  * This class represents the interface
  * 
- * @author Diana Lopes nï¿½ 72898
+ * @author Diana Lopes nº 72898
  **/
 
 public class Interface {
-	
+
 	private String adminEmail = "projetodees7@gmail.com";
 
 	private JFrame frame;
@@ -69,21 +70,15 @@ public class Interface {
 	private JTextField txtEmail;
 	private JTextField txtProblemName;
 	private JTextField txtNameOfDecisionVariablesGroup;
-	private JSpinner spnNumberOfDays;
-	private JSpinner spnNumberOfHours;
-	private JSpinner spnNumberOfMinutes;
+	private JSpinner spnMaxNumberOfDays;
+	private JSpinner spnMaxNumberOfHours;
+	private JSpinner spnMaxNumberOfMinutes;
 	private JSpinner spnIdealNumberOfDays;
 	private JSpinner spnIdealNumberOfHours;
 	private JSpinner spnIdealNumberOfMinutes;
 	private JSpinner spnNumberOfDecisionVariables;
 	private JTable tblDecisionVariables;
-	private JTextArea problemDescriptionJTA;
-	private JSpinner numberOfDaysSpinner;
-	private JSpinner numberOfHoursSpinner;
-	private JSpinner numberOfMinutesSpinner;
-	private JSpinner idealNumberOfDaysSpinner;
-	private JSpinner idealNumberOfHoursSpinner;
-	private JSpinner idealNumberOfMinutesSpinner;
+	private JTextArea jtaProblemDescription;
 	private JButton executeProcessB;
 
 	private Support support = new Support();
@@ -211,16 +206,16 @@ public class Interface {
 		JLabel lblNumberofHours = new JLabel("Hours");
 		JLabel lblNumberofMinutes = new JLabel("Minutes");
 
-		spnNumberOfDays = new JSpinner(new SpinnerNumberModel(0, 0, 31, 1));
-		spnNumberOfHours = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
-		spnNumberOfMinutes = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+		spnMaxNumberOfDays = new JSpinner(new SpinnerNumberModel(0, 0, 31, 1));
+		spnMaxNumberOfHours = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
+		spnMaxNumberOfMinutes = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
 
 		pnlMaxTime.add(lblMaxTime);
-		pnlMaxTime.add(spnNumberOfDays);
+		pnlMaxTime.add(spnMaxNumberOfDays);
 		pnlMaxTime.add(lblNumberofDays);
-		pnlMaxTime.add(spnNumberOfHours);
+		pnlMaxTime.add(spnMaxNumberOfHours);
 		pnlMaxTime.add(lblNumberofHours);
-		pnlMaxTime.add(spnNumberOfMinutes);
+		pnlMaxTime.add(spnMaxNumberOfMinutes);
 		pnlMaxTime.add(lblNumberofMinutes);
 		return pnlMaxTime;
 	}
@@ -315,35 +310,28 @@ public class Interface {
 	 **/
 	private JPanel savePanel() {
 		JPanel pnlSave = new JPanel();
-		JLabel lblSave = new JLabel("Save into XML (path):");
+		JLabel lblSave = new JLabel("File name:");
 		JTextField txtSave = new JTextField();
 		txtSave.setColumns(40);
 		btnSave = new JButton("Save XML File");
 		btnSave.addActionListener(new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fchXMLSave = new JFileChooser();
-				if (fchXMLSave.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-					File fileXML = fchXMLSave.getSelectedFile();
-					if (!fileXML.exists()) {
-						try {
-							fileXML.createNewFile();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+
+					String optFileName = JOptionPane.showInputDialog("File Name:");
+					if(optFileName!=null){
+						File f = new File("./src/files/"+optFileName+".txt");
+						saveProblem();
 					}
-					txtSave.setText(fileXML.getPath());
-					saveProblem();
-					xml.write(fileXML.getPath(), problem);
 				}
-			}
 		});
 		pnlSave.add(lblSave);
 		pnlSave.add(txtSave);
 		pnlSave.add(btnSave);
 		return pnlSave;
 	}
+	
 
 	/**
 	 * Returns a panel with a button. When clicked, a new frame is displayed to
@@ -375,25 +363,30 @@ public class Interface {
 		executeProcessB.addActionListener(new ActionListener() {
 
 			/**
-			 * For now the only thing it does is send an email to the user with information concerning the optimization
+			 * For now the only thing it does is send an email to the user with
+			 * information concerning the optimization
 			 **/
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(!txtEmail.getText().equals("")) {
-						
-						String subject = "Acabou de iniciar um processo de otimizaï¿½ï¿½o na nossa plataforma";
-						String name = "Nome do Problema: \n"+ txtProblemName.getText();
-						String description = "Descriï¿½ï¿½o do problema: \n"+problemDescriptionJTA.getText();
-						String maxTime = "Tempo mï¿½ximo de otimizaï¿½ï¿½o: \n"+numberOfDaysSpinner.getValue().toString() +"dias"+numberOfHoursSpinner.getValue().toString() +"horas"+numberOfMinutesSpinner.getValue().toString() +"minutos";
-						String idealTime ="Tempo ideal de otimizaï¿½ï¿½o: \n"+idealNumberOfDaysSpinner.getValue().toString() +"dias"+idealNumberOfHoursSpinner.getValue().toString() +"horas"+idealNumberOfMinutesSpinner.getValue().toString() +"minutos";
-						String message  = name+"\n"+description+"\n"+maxTime+"\n"+idealTime;
-						
-						support.SendEmail(adminEmail,txtEmail.getText(),subject,message);
-						
+					if (!txtEmail.getText().equals("")) {
+
+						String subject = "Acabou de iniciar um processo de otimização na nossa plataforma";
+						String name = "Nome do Problema: \n" + txtProblemName.getText();
+						String description = "Descrição do problema: \n" + jtaProblemDescription.getText();
+						String maxTime = "Tempo máximo de otimização: \n" + spnMaxNumberOfDays.getValue().toString()
+								+ "dias" + spnMaxNumberOfHours.getValue().toString() + "horas"
+								+ spnMaxNumberOfMinutes.getValue().toString() + "minutos";
+						String idealTime = "Tempo ideal de otimização: \n" + spnIdealNumberOfDays.getValue().toString()
+								+ "dias" + spnIdealNumberOfHours.getValue().toString() + "horas"
+								+ spnIdealNumberOfMinutes.getValue().toString() + "minutos";
+						String message = name + "\n" + description + "\n" + maxTime + "\n" + idealTime;
+
+						support.SendEmail(adminEmail, txtEmail.getText(), subject, message);
+
 					}
 				} catch (MessagingException e1) {
-					
+
 				}
 			}
 		});
@@ -443,7 +436,7 @@ public class Interface {
 				try {
 					sendEmailFrame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 					String subject = "From: " + txtEmail.getText() + txtMessageTitle.getText();
-					support.SendEmail(txtEmail.getText(),adminEmail, txtMessageTitle.getText(), subject);
+					support.SendEmail(txtEmail.getText(), adminEmail, txtMessageTitle.getText(), subject);
 				} catch (MessagingException e1) {
 					JOptionPane.showMessageDialog(pnlSendEmail, "Error sending email, connection issue!", "Warning",
 							JOptionPane.WARNING_MESSAGE);
@@ -567,13 +560,12 @@ public class Interface {
 	 * Adds content to the Help frame
 	 **/
 	private void setHelpFrame(JFrame frame) {
-		
-		JPanel pnlHelp= new JPanel(new BorderLayout());
-		
-		JPanel pnlFAQS = new JPanel(new GridLayout(6, 0));
+
+		JPanel pnlHelp = new JPanel(new BorderLayout());
+
+		JPanel pnlFAQ = new JPanel(new GridLayout(6, 0));
 		JPanel pnlSendEmail = new JPanel();
-		
-		
+
 		JButton btnSendEmail = new JButton("Send Email");
 		btnSendEmail.addActionListener(new ActionListener() {
 
@@ -582,56 +574,55 @@ public class Interface {
 				setEmailFrame();
 			}
 		});
-		
-		//Colocar noutro sitio a ler de um .txt
-		Map<String, String> listFAQ = readFAQfile("faqs");
-		
-		for(String question: listFAQ.keySet()){
-			pnlFAQS.add(addFAQPanel(question,listFAQ.get(question)));
+
+		Map<String, String> listFAQ = readFAQfile("./src/files/faq.txt");
+
+		for (String question : listFAQ.keySet()) {
+			pnlFAQ.add(addFAQPanel(question, listFAQ.get(question)));
 		}
-		
+
 		pnlSendEmail.add(btnSendEmail);
-		pnlHelp.add(pnlFAQS, BorderLayout.CENTER);
+		pnlHelp.add(pnlFAQ, BorderLayout.CENTER);
 		pnlHelp.add(pnlSendEmail, BorderLayout.PAGE_END);
 		helpFrame.add(pnlHelp);
-		
+
 	}
-	
+
 	/**
-	 * Reads faqs from txt file
+	 * Reads FAQ from .txt file
 	 **/
 
 	private Map<String, String> readFAQfile(String s) {
 		Scanner scanner = null;
 		Map<String, String> listFAQ = new HashMap<String, String>();
 		try {
-			scanner= new Scanner(new File(s));
-			String line= "";
-			
-			while(scanner.hasNext()){
-				line= scanner.nextLine();
-				String[] Tokens = line.split(";");
-				String question = Tokens[0];
-				listFAQ.put(question, Tokens[1]);
+			scanner = new Scanner(new File(s));
+			String line = "";
+
+			while (scanner.hasNext()) {
+				line = scanner.nextLine();
+				String[] tokens = line.split(";");
+				listFAQ.put(tokens[0], tokens[1]);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		return listFAQ;
-		
+
 	}
 
-	private JPanel addFAQPanel(String question, String answer){
-		JPanel pnlFAQ = new JPanel(new GridLayout(2, 0)); 
-		JLabel lblQuestion = new JLabel("Question: "+question);
-		JLabel lblAnswer = new JLabel("Answer: "+answer);
+	private JPanel addFAQPanel(String question, String answer) {
+		JPanel pnlFAQ = new JPanel(new GridLayout(2, 0));
+		JLabel lblQuestion = new JLabel("Question: " + question);
+		JLabel lblAnswer = new JLabel("Answer: " + answer);
 		lblAnswer.setForeground(Color.gray);
-		
+
 		pnlFAQ.add(lblQuestion);
 		pnlFAQ.add(lblAnswer);
 		return pnlFAQ;
 	}
+
 	/**
 	 * Defines the size of the given frame. The second parameter indicates the
 	 * number that the screen is divided by.
@@ -645,55 +636,13 @@ public class Interface {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
-	public JButton getHelpButton() {
-		return btnHelp;
-	}
-
-	public JButton getEmailButton() {
-		return btnEmail;
-	}
-
-	public JButton getMessageSendButton() {
-		return btnMessageSend;
-	}
-
-	public JButton getDecisionVarButton() {
-		return btnDecisionVariables;
-	}
-
-	public JButton getCriterionButton() {
-		return btnCriterion;
-	}
-
-	public JButton getSaveButton() {
-		return btnSave;
-	}
-
-	public JButton getReadButton() {
-		return btnRead;
-	}
-
-	public JButton getAddCriterionButton() {
-		return btnAddCriterion;
-	}
-
-	public JButton getReadJarButton() {
-		return btnReadJar;
-	}
-	
-	public JButton getExecuteProcessButton() {
-		return executeProcessB;
-	}
-	
-	
-	
 	public void fillInicialForm() {
 		txtProblemName.setText(problem.getName());
 		txaProblemDescription.setText(problem.getDescription());
 		txtEmail.setText(problem.getEmail());
-		spnNumberOfDays.setValue(problem.getMax().getDays());
-		spnNumberOfHours.setValue(problem.getMax().getHours());
-		spnNumberOfMinutes.setValue(problem.getMax().getMinutes());
+		spnMaxNumberOfDays.setValue(problem.getMax().getDays());
+		spnMaxNumberOfHours.setValue(problem.getMax().getHours());
+		spnMaxNumberOfMinutes.setValue(problem.getMax().getMinutes());
 		spnIdealNumberOfDays.setValue(problem.getIdeal().getDays());
 		spnIdealNumberOfHours.setValue(problem.getIdeal().getHours());
 		spnIdealNumberOfMinutes.setValue(problem.getIdeal().getMinutes());
@@ -762,13 +711,57 @@ public class Interface {
 		}
 
 		problem = new Problem(txtProblemName.getText(), txaProblemDescription.getText(), txtEmail.getText(),
-				new Time(Integer.parseInt(spnNumberOfDays.getValue().toString()),
-						Integer.parseInt(spnNumberOfHours.getValue().toString()),
-						Integer.parseInt(spnNumberOfMinutes.getValue().toString())),
+				new Time(Integer.parseInt(spnMaxNumberOfDays.getValue().toString()),
+						Integer.parseInt(spnMaxNumberOfHours.getValue().toString()),
+						Integer.parseInt(spnMaxNumberOfMinutes.getValue().toString())),
 				new Time(Integer.parseInt(spnIdealNumberOfDays.getValue().toString()),
 						Integer.parseInt(spnIdealNumberOfHours.getValue().toString()),
 						Integer.parseInt(spnIdealNumberOfMinutes.getValue().toString())),
 				groupName, Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()), variablesList);
+	}
+
+	public JButton getHelpButton() {
+		return btnHelp;
+	}
+
+	public JButton getEmailButton() {
+		return btnEmail;
+	}
+
+	public JButton getMessageSendButton() {
+		return btnMessageSend;
+	}
+
+	public JButton getDecisionVarButton() {
+		return btnDecisionVariables;
+	}
+
+	public JButton getCriterionButton() {
+		return btnCriterion;
+	}
+
+	public JButton getSaveButton() {
+		return btnSave;
+	}
+
+	public JButton getReadButton() {
+		return btnRead;
+	}
+
+	public JButton getAddCriterionButton() {
+		return btnAddCriterion;
+	}
+
+	public JButton getReadJarButton() {
+		return btnReadJar;
+	}
+
+	public JButton getExecuteProcessButton() {
+		return executeProcessB;
+	}
+
+	public JSpinner getSpnNumberOfDecisionVariables() {
+		return spnNumberOfDecisionVariables;
 	}
 
 }

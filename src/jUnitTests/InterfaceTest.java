@@ -1,12 +1,14 @@
 package jUnitTests;
 
 import javax.swing.JButton;
+import javax.swing.JSpinner;
+
 import org.junit.Test;
 import gui.Interface;
 
 /**
  * This is a jUnitTestCase that tests the interface
- * @author Diana Lopes nï¿½ 72898 
+ * @author Diana Lopes nº 72898 
  **/
 public class InterfaceTest {
 
@@ -16,38 +18,38 @@ public class InterfaceTest {
 	public void inicialInterface() {
 		interfaceTest = new Interface();
 
-		JButton helpButton = interfaceTest.getHelpButton();
-		helpButton.doClick();
+		JButton btnHelp = interfaceTest.getHelpButton();
+		btnHelp.doClick();
 
-		JButton emailButton = interfaceTest.getEmailButton();
-		emailButton.doClick();
+		JButton btnEmail = interfaceTest.getEmailButton();
+		btnEmail.doClick();
 
-		JButton messageSendButton = interfaceTest.getMessageSendButton();
-		messageSendButton.doClick();
+		JButton btnMessageSend = interfaceTest.getMessageSendButton();
+		btnMessageSend.doClick();
 
-		JButton decisionVarButton = interfaceTest.getDecisionVarButton();
-		decisionVarButton.doClick();
-
-		JButton readButton = interfaceTest.getReadButton();
-		readButton.doClick();
-
-		JButton saveButton = interfaceTest.getSaveButton();
-		saveButton.doClick();
-
-		JButton criterionButton = interfaceTest.getCriterionButton();
-		criterionButton.doClick();
-
-		JButton addCriterionButton = interfaceTest.getAddCriterionButton();
-		addCriterionButton.doClick();
-
-		JButton readJarButton = interfaceTest.getReadJarButton();
-		readJarButton.doClick();
+		JSpinner spnNumberOfVariableDecisions = interfaceTest.getSpnNumberOfDecisionVariables();
+		spnNumberOfVariableDecisions.setValue(Integer.valueOf(12));
 		
-		JButton messageSendB = interfaceTest.getMessageSendButton();
-		messageSendB.doClick();
+		JButton btnDecisionVariables = interfaceTest.getDecisionVarButton();
+		btnDecisionVariables.doClick();
+
+		JButton btnRead = interfaceTest.getReadButton();
+		btnRead.doClick();
+
+		JButton btnSave = interfaceTest.getSaveButton();
+		btnSave.doClick();
+
+		JButton btnCriterion = interfaceTest.getCriterionButton();
+		btnCriterion.doClick();
+
+		JButton btnAddCriterion = interfaceTest.getAddCriterionButton();
+		btnAddCriterion.doClick();
+
+		JButton btnReadJar = interfaceTest.getReadJarButton();
+		btnReadJar.doClick();
 		
-		JButton executeProcessB = interfaceTest.getExecuteProcessButton();
-		executeProcessB.doClick();
+		JButton btnExecuteProcess = interfaceTest.getExecuteProcessButton();
+		btnExecuteProcess.doClick();
 		
 		
 		
