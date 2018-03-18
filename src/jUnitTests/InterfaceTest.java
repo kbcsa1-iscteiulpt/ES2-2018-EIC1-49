@@ -41,6 +41,9 @@ public class InterfaceTest {
 		
 		JButton readJarButton = interfaceTest.getReadJarButton();
 		readJarButton.doClick();
+		
+		
+		
 	}
 
 }

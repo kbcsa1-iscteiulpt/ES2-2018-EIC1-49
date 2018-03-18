@@ -58,6 +58,7 @@ public class Interface {
 	private JButton addCriterionButton;
 	private JButton readJarButton;
 	private JTextArea problemDescriptionJTA;
+	private JButton messageSendButton;
 	private JTextField emailJTF;
 	private JTextField problemNameJTF;
 	private JTextField nameOfDecisionVarGroupJTF;
@@ -71,7 +72,7 @@ public class Interface {
 	private JTable decisionVarT;
 
 	private Support support = new Support();
-	private JButton messageSendButton;
+	
 	
 	private XML_Editor xml = new XML_Editor();
 	private Problem problem = new Problem();
@@ -401,10 +402,13 @@ public class Interface {
 
 		messageBodyPanel.add(messageBodyL, BorderLayout.NORTH);
 		messageBodyPanel.add(messageBodyScroll, BorderLayout.CENTER);
-
+		
 		messageSendButton = new JButton("Send Message");
 		messageSendButton.addActionListener(new ActionListener() {
-
+			
+			/**
+			 * Closes the email frame and sends the intended email , if the operation fails shows a warning message
+			 **/
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -677,5 +681,5 @@ public class Interface {
 		variables
 		);
 	}
-
+	
 }
