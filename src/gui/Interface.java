@@ -40,42 +40,43 @@ import classes.XML_Editor;
 
 /**
  * This class represents the interface
- * @author diana
+ * 
+ * @author Diana Lopes nº 72898
  **/
 
 public class Interface {
 
 	private JFrame frame;
 	private JFrame helpFrame;
-	private JButton helpButton;
-	private JButton emailButton;
+	private JButton btnHelp;
+	private JButton btnEmail;
 	private JFrame decisionVarFrame;
-	private JButton decisionVarButton;
+	private JButton btnDecisionVariables;
 	private JFrame criterionFrame;
-	private JButton criterionButton;
-	private JButton saveButton;
-	private JButton readButton;
-	private JButton addCriterionButton;
-	private JButton readJarButton;
-	private JTextArea problemDescriptionJTA;
-	private JButton messageSendButton;
-	private JTextField emailJTF;
-	private JTextField problemNameJTF;
-	private JTextField nameOfDecisionVarGroupJTF;
-	private JSpinner numberOfDaysSpinner;
-	private JSpinner numberOfHoursSpinner;
-	private JSpinner numberOfMinutesSpinner;
-	private JSpinner idealNumberOfDaysSpinner;
-	private JSpinner idealNumberOfHoursSpinner;
-	private JSpinner idealNumberOfMinutesSpinner;
-	private JSpinner numberOfDecisionVarSpinner;
-	private JTable decisionVarT;
+	private JButton btnCriterion;
+	private JButton btnSave;
+	private JButton btnRead;
+	private JButton btnAddCriterion;
+	private JButton btnReadJar;
+	private JTextArea txaProblemDescription;
+	private JButton btnMessageSend;
+	private JTextField txtEmail;
+	private JTextField txtProblemName;
+	private JTextField txtNameOfDecisionVariablesGroup;
+	private JSpinner spnNumberOfDays;
+	private JSpinner spnNumberOfHours;
+	private JSpinner spnNumberOfMinutes;
+	private JSpinner spnIdealNumberOfDays;
+	private JSpinner spnIdealNumberOfHours;
+	private JSpinner spnIdealNumberOfMinutes;
+	private JSpinner spnNumberOfDecisionVariables;
+	private JTable tblDecisionVariables;
 
 	private Support support = new Support();
-	
-	
+
 	private XML_Editor xml = new XML_Editor();
 	private Problem problem = new Problem();
+	private JButton btnDecisionVariablesFinish;
 
 	public Interface() {
 		frame = new JFrame("Problem to be optimized");
@@ -109,16 +110,16 @@ public class Interface {
 	 * frame. When clicked, a new frame is displayed to show the FAQ.
 	 **/
 	private JPanel helpFAQPanel() {
-		JPanel helpFAQPanel = new JPanel(new BorderLayout());
-		helpButton = new JButton();
+		JPanel pnlHelpFAQ = new JPanel(new BorderLayout());
+		btnHelp = new JButton();
 		ImageIcon question_mark = new ImageIcon(((new ImageIcon("./src/images/question_mark.png")).getImage())
 				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
-		helpButton.setIcon(question_mark);
-		helpButton.setContentAreaFilled(false);
-		helpButton.setBorderPainted(false);
-		helpButton.setFocusPainted(false);
+		btnHelp.setIcon(question_mark);
+		btnHelp.setContentAreaFilled(false);
+		btnHelp.setBorderPainted(false);
+		btnHelp.setFocusPainted(false);
 
-		helpButton.addActionListener(new ActionListener() {
+		btnHelp.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -128,9 +129,8 @@ public class Interface {
 				helpFrame.setVisible(true);
 			}
 		});
-		helpFAQPanel.add(helpButton, BorderLayout.LINE_END);
-		helpFAQPanel.setBackground(new Color(240, 240, 240));
-		return helpFAQPanel;
+		pnlHelpFAQ.add(btnHelp, BorderLayout.LINE_END);
+		return pnlHelpFAQ;
 	}
 
 	/**
@@ -138,14 +138,13 @@ public class Interface {
 	 * name.
 	 **/
 	private JPanel problemNamePanel() {
-		JPanel problemNamePanel = new JPanel();
-		JLabel problemNameL = new JLabel("Problem's Name:");
-		problemNameJTF = new JTextField();
-		problemNameJTF.setColumns(20);
-		problemNamePanel.add(problemNameL);
-		problemNamePanel.add(problemNameJTF);
-		problemNamePanel.setBackground(new Color(240, 240, 240));
-		return problemNamePanel;
+		JPanel pnlProblemName = new JPanel();
+		JLabel lblProblemName = new JLabel("Problem's Name:");
+		txtProblemName = new JTextField();
+		txtProblemName.setColumns(20);
+		pnlProblemName.add(lblProblemName);
+		pnlProblemName.add(txtProblemName);
+		return pnlProblemName;
 	}
 
 	/**
@@ -153,15 +152,14 @@ public class Interface {
 	 * description.
 	 **/
 	private JPanel problemDescriptionPanel() {
-		JPanel problemDescriptionPanel = new JPanel(new FlowLayout());
-		JLabel problemDescriptionL = new JLabel("Problem's Description:");
-		problemDescriptionJTA = new JTextArea(4, 60);
-		JScrollPane problemDescriptionSP = new JScrollPane(problemDescriptionJTA);
-		problemDescriptionJTA.setLineWrap(true);
-		problemDescriptionPanel.add(problemDescriptionL);
-		problemDescriptionPanel.add(problemDescriptionSP);
-		problemDescriptionPanel.setBackground(new Color(240, 240, 240));
-		return problemDescriptionPanel;
+		JPanel pnlProblemDescription = new JPanel(new FlowLayout());
+		JLabel lblProblemDescription = new JLabel("Problem's Description:");
+		txaProblemDescription = new JTextArea(4, 60);
+		JScrollPane scrProblemDescription = new JScrollPane(txaProblemDescription);
+		txaProblemDescription.setLineWrap(true);
+		pnlProblemDescription.add(lblProblemDescription);
+		pnlProblemDescription.add(scrProblemDescription);
+		return pnlProblemDescription;
 	}
 
 	/**
@@ -169,23 +167,22 @@ public class Interface {
 	 * button is clicked, a new frame is displayed to write and send the email.
 	 **/
 	private JPanel emailPanel() {
-		JPanel emailPanel = new JPanel(new FlowLayout());
-		JLabel emailL = new JLabel("Enter your Email:");
-		emailJTF = new JTextField();
-		emailJTF.setColumns(20);
-		emailButton = new JButton("Write Email");
-		emailButton.addActionListener(new ActionListener() {
+		JPanel pnlEmail = new JPanel(new FlowLayout());
+		JLabel lblEmail = new JLabel("Enter your Email:");
+		txtEmail = new JTextField();
+		txtEmail.setColumns(20);
+		btnEmail = new JButton("Write Email");
+		btnEmail.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setEmailFrame();
 			}
 		});
-		emailPanel.add(emailL);
-		emailPanel.add(emailJTF);
-		emailPanel.add(emailButton);
-		emailPanel.setBackground(new Color(240, 240, 240));
-		return emailPanel;
+		pnlEmail.add(lblEmail);
+		pnlEmail.add(txtEmail);
+		pnlEmail.add(btnEmail);
+		return pnlEmail;
 	}
 
 	/**
@@ -193,26 +190,25 @@ public class Interface {
 	 * wait for the optimization.
 	 **/
 	private JPanel maxTimePanel() {
-		JPanel maxTimePanel = new JPanel(new FlowLayout());
-		JLabel maxTimeL = new JLabel("Maximum time for optimization:");
+		JPanel pnlMaxTime = new JPanel(new FlowLayout());
+		JLabel lblMaxTime = new JLabel("Maximum time for optimization:");
 
-		JLabel numberofDaysLabel = new JLabel("Days");
-		JLabel numberofHoursLabel = new JLabel("Hours");
-		JLabel numberofMinutesLabel = new JLabel("Minutes");
+		JLabel lblNumberofDays = new JLabel("Days");
+		JLabel lblNumberofHours = new JLabel("Hours");
+		JLabel lblNumberofMinutes = new JLabel("Minutes");
 
-		numberOfDaysSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 31, 1));
-		numberOfHoursSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
-		numberOfMinutesSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+		spnNumberOfDays = new JSpinner(new SpinnerNumberModel(0, 0, 31, 1));
+		spnNumberOfHours = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
+		spnNumberOfMinutes = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
 
-		maxTimePanel.add(maxTimeL);
-		maxTimePanel.add(numberOfDaysSpinner);
-		maxTimePanel.add(numberofDaysLabel);
-		maxTimePanel.add(numberOfHoursSpinner);
-		maxTimePanel.add(numberofHoursLabel);
-		maxTimePanel.add(numberOfMinutesSpinner);
-		maxTimePanel.add(numberofMinutesLabel);
-		maxTimePanel.setBackground(new Color(240, 240, 240));
-		return maxTimePanel;
+		pnlMaxTime.add(lblMaxTime);
+		pnlMaxTime.add(spnNumberOfDays);
+		pnlMaxTime.add(lblNumberofDays);
+		pnlMaxTime.add(spnNumberOfHours);
+		pnlMaxTime.add(lblNumberofHours);
+		pnlMaxTime.add(spnNumberOfMinutes);
+		pnlMaxTime.add(lblNumberofMinutes);
+		return pnlMaxTime;
 	}
 
 	/**
@@ -220,26 +216,25 @@ public class Interface {
 	 * for the optimization.
 	 **/
 	private JPanel idealTimePanel() {
-		JPanel idealTimePanel = new JPanel(new FlowLayout());
-		JLabel idealTimeL = new JLabel("Ideal time for optimization:");
+		JPanel pnlIdealTime = new JPanel(new FlowLayout());
+		JLabel lblIdealTime = new JLabel("Ideal time for optimization:");
 
-		JLabel idealNumberofDaysLabel = new JLabel("Days");
-		JLabel idelNumberofHoursLabel = new JLabel("Hours");
-		JLabel idealNumberofMinutesLabel = new JLabel("Minutes");
+		JLabel lblIdealNumberofDays = new JLabel("Days");
+		JLabel lblIdealNumberofHours = new JLabel("Hours");
+		JLabel lblIdealNumberofMinutes = new JLabel("Minutes");
 
-		idealNumberOfDaysSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 31, 1));
-		idealNumberOfHoursSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
-		idealNumberOfMinutesSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+		spnIdealNumberOfDays = new JSpinner(new SpinnerNumberModel(0, 0, 31, 1));
+		spnIdealNumberOfHours = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
+		spnIdealNumberOfMinutes = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
 
-		idealTimePanel.add(idealTimeL);
-		idealTimePanel.add(idealNumberOfDaysSpinner);
-		idealTimePanel.add(idealNumberofDaysLabel);
-		idealTimePanel.add(idealNumberOfHoursSpinner);
-		idealTimePanel.add(idelNumberofHoursLabel);
-		idealTimePanel.add(idealNumberOfMinutesSpinner);
-		idealTimePanel.add(idealNumberofMinutesLabel);
-		idealTimePanel.setBackground(new Color(240, 240, 240));
-		return idealTimePanel;
+		pnlIdealTime.add(lblIdealTime);
+		pnlIdealTime.add(spnIdealNumberOfDays);
+		pnlIdealTime.add(lblIdealNumberofDays);
+		pnlIdealTime.add(spnIdealNumberOfHours);
+		pnlIdealTime.add(lblIdealNumberofHours);
+		pnlIdealTime.add(spnIdealNumberOfMinutes);
+		pnlIdealTime.add(lblIdealNumberofMinutes);
+		return pnlIdealTime;
 	}
 
 	/**
@@ -249,11 +244,11 @@ public class Interface {
 	 * decision.
 	 **/
 	private JPanel decisionVarPanel() {
-		JPanel decisionVarPanel = new JPanel(new FlowLayout());
-		JLabel numberOfDecisionVarL = new JLabel("Number of Decision Variables");
-		numberOfDecisionVarSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-		decisionVarButton = new JButton("Decision Variables");
-		decisionVarButton.addActionListener(new ActionListener() {
+		JPanel pnlDecisionVar = new JPanel(new FlowLayout());
+		JLabel lblNumberOfDecisionVariable = new JLabel("Number of Decision Variables");
+		spnNumberOfDecisionVariables = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+		btnDecisionVariables = new JButton("Decision Variables");
+		btnDecisionVariables.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -261,15 +256,14 @@ public class Interface {
 				setFrame(decisionVarFrame, 0.5);
 				setDecisionFrame(decisionVarFrame);
 				decisionVarFrame.setVisible(true);
-				fillDecisionVarForm();
+				fillDecisionVariableForm();
 			}
 
 		});
-		decisionVarPanel.add(numberOfDecisionVarL);
-		decisionVarPanel.add(numberOfDecisionVarSpinner);
-		decisionVarPanel.add(decisionVarButton);
-		decisionVarPanel.setBackground(new Color(240, 240, 240));
-		return decisionVarPanel;
+		pnlDecisionVar.add(lblNumberOfDecisionVariable);
+		pnlDecisionVar.add(spnNumberOfDecisionVariables);
+		pnlDecisionVar.add(btnDecisionVariables);
+		return pnlDecisionVar;
 	}
 
 	/**
@@ -277,32 +271,28 @@ public class Interface {
 	 * automatically with the file path (to read XML) through the button.
 	 **/
 	private JPanel readPanel() {
-		JPanel readPanel = new JPanel(new FlowLayout());
-		JLabel readL = new JLabel("Read from XML (path):");
-		JTextField readJTF = new JTextField();
-		readJTF.setColumns(40);
-		readButton = new JButton("Read XML File");
-		readButton.addActionListener(new ActionListener() {
+		JPanel pnlRead = new JPanel(new FlowLayout());
+		JLabel lblRead = new JLabel("Read from XML (path):");
+		JTextField txtRead = new JTextField();
+		txtRead.setColumns(40);
+		btnRead = new JButton("Read XML File");
+		btnRead.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fileChooser = new JFileChooser();
-				int returnValue = fileChooser.showOpenDialog(null);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
-					readJTF.setText(selectedFile.getPath());
-					
-					problem = xml.read(selectedFile.getPath());
+				JFileChooser fchReadXML = new JFileChooser();
+				if (fchReadXML.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					String filePath = fchReadXML.getSelectedFile().getPath();
+					txtRead.setText(filePath);
+					problem = xml.read(filePath);
 					fillInicialForm();
-					
 				}
 			}
 		});
-		readPanel.add(readL);
-		readPanel.add(readJTF);
-		readPanel.add(readButton);
-		readPanel.setBackground(new Color(240, 240, 240));
-		return readPanel;
+		pnlRead.add(lblRead);
+		pnlRead.add(txtRead);
+		pnlRead.add(btnRead);
+		return pnlRead;
 	}
 
 	/**
@@ -310,37 +300,35 @@ public class Interface {
 	 * automatically with the file path (to save into XML) through the button.
 	 **/
 	private JPanel savePanel() {
-		JPanel savePanel = new JPanel();
-		JLabel saveL = new JLabel("Save into XML (path):");
-		JTextField saveJTF = new JTextField();
-		saveJTF.setColumns(40);
-		saveButton = new JButton("Save XML File");
-		saveButton.addActionListener(new ActionListener() {
+		JPanel pnlSave = new JPanel();
+		JLabel lblSave = new JLabel("Save into XML (path):");
+		JTextField txtSave = new JTextField();
+		txtSave.setColumns(40);
+		btnSave = new JButton("Save XML File");
+		btnSave.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fileChooser = new JFileChooser();
-				int returnValue = fileChooser.showOpenDialog(null);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
-					if(!selectedFile.exists()) {
+				JFileChooser fchXMLSave = new JFileChooser();
+				if (fchXMLSave.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					File fileXML = fchXMLSave.getSelectedFile();
+					if (!fileXML.exists()) {
 						try {
-							selectedFile.createNewFile();
+							fileXML.createNewFile();
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
-					saveJTF.setText(selectedFile.getPath());
-					fillProblem();
-					xml.write(selectedFile.getPath(), problem);
+					txtSave.setText(fileXML.getPath());
+					saveProblem();
+					xml.write(fileXML.getPath(), problem);
 				}
 			}
 		});
-		savePanel.add(saveL);
-		savePanel.add(saveJTF);
-		savePanel.add(saveButton);
-		savePanel.setBackground(new Color(240, 240, 240));
-		return savePanel;
+		pnlSave.add(lblSave);
+		pnlSave.add(txtSave);
+		pnlSave.add(btnSave);
+		return pnlSave;
 	}
 
 	/**
@@ -348,9 +336,9 @@ public class Interface {
 	 * specify the criterion.
 	 **/
 	private JPanel criterionPanel() {
-		JPanel criterionPanel = new JPanel();
-		criterionButton = new JButton("Criterion to be optimized");
-		criterionButton.addActionListener(new ActionListener() {
+		JPanel pnlCriterion = new JPanel();
+		btnCriterion = new JButton("Criterion to be optimized");
+		btnCriterion.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -360,19 +348,19 @@ public class Interface {
 				criterionFrame.setVisible(true);
 			}
 		});
-		criterionPanel.add(criterionButton);
-		return criterionPanel;
+		pnlCriterion.add(btnCriterion);
+		return pnlCriterion;
 	}
 
 	/**
 	 * Returns a panel with the button to execute the optimization process.
 	 **/
 	private JPanel executeProcessPanel() {
-		JPanel executeProcessPanel = new JPanel(new FlowLayout());
-		JButton executeProcessB = new JButton("Execute Optimization Process");
-		executeProcessPanel.add(executeProcessB);
-		executeProcessPanel.setBackground(new Color(240, 240, 240));
-		return executeProcessPanel;
+		JPanel pnlExecuteProcess = new JPanel(new FlowLayout());
+		JButton btnExecuteProcess = new JButton("Execute Optimization Process");
+		pnlExecuteProcess.add(btnExecuteProcess);
+		pnlExecuteProcess.setBackground(new Color(240, 240, 240));
+		return pnlExecuteProcess;
 	}
 
 	/**
@@ -383,52 +371,53 @@ public class Interface {
 	private JFrame setEmailFrame() {
 		JFrame sendEmailFrame = new JFrame("Email");
 		setFrame(sendEmailFrame, 0.5);
-		JPanel sendEmailPanel = new JPanel(new BorderLayout());
-		JPanel messageTitlePanel = new JPanel(new BorderLayout());
-		JPanel messageBodyPanel = new JPanel(new BorderLayout());
-		JPanel messageSendPanel = new JPanel();
+		JPanel pnlSendEmail = new JPanel(new BorderLayout());
+		JPanel pnlMessageTitle = new JPanel(new BorderLayout());
+		JPanel pnlMessageBody = new JPanel(new BorderLayout());
+		JPanel pnlMessageSend = new JPanel();
 
-		JLabel messageTitleL = new JLabel("Subject:");
-		JTextField messageTitleJTF = new JTextField();
-		messageTitleJTF.setColumns(30);
+		JLabel lblMessageTitle = new JLabel("Subject:");
+		JTextField txtMessageTitle = new JTextField();
+		txtMessageTitle.setColumns(30);
 
-		messageTitlePanel.add(messageTitleL, BorderLayout.NORTH);
-		messageTitlePanel.add(messageTitleJTF, BorderLayout.CENTER);
+		pnlMessageTitle.add(lblMessageTitle, BorderLayout.NORTH);
+		pnlMessageTitle.add(txtMessageTitle, BorderLayout.CENTER);
 
-		JLabel messageBodyL = new JLabel("Message:");
-		JTextArea messageBodyJTA = new JTextArea();
-		messageBodyJTA.setLineWrap(true);
-		JScrollPane messageBodyScroll = new JScrollPane(messageBodyJTA);
+		JLabel lblMessageBody = new JLabel("Message:");
+		JTextArea txaMessageBody = new JTextArea();
+		txaMessageBody.setLineWrap(true);
+		JScrollPane scrMessageBody = new JScrollPane(txaMessageBody);
 
-		messageBodyPanel.add(messageBodyL, BorderLayout.NORTH);
-		messageBodyPanel.add(messageBodyScroll, BorderLayout.CENTER);
-		
-		messageSendButton = new JButton("Send Message");
-		messageSendButton.addActionListener(new ActionListener() {
-			
+		pnlMessageBody.add(lblMessageBody, BorderLayout.NORTH);
+		pnlMessageBody.add(scrMessageBody, BorderLayout.CENTER);
+
+		btnMessageSend = new JButton("Send Message");
+		btnMessageSend.addActionListener(new ActionListener() {
+
 			/**
-			 * Closes the email frame and sends the intended email , if the operation fails shows a warning message
+			 * Closes the email frame and sends the intended email, if the
+			 * operation fails shows a warning message.
 			 **/
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					sendEmailFrame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-					String subject = "From: " + emailJTF.getText() + messageTitleJTF.getText();
-					support.SendEmail(emailJTF.getText(), messageTitleJTF.getText(), subject);
+					String subject = "From: " + txtEmail.getText() + txtMessageTitle.getText();
+					support.SendEmail(txtEmail.getText(), txtMessageTitle.getText(), subject);
 				} catch (MessagingException e1) {
-					JOptionPane.showMessageDialog(sendEmailPanel, "Error sending email, connection issue!", "Warning",
+					JOptionPane.showMessageDialog(pnlSendEmail, "Error sending email, connection issue!", "Warning",
 							JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
 
-		messageSendPanel.add(messageSendButton);
+		pnlMessageSend.add(btnMessageSend);
 
-		sendEmailPanel.add(messageTitlePanel, BorderLayout.NORTH);
-		sendEmailPanel.add(messageBodyPanel, BorderLayout.CENTER);
-		sendEmailPanel.add(messageSendPanel, BorderLayout.SOUTH);
+		pnlSendEmail.add(pnlMessageTitle, BorderLayout.NORTH);
+		pnlSendEmail.add(pnlMessageBody, BorderLayout.CENTER);
+		pnlSendEmail.add(pnlMessageSend, BorderLayout.SOUTH);
 
-		sendEmailFrame.add(sendEmailPanel);
+		sendEmailFrame.add(pnlSendEmail);
 		sendEmailFrame.setVisible(true);
 		return sendEmailFrame;
 	}
@@ -440,37 +429,39 @@ public class Interface {
 	 * restrictions.
 	 **/
 	private void setDecisionFrame(JFrame decisionVarFrame) {
-		JPanel decisionPanel = new JPanel(new BorderLayout());
+		JPanel pnlDecision = new JPanel(new BorderLayout());
 
-		JPanel nameOfDecisionVarGroupPanel = new JPanel();
-		JLabel nameOfDecisionVarGroupL = new JLabel("Name of Decision Variable Group:");
-		nameOfDecisionVarGroupJTF = new JTextField();
-		nameOfDecisionVarGroupJTF.setColumns(50);
+		JPanel pnlNameOfDecisionVariablesGroup = new JPanel();
+		JLabel lblNameOfDecisionVariablesGroup = new JLabel("Name of Decision Variable Group:");
+		txtNameOfDecisionVariablesGroup = new JTextField();
+		txtNameOfDecisionVariablesGroup.setColumns(50);
 
-		DefaultTableModel model = new DefaultTableModel();
-		decisionVarT = new JTable();
-		decisionVarT.setModel(model);
+		DefaultTableModel dtmDecisionVariables = new DefaultTableModel();
+		tblDecisionVariables = new JTable();
+		tblDecisionVariables.setModel(dtmDecisionVariables);
 
-		model.addColumn("Name");
-		model.addColumn("Type");
-		model.addColumn("Interval");
-		model.addColumn("Restrictions");
-		String[] variableDataTypesString = { "boolean", "byte", "char", "double", "float", "integer", "long", "real",
-				"short", "String" };
-		JComboBox variableDataTypes = new JComboBox(variableDataTypesString);
+		dtmDecisionVariables.addColumn("Name");
+		dtmDecisionVariables.addColumn("Type");
+		dtmDecisionVariables.addColumn("Interval");
+		dtmDecisionVariables.addColumn("Restrictions");
 
-		for (int i = 0; i < Integer.parseInt(numberOfDecisionVarSpinner.getValue().toString()); i++) {
-			model.addRow(new Object[] { "", "", "" });
-			decisionVarT.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(variableDataTypes));
+		String[] variableDataTypes = { "boolean", "byte", "char", "double", "float", "integer", "long", "real", "short",
+				"String" };
+		JComboBox<String> cmbVariableDataTypes = new JComboBox<>(variableDataTypes);
+
+		for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
+			dtmDecisionVariables.addRow(new Object[] { "", "", "" });
+			tblDecisionVariables.getColumnModel().getColumn(1)
+					.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
 		}
 
-		nameOfDecisionVarGroupPanel.add(nameOfDecisionVarGroupL);
-		nameOfDecisionVarGroupPanel.add(nameOfDecisionVarGroupJTF);
-		decisionPanel.add(nameOfDecisionVarGroupPanel, BorderLayout.NORTH);
-		decisionPanel.add(new JScrollPane(decisionVarT));
-		JButton button = new JButton("Finish");
-		decisionPanel.add(button, BorderLayout.PAGE_END);
-		decisionVarFrame.add(decisionPanel);
+		pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
+		pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
+		pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
+		pnlDecision.add(new JScrollPane(tblDecisionVariables));
+		btnDecisionVariablesFinish = new JButton("Finish");
+		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
+		decisionVarFrame.add(pnlDecision);
 	}
 
 	/**
@@ -478,20 +469,20 @@ public class Interface {
 	 * button to add a new criterion and a button to upload the .jar file.
 	 **/
 	private void setCriterionFrame(JFrame criterionFrame) {
-		JPanel criterionPanel = new JPanel();
-		criterionPanel.setLayout(new BoxLayout(criterionPanel, BoxLayout.Y_AXIS));
-		addCriterionButton = new JButton("Add Criterion");
-		addCriterionButton.addActionListener(new ActionListener() {
+		JPanel pnlCriterion = new JPanel();
+		pnlCriterion.setLayout(new BoxLayout(pnlCriterion, BoxLayout.Y_AXIS));
+		btnAddCriterion = new JButton("Add Criterion");
+		btnAddCriterion.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				criterionPanel.add(addCriterion());
-				criterionPanel.revalidate();
+				pnlCriterion.add(addCriterion());
+				pnlCriterion.revalidate();
 			}
 		});
-		criterionPanel.add(addCriterionButton);
-		criterionPanel.add(addCriterion());
-		criterionFrame.add(new JScrollPane(criterionPanel));
+		pnlCriterion.add(btnAddCriterion);
+		pnlCriterion.add(addCriterion());
+		criterionFrame.add(new JScrollPane(pnlCriterion));
 	}
 
 	/**
@@ -499,39 +490,37 @@ public class Interface {
 	 * button to upload the .jar file.
 	 **/
 	private JPanel addCriterion() {
-		JPanel criterionPanel = new JPanel(new FlowLayout());
-		JPanel criterionNamePanel = new JPanel();
+		JPanel pnlCriterion = new JPanel(new FlowLayout());
+		JPanel pnlCriterionName = new JPanel();
+		JPanel pnlCriterionJar = new JPanel();
 
-		JLabel criterionNameL = new JLabel("Criterion Name:");
-		JTextField criterionNameJTF = new JTextField();
-		criterionNameJTF.setColumns(30);
-		JPanel criterionJarPanel = new JPanel();
+		JLabel lblCriterionName = new JLabel("Criterion Name:");
+		JTextField txtCriterionName = new JTextField();
+		txtCriterionName.setColumns(30);
 
-		JLabel jarPathL = new JLabel("Jar Path");
-		JTextField jarPathJTF = new JTextField();
-		jarPathJTF.setColumns(25);
-		readJarButton = new JButton("Add jar");
-		readJarButton.addActionListener(new ActionListener() {
+		JLabel lblJarPath = new JLabel("Jar Path");
+		JTextField txtJarPath = new JTextField();
+		txtJarPath.setColumns(25);
+		btnReadJar = new JButton("Add jar");
+		btnReadJar.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fileChooser = new JFileChooser();
-				int returnValue = fileChooser.showOpenDialog(null);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-					File selectedFile = fileChooser.getSelectedFile();
-					jarPathJTF.setText(selectedFile.getPath());
+				JFileChooser fchUploadJar = new JFileChooser();
+				if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					txtJarPath.setText(fchUploadJar.getSelectedFile().getPath());
 				}
 			}
 		});
 
-		criterionNamePanel.add(criterionNameL);
-		criterionNamePanel.add(criterionNameJTF);
-		criterionJarPanel.add(jarPathL);
-		criterionJarPanel.add(jarPathJTF);
-		criterionJarPanel.add(readJarButton);
-		criterionPanel.add(criterionNamePanel);
-		criterionPanel.add(criterionJarPanel);
-		return criterionPanel;
+		pnlCriterionName.add(lblCriterionName);
+		pnlCriterionName.add(txtCriterionName);
+		pnlCriterionJar.add(lblJarPath);
+		pnlCriterionJar.add(txtJarPath);
+		pnlCriterionJar.add(btnReadJar);
+		pnlCriterion.add(pnlCriterionName);
+		pnlCriterion.add(pnlCriterionJar);
+		return pnlCriterion;
 	}
 
 	/**
@@ -555,131 +544,123 @@ public class Interface {
 	}
 
 	public JButton getHelpButton() {
-		return helpButton;
+		return btnHelp;
 	}
 
 	public JButton getEmailButton() {
-		return emailButton;
+		return btnEmail;
 	}
-	
+
 	public JButton getMessageSendButton() {
-		return messageSendButton;
+		return btnMessageSend;
 	}
 
 	public JButton getDecisionVarButton() {
-		return decisionVarButton;
+		return btnDecisionVariables;
 	}
 
 	public JButton getCriterionButton() {
-		return criterionButton;
+		return btnCriterion;
 	}
 
 	public JButton getSaveButton() {
-		return saveButton;
+		return btnSave;
 	}
 
 	public JButton getReadButton() {
-		return readButton;
+		return btnRead;
 	}
 
 	public JButton getAddCriterionButton() {
-		return addCriterionButton;
+		return btnAddCriterion;
 	}
 
 	public JButton getReadJarButton() {
-		return readJarButton;
+		return btnReadJar;
 	}
-	
+
 	public void fillInicialForm() {
-		problemNameJTF.setText(problem.getName());
-		problemDescriptionJTA.setText(problem.getDescription());
-		emailJTF.setText(problem.getEmail());
-		numberOfDaysSpinner.setValue(problem.getMax().getDays());
-		numberOfHoursSpinner.setValue(problem.getMax().getHours());
-		numberOfMinutesSpinner.setValue(problem.getMax().getMinutes());
-		idealNumberOfDaysSpinner.setValue(problem.getIdeal().getDays());
-		idealNumberOfHoursSpinner.setValue(problem.getIdeal().getHours());
-		idealNumberOfMinutesSpinner.setValue(problem.getIdeal().getMinutes());
-		numberOfDecisionVarSpinner.setValue(problem.getNumberVariables());
+		txtProblemName.setText(problem.getName());
+		txaProblemDescription.setText(problem.getDescription());
+		txtEmail.setText(problem.getEmail());
+		spnNumberOfDays.setValue(problem.getMax().getDays());
+		spnNumberOfHours.setValue(problem.getMax().getHours());
+		spnNumberOfMinutes.setValue(problem.getMax().getMinutes());
+		spnIdealNumberOfDays.setValue(problem.getIdeal().getDays());
+		spnIdealNumberOfHours.setValue(problem.getIdeal().getHours());
+		spnIdealNumberOfMinutes.setValue(problem.getIdeal().getMinutes());
+		spnNumberOfDecisionVariables.setValue(problem.getNumberVariables());
 	}
-	
-	public void fillDecisionVarForm() {
-		nameOfDecisionVarGroupJTF.setText(problem.getGroupName());
-		
-		DefaultTableModel model = new DefaultTableModel();
-		decisionVarT.setModel(model);
 
-		model.addColumn("Name");
-		model.addColumn("Type");
-		model.addColumn("Interval");
-		model.addColumn("Restrictions");
-		String[] variableDataTypesString = { "boolean", "byte", "char", "double", "float", "integer", "long", "real",
+	public void fillDecisionVariableForm() {
+		txtNameOfDecisionVariablesGroup.setText(problem.getGroupName());
+
+		DefaultTableModel dtmDecisionVariablesXML = new DefaultTableModel();
+		tblDecisionVariables.setModel(dtmDecisionVariablesXML);
+
+		dtmDecisionVariablesXML.addColumn("Name");
+		dtmDecisionVariablesXML.addColumn("Type");
+		dtmDecisionVariablesXML.addColumn("Interval");
+		dtmDecisionVariablesXML.addColumn("Restrictions");
+		String[] variableDataTypesXML = { "boolean", "byte", "char", "double", "float", "integer", "long", "real",
 				"short", "String" };
-		JComboBox variableDataTypes = new JComboBox(variableDataTypesString);
+		JComboBox<String> cmbVariableDataTypesXML = new JComboBox<>(variableDataTypesXML);
 
-		for (int i = 0; i < Integer.parseInt(numberOfDecisionVarSpinner.getValue().toString()); i++) {
-			List<Variable> var = problem.getVariables();
-			if(i<var.size()) {
-			model.addRow(new Object[] { 
-					var.get(i).getName(), var.get(i).getType(), 
-					var.get(i).getMin()+":"+var.get(i).getMax(),var.get(i).getRestriction() });
-			}else {
-				model.addRow(new Object[] { "", "", "" });
+		for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
+			List<Variable> variablesList = problem.getVariables();
+			if (i < variablesList.size()) {
+				dtmDecisionVariablesXML
+						.addRow(new Object[] { variablesList.get(i).getName(), variablesList.get(i).getType(),
+								variablesList.get(i).getMin() + ":" + variablesList.get(i).getMax(),
+								variablesList.get(i).getRestriction() });
+			} else {
+				dtmDecisionVariablesXML.addRow(new Object[] { "", "", "" });
 			}
-			decisionVarT.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(variableDataTypes));
+			tblDecisionVariables.getColumnModel().getColumn(1)
+					.setCellEditor(new DefaultCellEditor(cmbVariableDataTypesXML));
 		}
 	}
-	
-	public void fillProblem() {
-		String groupName="";
-		List<Variable> variables = new ArrayList<Variable>();
-		
-		if(nameOfDecisionVarGroupJTF!=null && decisionVarT!=null) {
-			groupName=nameOfDecisionVarGroupJTF.getText();
-			
-			    DefaultTableModel dtm = (DefaultTableModel) decisionVarT.getModel();
-			    int nRow = dtm.getRowCount() ;
-			    System.out.println(nRow);
-			    for (int i = 0 ; i < nRow ; i++) {
-			    	String name="";
-			    	String type="";
-			    	String min="";
-			    	String max="";
-			    	String res="";
-			    	String[] range = dtm.getValueAt(i,2).toString().split(":");
-			    	
-			    	if(dtm.getValueAt(i,0).toString()!=null)name=dtm.getValueAt(i,0).toString();
-			    	if(dtm.getValueAt(i,1).toString()!=null)type=dtm.getValueAt(i,1).toString();
-			    	if(range.length>0)min=range[0];
-			    	if(range.length>1)max=range[1];
-			    	if(dtm.getValueAt(i,3).toString()!=null)res=dtm.getValueAt(i,3).toString();
-			    		Variable var = new Variable(
-			    				name,
-			    				type,
-			    				min,
-			    				max,
-			    				res
-			    				);
-			    		variables.add(var);
-			    }
+
+	public void saveProblem() {
+		String groupName = "";
+		List<Variable> variablesList = new ArrayList<Variable>();
+
+		if (txtNameOfDecisionVariablesGroup != null && tblDecisionVariables != null) {
+			groupName = txtNameOfDecisionVariablesGroup.getText();
+
+			DefaultTableModel dtmDecisionVariables = (DefaultTableModel) tblDecisionVariables.getModel();
+			int numberOfRows = dtmDecisionVariables.getRowCount();
+			for (int i = 0; i < numberOfRows; i++) {
+				String decisionVariableName = "";
+				String decisionVariableType = "";
+				String decisionVariableMinValue = "";
+				String decisionVariableMaxValue = "";
+				String decisionVariableRestriction = "";
+				String[] decisionVariableRange = dtmDecisionVariables.getValueAt(i, 2).toString().split(":");
+
+				if (dtmDecisionVariables.getValueAt(i, 0).toString() != null)
+					decisionVariableName = dtmDecisionVariables.getValueAt(i, 0).toString();
+				if (dtmDecisionVariables.getValueAt(i, 1).toString() != null)
+					decisionVariableType = dtmDecisionVariables.getValueAt(i, 1).toString();
+				if (decisionVariableRange.length > 0)
+					decisionVariableMinValue = decisionVariableRange[0];
+				if (decisionVariableRange.length > 1)
+					decisionVariableMaxValue = decisionVariableRange[1];
+				if (dtmDecisionVariables.getValueAt(i, 3).toString() != null)
+					decisionVariableRestriction = dtmDecisionVariables.getValueAt(i, 3).toString();
+				variablesList.add(new Variable(decisionVariableName, decisionVariableType, decisionVariableMinValue,
+						decisionVariableMaxValue, decisionVariableRestriction));
+			}
 		}
-		
-		problem = new Problem(
-		problemNameJTF.getText(),
-		problemDescriptionJTA.getText(),
-		emailJTF.getText(),
-		new Time(
-				Integer.parseInt(numberOfDaysSpinner.getValue().toString()),
-				Integer.parseInt(numberOfHoursSpinner.getValue().toString()),
-				Integer.parseInt(numberOfMinutesSpinner.getValue().toString())),
-		new Time(
-				Integer.parseInt(idealNumberOfDaysSpinner.getValue().toString()),
-				Integer.parseInt(idealNumberOfHoursSpinner.getValue().toString()),
-				Integer.parseInt(idealNumberOfMinutesSpinner.getValue().toString())),
-		groupName,
-		Integer.parseInt(numberOfDecisionVarSpinner.getValue().toString()),
-		variables
-		);
+
+		problem = new Problem(txtProblemName.getText(), txaProblemDescription.getText(), txtEmail.getText(),
+				new Time(Integer.parseInt(spnNumberOfDays.getValue().toString()),
+						Integer.parseInt(spnNumberOfHours.getValue().toString()),
+						Integer.parseInt(spnNumberOfMinutes.getValue().toString())),
+				new Time(Integer.parseInt(spnIdealNumberOfDays.getValue().toString()),
+						Integer.parseInt(spnIdealNumberOfHours.getValue().toString()),
+						Integer.parseInt(spnIdealNumberOfMinutes.getValue().toString())),
+				groupName, Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()), variablesList);
 	}
-	
+
 }
