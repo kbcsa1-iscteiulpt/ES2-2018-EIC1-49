@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -527,7 +529,31 @@ public class Interface {
 	 * Adds content to the Help frame
 	 **/
 	private void setHelpFrame(JFrame frame) {
+		
+		JPanel FAQS = new JPanel(new GridLayout(6,2));
+		
+		JLabel faq1 = new JLabel("FAQ 1");
+		JLabel answ1 = new JLabel("Answer 1");
+		FAQS.add(faq1);
+		FAQS.add(answ1);
+		
+		JLabel faq2 = new JLabel("FAQ 2");
+		JLabel answ2 = new JLabel("Answer 2");
+		FAQS.add(faq2);
+		FAQS.add(answ2);
+		
+		
+		JButton mail = new JButton("Send Email");
+		mail.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setEmailFrame();
+			}
+		});
+		FAQS.add(mail);
+		helpFrame.add(FAQS);
+		
 	}
 
 	/**
