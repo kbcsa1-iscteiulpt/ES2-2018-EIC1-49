@@ -37,7 +37,7 @@ public class InterfaceTest {
 		btnRead.doClick();
 
 		JButton btnSave = interfaceTest.getSaveButton();
-		btnSave.doClick();
+		//btnSave.doClick();
 
 		JButton btnCriterion = interfaceTest.getCriterionButton();
 		btnCriterion.doClick();
@@ -49,7 +49,7 @@ public class InterfaceTest {
 		btnReadJar.doClick();
 		
 		JButton btnExecuteProcess = interfaceTest.getExecuteProcessButton();
-		btnExecuteProcess.doClick();
+//		btnExecuteProcess.doClick();
 		
 		
 		
