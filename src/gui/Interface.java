@@ -2,8 +2,6 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -13,11 +11,12 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
-import javax.mail.MessagingException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -530,32 +529,50 @@ public class Interface {
 	 **/
 	private void setHelpFrame(JFrame frame) {
 		
-		JPanel FAQS = new JPanel(new GridLayout(6,2));
+		JPanel pnlHelp= new JPanel(new BorderLayout());
 		
-		JLabel faq1 = new JLabel("FAQ 1");
-		JLabel answ1 = new JLabel("Answer 1");
-		FAQS.add(faq1);
-		FAQS.add(answ1);
-		
-		JLabel faq2 = new JLabel("FAQ 2");
-		JLabel answ2 = new JLabel("Answer 2");
-		FAQS.add(faq2);
-		FAQS.add(answ2);
+		JPanel pnlFAQS = new JPanel(new GridLayout(6, 0));
+		JPanel pnlSendEmail = new JPanel();
 		
 		
-		JButton mail = new JButton("Send Email");
-		mail.addActionListener(new ActionListener() {
+		JButton btnSendEmail = new JButton("Send Email");
+		btnSendEmail.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setEmailFrame();
 			}
 		});
-		FAQS.add(mail);
-		helpFrame.add(FAQS);
+		
+		//Colocar noutro sitio a ler de um .txt
+		List<String> listFAQ = new ArrayList<String>();
+		listFAQ.add("What kind of problems can this software optimize?");
+		listFAQ.add("Any problem, if you can give us the solution you already have to compare");
+		
+		listFAQ.add("How can I upload my current solution?");
+		listFAQ.add("Click on button \"Criterion\" to be optimzed and then you can upload your .jar file");
+		
+		for(int i = 0; i<listFAQ.size(); i+=2){
+			pnlFAQS.add(addFAQPanel(listFAQ.get(i), listFAQ.get(i+1)));
+		}
+		
+		pnlSendEmail.add(btnSendEmail);
+		pnlHelp.add(pnlFAQS, BorderLayout.CENTER);
+		pnlHelp.add(pnlSendEmail, BorderLayout.PAGE_END);
+		helpFrame.add(pnlHelp);
 		
 	}
 
+	private JPanel addFAQPanel(String question, String answer){
+		JPanel pnlFAQ = new JPanel(new GridLayout(2, 0)); 
+		JLabel lblQuestion = new JLabel("Question: "+question);
+		JLabel lblAnswer = new JLabel("Answer: "+answer);
+		lblAnswer.setForeground(Color.gray);
+		
+		pnlFAQ.add(lblQuestion);
+		pnlFAQ.add(lblAnswer);
+		return pnlFAQ;
+	}
 	/**
 	 * Defines the size of the given frame. The second parameter indicates the
 	 * number that the screen is divided by.
