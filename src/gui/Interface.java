@@ -596,6 +596,10 @@ public class Interface {
 		helpFrame.add(pnlHelp);
 		
 	}
+	
+	/**
+	 * Reads faqs from txt file
+	 **/
 
 	private Map<String, String> readFAQfile(String s) {
 		Scanner scanner = null;
