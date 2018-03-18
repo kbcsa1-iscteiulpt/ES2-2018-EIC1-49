@@ -9,10 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 import javax.mail.MessagingException;
 import javax.swing.BoxLayout;
@@ -581,21 +584,41 @@ public class Interface {
 		});
 		
 		//Colocar noutro sitio a ler de um .txt
-		List<String> listFAQ = new ArrayList<String>();
-		listFAQ.add("What kind of problems can this software optimize?");
-		listFAQ.add("Any problem, if you can give us the solution you already have to compare");
+		Map<String, String> listFAQ = readFAQfile("faqs");
 		
-		listFAQ.add("How can I upload my current solution?");
-		listFAQ.add("Click on button \"Criterion\" to be optimzed and then you can upload your .jar file");
-		
-		for(int i = 0; i<listFAQ.size(); i+=2){
-			pnlFAQS.add(addFAQPanel(listFAQ.get(i), listFAQ.get(i+1)));
+		for(String question: listFAQ.keySet()){
+			pnlFAQS.add(addFAQPanel(question,listFAQ.get(question)));
 		}
 		
 		pnlSendEmail.add(btnSendEmail);
 		pnlHelp.add(pnlFAQS, BorderLayout.CENTER);
 		pnlHelp.add(pnlSendEmail, BorderLayout.PAGE_END);
 		helpFrame.add(pnlHelp);
+		
+	}
+	
+	/**
+	 * Reads faqs from txt file
+	 **/
+
+	private Map<String, String> readFAQfile(String s) {
+		Scanner scanner = null;
+		Map<String, String> listFAQ = new HashMap<String, String>();
+		try {
+			scanner= new Scanner(new File(s));
+			String line= "";
+			
+			while(scanner.hasNext()){
+				line= scanner.nextLine();
+				String[] Tokens = line.split(";");
+				String question = Tokens[0];
+				listFAQ.put(question, Tokens[1]);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return listFAQ;
 		
 	}
 
