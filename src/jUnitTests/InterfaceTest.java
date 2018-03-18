@@ -6,7 +6,7 @@ import gui.Interface;
 
 /**
  * This is a jUnitTestCase that tests the interface
- * @author Diana Lopes nº 72898 
+ * @author Diana Lopes nï¿½ 72898 
  **/
 public class InterfaceTest {
 
@@ -42,7 +42,15 @@ public class InterfaceTest {
 
 		JButton readJarButton = interfaceTest.getReadJarButton();
 		readJarButton.doClick();
-
+		
+		JButton messageSendB = interfaceTest.getMessageSendButton();
+		messageSendB.doClick();
+		
+		JButton executeProcessB = interfaceTest.getExecuteProcessButton();
+		executeProcessB.doClick();
+		
+		
+		
 	}
 
 }

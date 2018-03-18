@@ -42,10 +42,12 @@ import classes.XML_Editor;
 /**
  * This class represents the interface
  * 
- * @author Diana Lopes nº 72898
+ * @author Diana Lopes nï¿½ 72898
  **/
 
 public class Interface {
+	
+	private String adminEmail = "projetodees7@gmail.com";
 
 	private JFrame frame;
 	private JFrame helpFrame;
@@ -72,6 +74,14 @@ public class Interface {
 	private JSpinner spnIdealNumberOfMinutes;
 	private JSpinner spnNumberOfDecisionVariables;
 	private JTable tblDecisionVariables;
+	private JTextArea problemDescriptionJTA;
+	private JSpinner numberOfDaysSpinner;
+	private JSpinner numberOfHoursSpinner;
+	private JSpinner numberOfMinutesSpinner;
+	private JSpinner idealNumberOfDaysSpinner;
+	private JSpinner idealNumberOfHoursSpinner;
+	private JSpinner idealNumberOfMinutesSpinner;
+	private JButton executeProcessB;
 
 	private Support support = new Support();
 
@@ -357,11 +367,37 @@ public class Interface {
 	 * Returns a panel with the button to execute the optimization process.
 	 **/
 	private JPanel executeProcessPanel() {
-		JPanel pnlExecuteProcess = new JPanel(new FlowLayout());
-		JButton btnExecuteProcess = new JButton("Execute Optimization Process");
-		pnlExecuteProcess.add(btnExecuteProcess);
-		pnlExecuteProcess.setBackground(new Color(240, 240, 240));
-		return pnlExecuteProcess;
+		JPanel executeProcessPanel = new JPanel(new FlowLayout());
+		executeProcessB = new JButton("Execute Optimization Process");
+		executeProcessB.addActionListener(new ActionListener() {
+
+			/**
+			 * For now the only thing it does is send an email to the user with information concerning the optimization
+			 **/
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(!txtEmail.getText().equals("")) {
+						
+						String subject = "Acabou de iniciar um processo de otimizaï¿½ï¿½o na nossa plataforma";
+						String name = "Nome do Problema: \n"+ txtProblemName.getText();
+						String description = "Descriï¿½ï¿½o do problema: \n"+problemDescriptionJTA.getText();
+						String maxTime = "Tempo mï¿½ximo de otimizaï¿½ï¿½o: \n"+numberOfDaysSpinner.getValue().toString() +"dias"+numberOfHoursSpinner.getValue().toString() +"horas"+numberOfMinutesSpinner.getValue().toString() +"minutos";
+						String idealTime ="Tempo ideal de otimizaï¿½ï¿½o: \n"+idealNumberOfDaysSpinner.getValue().toString() +"dias"+idealNumberOfHoursSpinner.getValue().toString() +"horas"+idealNumberOfMinutesSpinner.getValue().toString() +"minutos";
+						String message  = name+"\n"+description+"\n"+maxTime+"\n"+idealTime;
+						
+						support.SendEmail(adminEmail,txtEmail.getText(),subject,message);
+						
+					}
+				} catch (MessagingException e1) {
+					
+				}
+			}
+		});
+
+		executeProcessPanel.add(executeProcessB);
+		executeProcessPanel.setBackground(new Color(240, 240, 240));
+		return executeProcessPanel;
 	}
 
 	/**
@@ -404,7 +440,7 @@ public class Interface {
 				try {
 					sendEmailFrame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 					String subject = "From: " + txtEmail.getText() + txtMessageTitle.getText();
-					support.SendEmail(txtEmail.getText(), txtMessageTitle.getText(), subject);
+					support.SendEmail(txtEmail.getText(),adminEmail, txtMessageTitle.getText(), subject);
 				} catch (MessagingException e1) {
 					JOptionPane.showMessageDialog(pnlSendEmail, "Error sending email, connection issue!", "Warning",
 							JOptionPane.WARNING_MESSAGE);
@@ -621,7 +657,13 @@ public class Interface {
 	public JButton getReadJarButton() {
 		return btnReadJar;
 	}
-
+	
+	public JButton getExecuteProcessButton() {
+		return executeProcessB;
+	}
+	
+	
+	
 	public void fillInicialForm() {
 		txtProblemName.setText(problem.getName());
 		txaProblemDescription.setText(problem.getDescription());
