@@ -1,8 +1,6 @@
 package classes;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,7 +11,6 @@ import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
-import org.xml.sax.*;
 import org.w3c.dom.*;
 
 /**
@@ -79,7 +76,6 @@ public class XML_Editor {
 							prob.getAttribute("name"),
 							prob.getAttribute("description"),
 							prob.getAttribute("email"),
-							"",
 							new Time(Integer.parseInt(maxTime.getAttribute("maxdays")),
 									Integer.parseInt(maxTime.getAttribute("maxhours")),
 									Integer.parseInt(maxTime.getAttribute("maxminutes"))),
@@ -145,7 +141,7 @@ public class XML_Editor {
 			timeTag.appendChild(idealTimeTag);
 			
 			// Group Variables elements
-			for(int i=0;i<problem.getNumberVariables();i++) {
+			for(int i=0;i<problem.getNumberVariables() && i<problem.getVariables().size();i++) {
 				Variable var = problem.getVariables().get(i);
 				
 				Element varTag = doc.createElement("variable");

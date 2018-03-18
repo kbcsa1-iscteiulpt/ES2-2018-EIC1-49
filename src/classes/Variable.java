@@ -20,7 +20,15 @@ public class Variable {
 	private String max;	//End of the range
 	private String restriction;
 	
-	
+	/**
+	 * Class constructor
+	 * 
+	 * @param name
+	 * @param type
+	 * @param min
+	 * @param max
+	 * @param restriction
+	 */
 	public Variable(String name, String type, String min, String max, String restriction) {
 		super();
 		this.name = name;

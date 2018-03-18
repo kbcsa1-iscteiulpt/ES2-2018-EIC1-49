@@ -1,7 +1,10 @@
 package classes;
 
 import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Class that represents a problem
@@ -30,19 +33,32 @@ public class Problem {
 	private int numberVariables;
 	private List<Variable> variables = new ArrayList<Variable>();
 	
-	
-	public Problem(String name, String description, String email, String creationDate, Time max, Time ideal,
+	/**
+	 * Class constructor
+	 * 
+	 * @param name
+	 * @param description
+	 * @param email
+	 * @param max
+	 * @param ideal
+	 * @param groupName
+	 * @param numberVariables
+	 * @param variables
+	 */
+	public Problem(String name, String description, String email, Time max, Time ideal,
 			String groupName,int numberVariables, List<Variable> variables) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.email = email;
-		this.creationDate = creationDate;
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date current = new Date();  
+		this.creationDate = dateFormat.format(current);
 		this.max = max;
 		this.ideal = ideal;
 		this.groupName = groupName;
-		this.variables = variables;
 		this.numberVariables = numberVariables;
+		this.variables = variables;
 	}
 
 

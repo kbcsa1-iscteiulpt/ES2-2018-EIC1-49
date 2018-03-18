@@ -32,7 +32,7 @@ public class XML_EditorTest {
 		Variable v2= new Variable("v2","double","0.5","2.5","0;1.0");
 		l.add(v1);l.add(v2);
 		
-		Problem p = new Problem("n","d","e","d",
+		Problem p = new Problem("n","d","e",
 				new Time(2,2,2),
 				new Time(3,3,3),
 				"g",2,l);

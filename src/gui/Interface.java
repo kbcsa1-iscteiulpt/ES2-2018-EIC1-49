@@ -9,6 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.mail.MessagingException;
@@ -28,7 +32,11 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
+import classes.Problem;
 import classes.Support;
+import classes.Time;
+import classes.Variable;
+import classes.XML_Editor;
 
 /**
  * This class represents the interface
@@ -49,10 +57,24 @@ public class Interface {
 	private JButton readButton;
 	private JButton addCriterionButton;
 	private JButton readJarButton;
+	private JTextArea problemDescriptionJTA;
 	private JTextField emailJTF;
+	private JTextField problemNameJTF;
+	private JTextField nameOfDecisionVarGroupJTF;
+	private JSpinner numberOfDaysSpinner;
+	private JSpinner numberOfHoursSpinner;
+	private JSpinner numberOfMinutesSpinner;
+	private JSpinner idealNumberOfDaysSpinner;
+	private JSpinner idealNumberOfHoursSpinner;
+	private JSpinner idealNumberOfMinutesSpinner;
+	private JSpinner numberOfDecisionVarSpinner;
+	private JTable decisionVarT;
 
 	private Support support = new Support();
 	private JButton messageSendButton;
+	
+	private XML_Editor xml = new XML_Editor();
+	private Problem problem = new Problem();
 
 	public Interface() {
 		frame = new JFrame("Problem to be optimized");
@@ -117,7 +139,7 @@ public class Interface {
 	private JPanel problemNamePanel() {
 		JPanel problemNamePanel = new JPanel();
 		JLabel problemNameL = new JLabel("Problem's Name:");
-		JTextField problemNameJTF = new JTextField();
+		problemNameJTF = new JTextField();
 		problemNameJTF.setColumns(20);
 		problemNamePanel.add(problemNameL);
 		problemNamePanel.add(problemNameJTF);
@@ -132,7 +154,7 @@ public class Interface {
 	private JPanel problemDescriptionPanel() {
 		JPanel problemDescriptionPanel = new JPanel(new FlowLayout());
 		JLabel problemDescriptionL = new JLabel("Problem's Description:");
-		JTextArea problemDescriptionJTA = new JTextArea(4, 60);
+		problemDescriptionJTA = new JTextArea(4, 60);
 		JScrollPane problemDescriptionSP = new JScrollPane(problemDescriptionJTA);
 		problemDescriptionJTA.setLineWrap(true);
 		problemDescriptionPanel.add(problemDescriptionL);
@@ -177,9 +199,9 @@ public class Interface {
 		JLabel numberofHoursLabel = new JLabel("Hours");
 		JLabel numberofMinutesLabel = new JLabel("Minutes");
 
-		JSpinner numberOfDaysSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 31, 1));
-		JSpinner numberOfHoursSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
-		JSpinner numberOfMinutesSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+		numberOfDaysSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 31, 1));
+		numberOfHoursSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
+		numberOfMinutesSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
 
 		maxTimePanel.add(maxTimeL);
 		maxTimePanel.add(numberOfDaysSpinner);
@@ -204,9 +226,9 @@ public class Interface {
 		JLabel idelNumberofHoursLabel = new JLabel("Hours");
 		JLabel idealNumberofMinutesLabel = new JLabel("Minutes");
 
-		JSpinner idealNumberOfDaysSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 31, 1));
-		JSpinner idealNumberOfHoursSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
-		JSpinner idealNumberOfMinutesSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+		idealNumberOfDaysSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 31, 1));
+		idealNumberOfHoursSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 23, 1));
+		idealNumberOfMinutesSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
 
 		idealTimePanel.add(idealTimeL);
 		idealTimePanel.add(idealNumberOfDaysSpinner);
@@ -228,7 +250,7 @@ public class Interface {
 	private JPanel decisionVarPanel() {
 		JPanel decisionVarPanel = new JPanel(new FlowLayout());
 		JLabel numberOfDecisionVarL = new JLabel("Number of Decision Variables");
-		JSpinner numberOfDecisionVarSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+		numberOfDecisionVarSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
 		decisionVarButton = new JButton("Decision Variables");
 		decisionVarButton.addActionListener(new ActionListener() {
 
@@ -236,8 +258,9 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				decisionVarFrame = new JFrame("Decision Variables");
 				setFrame(decisionVarFrame, 0.5);
-				setDecisionFrame(decisionVarFrame, numberOfDecisionVarSpinner.getValue());
+				setDecisionFrame(decisionVarFrame);
 				decisionVarFrame.setVisible(true);
+				fillDecisionVarForm();
 			}
 
 		});
@@ -267,6 +290,10 @@ public class Interface {
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
 					readJTF.setText(selectedFile.getPath());
+					
+					problem = xml.read(selectedFile.getPath());
+					fillInicialForm();
+					
 				}
 			}
 		});
@@ -295,7 +322,16 @@ public class Interface {
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
 					File selectedFile = fileChooser.getSelectedFile();
+					if(!selectedFile.exists()) {
+						try {
+							selectedFile.createNewFile();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
 					saveJTF.setText(selectedFile.getPath());
+					fillProblem();
+					xml.write(selectedFile.getPath(), problem);
 				}
 			}
 		});
@@ -399,16 +435,16 @@ public class Interface {
 	 * decision variable has a name, type, and potential intervals and
 	 * restrictions.
 	 **/
-	private void setDecisionFrame(JFrame decisionVarFrame, Object numberOfVariableDecisionGroup) {
+	private void setDecisionFrame(JFrame decisionVarFrame) {
 		JPanel decisionPanel = new JPanel(new BorderLayout());
 
 		JPanel nameOfDecisionVarGroupPanel = new JPanel();
 		JLabel nameOfDecisionVarGroupL = new JLabel("Name of Decision Variable Group:");
-		JTextField nameOfDecisionVarGroupJTF = new JTextField();
+		nameOfDecisionVarGroupJTF = new JTextField();
 		nameOfDecisionVarGroupJTF.setColumns(50);
 
 		DefaultTableModel model = new DefaultTableModel();
-		JTable decisionVarT = new JTable();
+		decisionVarT = new JTable();
 		decisionVarT.setModel(model);
 
 		model.addColumn("Name");
@@ -419,7 +455,7 @@ public class Interface {
 				"short", "String" };
 		JComboBox variableDataTypes = new JComboBox(variableDataTypesString);
 
-		for (int i = 0; i < Integer.parseInt(numberOfVariableDecisionGroup.toString()); i++) {
+		for (int i = 0; i < Integer.parseInt(numberOfDecisionVarSpinner.getValue().toString()); i++) {
 			model.addRow(new Object[] { "", "", "" });
 			decisionVarT.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(variableDataTypes));
 		}
@@ -548,6 +584,98 @@ public class Interface {
 
 	public JButton getReadJarButton() {
 		return readJarButton;
+	}
+	
+	public void fillInicialForm() {
+		problemNameJTF.setText(problem.getName());
+		problemDescriptionJTA.setText(problem.getDescription());
+		emailJTF.setText(problem.getEmail());
+		numberOfDaysSpinner.setValue(problem.getMax().getDays());
+		numberOfHoursSpinner.setValue(problem.getMax().getHours());
+		numberOfMinutesSpinner.setValue(problem.getMax().getMinutes());
+		idealNumberOfDaysSpinner.setValue(problem.getIdeal().getDays());
+		idealNumberOfHoursSpinner.setValue(problem.getIdeal().getHours());
+		idealNumberOfMinutesSpinner.setValue(problem.getIdeal().getMinutes());
+		numberOfDecisionVarSpinner.setValue(problem.getNumberVariables());
+	}
+	
+	public void fillDecisionVarForm() {
+		nameOfDecisionVarGroupJTF.setText(problem.getGroupName());
+		
+		DefaultTableModel model = new DefaultTableModel();
+		decisionVarT.setModel(model);
+
+		model.addColumn("Name");
+		model.addColumn("Type");
+		model.addColumn("Interval");
+		model.addColumn("Restrictions");
+		String[] variableDataTypesString = { "boolean", "byte", "char", "double", "float", "integer", "long", "real",
+				"short", "String" };
+		JComboBox variableDataTypes = new JComboBox(variableDataTypesString);
+
+		for (int i = 0; i < Integer.parseInt(numberOfDecisionVarSpinner.getValue().toString()); i++) {
+			List<Variable> var = problem.getVariables();
+			if(i<var.size()) {
+			model.addRow(new Object[] { 
+					var.get(i).getName(), var.get(i).getType(), 
+					var.get(i).getMin()+":"+var.get(i).getMax(),var.get(i).getRestriction() });
+			}else {
+				model.addRow(new Object[] { "", "", "" });
+			}
+			decisionVarT.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(variableDataTypes));
+		}
+	}
+	
+	public void fillProblem() {
+		String groupName="";
+		List<Variable> variables = new ArrayList<Variable>();
+		
+		if(nameOfDecisionVarGroupJTF!=null && decisionVarT!=null) {
+			groupName=nameOfDecisionVarGroupJTF.getText();
+			
+			    DefaultTableModel dtm = (DefaultTableModel) decisionVarT.getModel();
+			    int nRow = dtm.getRowCount() ;
+			    System.out.println(nRow);
+			    for (int i = 0 ; i < nRow ; i++) {
+			    	String name="";
+			    	String type="";
+			    	String min="";
+			    	String max="";
+			    	String res="";
+			    	String[] range = dtm.getValueAt(i,2).toString().split(":");
+			    	
+			    	if(dtm.getValueAt(i,0).toString()!=null)name=dtm.getValueAt(i,0).toString();
+			    	if(dtm.getValueAt(i,1).toString()!=null)type=dtm.getValueAt(i,1).toString();
+			    	if(range.length>0)min=range[0];
+			    	if(range.length>1)max=range[1];
+			    	if(dtm.getValueAt(i,3).toString()!=null)res=dtm.getValueAt(i,3).toString();
+			    		Variable var = new Variable(
+			    				name,
+			    				type,
+			    				min,
+			    				max,
+			    				res
+			    				);
+			    		variables.add(var);
+			    }
+		}
+		
+		problem = new Problem(
+		problemNameJTF.getText(),
+		problemDescriptionJTA.getText(),
+		emailJTF.getText(),
+		new Time(
+				Integer.parseInt(numberOfDaysSpinner.getValue().toString()),
+				Integer.parseInt(numberOfHoursSpinner.getValue().toString()),
+				Integer.parseInt(numberOfMinutesSpinner.getValue().toString())),
+		new Time(
+				Integer.parseInt(idealNumberOfDaysSpinner.getValue().toString()),
+				Integer.parseInt(idealNumberOfHoursSpinner.getValue().toString()),
+				Integer.parseInt(idealNumberOfMinutesSpinner.getValue().toString())),
+		groupName,
+		Integer.parseInt(numberOfDecisionVarSpinner.getValue().toString()),
+		variables
+		);
 	}
 
 }
