@@ -10,12 +10,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import javax.mail.MessagingException;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -33,8 +33,9 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileSystemView;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import classes.Problem;
@@ -53,93 +54,209 @@ public class Interface {
 
 	private String adminEmail = "projetodees7@gmail.com";
 
-	private JFrame frame;
-	private JFrame helpFrame;
+	private JFrame decisionFrame;
+	private JFrame readProblemFrame;
+	private JFrame createProblemFrame;
+	private JButton btnCreateProblem;
+	private JButton btnReadProblem;
+
 	private JButton btnHelp;
-	private JButton btnEmail;
-	private JFrame decisionVarFrame;
-	private JButton btnDecisionVariables;
-	private JFrame criterionFrame;
-	private JButton btnCriterion;
-	private JButton btnSave;
-	private JButton btnRead;
-	private JButton btnAddCriterion;
-	private JButton btnReadJar;
-	private JTextArea txaProblemDescription;
-	private JButton btnMessageSend;
-	private JTextField txtEmail;
+	private JButton btnGoBack;
+	private JButton btnWriteEmailFAQ;
+
+	private JButton btnReadXML;
+	private JTextField txtFilePathXML;
+
 	private JTextField txtProblemName;
-	private JTextField txtNameOfDecisionVariablesGroup;
+	private JTextArea txaProblemDescription;
+	private JButton btnWriteEmail;
+	private JTextField txtEmail;
+	private JButton btnMessageSend;
+
 	private JSpinner spnMaxNumberOfDays;
 	private JSpinner spnMaxNumberOfHours;
 	private JSpinner spnMaxNumberOfMinutes;
 	private JSpinner spnIdealNumberOfDays;
 	private JSpinner spnIdealNumberOfHours;
 	private JSpinner spnIdealNumberOfMinutes;
+
 	private JSpinner spnNumberOfDecisionVariables;
+	private JButton btnDecisionVariables;
+
+	private JTextField txtNameOfDecisionVariablesGroup;
 	private JTable tblDecisionVariables;
-	private JTextArea jtaProblemDescription;
-	private JButton executeProcessB;
+	private JButton btnDecisionVariablesFinish;
+	
+	private JButton btnCriteria;
+	private JButton btnAddCriteria;
+	private JButton btnReadJar;
+
+	private JButton btnSaveToXML;
+	private JButton btnExecuteProcess;
 
 	private Support support = new Support();
-
 	private XML_Editor xml = new XML_Editor();
 	private Problem problem = new Problem();
-	private JButton btnDecisionVariablesFinish;
 
 	public Interface() {
-		frame = new JFrame("Problem to be optimized");
-		setFrame(frame, 0.75);
-		setContent(frame);
-		frame.setVisible(true);
+		decisionFrame = new JFrame("Problem to be optimized");
+		setFrame(decisionFrame, 0.25);
+		setDecisionContent(decisionFrame);
+		decisionFrame.setVisible(true);
+	}
+
+	/**
+	 * Returns a frame with two options: read a problem from a XML file or
+	 * create a new one.
+	 **/
+	private void setDecisionContent(JFrame frame) {
+		GridLayout gly = new GridLayout(0, 2);
+		gly.setHgap(5);
+		JPanel decisionPanel = new JPanel(gly);
+		btnReadProblem = new JButton("Read problem from XML file");
+		btnReadProblem.setContentAreaFilled(false);
+		btnReadProblem.setFocusable(false);
+		btnReadProblem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (readProblemFrame == null) {
+					readProblemFrame = new JFrame("Problem to be optimized");
+					setFrame(readProblemFrame, 0.75);
+					setContent(readProblemFrame, true);
+
+					JFileChooser fchReadXML = new JFileChooser();
+					if (fchReadXML.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+						String filePath = fchReadXML.getSelectedFile().getPath();
+						problem = xml.read(filePath);
+						fillInicialForm(filePath);
+					}
+				}
+				readProblemFrame.setVisible(true);
+				decisionFrame.setVisible(false);
+			}
+		});
+		btnCreateProblem = new JButton("Create a new problem");
+		btnCreateProblem.setContentAreaFilled(false);
+		btnCreateProblem.setFocusable(false);
+		btnCreateProblem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (createProblemFrame == null) {
+					createProblemFrame = new JFrame("Problem to be optimized");
+					setFrame(createProblemFrame, 0.75);
+					setContent(createProblemFrame, false);
+				}
+				createProblemFrame.setVisible(true);
+				decisionFrame.setVisible(false);
+			}
+		});
+		decisionPanel.add(btnReadProblem);
+		decisionPanel.add(btnCreateProblem);
+		frame.add(decisionPanel);
 	}
 
 	/**
 	 * The panels are added to the initial frame by calling methods that return
 	 * JPanel.
 	 **/
-	private void setContent(JFrame frame) {
-		JPanel initialPanel = new JPanel(new GridLayout(11, 0));
-		initialPanel.add(helpFAQPanel());
+	private void setContent(JFrame frame, boolean problemReadFromXML) {
+		JPanel initialPanel = new JPanel(new GridLayout(problemReadFromXML ? 11 : 10, 0));
+
+		initialPanel.add(helpFAQPanel(frame));
+
+		if (problemReadFromXML) {
+			initialPanel.add(readPanel());
+		}
+
 		initialPanel.add(problemNamePanel());
 		initialPanel.add(problemDescriptionPanel());
-		initialPanel.add(emailPanel());
+		initialPanel.add(emailPanel(frame));
 		initialPanel.add(maxTimePanel());
 		initialPanel.add(idealTimePanel());
 		initialPanel.add(decisionVarPanel());
-		initialPanel.add(readPanel());
 		initialPanel.add(savePanel());
-		initialPanel.add(criterionPanel());
+		initialPanel.add(criteriaPanel());
 		initialPanel.add(executeProcessPanel());
 		frame.add(initialPanel);
 	}
 
 	/**
-	 * Returns a panel with a question mark placed at the top-right of the
-	 * frame. When clicked, a new frame is displayed to show the FAQ.
+	 * Returns a panel with a question mark placed at the top-right and a return
+	 * button at the top-left of the frame. When the question mark is clicked, a
+	 * new frame is displayed to show the FAQ. When the return symbol is
+	 * clicked, it returns to the initial decision panel.
+	 * 
 	 **/
-	private JPanel helpFAQPanel() {
+	private JPanel helpFAQPanel(JFrame frame) {
 		JPanel pnlHelpFAQ = new JPanel(new BorderLayout());
-		btnHelp = new JButton();
-		ImageIcon question_mark = new ImageIcon(((new ImageIcon("./src/images/question_mark.png")).getImage())
+		btnGoBack = new JButton();
+		ImageIcon icoGoBack = new ImageIcon(((new ImageIcon("./src/images/goBack.png")).getImage())
 				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
-		btnHelp.setIcon(question_mark);
+		btnGoBack.setContentAreaFilled(false);
+		btnGoBack.setBorderPainted(false);
+		btnGoBack.setFocusPainted(false);
+		btnGoBack.setIcon(icoGoBack);
+		btnGoBack.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				decisionFrame.setVisible(true);
+				frame.setVisible(false);
+			}
+		});
+		btnHelp = new JButton();
+		ImageIcon icoQuestion_mark = new ImageIcon(((new ImageIcon("./src/images/question_mark.png")).getImage())
+				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		btnHelp.setIcon(icoQuestion_mark);
 		btnHelp.setContentAreaFilled(false);
 		btnHelp.setBorderPainted(false);
 		btnHelp.setFocusPainted(false);
-
+		btnHelp.setToolTipText("Help and FAQs");
 		btnHelp.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				helpFrame = new JFrame("Help Section");
+				JFrame helpFrame = new JFrame("Help Section");
 				setFrame(helpFrame, 0.5);
-				setHelpFrame(helpFrame);
+				setHelpFrame(frame,helpFrame);
 				helpFrame.setVisible(true);
 			}
 		});
+		pnlHelpFAQ.add(btnGoBack, BorderLayout.LINE_START);
 		pnlHelpFAQ.add(btnHelp, BorderLayout.LINE_END);
 		return pnlHelpFAQ;
+	}
+
+	/**
+	 * Returns a panel with a JTextField filled automatically with the file path 
+	 * (to read XML) through the button.
+	 **/
+	private JPanel readPanel() {
+		JPanel pnlRead = new JPanel();
+		btnReadXML = new JButton("Read from a XML File:");
+		btnReadXML.setToolTipText("Read a XML file. This action will replace the fields already filled");
+		txtFilePathXML = new JTextField();
+		txtFilePathXML.setEditable(false);
+		btnReadXML.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fchReadXML = new JFileChooser();
+				if (fchReadXML.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					String filePath = fchReadXML.getSelectedFile().getPath();
+					problem = xml.read(filePath);
+					txtFilePathXML.setText(filePath);
+					pnlRead.add(txtFilePathXML);
+					pnlRead.revalidate();
+					fillInicialForm(filePath);
+				}
+			}
+		});
+		pnlRead.add(btnReadXML);
+		pnlRead.add(txtFilePathXML);
+		return pnlRead;
 	}
 
 	/**
@@ -148,9 +265,13 @@ public class Interface {
 	 **/
 	private JPanel problemNamePanel() {
 		JPanel pnlProblemName = new JPanel();
+		JLabel lblProblemNameMandatory = new JLabel("*");
+		lblProblemNameMandatory.setForeground(Color.red);
 		JLabel lblProblemName = new JLabel("Problem's Name:");
 		txtProblemName = new JTextField();
+		txtProblemName.setToolTipText("Enter the problem's name here.");
 		txtProblemName.setColumns(20);
+		pnlProblemName.add(lblProblemNameMandatory);
 		pnlProblemName.add(lblProblemName);
 		pnlProblemName.add(txtProblemName);
 		return pnlProblemName;
@@ -162,10 +283,14 @@ public class Interface {
 	 **/
 	private JPanel problemDescriptionPanel() {
 		JPanel pnlProblemDescription = new JPanel(new FlowLayout());
+		JLabel lblProblemDescriptionMandatory = new JLabel("*");
+		lblProblemDescriptionMandatory.setForeground(Color.red);
 		JLabel lblProblemDescription = new JLabel("Problem's Description:");
 		txaProblemDescription = new JTextArea(4, 60);
+		txaProblemDescription.setToolTipText("Describe your problem here.");
 		JScrollPane scrProblemDescription = new JScrollPane(txaProblemDescription);
 		txaProblemDescription.setLineWrap(true);
+		pnlProblemDescription.add(lblProblemDescriptionMandatory);
 		pnlProblemDescription.add(lblProblemDescription);
 		pnlProblemDescription.add(scrProblemDescription);
 		return pnlProblemDescription;
@@ -175,24 +300,68 @@ public class Interface {
 	 * Returns a panel with a JTextField to fill with user's email. When the
 	 * button is clicked, a new frame is displayed to write and send the email.
 	 **/
-	private JPanel emailPanel() {
+	private JPanel emailPanel(JFrame frame) {
 		JPanel pnlEmail = new JPanel(new FlowLayout());
+		JLabel lblEmailMandatory = new JLabel("*");
+		lblEmailMandatory.setForeground(Color.red);
 		JLabel lblEmail = new JLabel("Enter your Email:");
 		txtEmail = new JTextField();
 		txtEmail.setColumns(20);
-		btnEmail = new JButton("Write Email");
-		btnEmail.addActionListener(new ActionListener() {
+		btnWriteEmail = new JButton("Write Email");
+		btnWriteEmailFAQ = new JButton("Write Email");
+		btnWriteEmail.setToolTipText("Enter your email, then you can write one.");
+		btnWriteEmailFAQ.setToolTipText("Enter your email, then you can write one.");
+		btnWriteEmail.setContentAreaFilled(false);
+		btnWriteEmail.setEnabled(false);
+		btnWriteEmailFAQ.setEnabled(false);
+
+		txtEmail.getDocument().addDocumentListener(new DocumentListener() {
+
+			String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
+					+ "A-Z]{2,7}$";
+			Pattern patEmail = Pattern.compile(emailRegex);
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				setEmailFrame();
+			public void removeUpdate(DocumentEvent e) {
+				if (!patEmail.matcher(txtEmail.getText()).matches()) {
+					btnWriteEmail.setEnabled(false);
+					btnWriteEmailFAQ.setEnabled(false);
+					btnWriteEmail.setToolTipText("Enter your email, then you can write one.");
+					btnWriteEmailFAQ.setToolTipText("Enter your email, then you can write one.");
+					
+				}
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				if (patEmail.matcher(txtEmail.getText()).matches()) {
+					btnWriteEmail.setEnabled(true);
+					btnWriteEmailFAQ.setEnabled(true);
+					btnWriteEmail.setToolTipText("Write an email");
+					btnWriteEmailFAQ.setToolTipText("Write an email.");
+					
+				}
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+
 			}
 		});
+
+		btnWriteEmail.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setEmailFrame(frame);
+			}
+		});
+		pnlEmail.add(lblEmailMandatory);
 		pnlEmail.add(lblEmail);
 		pnlEmail.add(txtEmail);
-		pnlEmail.add(btnEmail);
+		pnlEmail.add(btnWriteEmail);
 		return pnlEmail;
 	}
+
 
 	/**
 	 * Returns a panel with a JSpinner for user to select the maximum time to
@@ -220,6 +389,7 @@ public class Interface {
 		return pnlMaxTime;
 	}
 
+	
 	/**
 	 * Returns a panel with a JSpinner for user to select the ideal time to wait
 	 * for the optimization.
@@ -246,22 +416,25 @@ public class Interface {
 		return pnlIdealTime;
 	}
 
+	
 	/**
 	 * Returns a panel with a JSpinner to select the number of decision
 	 * variables and button. When clicked, a new frame is displayed to write the
 	 * decision variable group name and to fill the table of the variable
 	 * decision.
 	 **/
+	
 	private JPanel decisionVarPanel() {
 		JPanel pnlDecisionVar = new JPanel(new FlowLayout());
 		JLabel lblNumberOfDecisionVariable = new JLabel("Number of Decision Variables");
 		spnNumberOfDecisionVariables = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
 		btnDecisionVariables = new JButton("Decision Variables");
+		btnDecisionVariables.setContentAreaFilled(false);
 		btnDecisionVariables.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				decisionVarFrame = new JFrame("Decision Variables");
+				JFrame decisionVarFrame = new JFrame("Decision Variables");
 				setFrame(decisionVarFrame, 0.5);
 				setDecisionFrame(decisionVarFrame);
 				decisionVarFrame.setVisible(true);
@@ -276,82 +449,56 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JTextField to fill by the user or to be filled
-	 * automatically with the file path (to read XML) through the button.
-	 **/
-	private JPanel readPanel() {
-		JPanel pnlRead = new JPanel(new FlowLayout());
-		JLabel lblRead = new JLabel("Read from XML (path):");
-		JTextField txtRead = new JTextField();
-		txtRead.setColumns(40);
-		btnRead = new JButton("Read XML File");
-		btnRead.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fchReadXML = new JFileChooser();
-				if (fchReadXML.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-					String filePath = fchReadXML.getSelectedFile().getPath();
-					txtRead.setText(filePath);
-					problem = xml.read(filePath);
-					fillInicialForm();
-				}
-			}
-		});
-		pnlRead.add(lblRead);
-		pnlRead.add(txtRead);
-		pnlRead.add(btnRead);
-		return pnlRead;
-	}
-
-	/**
-	 * Returns a panel with a JTextField to fill by the user or to be filled
-	 * automatically with the file path (to save into XML) through the button.
+	 * Returns a panel with a JButton that saves the configuration to a XML
+	 * file.
 	 **/
 	private JPanel savePanel() {
 		JPanel pnlSave = new JPanel();
-		JLabel lblSave = new JLabel("File name:");
-		JTextField txtSave = new JTextField();
-		txtSave.setColumns(40);
-		btnSave = new JButton("Save XML File");
-		btnSave.addActionListener(new ActionListener() {
-			
+		btnSaveToXML = new JButton("Save XML File");
+		btnSaveToXML.setToolTipText("Save your problem into a XML file");
+		btnSaveToXML.setContentAreaFilled(false);
+		btnSaveToXML.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-
-					String optFileName = JOptionPane.showInputDialog("File Name:");
-					if(optFileName!=null){
-						File f = new File("./src/files/"+optFileName+".txt");
-						saveProblem();
+				JFileChooser fchXMLSave = new JFileChooser();
+				fchXMLSave.setDialogTitle("Save");
+				fchXMLSave.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
+				if (fchXMLSave.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+					saveProblem();
+					String filePath = fchXMLSave.getSelectedFile().getPath();
+					if (!filePath.endsWith(".xml")) {
+						filePath += ".xml";
 					}
+					xml.write(filePath, problem);
 				}
+			}
 		});
-		pnlSave.add(lblSave);
-		pnlSave.add(txtSave);
-		pnlSave.add(btnSave);
+
+		pnlSave.add(btnSaveToXML);
 		return pnlSave;
 	}
-	
 
 	/**
 	 * Returns a panel with a button. When clicked, a new frame is displayed to
-	 * specify the criterion.
+	 * specify the criteria.
 	 **/
-	private JPanel criterionPanel() {
-		JPanel pnlCriterion = new JPanel();
-		btnCriterion = new JButton("Criterion to be optimized");
-		btnCriterion.addActionListener(new ActionListener() {
+	private JPanel criteriaPanel() {
+		JPanel pnlCriteria = new JPanel();
+		btnCriteria = new JButton("Criteria to be optimized");
+		btnCriteria.setContentAreaFilled(false);
+		btnCriteria.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				criterionFrame = new JFrame("Criterions");
-				setFrame(criterionFrame, 0.5);
-				setCriterionFrame(criterionFrame);
-				criterionFrame.setVisible(true);
+				JFrame criteriaFrame = new JFrame("Criterias");
+				setFrame(criteriaFrame, 0.5);
+				setCriteriaFrame(criteriaFrame);
+				criteriaFrame.setVisible(true);
 			}
 		});
-		pnlCriterion.add(btnCriterion);
-		return pnlCriterion;
+		pnlCriteria.add(btnCriteria);
+		return pnlCriteria;
 	}
 
 	/**
@@ -359,8 +506,12 @@ public class Interface {
 	 **/
 	private JPanel executeProcessPanel() {
 		JPanel executeProcessPanel = new JPanel(new FlowLayout());
-		executeProcessB = new JButton("Execute Optimization Process");
-		executeProcessB.addActionListener(new ActionListener() {
+		btnExecuteProcess = new JButton("Execute Optimization Process");
+		ImageIcon icoExecute = new ImageIcon(((new ImageIcon("./src/images/execute.png")).getImage())
+				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		btnExecuteProcess.setContentAreaFilled(false);
+		btnExecuteProcess.setIcon(icoExecute);
+		btnExecuteProcess.addActionListener(new ActionListener() {
 
 			/**
 			 * For now the only thing it does is send an email to the user with
@@ -368,12 +519,16 @@ public class Interface {
 			 **/
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if (!txtEmail.getText().equals("")) {
+				if (txtProblemName.getText().isEmpty() || txaProblemDescription.getText().isEmpty()
+						|| txtEmail.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please fill all the mandatory fields", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					try {
 
 						String subject = "Acabou de iniciar um processo de otimização na nossa plataforma";
 						String name = "Nome do Problema: \n" + txtProblemName.getText();
-						String description = "Descrição do problema: \n" + jtaProblemDescription.getText();
+						String description = "Descrição do problema: \n" + txaProblemDescription.getText();
 						String maxTime = "Tempo máximo de otimização: \n" + spnMaxNumberOfDays.getValue().toString()
 								+ "dias" + spnMaxNumberOfHours.getValue().toString() + "horas"
 								+ spnMaxNumberOfMinutes.getValue().toString() + "minutos";
@@ -384,14 +539,14 @@ public class Interface {
 
 						support.SendEmail(adminEmail, txtEmail.getText(), subject, message);
 
-					}
-				} catch (MessagingException e1) {
+					} catch (MessagingException e1) {
 
+					}
 				}
 			}
 		});
 
-		executeProcessPanel.add(executeProcessB);
+		executeProcessPanel.add(btnExecuteProcess);
 		executeProcessPanel.setBackground(new Color(240, 240, 240));
 		return executeProcessPanel;
 	}
@@ -401,13 +556,13 @@ public class Interface {
 	 * email. One with the subject of the email and the other with the email
 	 * body.
 	 **/
-	private JFrame setEmailFrame() {
+	private JFrame setEmailFrame(JFrame frame) {
 		JFrame sendEmailFrame = new JFrame("Email");
 		setFrame(sendEmailFrame, 0.5);
 		JPanel pnlSendEmail = new JPanel(new BorderLayout());
 		JPanel pnlMessageTitle = new JPanel(new BorderLayout());
 		JPanel pnlMessageBody = new JPanel(new BorderLayout());
-		JPanel pnlMessageSend = new JPanel();
+		JPanel pnlMessageSend = new JPanel(new BorderLayout());
 
 		JLabel lblMessageTitle = new JLabel("Subject:");
 		JTextField txtMessageTitle = new JTextField();
@@ -425,6 +580,11 @@ public class Interface {
 		pnlMessageBody.add(scrMessageBody, BorderLayout.CENTER);
 
 		btnMessageSend = new JButton("Send Message");
+		btnMessageSend.setContentAreaFilled(false);
+		ImageIcon icoSendMessage = new ImageIcon(((new ImageIcon("./src/images/send_message.png")).getImage())
+				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		btnMessageSend.setContentAreaFilled(false);
+		btnMessageSend.setIcon(icoSendMessage);
 		btnMessageSend.addActionListener(new ActionListener() {
 
 			/**
@@ -433,18 +593,23 @@ public class Interface {
 			 **/
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					sendEmailFrame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-					String subject = "From: " + txtEmail.getText() + txtMessageTitle.getText();
-					support.SendEmail(txtEmail.getText(), adminEmail, txtMessageTitle.getText(), subject);
-				} catch (MessagingException e1) {
-					JOptionPane.showMessageDialog(pnlSendEmail, "Error sending email, connection issue!", "Warning",
+				if (txtMessageTitle.getText().isEmpty() || txaMessageBody.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please fill the subject and the message body", "Warning",
 							JOptionPane.WARNING_MESSAGE);
+				} else {
+					try {
+						sendEmailFrame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+						String subject = "From: " + txtEmail.getText() + txtMessageTitle.getText();
+						support.SendEmail(txtEmail.getText(), adminEmail, txtMessageTitle.getText(), subject);
+					} catch (MessagingException e1) {
+						JOptionPane.showMessageDialog(pnlSendEmail, "Error sending email, connection issue!", "Warning",
+								JOptionPane.WARNING_MESSAGE);
+					}
 				}
 			}
 		});
 
-		pnlMessageSend.add(btnMessageSend);
+		pnlMessageSend.add(btnMessageSend, BorderLayout.SOUTH);
 
 		pnlSendEmail.add(pnlMessageTitle, BorderLayout.NORTH);
 		pnlSendEmail.add(pnlMessageBody, BorderLayout.CENTER);
@@ -493,48 +658,56 @@ public class Interface {
 		pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
 		pnlDecision.add(new JScrollPane(tblDecisionVariables));
 		btnDecisionVariablesFinish = new JButton("Finish");
+		btnDecisionVariablesFinish.setContentAreaFilled(false);
+		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
+				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
+		btnDecisionVariablesFinish.setContentAreaFilled(false);
+		btnDecisionVariablesFinish.setIcon(icoFinish);
 		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
 		decisionVarFrame.add(pnlDecision);
 	}
 
 	/**
-	 * Adds content to the frame with a JTextField to define the criterion(s), a
-	 * button to add a new criterion and a button to upload the .jar file.
+	 * Adds content to the frame with a JTextField to define the criteria(s), a
+	 * button to add a new criteria and a button to upload the .jar file.
 	 **/
-	private void setCriterionFrame(JFrame criterionFrame) {
-		JPanel pnlCriterion = new JPanel();
-		pnlCriterion.setLayout(new BoxLayout(pnlCriterion, BoxLayout.Y_AXIS));
-		btnAddCriterion = new JButton("Add Criterion");
-		btnAddCriterion.addActionListener(new ActionListener() {
+	private void setCriteriaFrame(JFrame criteriaFrame) {
+		JPanel pnlCriteria = new JPanel();
+		pnlCriteria.setLayout(new BoxLayout(pnlCriteria, BoxLayout.Y_AXIS));
+		btnAddCriteria = new JButton("Add criteria");
+		btnAddCriteria.setContentAreaFilled(false);
+		btnAddCriteria.setFocusable(false);
+		btnAddCriteria.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pnlCriterion.add(addCriterion());
-				pnlCriterion.revalidate();
+				pnlCriteria.add(addCriteria());
+				pnlCriteria.revalidate();
 			}
 		});
-		pnlCriterion.add(btnAddCriterion);
-		pnlCriterion.add(addCriterion());
-		criterionFrame.add(new JScrollPane(pnlCriterion));
+		pnlCriteria.add(btnAddCriteria);
+		pnlCriteria.add(addCriteria());
+		criteriaFrame.add(new JScrollPane(pnlCriteria));
 	}
 
 	/**
-	 * Returns a JPanel with a JTextField to define the criterion(s) and a
-	 * button to upload the .jar file.
+	 * Returns a JPanel with a JTextField to define the criteria(s) and a button
+	 * to upload the .jar file.
 	 **/
-	private JPanel addCriterion() {
-		JPanel pnlCriterion = new JPanel(new FlowLayout());
-		JPanel pnlCriterionName = new JPanel();
-		JPanel pnlCriterionJar = new JPanel();
+	private JPanel addCriteria() {
+		JPanel pnlCriteria = new JPanel(new FlowLayout());
+		JPanel pnlCriteriaName = new JPanel();
+		JPanel pnlCriteriaJar = new JPanel();
 
-		JLabel lblCriterionName = new JLabel("Criterion Name:");
-		JTextField txtCriterionName = new JTextField();
-		txtCriterionName.setColumns(30);
+		JLabel lblCriteriaName = new JLabel("Criteria Name:");
+		JTextField txtCriteriaName = new JTextField();
+		txtCriteriaName.setColumns(30);
 
 		JLabel lblJarPath = new JLabel("Jar Path");
 		JTextField txtJarPath = new JTextField();
 		txtJarPath.setColumns(25);
 		btnReadJar = new JButton("Add jar");
+		btnReadJar.setContentAreaFilled(false);
 		btnReadJar.addActionListener(new ActionListener() {
 
 			@Override
@@ -546,32 +719,33 @@ public class Interface {
 			}
 		});
 
-		pnlCriterionName.add(lblCriterionName);
-		pnlCriterionName.add(txtCriterionName);
-		pnlCriterionJar.add(lblJarPath);
-		pnlCriterionJar.add(txtJarPath);
-		pnlCriterionJar.add(btnReadJar);
-		pnlCriterion.add(pnlCriterionName);
-		pnlCriterion.add(pnlCriterionJar);
-		return pnlCriterion;
+		pnlCriteriaName.add(lblCriteriaName);
+		pnlCriteriaName.add(txtCriteriaName);
+		pnlCriteriaJar.add(lblJarPath);
+		pnlCriteriaJar.add(txtJarPath);
+		pnlCriteriaJar.add(btnReadJar);
+		pnlCriteria.add(pnlCriteriaName);
+		pnlCriteria.add(pnlCriteriaJar);
+		return pnlCriteria;
 	}
 
 	/**
 	 * Adds content to the Help frame
 	 **/
-	private void setHelpFrame(JFrame frame) {
+	private void setHelpFrame(JFrame frame, JFrame helpFrame) {
 
 		JPanel pnlHelp = new JPanel(new BorderLayout());
 
 		JPanel pnlFAQ = new JPanel(new GridLayout(6, 0));
 		JPanel pnlSendEmail = new JPanel();
-
-		JButton btnSendEmail = new JButton("Send Email");
-		btnSendEmail.addActionListener(new ActionListener() {
+		
+		btnWriteEmailFAQ.setContentAreaFilled(false);
+		btnWriteEmailFAQ.setFocusable(false);
+		btnWriteEmailFAQ.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setEmailFrame();
+					setEmailFrame(frame);					
 			}
 		});
 
@@ -581,7 +755,7 @@ public class Interface {
 			pnlFAQ.add(addFAQPanel(question, listFAQ.get(question)));
 		}
 
-		pnlSendEmail.add(btnSendEmail);
+		pnlSendEmail.add(btnWriteEmailFAQ);
 		pnlHelp.add(pnlFAQ, BorderLayout.CENTER);
 		pnlHelp.add(pnlSendEmail, BorderLayout.PAGE_END);
 		helpFrame.add(pnlHelp);
@@ -591,7 +765,6 @@ public class Interface {
 	/**
 	 * Reads FAQ from .txt file
 	 **/
-
 	private Map<String, String> readFAQfile(String s) {
 		Scanner scanner = null;
 		Map<String, String> listFAQ = new HashMap<String, String>();
@@ -612,6 +785,9 @@ public class Interface {
 
 	}
 
+	/**
+	 * Returns a panel with a question and an answer.
+	 **/
 	private JPanel addFAQPanel(String question, String answer) {
 		JPanel pnlFAQ = new JPanel(new GridLayout(2, 0));
 		JLabel lblQuestion = new JLabel("Question: " + question);
@@ -636,7 +812,11 @@ public class Interface {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
-	public void fillInicialForm() {
+	/**
+	 * Fills the form with the data from a XML file.
+	 **/
+	public void fillInicialForm(String filePath) {
+		txtFilePathXML.setText(filePath);
 		txtProblemName.setText(problem.getName());
 		txaProblemDescription.setText(problem.getDescription());
 		txtEmail.setText(problem.getEmail());
@@ -649,6 +829,9 @@ public class Interface {
 		spnNumberOfDecisionVariables.setValue(problem.getNumberVariables());
 	}
 
+	/**
+	 * Fills the decision variable table with the data from a XML file.
+	 **/
 	public void fillDecisionVariableForm() {
 		txtNameOfDecisionVariablesGroup.setText(problem.getGroupName());
 
@@ -678,6 +861,9 @@ public class Interface {
 		}
 	}
 
+	/**
+	 * Saves the problem with the data given by the fields that were filled.
+	 **/
 	public void saveProblem() {
 		String groupName = "";
 		List<Variable> variablesList = new ArrayList<Variable>();
@@ -725,7 +911,7 @@ public class Interface {
 	}
 
 	public JButton getEmailButton() {
-		return btnEmail;
+		return btnWriteEmail;
 	}
 
 	public JButton getMessageSendButton() {
@@ -736,20 +922,20 @@ public class Interface {
 		return btnDecisionVariables;
 	}
 
-	public JButton getCriterionButton() {
-		return btnCriterion;
+	public JButton getCriteriaButton() {
+		return btnCriteria;
 	}
 
 	public JButton getSaveButton() {
-		return btnSave;
+		return btnSaveToXML;
 	}
 
 	public JButton getReadButton() {
-		return btnRead;
+		return btnReadXML;
 	}
 
-	public JButton getAddCriterionButton() {
-		return btnAddCriterion;
+	public JButton getAddCriteriaButton() {
+		return btnAddCriteria;
 	}
 
 	public JButton getReadJarButton() {
@@ -757,7 +943,7 @@ public class Interface {
 	}
 
 	public JButton getExecuteProcessButton() {
-		return executeProcessB;
+		return btnExecuteProcess;
 	}
 
 	public JSpinner getSpnNumberOfDecisionVariables() {

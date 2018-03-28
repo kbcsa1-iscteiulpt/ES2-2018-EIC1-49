@@ -39,10 +39,10 @@ public class InterfaceTest {
 		JButton btnSave = interfaceTest.getSaveButton();
 		//btnSave.doClick();
 
-		JButton btnCriterion = interfaceTest.getCriterionButton();
+		JButton btnCriterion = interfaceTest.getCriteriaButton();
 		btnCriterion.doClick();
 
-		JButton btnAddCriterion = interfaceTest.getAddCriterionButton();
+		JButton btnAddCriterion = interfaceTest.getAddCriteriaButton();
 		btnAddCriterion.doClick();
 
 		JButton btnReadJar = interfaceTest.getReadJarButton();
