@@ -86,7 +86,7 @@ public class Interface {
 	private JTextField txtNameOfDecisionVariablesGroup;
 	private JTable tblDecisionVariables;
 	private JButton btnDecisionVariablesFinish;
-	
+
 	private JButton btnCriteria;
 	private JButton btnAddCriteria;
 	private JButton btnReadJar;
@@ -220,7 +220,7 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				JFrame helpFrame = new JFrame("Help Section");
 				setFrame(helpFrame, 0.5);
-				setHelpFrame(frame,helpFrame);
+				setHelpFrame(frame, helpFrame);
 				helpFrame.setVisible(true);
 			}
 		});
@@ -230,7 +230,7 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JTextField filled automatically with the file path 
+	 * Returns a panel with a JTextField filled automatically with the file path
 	 * (to read XML) through the button.
 	 **/
 	private JPanel readPanel() {
@@ -328,7 +328,7 @@ public class Interface {
 					btnWriteEmailFAQ.setEnabled(false);
 					btnWriteEmail.setToolTipText("Enter your email, then you can write one.");
 					btnWriteEmailFAQ.setToolTipText("Enter your email, then you can write one.");
-					
+
 				}
 			}
 
@@ -339,7 +339,7 @@ public class Interface {
 					btnWriteEmailFAQ.setEnabled(true);
 					btnWriteEmail.setToolTipText("Write an email");
 					btnWriteEmailFAQ.setToolTipText("Write an email.");
-					
+
 				}
 			}
 
@@ -361,7 +361,6 @@ public class Interface {
 		pnlEmail.add(btnWriteEmail);
 		return pnlEmail;
 	}
-
 
 	/**
 	 * Returns a panel with a JSpinner for user to select the maximum time to
@@ -389,7 +388,6 @@ public class Interface {
 		return pnlMaxTime;
 	}
 
-	
 	/**
 	 * Returns a panel with a JSpinner for user to select the ideal time to wait
 	 * for the optimization.
@@ -416,14 +414,13 @@ public class Interface {
 		return pnlIdealTime;
 	}
 
-	
 	/**
 	 * Returns a panel with a JSpinner to select the number of decision
 	 * variables and button. When clicked, a new frame is displayed to write the
 	 * decision variable group name and to fill the table of the variable
 	 * decision.
 	 **/
-	
+
 	private JPanel decisionVarPanel() {
 		JPanel pnlDecisionVar = new JPanel(new FlowLayout());
 		JLabel lblNumberOfDecisionVariable = new JLabel("Number of Decision Variables");
@@ -461,16 +458,22 @@ public class Interface {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JFileChooser fchXMLSave = new JFileChooser();
-				fchXMLSave.setDialogTitle("Save");
-				fchXMLSave.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
-				if (fchXMLSave.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-					saveProblem();
-					String filePath = fchXMLSave.getSelectedFile().getPath();
-					if (!filePath.endsWith(".xml")) {
-						filePath += ".xml";
+				if (txtProblemName.getText().isEmpty() || txaProblemDescription.getText().isEmpty()
+						|| txtEmail.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please fill all the mandatory fields", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					JFileChooser fchXMLSave = new JFileChooser();
+					fchXMLSave.setDialogTitle("Save");
+					fchXMLSave.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
+					if (fchXMLSave.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+						saveProblem();
+						String filePath = fchXMLSave.getSelectedFile().getPath();
+						if (!filePath.endsWith(".xml")) {
+							filePath += ".xml";
+						}
+						xml.write(filePath, problem);
 					}
-					xml.write(filePath, problem);
 				}
 			}
 		});
@@ -738,14 +741,14 @@ public class Interface {
 
 		JPanel pnlFAQ = new JPanel(new GridLayout(6, 0));
 		JPanel pnlSendEmail = new JPanel();
-		
+
 		btnWriteEmailFAQ.setContentAreaFilled(false);
 		btnWriteEmailFAQ.setFocusable(false);
 		btnWriteEmailFAQ.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					setEmailFrame(frame);					
+				setEmailFrame(frame);
 			}
 		});
 
