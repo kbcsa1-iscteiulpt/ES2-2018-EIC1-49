@@ -701,6 +701,7 @@ public class Interface {
 		JPanel pnlCriteria = new JPanel(new FlowLayout());
 		JPanel pnlCriteriaName = new JPanel();
 		JPanel pnlCriteriaJar = new JPanel();
+		JPanel pnlCriteriaDataType = new JPanel();
 
 		JLabel lblCriteriaName = new JLabel("Criteria Name:");
 		JTextField txtCriteriaName = new JTextField();
@@ -708,7 +709,7 @@ public class Interface {
 
 		JLabel lblJarPath = new JLabel("Jar Path");
 		JTextField txtJarPath = new JTextField();
-		txtJarPath.setColumns(25);
+		txtJarPath.setColumns(15);
 		btnReadJar = new JButton("Add jar");
 		btnReadJar.setContentAreaFilled(false);
 		btnReadJar.addActionListener(new ActionListener() {
@@ -721,14 +722,29 @@ public class Interface {
 				}
 			}
 		});
-
+		JLabel lblDataTypeCriteria = new JLabel("Data Type:");
+		String[] dataTypeCriteria = { "Binary", "Double", "Integer"};
+		JComboBox<String> cmbDataType = new JComboBox<String>(dataTypeCriteria);
+		cmbDataType.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 JComboBox<String> cmbSelectedDataType = (JComboBox<String>)e.getSource();
+			     String dataTypeSelected = (String)cmbSelectedDataType.getSelectedItem();
+			}
+		});
+		
+		
 		pnlCriteriaName.add(lblCriteriaName);
 		pnlCriteriaName.add(txtCriteriaName);
 		pnlCriteriaJar.add(lblJarPath);
 		pnlCriteriaJar.add(txtJarPath);
 		pnlCriteriaJar.add(btnReadJar);
+		pnlCriteriaDataType.add(lblDataTypeCriteria);
+		pnlCriteriaDataType.add(cmbDataType);
 		pnlCriteria.add(pnlCriteriaName);
 		pnlCriteria.add(pnlCriteriaJar);
+		pnlCriteria.add(pnlCriteriaDataType);
 		return pnlCriteria;
 	}
 
