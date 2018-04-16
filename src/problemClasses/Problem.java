@@ -1,4 +1,4 @@
-package classes;
+package problemClasses;
 
 import java.util.List;
 import java.text.DateFormat;
@@ -18,6 +18,7 @@ import java.util.Date;
  * 		- name of the group of variables
  * 		- total number of the variables
  * 		- list of the variables of decision
+ * 		- list of criterias for evaluation
  * 
  * @author Kevin Corrales nº 73529
  *
@@ -32,6 +33,7 @@ public class Problem {
 	private String groupName;
 	private int numberVariables;
 	private List<Variable> variables = new ArrayList<Variable>();
+	private List<Criteria> criterias = new ArrayList<Criteria>();
 	
 	/**
 	 * Class constructor
@@ -73,6 +75,15 @@ public class Problem {
 
 	public String getName() {
 		return name;
+	}
+
+
+	public List<Criteria> getCriterias() {
+		return criterias;
+	}
+	
+	public void addCriteria(Criteria criteria) {
+		criterias.add(criteria);
 	}
 
 
@@ -123,5 +134,6 @@ public class Problem {
 				"Variable group name:"+getGroupName()+"; Number of variables:"+getNumberVariables()+
 				System.getProperty("line.separator") + allVariables;
 	}
+	
 	
 }

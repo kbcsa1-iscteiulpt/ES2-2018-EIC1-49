@@ -1,0 +1,47 @@
+package classes;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
+import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.util.binarySet.BinarySet;
+
+public class EvaluateBinary extends AbstractBinaryProblem{
+
+
+		  public EvaluateBinary() {
+		    this((byte) 335);
+		  }
+
+		  public EvaluateBinary(byte numberOfVariables) {
+			setNumberOfVariables(numberOfVariables);
+		    setNumberOfObjectives(2);
+		    setName("AntiSpamFilterProblem");
+
+		    getBitsPerVariable(numberOfVariables);
+
+		  }
+		  
+		  
+		  public void evaluate(BinarySolution solution){
+		    BinarySet[] fx = new BinarySet[getNumberOfObjectives()];
+		    BinarySet[] x = new BinarySet[getNumberOfVariables()];
+		    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
+		      x[i] = solution.getVariableValue(i) ;
+		    }
+		    
+		    /**
+		  		 * 
+		  		 * Feedback para o jMetal
+		  		 */
+		    System.out.println("its in");
+/*
+		    List<Rule> ruleList = reader.getRulesFromFile(Interface_Window.RulePath,x);
+		    
+		    solution.setObjective(0,  analyser.getFPcount(reader.getEmailsFromFile(Interface_Window.SpamPath), ruleList));
+		    solution.setObjective(1, analyser.getFNcount(reader.getEmailsFromFile(Interface_Window.HamPath), ruleList));
+	*/
+		  }
+		
+}

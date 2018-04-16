@@ -1,4 +1,4 @@
-package classes;
+package problemClasses;
 
 /**
  * Class that represents a variable of decision

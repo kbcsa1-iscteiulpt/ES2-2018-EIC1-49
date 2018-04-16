@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import classes.Problem;
-import classes.Time;
-import classes.Variable;
 import classes.XML_Editor;
+import problemClasses.Problem;
+import problemClasses.Time;
+import problemClasses.Variable;
 
 /**
  * JUnit test cases for XML_Editor

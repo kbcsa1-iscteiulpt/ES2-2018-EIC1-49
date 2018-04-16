@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,11 +39,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-import classes.Problem;
 import classes.Support;
-import classes.Time;
-import classes.Variable;
 import classes.XML_Editor;
+import problemClasses.Criteria;
+import problemClasses.Problem;
+import problemClasses.Time;
+import problemClasses.Variable;
 
 /**
  * This class represents the interface
@@ -93,6 +95,10 @@ public class Interface {
 
 	private JButton btnSaveToXML;
 	private JButton btnExecuteProcess;
+	
+	private List<JTextField> criteriaNames = new ArrayList<JTextField>();
+	private List<JFileChooser> criteriaPaths = new ArrayList<JFileChooser>();
+	private List<JComboBox<String>> criteriaTypes = new ArrayList<JComboBox<String>>();
 
 	private Support support = new Support();
 	private XML_Editor xml = new XML_Editor();
@@ -690,6 +696,21 @@ public class Interface {
 		});
 		pnlCriteria.add(btnAddCriteria);
 		pnlCriteria.add(addCriteria());
+		
+		// TODO : em vez deste action listener , passar tudo para o botão finish
+		criteriaFrame.addWindowListener(new WindowAdapter() {
+			  public void windowClosing(WindowEvent we) {
+				  
+			for(int i=0;i<criteriaNames.size() && i<criteriaPaths.size()
+					&& i<criteriaTypes.size(); i++) {
+				  Criteria criteria = new Criteria(
+							criteriaNames.get(i).getText(),
+							criteriaPaths.get(i).getSelectedFile().getPath(),
+							criteriaTypes.get(i).getSelectedItem().toString());
+					problem.addCriteria(criteria);
+			}
+			  }
+			});
 		criteriaFrame.add(new JScrollPane(pnlCriteria));
 	}
 
@@ -705,11 +726,18 @@ public class Interface {
 
 		JLabel lblCriteriaName = new JLabel("Criteria Name:");
 		JTextField txtCriteriaName = new JTextField();
+		criteriaNames.add(txtCriteriaName);
 		txtCriteriaName.setColumns(30);
 
 		JLabel lblJarPath = new JLabel("Jar Path");
 		JTextField txtJarPath = new JTextField();
 		txtJarPath.setColumns(15);
+
+		JLabel lblDataTypeCriteria = new JLabel("Data Type:");
+		String[] dataTypeCriteria = { "Binary", "Double", "Integer"};
+		JComboBox<String> cmbDataType = new JComboBox<String>(dataTypeCriteria);	
+		criteriaTypes.add(cmbDataType);
+		
 		btnReadJar = new JButton("Add jar");
 		btnReadJar.setContentAreaFilled(false);
 		btnReadJar.addActionListener(new ActionListener() {
@@ -717,14 +745,14 @@ public class Interface {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fchUploadJar = new JFileChooser();
+				criteriaPaths.add(fchUploadJar);
 				if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					txtJarPath.setText(fchUploadJar.getSelectedFile().getPath());
+			
 				}
 			}
 		});
-		JLabel lblDataTypeCriteria = new JLabel("Data Type:");
-		String[] dataTypeCriteria = { "Binary", "Double", "Integer"};
-		JComboBox<String> cmbDataType = new JComboBox<String>(dataTypeCriteria);
+		
 		cmbDataType.addActionListener(new ActionListener() {
 			
 			@Override
