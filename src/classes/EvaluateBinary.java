@@ -43,5 +43,12 @@ public class EvaluateBinary extends AbstractBinaryProblem{
 		    solution.setObjective(1, analyser.getFNcount(reader.getEmailsFromFile(Interface_Window.HamPath), ruleList));
 	*/
 		  }
+
+		@Override
+		protected int getBitsPerVariable(int arg0) {
+			// TODO Auto-generated method stub
+			
+			return Integer.toBinaryString(arg0).length();
+		}
 		
 }
