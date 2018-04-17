@@ -11,7 +11,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -534,17 +537,23 @@ public class Interface {
 							JOptionPane.WARNING_MESSAGE);
 				} else {
 					try {
-
-						String subject = "Acabou de iniciar um processo de otimização na nossa plataforma";
-						String name = "Nome do Problema: \n" + txtProblemName.getText();
-						String description = "Descrição do problema: \n" + txaProblemDescription.getText();
-						String maxTime = "Tempo máximo de otimização: \n" + spnMaxNumberOfDays.getValue().toString()
-								+ "dias" + spnMaxNumberOfHours.getValue().toString() + "horas"
-								+ spnMaxNumberOfMinutes.getValue().toString() + "minutos";
-						String idealTime = "Tempo ideal de otimização: \n" + spnIdealNumberOfDays.getValue().toString()
-								+ "dias" + spnIdealNumberOfHours.getValue().toString() + "horas"
-								+ spnIdealNumberOfMinutes.getValue().toString() + "minutos";
-						String message = name + "\n" + description + "\n" + maxTime + "\n" + idealTime;
+						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+						Date date = new Date();
+						
+						
+						String subject = "Otimização em curso: " + txtProblemName.getText() + " " +  dateFormat.format(date);
+//						String name = "Nome do Problema: \n" + txtProblemName.getText();
+//						String description = "Descrição do problema: \n" + txaProblemDescription.getText();
+//						String maxTime = "Tempo máximo de otimização: \n" + spnMaxNumberOfDays.getValue().toString()
+//								+ "dias" + spnMaxNumberOfHours.getValue().toString() + "horas"
+//								+ spnMaxNumberOfMinutes.getValue().toString() + "minutos";
+//						String idealTime = "Tempo ideal de otimização: \n" + spnIdealNumberOfDays.getValue().toString()
+//								+ "dias" + spnIdealNumberOfHours.getValue().toString() + "horas"
+//								+ spnIdealNumberOfMinutes.getValue().toString() + "minutos";
+						String message = "Muito obrigado por usar esta plataforma de otimização. Será informado por email\r\n" + 
+								"sobre o progresso do processo de otimização, quando o processo de otimização tiver atingido 25%,\r\n" + 
+								"50%, 75% do total do (número de avaliações ou) tempo estimado, e também quando o processo tiver\r\n" + 
+								"terminado, com sucesso ou devido à ocorrência de erros.";
 
 						support.SendEmail(adminEmail, txtEmail.getText(), subject, message);
 
