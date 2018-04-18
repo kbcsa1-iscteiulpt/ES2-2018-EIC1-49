@@ -13,7 +13,7 @@ package problem;
 public class Criteria {
 	private String name;
 	private String path;
-	private String argumentType;
+	private String type;
 	
 	/**
 	 * Class constructor
@@ -22,11 +22,11 @@ public class Criteria {
 	 * @param path
 	 * @param argumentType
 	 */
-	public Criteria(String name, String path, String argumentType) {
+	public Criteria(String name, String path, String type) {
 		super();
 		this.name = name;
 		this.path = path;
-		this.argumentType = argumentType;
+		this.type = type;
 	}
 
 
@@ -40,13 +40,13 @@ public class Criteria {
 	}
 
 
-	public String getArgumentType() {
-		return argumentType;
+	public String getType() {
+		return type;
 	}
 	
 	
 	public String toString() {
-		return "Name:"+getName()+"; Path:"+getPath()+"; Arguments Type:"+getArgumentType()
+		return "Name:"+getName()+"; Path:"+getPath()+"; Arguments Type:"+getType()
 		+System.getProperty("line.separator");
 	}
 }

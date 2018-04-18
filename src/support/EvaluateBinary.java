@@ -7,6 +7,8 @@ import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
+import problem.Problem;
+
 /**
  * Jmetal class to evaluate criteria with Binary arguments
  * 
@@ -15,6 +17,11 @@ import org.uma.jmetal.util.binarySet.BinarySet;
  */
 public class EvaluateBinary extends AbstractBinaryProblem{
 
+	private Problem problem;
+	
+	 public void setProblem(Problem problem) {
+		  this.problem=problem;
+	  }
 
 		  public EvaluateBinary() {
 		    this((byte) 335);
@@ -23,7 +30,7 @@ public class EvaluateBinary extends AbstractBinaryProblem{
 		  public EvaluateBinary(byte numberOfVariables) {
 			setNumberOfVariables(numberOfVariables);
 		    setNumberOfObjectives(2);
-		    setName("AntiSpamFilterProblem");
+		    setName("EvaluateBinary");
 
 		    getBitsPerVariable(numberOfVariables);
 

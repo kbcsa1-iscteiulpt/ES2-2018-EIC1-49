@@ -6,6 +6,8 @@ import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 
+import problem.Problem;
+
 /**
  * Jmetal class to evaluate criteria with Integer arguments
  * 
@@ -13,7 +15,12 @@ import org.uma.jmetal.solution.IntegerSolution;
  *
  */
 public class EvaluateInteger extends AbstractIntegerProblem{
-
+			
+	private Problem problem;
+	
+	 public void setProblem(Problem problem) {
+		  this.problem=problem;
+	  }
 
 		  public EvaluateInteger() {
 		    this(335);
@@ -22,7 +29,7 @@ public class EvaluateInteger extends AbstractIntegerProblem{
 		  public EvaluateInteger(Integer numberOfVariables) {
 		    setNumberOfVariables(numberOfVariables);
 		    setNumberOfObjectives(2);
-		    setName("AntiSpamFilterProblem");
+		    setName("EvaluateInteger");
 
 		    List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
 		    List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
@@ -35,6 +42,8 @@ public class EvaluateInteger extends AbstractIntegerProblem{
 		    setLowerLimit(lowerLimit);
 		    setUpperLimit(upperLimit);
 		  }
+		  
+		 
 		  
 		  
 		  public void evaluate(IntegerSolution solution){

@@ -1,10 +1,16 @@
 package support;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+
+import problem.Criteria;
+import problem.Problem;
+import problem.Variable;
 
 /**
  * Jmetal class to evaluate criteria with Double arguments
@@ -14,15 +20,26 @@ import org.uma.jmetal.solution.DoubleSolution;
  */
 public class EvaluateDouble extends AbstractDoubleProblem{
 
-
-		  public EvaluateDouble() {
-		    this(335);
-		  }
+	
+	private List<Variable> variables = new ArrayList<Variable>();
+	private List<Criteria> criterias = new ArrayList<Criteria>();
+	
+	 public EvaluateDouble(Problem problem) {
+		 for(Variable var: problem.getVariables()) {
+			 if(var.getType().toLowerCase().equals("double"))
+				 variables.add(var);
+		 }
+		 for(Criteria crit: problem.getCriterias()) {
+			 if(crit.getType().toLowerCase().equals("double"))
+				 criterias.add(crit);
+		 }
+		 
+	  }
 
 		  public EvaluateDouble(Integer numberOfVariables) {
 		    setNumberOfVariables(numberOfVariables);
 		    setNumberOfObjectives(2);
-		    setName("AntiSpamFilterProblem");
+		    setName("EvaluateDouble");
 
 		    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
 		    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
@@ -45,17 +62,22 @@ public class EvaluateDouble extends AbstractDoubleProblem{
 		      x[i] = solution.getVariableValue(i) ;
 		    }
 		    
-		    /**
-		  		 * 
-		  		 * Feedback para o jMetal
-		  		 */
-		    System.out.println("its in");
-/*
-		    List<Rule> ruleList = reader.getRulesFromFile(Interface_Window.RulePath,x);
+
+		    for(int i=0;i<criterias.size();i++) {
+			    Process proc;
+				try {
+					proc = Runtime.getRuntime().exec("java -jar "+criterias.get(i).getPath());
+					InputStream in = proc.getInputStream();
+					solution.setObjective(i,  Double.parseDouble(in.toString()));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			    
+			    
+			   
+		    }
 		    
-		    solution.setObjective(0,  analyser.getFPcount(reader.getEmailsFromFile(Interface_Window.SpamPath), ruleList));
-		    solution.setObjective(1, analyser.getFNcount(reader.getEmailsFromFile(Interface_Window.HamPath), ruleList));
-	*/
+		    
 		  }
 		
 }
