@@ -1,4 +1,4 @@
-package problemClasses;
+package problem;
 
 import java.util.List;
 import java.text.DateFormat;

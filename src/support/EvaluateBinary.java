@@ -7,6 +7,12 @@ import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
+/**
+ * Jmetal class to evaluate criteria with Binary arguments
+ * 
+ * @author Kevin Corrales nº 73529 ; Ricardo Santos nº 72973
+ *
+ */
 public class EvaluateBinary extends AbstractBinaryProblem{
 
 

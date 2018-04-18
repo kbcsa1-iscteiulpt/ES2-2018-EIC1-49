@@ -44,10 +44,10 @@ import javax.swing.table.DefaultTableModel;
 
 import classes.Support;
 import classes.XML_Editor;
-import problemClasses.Criteria;
-import problemClasses.Problem;
-import problemClasses.Time;
-import problemClasses.Variable;
+import problem.Criteria;
+import problem.Problem;
+import problem.Time;
+import problem.Variable;
 
 /**
  * This class represents the interface

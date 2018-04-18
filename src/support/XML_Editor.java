@@ -13,9 +13,9 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
-import problemClasses.Problem;
-import problemClasses.Time;
-import problemClasses.Variable;
+import problem.Problem;
+import problem.Time;
+import problem.Variable;
 
 /**
  * Editor of XML

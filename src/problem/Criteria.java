@@ -1,4 +1,4 @@
-package problemClasses;
+package problem;
 
 /**
  * Class that represents a criteria
