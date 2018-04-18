@@ -1,4 +1,4 @@
-package gui;
+package mainAndGui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-import classes.*;
+import support.*;
 
 public class Main {
 
