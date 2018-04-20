@@ -8,10 +8,6 @@ import java.util.List;
 import org.junit.Test;
 
 import classes.Config;
-import classes.XML_Editor;
-import problemClasses.Problem;
-import problemClasses.Time;
-import problemClasses.Variable;
 import problem.Problem;
 import problem.Time;
 import problem.Variable;

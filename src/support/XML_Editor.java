@@ -13,6 +13,7 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
+import classes.Config;
 import problem.Problem;
 import problem.Time;
 import problem.Variable;
