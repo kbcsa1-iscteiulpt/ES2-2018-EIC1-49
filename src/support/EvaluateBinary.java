@@ -7,7 +7,9 @@ import org.uma.jmetal.problem.impl.AbstractBinaryProblem;
 import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.binarySet.BinarySet;
 
+import problem.Criteria;
 import problem.Problem;
+import problem.Variable;
 
 /**
  * Jmetal class to evaluate criteria with Binary arguments
@@ -17,16 +19,26 @@ import problem.Problem;
  */
 public class EvaluateBinary extends AbstractBinaryProblem{
 
-	private Problem problem;
+	private List<Variable> variables = new ArrayList<Variable>();
+	private List<Criteria> criterias = new ArrayList<Criteria>();
 	
-	 public void setProblem(Problem problem) {
-		  this.problem=problem;
-	  }
+	 public EvaluateBinary(byte numberOfVariables,Problem problem) {
+		 for(Variable var: problem.getVariables()) {
+			 if(var.getType().toLowerCase().equals("double"))
+				 variables.add(var);
+		 }
+		 for(Criteria crit: problem.getCriterias()) {
+			 if(crit.getType().toLowerCase().equals("double"))
+				 criterias.add(crit);
+		 }
+		 
+		 	setNumberOfVariables(numberOfVariables);
+		    setNumberOfObjectives(2);
+		    setName("EvaluateBinary");
 
-		  public EvaluateBinary() {
-		    this((byte) 335);
-		  }
+		    getBitsPerVariable(numberOfVariables);
 
+	 }
 		  public EvaluateBinary(byte numberOfVariables) {
 			setNumberOfVariables(numberOfVariables);
 		    setNumberOfObjectives(2);

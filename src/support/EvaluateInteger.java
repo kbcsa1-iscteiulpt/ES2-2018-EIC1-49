@@ -6,7 +6,9 @@ import java.util.List;
 import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 
+import problem.Criteria;
 import problem.Problem;
+import problem.Variable;
 
 /**
  * Jmetal class to evaluate criteria with Integer arguments
@@ -16,15 +18,37 @@ import problem.Problem;
  */
 public class EvaluateInteger extends AbstractIntegerProblem{
 			
-	private Problem problem;
 	
-	 public void setProblem(Problem problem) {
-		  this.problem=problem;
+	private List<Variable> variables = new ArrayList<Variable>();
+	private List<Criteria> criterias = new ArrayList<Criteria>();
+	
+	 public EvaluateInteger(Integer numberOfVariables,Problem problem) {
+		 for(Variable var: problem.getVariables()) {
+			 if(var.getType().toLowerCase().equals("double"))
+				 variables.add(var);
+		 }
+		 for(Criteria crit: problem.getCriterias()) {
+			 if(crit.getType().toLowerCase().equals("double"))
+				 criterias.add(crit);
+		 }
+		 
+		 setNumberOfVariables(numberOfVariables);
+		    setNumberOfObjectives(2);
+		    setName("EvaluateInteger");
+
+		    List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+		    List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+
+		    for (int i = 0; i < getNumberOfVariables(); i++) {
+		      lowerLimit.add(-5);
+		      upperLimit.add(5);
+		    }
+
+		    setLowerLimit(lowerLimit);
+		    setUpperLimit(upperLimit);
 	  }
 
-		  public EvaluateInteger() {
-		    this(335);
-		  }
+		 
 
 		  public EvaluateInteger(Integer numberOfVariables) {
 		    setNumberOfVariables(numberOfVariables);

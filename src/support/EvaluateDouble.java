@@ -24,7 +24,7 @@ public class EvaluateDouble extends AbstractDoubleProblem{
 	private List<Variable> variables = new ArrayList<Variable>();
 	private List<Criteria> criterias = new ArrayList<Criteria>();
 	
-	 public EvaluateDouble(Problem problem) {
+	 public EvaluateDouble(Integer numberOfVariables,Problem problem) {
 		 for(Variable var: problem.getVariables()) {
 			 if(var.getType().toLowerCase().equals("double"))
 				 variables.add(var);
@@ -33,6 +33,21 @@ public class EvaluateDouble extends AbstractDoubleProblem{
 			 if(crit.getType().toLowerCase().equals("double"))
 				 criterias.add(crit);
 		 }
+		 
+		 setNumberOfVariables(numberOfVariables);
+		    setNumberOfObjectives(2);
+		    setName("EvaluateDouble");
+
+		    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+		    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+
+		    for (int i = 0; i < getNumberOfVariables(); i++) {
+		      lowerLimit.add(-5.0);
+		      upperLimit.add(5.0);
+		    }
+
+		    setLowerLimit(lowerLimit);
+		    setUpperLimit(upperLimit);
 		 
 	  }
 
