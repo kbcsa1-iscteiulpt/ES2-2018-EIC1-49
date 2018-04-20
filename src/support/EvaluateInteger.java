@@ -1,38 +1,52 @@
-package classes;
+package support;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
-import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
+import org.uma.jmetal.solution.IntegerSolution;
 
-public class EvaluateDouble extends AbstractDoubleProblem{
+import problem.Problem;
 
+/**
+ * Jmetal class to evaluate criteria with Integer arguments
+ * 
+ * @author Kevin Corrales nº 73529
+ *
+ */
+public class EvaluateInteger extends AbstractIntegerProblem{
+			
+	private Problem problem;
+	
+	 public void setProblem(Problem problem) {
+		  this.problem=problem;
+	  }
 
-		  public EvaluateDouble() {
+		  public EvaluateInteger() {
 		    this(335);
 		  }
 
-		  public EvaluateDouble(Integer numberOfVariables) {
+		  public EvaluateInteger(Integer numberOfVariables) {
 		    setNumberOfVariables(numberOfVariables);
 		    setNumberOfObjectives(2);
-		    setName("AntiSpamFilterProblem");
+		    setName("EvaluateInteger");
 
-		    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-		    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+		    List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+		    List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
 		    for (int i = 0; i < getNumberOfVariables(); i++) {
-		      lowerLimit.add(-5.0);
-		      upperLimit.add(5.0);
+		      lowerLimit.add(-5);
+		      upperLimit.add(5);
 		    }
 
 		    setLowerLimit(lowerLimit);
 		    setUpperLimit(upperLimit);
 		  }
 		  
+		 
 		  
-		  public void evaluate(DoubleSolution solution){
-		    double aux, xi, xj;
+		  
+		  public void evaluate(IntegerSolution solution){
 		    double[] fx = new double[getNumberOfObjectives()];
 		    double[] x = new double[getNumberOfVariables()];
 		    for (int i = 0; i < solution.getNumberOfVariables(); i++) {

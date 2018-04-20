@@ -1,4 +1,4 @@
-package gui;
+package mainAndGui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -42,12 +42,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-import classes.Support;
-import classes.XML_Editor;
-import problemClasses.Criteria;
-import problemClasses.Problem;
-import problemClasses.Time;
-import problemClasses.Variable;
+import problem.Criteria;
+import problem.Problem;
+import problem.Time;
+import problem.Variable;
+import support.Support;
+import support.XML_Editor;
 
 /**
  * This class represents the interface

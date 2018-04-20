@@ -1,4 +1,4 @@
-package classes;
+package support;
 
 import java.util.Properties;
 

@@ -4,7 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JSpinner;
 
 import org.junit.Test;
-import gui.Interface;
+
+import mainAndGui.Interface;
 
 /**
  * This is a jUnitTestCase that tests the interface
