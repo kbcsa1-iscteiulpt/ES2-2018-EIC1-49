@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import classes.Config;
 import problem.Problem;
 import problem.Time;
 import problem.Variable;
+import support.Config;
 import support.XML_Editor;
 
 /**

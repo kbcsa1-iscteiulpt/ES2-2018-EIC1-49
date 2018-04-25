@@ -1,4 +1,4 @@
-package classes;
+package support;
 
 public class Config {
 	
