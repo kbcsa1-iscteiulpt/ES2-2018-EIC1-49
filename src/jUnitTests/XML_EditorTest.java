@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import classes.Config;
 import problem.Problem;
 import problem.Time;
 import problem.Variable;
@@ -15,7 +16,7 @@ import support.XML_Editor;
 /**
  * JUnit test cases for XML_Editor
  * 
- * @author Kevin Corrales nº 73529
+ * @author Kevin Corrales nï¿½ 73529
  *
  */
 public class XML_EditorTest {
@@ -23,7 +24,7 @@ public class XML_EditorTest {
 	
 	
 	/**
-	 * Test cases for writing and reading a xml file
+	 * Test cases for writing and reading a xml file (problem and config)
 	 */
 	@Test
 	public void writeReadTest() {
@@ -42,6 +43,16 @@ public class XML_EditorTest {
 		Problem problem = xml.read("src/jUnitTests/test.xml");
 		
 		assertTrue(p.getDescription().equals(problem.getDescription()));
+		
+
+		Config config = new Config("email@gmail.com");
+		
+		xml.writeConfig("src/jUnitTests/configTest.xml", config);
+		
+		Config conf = xml.readConfig("src/jUnitTests/configTest.xml");
+		
+		assertTrue(config.getEmailAdmin().equals(conf.getEmailAdmin()));
 	}
+	
 
 }

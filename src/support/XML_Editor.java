@@ -13,6 +13,7 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
+import classes.Config;
 import problem.Problem;
 import problem.Time;
 import problem.Variable;
@@ -21,19 +22,95 @@ import problem.Variable;
  * Editor of XML
  * Reads and writes a XML file, using the Problem class
  * 
- * @author Kevin Corrales nº 73529
+ * @author Kevin Corrales nï¿½ 73529
  *
  */
 public class XML_Editor {
 	
-	/**
-	 * Reads a XML file from the received path and creates a Problem(Class) 
-	 * 
-	 * @param path of xml file
-	 * @return Problem
-	 */
-	public Problem read(String path) {
-		Problem problem = new Problem();
+	
+		
+		/**
+		 * Reads a XML file from the received path and creates a Problem(Class) 
+		 * 
+		 * @param path of xml file
+		 * @return Problem
+		 */
+		public Problem read(String path) {
+			Problem problem = new Problem();
+			try {
+
+				File fXmlFile = new File(path);
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(fXmlFile);
+
+				doc.getDocumentElement().normalize();
+							
+				NodeList nodeList = doc.getElementsByTagName("problem");
+				
+				//Set the date format of actual date
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				Calendar current = Calendar.getInstance();
+				
+				for (int k = 0; k < nodeList.getLength(); k++) {
+					Node node = nodeList.item(k);
+					
+					if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element prob = (Element) node;
+							
+						Element time =(Element) prob.getElementsByTagName("time").item(0);
+						Element maxTime = (Element)time.getElementsByTagName("max").item(0);
+						Element idealTime = (Element)time.getElementsByTagName("ideal").item(0);
+						Element variables = (Element) prob.getElementsByTagName("groupVariables").item(0);
+						
+						List<Variable> problemVariables = new ArrayList<Variable>();
+						NodeList varList = variables.getElementsByTagName("variable");
+						for (int i = 0; i < varList.getLength(); i++) {
+							
+							Element varElement = (Element) varList.item(i);
+							Variable var = new Variable(
+									varElement.getAttribute("variableName"),
+									varElement.getAttribute("variableType"),
+									varElement.getAttribute("variableMin"),
+									varElement.getAttribute("variableMax"),
+									varElement.getAttribute("variableRestriction")
+									);
+							problemVariables.add(var);
+						}
+						
+						problem = new Problem(
+								prob.getAttribute("name"),
+								prob.getAttribute("description"),
+								prob.getAttribute("email"),
+								new Time(Integer.parseInt(maxTime.getAttribute("maxdays")),
+										Integer.parseInt(maxTime.getAttribute("maxhours")),
+										Integer.parseInt(maxTime.getAttribute("maxminutes"))),
+								new Time(Integer.parseInt(idealTime.getAttribute("idealdays")),
+										Integer.parseInt(idealTime.getAttribute("idealhours")),
+										Integer.parseInt(idealTime.getAttribute("idealminutes"))),
+								variables.getAttribute("groupName"),
+								Integer.parseInt(variables.getAttribute("numberVariables")),
+								problemVariables
+								);
+					}
+				}
+			
+			    } catch (Exception e) {
+				e.printStackTrace();
+			    }
+			
+			return problem;
+	}
+		
+		/**
+		 * Reads a XML file from the received path and creates a Configuration (Config Class) 
+		 * 
+		 * @param path of xml file
+		 * @return Config
+		 */	
+	public Config readConfig(String path) {
+		Config config = new Config("");
 		try {
 
 			File fXmlFile = new File(path);
@@ -43,63 +120,19 @@ public class XML_Editor {
 
 			doc.getDocumentElement().normalize();
 						
-			NodeList nodeList = doc.getElementsByTagName("problem");
+			Node node = (Element) doc.getElementsByTagName("Administrator").item(0);
 			
-			//Set the date format of actual date
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Calendar current = Calendar.getInstance();
-			
-			for (int k = 0; k < nodeList.getLength(); k++) {
-				Node node = nodeList.item(k);
-				
-				if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-					Element prob = (Element) node;
-						
-					Element time =(Element) prob.getElementsByTagName("time").item(0);
-					Element maxTime = (Element)time.getElementsByTagName("max").item(0);
-					Element idealTime = (Element)time.getElementsByTagName("ideal").item(0);
-					Element variables = (Element) prob.getElementsByTagName("groupVariables").item(0);
-					
-					List<Variable> problemVariables = new ArrayList<Variable>();
-					NodeList varList = variables.getElementsByTagName("variable");
-					for (int i = 0; i < varList.getLength(); i++) {
-						
-						Element varElement = (Element) varList.item(i);
-						Variable var = new Variable(
-								varElement.getAttribute("variableName"),
-								varElement.getAttribute("variableType"),
-								varElement.getAttribute("variableMin"),
-								varElement.getAttribute("variableMax"),
-								varElement.getAttribute("variableRestriction")
-								);
-						problemVariables.add(var);
-					}
-					
-					problem = new Problem(
-							prob.getAttribute("name"),
-							prob.getAttribute("description"),
-							prob.getAttribute("email"),
-							new Time(Integer.parseInt(maxTime.getAttribute("maxdays")),
-									Integer.parseInt(maxTime.getAttribute("maxhours")),
-									Integer.parseInt(maxTime.getAttribute("maxminutes"))),
-							new Time(Integer.parseInt(idealTime.getAttribute("idealdays")),
-									Integer.parseInt(idealTime.getAttribute("idealhours")),
-									Integer.parseInt(idealTime.getAttribute("idealminutes"))),
-							variables.getAttribute("groupName"),
-							Integer.parseInt(variables.getAttribute("numberVariables")),
-							problemVariables
-							);
-				}
+			if(node.getNodeType() == Node.ELEMENT_NODE) {
+				Element conf = (Element) node;
+								
+				config = new Config(conf.getAttribute("email"));
 			}
 		
 		    } catch (Exception e) {
 			e.printStackTrace();
 		    }
-		
-		return problem;
+		return config;
 	}
-	
 	/**
 	 * Writes the Problem into XML file
 	 * 
@@ -171,7 +204,50 @@ public class XML_Editor {
 		  } catch (TransformerException tfe) {
 			tfe.printStackTrace();
 		  }
-		}
+	}
+	
+	/**
+	 * Writes the Config into XML file
+	 * 
+	 * @param path of file
+	 * @param config
+	 */
+	public void writeConfig(String path,Config config) {
+			try {
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder;
+				docBuilder = docFactory.newDocumentBuilder();
+				// Root elements
+				Document doc = docBuilder.newDocument();
+				Element probTag = doc.createElement("Administrator");
+				probTag.setAttribute("email", config.getEmailAdmin());
+			
+				doc.appendChild(probTag);
+				
+				
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+				StreamResult result = new StreamResult(new File(path));
+
+				transformer.transform(source, result);
+
+				System.out.println("File saved!");
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TransformerConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (TransformerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
+		
+	}
+	
 	
 	
 

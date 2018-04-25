@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,6 +20,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import javax.mail.MessagingException;
+import javax.swing.AbstractButton;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -37,6 +38,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -95,6 +97,7 @@ public class Interface {
 	private JButton btnCriteria;
 	private JButton btnAddCriteria;
 	private JButton btnReadJar;
+	private JButton btnCriteriaFinish;
 
 	private JButton btnSaveToXML;
 	private JButton btnExecuteProcess;
@@ -106,6 +109,8 @@ public class Interface {
 	private Support support = new Support();
 	private XML_Editor xml = new XML_Editor();
 	private Problem problem = new Problem();
+
+	private JTable tblCriteria;
 
 	public Interface() {
 		decisionFrame = new JFrame("Problem to be optimized");
@@ -679,7 +684,6 @@ public class Interface {
 		btnDecisionVariablesFinish.setContentAreaFilled(false);
 		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
 				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
-		btnDecisionVariablesFinish.setContentAreaFilled(false);
 		btnDecisionVariablesFinish.setIcon(icoFinish);
 		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
 		decisionVarFrame.add(pnlDecision);
@@ -690,8 +694,12 @@ public class Interface {
 	 * button to add a new criteria and a button to upload the .jar file.
 	 **/
 	private void setCriteriaFrame(JFrame criteriaFrame) {
-		JPanel pnlCriteria = new JPanel();
-		pnlCriteria.setLayout(new BoxLayout(pnlCriteria, BoxLayout.Y_AXIS));
+		JPanel pnlCriteria = new JPanel(new BorderLayout());
+		JPanel pnlAddCriteria = new JPanel();
+		JPanel pnlCriteriaList = new JPanel();
+		pnlCriteriaList.setLayout(new BoxLayout(pnlCriteriaList, BoxLayout.Y_AXIS));
+		JPanel pnlCriteriaFinish = new JPanel();
+		
 		btnAddCriteria = new JButton("Add criteria");
 		btnAddCriteria.setContentAreaFilled(false);
 		btnAddCriteria.setFocusable(false);
@@ -699,27 +707,40 @@ public class Interface {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pnlCriteria.add(addCriteria());
+				pnlCriteriaList.add(addCriteria());
 				pnlCriteria.revalidate();
 			}
 		});
-		pnlCriteria.add(btnAddCriteria);
-		pnlCriteria.add(addCriteria());
-		
-		// TODO : em vez deste action listener , passar tudo para o botão finish
-		criteriaFrame.addWindowListener(new WindowAdapter() {
-			  public void windowClosing(WindowEvent we) {
-				  
-			for(int i=0;i<criteriaNames.size() && i<criteriaPaths.size()
-					&& i<criteriaTypes.size(); i++) {
-				  Criteria criteria = new Criteria(
-							criteriaNames.get(i).getText(),
-							criteriaPaths.get(i).getSelectedFile().getPath(),
-							criteriaTypes.get(i).getSelectedItem().toString());
-					problem.addCriteria(criteria);
+	
+		btnCriteriaFinish = new JButton("Finish");
+		btnCriteriaFinish.setContentAreaFilled(false);
+		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
+				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
+		btnCriteriaFinish.setContentAreaFilled(false);
+		btnCriteriaFinish.setIcon(icoFinish);
+		btnCriteriaFinish.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for(int i=0;i<criteriaNames.size() && i<criteriaPaths.size()
+						&& i<criteriaTypes.size(); i++) {
+					  Criteria criteria = new Criteria(
+								criteriaNames.get(i).getText(),
+								criteriaPaths.get(i).getSelectedFile().getPath(),
+								criteriaTypes.get(i).getSelectedItem().toString());
+						problem.addCriteria(criteria);
+				}
 			}
-			  }
-			});
+		});
+		
+		pnlAddCriteria.add(btnAddCriteria);
+		pnlCriteriaList.add(addCriteria());
+		pnlCriteriaFinish.add(btnCriteriaFinish);
+		
+		pnlCriteria.add(pnlAddCriteria, BorderLayout.PAGE_START);
+		pnlCriteria.add(pnlCriteriaList, BorderLayout.CENTER);
+		pnlCriteria.add(pnlCriteriaFinish, BorderLayout.PAGE_END);
+		
 		criteriaFrame.add(new JScrollPane(pnlCriteria));
 	}
 
@@ -865,7 +886,11 @@ public class Interface {
 
 		frame.setSize((int) (frameWidth * size), (int) (frameHeight * size));
 		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		if(frame.getTitle().equals("Problem to be optimized")) {
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		}else {
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
 	}
 
 	/**
