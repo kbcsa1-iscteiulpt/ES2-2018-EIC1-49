@@ -66,6 +66,7 @@ public class Interface {
 	private JFrame createProblemFrame;
 	private JButton btnCreateProblem;
 	private JButton btnReadProblem;
+	private JFrame graphicsFrame;
 
 	private JButton btnHelp;
 	private JButton btnGoBack;
@@ -101,6 +102,7 @@ public class Interface {
 
 	private JButton btnSaveToXML;
 	private JButton btnExecuteProcess;
+	private JButton btnExecuteGraphics;
 	
 	private List<JTextField> criteriaNames = new ArrayList<JTextField>();
 	private List<JFileChooser> criteriaPaths = new ArrayList<JFileChooser>();
@@ -569,8 +571,20 @@ public class Interface {
 			}
 		});
 
+		
+		btnExecuteGraphics= new JButton("Graphics");
+		btnExecuteGraphics.setContentAreaFilled(false);
+		btnExecuteGraphics.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				graphicsFrame = new JFrame("Graphics");
+				setFrame(graphicsFrame, 0.5);
+				setGraphicsFrame(graphicsFrame);
+			}
+		});
 		executeProcessPanel.add(btnExecuteProcess);
-		executeProcessPanel.setBackground(new Color(240, 240, 240));
+		executeProcessPanel.add(btnExecuteGraphics);
 		return executeProcessPanel;
 	}
 
@@ -876,6 +890,13 @@ public class Interface {
 		return pnlFAQ;
 	}
 
+	/**
+	 *	Frame that shows the graphics from the optmization process 
+	 **/
+	private void setGraphicsFrame(JFrame frame) {
+		frame.setVisible(true);
+	}
+	
 	/**
 	 * Defines the size of the given frame. The second parameter indicates the
 	 * number that the screen is divided by.
