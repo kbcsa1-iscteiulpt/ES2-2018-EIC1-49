@@ -21,7 +21,7 @@ import problem.Variable;
  * Editor of XML
  * Reads and writes a XML file, using the Problem class
  * 
- * @author Kevin Corrales nï¿½ 73529
+ * @author Kevin Corrales nº 73529
  *
  */
 public class XML_Editor {
