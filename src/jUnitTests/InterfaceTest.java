@@ -2,6 +2,7 @@ package jUnitTests;
 
 import javax.swing.JButton;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 import org.junit.Test;
 
@@ -19,12 +20,25 @@ public class InterfaceTest {
 	public void inicialInterface() {
 		interfaceTest = new Interface();
 
+		JButton btnCreateProblem = interfaceTest.getCreateProblem();
+		btnCreateProblem.doClick();
+		
+		JButton btnGoBack = interfaceTest.getGoBack();
+		btnGoBack.doClick();
+		
+		JButton btnReadProblem = interfaceTest.getReadProblem();
+		btnReadProblem.doClick();
+		
 		JButton btnHelp = interfaceTest.getHelpButton();
 		btnHelp.doClick();
 
+		interfaceTest.setEmail("dianalopes@sapo.pt");
 		JButton btnEmail = interfaceTest.getEmailButton();
 		btnEmail.doClick();
 
+		interfaceTest.setEmailTitle("email title");
+		interfaceTest.setEmailMessage("email message body");
+		
 		JButton btnMessageSend = interfaceTest.getMessageSendButton();
 		btnMessageSend.doClick();
 
@@ -33,25 +47,34 @@ public class InterfaceTest {
 		
 		JButton btnDecisionVariables = interfaceTest.getDecisionVarButton();
 		btnDecisionVariables.doClick();
+		
+		JButton btnDecisionVariablesFinishButton = interfaceTest.getDecisionVariablesFinishButton();
+		btnDecisionVariablesFinishButton.doClick();
 
 		JButton btnRead = interfaceTest.getReadButton();
 		btnRead.doClick();
 
-		JButton btnSave = interfaceTest.getSaveButton();
-		//btnSave.doClick();
+		
 
-		JButton btnCriterion = interfaceTest.getCriteriaButton();
-		btnCriterion.doClick();
-
+		JButton btnCriteria = interfaceTest.getCriteriaButton();
+		btnCriteria.doClick();
+		
 		JButton btnAddCriterion = interfaceTest.getAddCriteriaButton();
+		
+		JButton btnCriteriaFinish = interfaceTest.getCriteriaFinishButton();
 		btnAddCriterion.doClick();
+		
+		btnCriteriaFinish.doClick();
 
 		JButton btnReadJar = interfaceTest.getReadJarButton();
 		btnReadJar.doClick();
 		
 		JButton btnExecuteProcess = interfaceTest.getExecuteProcessButton();
-//		btnExecuteProcess.doClick();
+		btnExecuteProcess.doClick();
 		
+		
+		JButton btnSave = interfaceTest.getSaveButton();
+		btnSave.doClick();
 		
 		
 	}

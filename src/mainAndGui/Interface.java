@@ -20,8 +20,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import javax.mail.MessagingException;
-import javax.swing.AbstractButton;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -38,7 +36,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -79,6 +76,8 @@ public class Interface {
 	private JTextArea txaProblemDescription;
 	private JButton btnWriteEmail;
 	private JTextField txtEmail;
+	private JTextField txtMessageTitle;
+	private JTextArea txaMessageBody;
 	private JButton btnMessageSend;
 
 	private JSpinner spnMaxNumberOfDays;
@@ -602,14 +601,14 @@ public class Interface {
 		JPanel pnlMessageSend = new JPanel(new BorderLayout());
 
 		JLabel lblMessageTitle = new JLabel("Subject:");
-		JTextField txtMessageTitle = new JTextField();
+		txtMessageTitle = new JTextField();
 		txtMessageTitle.setColumns(30);
 
 		pnlMessageTitle.add(lblMessageTitle, BorderLayout.NORTH);
 		pnlMessageTitle.add(txtMessageTitle, BorderLayout.CENTER);
 
 		JLabel lblMessageBody = new JLabel("Message:");
-		JTextArea txaMessageBody = new JTextArea();
+		txaMessageBody = new JTextArea();
 		txaMessageBody.setLineWrap(true);
 		JScrollPane scrMessageBody = new JScrollPane(txaMessageBody);
 
@@ -699,6 +698,14 @@ public class Interface {
 		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
 				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
 		btnDecisionVariablesFinish.setIcon(icoFinish);
+		
+		btnDecisionVariablesFinish.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				decisionVarFrame.dispose();
+			}
+		});
 		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
 		decisionVarFrame.add(pnlDecision);
 	}
@@ -736,14 +743,14 @@ public class Interface {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for(int i=0;i<criteriaNames.size() && i<criteriaPaths.size()
-						&& i<criteriaTypes.size(); i++) {
+				for(int i=0;i<criteriaNames.size() && i<criteriaPaths.size() && i<criteriaTypes.size(); i++) {
 					  Criteria criteria = new Criteria(
 								criteriaNames.get(i).getText(),
 								criteriaPaths.get(i).getSelectedFile().getPath(),
 								criteriaTypes.get(i).getSelectedItem().toString());
 						problem.addCriteria(criteria);
 				}
+								
 			}
 		});
 		
@@ -891,7 +898,7 @@ public class Interface {
 	}
 
 	/**
-	 *	Frame that shows the graphics from the optmization process 
+	 *	Frame that shows the graphics from the optimization process 
 	 **/
 	private void setGraphicsFrame(JFrame frame) {
 		frame.setVisible(true);
@@ -909,6 +916,8 @@ public class Interface {
 		frame.setLocationRelativeTo(null);
 		if(frame.getTitle().equals("Problem to be optimized")) {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		}else if(frame.getTitle().equals("Criterias") || frame.getTitle().equals("Decision Variables")){
+			frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		}else {
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -997,17 +1006,33 @@ public class Interface {
 						decisionVariableMaxValue, decisionVariableRestriction));
 			}
 		}
-
-		problem = new Problem(txtProblemName.getText(), txaProblemDescription.getText(), txtEmail.getText(),
-				new Time(Integer.parseInt(spnMaxNumberOfDays.getValue().toString()),
-						Integer.parseInt(spnMaxNumberOfHours.getValue().toString()),
-						Integer.parseInt(spnMaxNumberOfMinutes.getValue().toString())),
-				new Time(Integer.parseInt(spnIdealNumberOfDays.getValue().toString()),
+		
+		problem.setName(txtProblemName.getText());
+		problem.setDescription(txaProblemDescription.getText());
+		problem.setEmail(txtEmail.getText());
+		problem.setMax(new Time(Integer.parseInt(spnMaxNumberOfDays.getValue().toString()),
+				Integer.parseInt(spnMaxNumberOfHours.getValue().toString()),
+				Integer.parseInt(spnMaxNumberOfMinutes.getValue().toString())));
+		problem.setIdeal(new Time(Integer.parseInt(spnIdealNumberOfDays.getValue().toString()),
 						Integer.parseInt(spnIdealNumberOfHours.getValue().toString()),
-						Integer.parseInt(spnIdealNumberOfMinutes.getValue().toString())),
-				groupName, Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()), variablesList);
+						Integer.parseInt(spnIdealNumberOfMinutes.getValue().toString())));
+		problem.setGroupName(groupName);
+		problem.setNumberVariables(Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
+		problem.setVariables(variablesList);
 	}
 
+	public JButton getCreateProblem(){
+		return btnCreateProblem;
+	}
+	
+	public JButton getReadProblem() {
+		return btnReadProblem;
+	}
+	
+	public JButton getGoBack(){
+		return btnGoBack;
+	}
+	
 	public JButton getHelpButton() {
 		return btnHelp;
 	}
@@ -1019,9 +1044,29 @@ public class Interface {
 	public JButton getMessageSendButton() {
 		return btnMessageSend;
 	}
+	
+	public void setEmail(String text) {
+		txtEmail.setText(text);
+	}
 
+	public void setEmailTitle(String emailTitle) {
+		txtMessageTitle.setText(emailTitle);
+	}
+	
+	public void setEmailMessage(String emailMessage) {
+		txaMessageBody.setText(emailMessage);
+	}
+	
 	public JButton getDecisionVarButton() {
 		return btnDecisionVariables;
+	}
+	
+	public JButton getDecisionVariablesFinishButton() {
+		return btnDecisionVariablesFinish;
+	}
+	
+	public JButton getCriteriaFinishButton() {
+		return btnCriteriaFinish;
 	}
 
 	public JButton getCriteriaButton() {

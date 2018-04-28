@@ -121,6 +121,51 @@ public class Problem {
 		return variables;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	
+	public void setMax(Time max) {
+		this.max = max;
+	}
+
+
+	public void setIdeal(Time ideal) {
+		this.ideal = ideal;
+	}
+
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+
+	public void setNumberVariables(int numberVariables) {
+		this.numberVariables = numberVariables;
+	}
+
+
+	public void setVariables(List<Variable> variables) {
+		this.variables = variables;
+	}
+
+
+	public void setCriterias(List<Criteria> criterias) {
+		this.criterias = criterias;
+	}
+
+	
 	public String toString() {
 		String allVariables = "";
 		for(Variable var : getVariables()) {
