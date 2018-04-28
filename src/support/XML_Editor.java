@@ -26,6 +26,7 @@ import problem.Variable;
  */
 public class XML_Editor {
 	
+	private final String configPath = "./config.xml";
 	
 		
 		/**
@@ -102,36 +103,7 @@ public class XML_Editor {
 			return problem;
 	}
 		
-		/**
-		 * Reads a XML file from the received path and creates a Configuration (Config Class) 
-		 * 
-		 * @param path of xml file
-		 * @return Config
-		 */	
-	public Config readConfig(String path) {
-		Config config = new Config("");
-		try {
-
-			File fXmlFile = new File(path);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
-
-			doc.getDocumentElement().normalize();
-						
-			Node node = (Element) doc.getElementsByTagName("Administrator").item(0);
-			
-			if(node.getNodeType() == Node.ELEMENT_NODE) {
-				Element conf = (Element) node;
-								
-				config = new Config(conf.getAttribute("email"));
-			}
-		
-		    } catch (Exception e) {
-			e.printStackTrace();
-		    }
-		return config;
-	}
+	
 	/**
 	 * Writes the Problem into XML file
 	 * 
@@ -205,47 +177,39 @@ public class XML_Editor {
 		  }
 	}
 	
+	
 	/**
-	 * Writes the Config into XML file
+	 * Reads a XML file from the received path and creates a Configuration (Config Class) 
 	 * 
-	 * @param path of file
-	 * @param config
-	 */
-	public void writeConfig(String path,Config config) {
-			try {
-				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder docBuilder;
-				docBuilder = docFactory.newDocumentBuilder();
-				// Root elements
-				Document doc = docBuilder.newDocument();
-				Element probTag = doc.createElement("Administrator");
-				probTag.setAttribute("email", config.getEmailAdmin());
+	 * @param path of xml file
+	 * @return Config
+	 */	
+	public Config readConfig() {
+		Config config = new Config("");
+		try {
+	
+			File fXmlFile = new File(configPath);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
+	
+			doc.getDocumentElement().normalize();
+						
+			Node node = (Element) doc.getElementsByTagName("Administrator").item(0);
 			
-				doc.appendChild(probTag);
-				
-				
-				TransformerFactory transformerFactory = TransformerFactory.newInstance();
-				Transformer transformer = transformerFactory.newTransformer();
-				DOMSource source = new DOMSource(doc);
-				StreamResult result = new StreamResult(new File(path));
-
-				transformer.transform(source, result);
-
-				System.out.println("File saved!");
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TransformerConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (TransformerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(node.getNodeType() == Node.ELEMENT_NODE) {
+				Element conf = (Element) node;
+								
+				config = new Config(conf.getAttribute("email"));
 			}
-
-			
 		
+		    } catch (Exception e) {
+			e.printStackTrace();
+		    }
+		return config;
 	}
+		
+	
 	
 	
 	

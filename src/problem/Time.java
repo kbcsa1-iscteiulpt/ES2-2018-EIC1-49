@@ -45,6 +45,7 @@ public class Time {
 	}
 	
 	public String toString() {
-		return "Days:"+getDays()+"; Hours:"+getHours()+"; Minutes:"+getMinutes();
+		return "Days:"+getDays()+"-Hours:"+getHours()+"-Minutes:"+getMinutes()
+		+System.getProperty("line.separator");
 	}
 }

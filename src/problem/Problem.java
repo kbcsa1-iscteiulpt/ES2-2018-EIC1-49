@@ -123,16 +123,34 @@ public class Problem {
 	
 	public String toString() {
 		String allVariables = "";
+		boolean first=true;
 		for(Variable var : getVariables()) {
-			allVariables+="   -"+var.toString()+System.getProperty("line.separator");
+			if(first) {
+				allVariables+=";";
+				first=false;
+			}
+			allVariables+="   -"+var.toString()+";"+System.getProperty("line.separator");
 		}
 		
-		return "Name:"+getName()+"; Description:"+getDescription()+";  E-mail:"+getEmail()+
-				"; Date of creation:"+getCreationDate()+System.getProperty("line.separator")+
-				"Max time:"+getMax().toString()+System.getProperty("line.separator")+
-				"Ideal time:"+getIdeal().toString()+System.getProperty("line.separator")+
-				"Variable group name:"+getGroupName()+"; Number of variables:"+getNumberVariables()+
-				System.getProperty("line.separator") + allVariables;
+		String allCriterias = "";
+		first=true;
+		for(Criteria crit : getCriterias()) {
+			if(first) {
+				allCriterias+=";";
+				first=false;
+			}
+			allCriterias+="   -"+crit.toString()+";"+System.getProperty("line.separator");
+		}
+		
+		
+		
+		return "Name:"+getName()+";Description:"+getDescription()+";E-mail:"+getEmail()+
+				";Date of creation:"+getCreationDate()+System.getProperty("line.separator")+
+				";Max time:"+getMax().toString()+System.getProperty("line.separator")+
+				";Ideal time:"+getIdeal().toString()+System.getProperty("line.separator")+
+				";Variable group name:"+getGroupName()+";Number of variables:"+getNumberVariables()+
+				System.getProperty("line.separator") + allVariables+
+				System.getProperty("line.separator") + allCriterias;
 	}
 	
 	

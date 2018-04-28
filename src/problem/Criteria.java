@@ -46,7 +46,7 @@ public class Criteria {
 	
 	
 	public String toString() {
-		return "Name:"+getName()+"; Path:"+getPath()+"; Arguments Type:"+getType()
+		return "Name:"+getName()+";Path:"+getPath()+";Arguments Type:"+getType()
 		+System.getProperty("line.separator");
 	}
 }

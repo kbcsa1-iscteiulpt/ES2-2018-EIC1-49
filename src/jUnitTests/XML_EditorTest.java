@@ -45,13 +45,15 @@ public class XML_EditorTest {
 		assertTrue(p.getDescription().equals(problem.getDescription()));
 		
 
-		Config config = new Config("email@gmail.com");
 		
-		xml.writeConfig("src/jUnitTests/configTest.xml", config);
 		
-		Config conf = xml.readConfig("src/jUnitTests/configTest.xml");
-		
-		assertTrue(config.getEmailAdmin().equals(conf.getEmailAdmin()));
+	}
+	
+	@Test
+	public void readConfigTest() {
+
+		Config conf = xml.readConfig();
+		assertTrue(!conf.getEmailAdmin().equals(""));
 	}
 	
 

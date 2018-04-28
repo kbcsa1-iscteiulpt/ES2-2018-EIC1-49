@@ -59,7 +59,7 @@ import support.XML_Editor;
 
 public class Interface {
 
-	private String adminEmail = "projetodees7@gmail.com";
+	private String adminEmail ;
 
 	private JFrame decisionFrame;
 	private JFrame readProblemFrame;
@@ -112,11 +112,13 @@ public class Interface {
 
 	private JTable tblCriteria;
 
-	public Interface() {
+	public Interface(String adminEmail) {
 		decisionFrame = new JFrame("Problem to be optimized");
 		setFrame(decisionFrame, 0.25);
 		setDecisionContent(decisionFrame);
 		decisionFrame.setVisible(true);
+		
+		this.adminEmail = adminEmail;
 	}
 
 	/**
