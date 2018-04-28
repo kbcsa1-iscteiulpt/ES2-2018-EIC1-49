@@ -49,7 +49,7 @@ public class PDF_Editor {
 	         g2d.drawString(problem.getDescription(), 100, line);
 	         
 	         pdfDoc.addPage(newPage);
-	         pdfDoc.saveDocument("./src/files/"+problem.getName()+".pdf");
+	         pdfDoc.saveDocument("./results/"+problem.getName()+".pdf");
     	}
     	catch(Throwable t)
     	{
