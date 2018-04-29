@@ -95,6 +95,7 @@ public class Interface {
 	private JSpinner spnNumberOfDecisionVariables;
 	private JButton btnDecisionVariables;
 
+	private DefaultTableModel dtmDecisionVariables;
 	private JTextField txtNameOfDecisionVariablesGroup;
 	private JTable tblDecisionVariables;
 	private JButton btnDecisionVariablesFinish;
@@ -677,7 +678,7 @@ public class Interface {
 		pnlNameOfDecisionVariablesGroup.add(lblNumberOfDecisionVariable, BorderLayout.NORTH);
 		pnlNameOfDecisionVariablesGroup.add(spnNumberOfDecisionVariables, BorderLayout.NORTH);
 
-		DefaultTableModel dtmDecisionVariables = new DefaultTableModel();
+		dtmDecisionVariables = new DefaultTableModel();
 
 		tblDecisionVariables.setModel(dtmDecisionVariables);
 
@@ -696,7 +697,7 @@ public class Interface {
 
 		if (Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()) != 0) {
 			for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
-				dtmDecisionVariables.addRow(new Object[] { "", "", "" });
+				dtmDecisionVariables.addRow(new Object[] { "", "", "","" ,""});
 				tblDecisionVariables.getColumnModel().getColumn(1)
 						.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
 			}
@@ -709,7 +710,7 @@ public class Interface {
 				int spinnerValue = Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString());
 				if (dtmDecisionVariables.getRowCount() < spinnerValue) {
 					for (int j = 0; j < spinnerValue - dtmDecisionVariables.getRowCount(); j++) {
-						dtmDecisionVariables.addRow(new Object[] { "", "", "" });
+						dtmDecisionVariables.addRow(new Object[] { "", "", "","" ,""});
 						tblDecisionVariables.getColumnModel().getColumn(1)
 								.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
 					}
@@ -737,10 +738,12 @@ public class Interface {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean varsReady = true;
 				for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
-					if (dtmDecisionVariables.getValueAt(i, 0).equals("")
-							|| dtmDecisionVariables.getValueAt(i, 1).equals("")
-							|| dtmDecisionVariables.getValueAt(i, 2).equals("")
-							|| dtmDecisionVariables.getValueAt(i, 3).equals("")) {
+					if (dtmDecisionVariables.getValueAt(i, 0).toString().equals("")
+							|| dtmDecisionVariables.getValueAt(i, 1).toString().equals("")
+							|| dtmDecisionVariables.getValueAt(i, 2).toString().equals("")
+							|| dtmDecisionVariables.getValueAt(i, 3).toString().equals("")
+							|| dtmDecisionVariables.getValueAt(i, 4).toString().equals("")
+							) {
 						JOptionPane.showMessageDialog(null, "Please fill the variable's name, type and interval fields",
 								"Warning", JOptionPane.WARNING_MESSAGE);
 						varsReady = false;
@@ -749,7 +752,8 @@ public class Interface {
 				}
 
 				if (varsReady) {
-					tblDecisionVariables.getCellEditor().stopCellEditing();
+					//TODO
+			//		tblDecisionVariables.getCellEditor().stopCellEditing();
 
 					for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
 						Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
@@ -1045,14 +1049,14 @@ public class Interface {
 		txtNameOfDecisionVariablesGroup.setText(problem.getGroupName());
 		spnNumberOfDecisionVariables.setValue(problem.getNumberVariables());
 
-		DefaultTableModel dtmDecisionVariablesXML = new DefaultTableModel();
-		tblDecisionVariables.setModel(dtmDecisionVariablesXML);
+		dtmDecisionVariables = new DefaultTableModel(); 
+		tblDecisionVariables.setModel(dtmDecisionVariables);
 
-		dtmDecisionVariablesXML.addColumn("Name");
-		dtmDecisionVariablesXML.addColumn("Type");
-		dtmDecisionVariablesXML.addColumn("Minimum Value");
-		dtmDecisionVariablesXML.addColumn("Maximum Value");
-		dtmDecisionVariablesXML.addColumn("Restrictions");
+		dtmDecisionVariables.addColumn("Name");
+		dtmDecisionVariables.addColumn("Type");
+		dtmDecisionVariables.addColumn("Minimum Value");
+		dtmDecisionVariables.addColumn("Maximum Value");
+		dtmDecisionVariables.addColumn("Restrictions");
 		String[] variableDataTypesXML = { "boolean", "byte", "char", "double", "float", "integer", "long", "real",
 				"short", "String" };
 		JComboBox<String> cmbVariableDataTypesXML = new JComboBox<>(variableDataTypesXML);
@@ -1061,11 +1065,11 @@ public class Interface {
 		List<Variable> variablesList = problem.getVariables();
 		
 			if (i < variablesList.size()) {
-				dtmDecisionVariablesXML.addRow(new Object[] { variablesList.get(i).getName(),
+				dtmDecisionVariables.addRow(new Object[] { variablesList.get(i).getName(),
 						variablesList.get(i).getType(), variablesList.get(i).getMin(), variablesList.get(i).getMax(),
 						variablesList.get(i).getRestriction() });
 			} else {
-				dtmDecisionVariablesXML.addRow(new Object[] { "", "", "","" });
+				dtmDecisionVariables.addRow(new Object[] { "", "", "","","" });
 			}
 			tblDecisionVariables.getColumnModel().getColumn(1)
 					.setCellEditor(new DefaultCellEditor(cmbVariableDataTypesXML));
