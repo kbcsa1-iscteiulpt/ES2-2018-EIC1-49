@@ -1,9 +1,18 @@
 package support;
 
+/**
+ * Class that represents system configuration
+ * contains:
+ * 		- email of the administrator
+
+ * 
+ * @author Kevin Corrales nº 73529
+ *
+ */
 public class Config {
 	
-	private  String emailAdmin;
-	
+	private final String emailAdmin;
+		
 	public Config(String emailAdmin){
 		this.emailAdmin = emailAdmin;
 	}

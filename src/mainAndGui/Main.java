@@ -6,11 +6,16 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-import support.*;
+import problem.Problem;
+import support.Config;
+import support.XML_Editor;
 
 public class Main {
 
 	public static void main(String[] args) {
+		
+	
+		
 /*		Support support = new Support();
 		try {
 			support.SendEmail("projetodees7", "P@ssw0rd123", "ricardojoaosantos0@gmail.com", "", "test 4", "e agora");
@@ -24,9 +29,18 @@ public class Main {
 			e.printStackTrace();
 		}
 	*/
-		new Interface();
-	
 		
+		XML_Editor xml = new XML_Editor();
+		Config config = xml.readConfig();
+		
+		new Interface(config.getEmailAdmin());
+		
+		/*
+		XML_Editor xml = new XML_Editor();
+		Problem p = xml.read("./src/jUnitTests/test.xml");
+		PDF_Editor pdf = new PDF_Editor();
+		pdf.write(p);
+		*/
 	}
 
 }

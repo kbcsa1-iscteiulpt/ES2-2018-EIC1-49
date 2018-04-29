@@ -64,7 +64,8 @@ public class Variable {
 	}
 	
 	public String toString() {
-		return "Variable name:"+getName()+"; Type:"+getType()+"; Minimum range:"+getMin()+
-				"; Maximum range:"+getMax()+"; Restrictions:"+getRestriction();
+		return "Variable name:"+getName()+";Type:"+getType()+";Minimum range:"+getMin()+
+				";Maximum range:"+getMax()+";Restrictions:"+getRestriction().replace(";",":")
+				+System.getProperty("line.separator");
 	}
 }

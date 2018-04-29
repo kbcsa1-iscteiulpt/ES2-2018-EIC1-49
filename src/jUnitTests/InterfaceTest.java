@@ -7,6 +7,8 @@ import javax.swing.JTextField;
 import org.junit.Test;
 
 import mainAndGui.Interface;
+import support.Config;
+import support.XML_Editor;
 
 /**
  * This is a jUnitTestCase that tests the interface
@@ -15,10 +17,12 @@ import mainAndGui.Interface;
 public class InterfaceTest {
 
 	private Interface interfaceTest;
+	private XML_Editor xml = new XML_Editor();
+	private Config config = xml.readConfig();
 
 	@Test
 	public void inicialInterface() {
-		interfaceTest = new Interface();
+		interfaceTest = new Interface(config.getEmailAdmin());
 
 		JButton btnCreateProblem = interfaceTest.getCreateProblem();
 		btnCreateProblem.doClick();

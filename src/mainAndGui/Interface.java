@@ -56,12 +56,12 @@ import support.XML_Editor;
 /**
  * This class represents the interface
  * 
- * @author Diana Lopes nº 72898
+ * @author Diana Lopes nï¿½ 72898
  **/
 
 public class Interface {
 
-	private String adminEmail = "projetodees7@gmail.com";
+	private String adminEmail ;
 
 	private JFrame decisionFrame;
 	private JFrame readProblemFrame;
@@ -122,6 +122,8 @@ public class Interface {
 		setFrame(decisionFrame, 0.25);
 		setDecisionContent(decisionFrame);
 		decisionFrame.setVisible(true);
+		
+		this.adminEmail = adminEmail;
 	}
 
 	/**
@@ -549,23 +551,23 @@ public class Interface {
 						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 						Date date = new Date();
 
-						String subject = "Otimização em curso: " + txtProblemName.getText() + " "
+						String subject = "Otimizaï¿½ï¿½o em curso: " + txtProblemName.getText() + " "
 								+ dateFormat.format(date);
 						// String name = "Nome do Problema: \n" + txtProblemName.getText();
-						// String description = "Descrição do problema: \n" +
+						// String description = "Descriï¿½ï¿½o do problema: \n" +
 						// txaProblemDescription.getText();
-						// String maxTime = "Tempo máximo de otimização: \n" +
+						// String maxTime = "Tempo mï¿½ximo de otimizaï¿½ï¿½o: \n" +
 						// spnMaxNumberOfDays.getValue().toString()
 						// + "dias" + spnMaxNumberOfHours.getValue().toString() + "horas"
 						// + spnMaxNumberOfMinutes.getValue().toString() + "minutos";
-						// String idealTime = "Tempo ideal de otimização: \n" +
+						// String idealTime = "Tempo ideal de otimizaï¿½ï¿½o: \n" +
 						// spnIdealNumberOfDays.getValue().toString()
 						// + "dias" + spnIdealNumberOfHours.getValue().toString() + "horas"
 						// + spnIdealNumberOfMinutes.getValue().toString() + "minutos";
-						String message = "Muito obrigado por usar esta plataforma de otimização. Será informado por email\r\n"
-								+ "sobre o progresso do processo de otimização, quando o processo de otimização tiver atingido 25%,\r\n"
-								+ "50%, 75% do total do (número de avaliações ou) tempo estimado, e também quando o processo tiver\r\n"
-								+ "terminado, com sucesso ou devido à ocorrência de erros.";
+						String message = "Muito obrigado por usar esta plataforma de otimizaï¿½ï¿½o. Serï¿½ informado por email\r\n"
+								+ "sobre o progresso do processo de otimizaï¿½ï¿½o, quando o processo de otimizaï¿½ï¿½o tiver atingido 25%,\r\n"
+								+ "50%, 75% do total do (nï¿½mero de avaliaï¿½ï¿½es ou) tempo estimado, e tambï¿½m quando o processo tiver\r\n"
+								+ "terminado, com sucesso ou devido ï¿½ ocorrï¿½ncia de erros.";
 
 						support.SendEmail(adminEmail, txtEmail.getText(), subject, message);
 
