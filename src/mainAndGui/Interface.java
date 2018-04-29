@@ -117,12 +117,11 @@ public class Interface {
 	private XML_Editor xml = new XML_Editor();
 	private Problem problem = new Problem();
 
-	public Interface() {
+	public Interface(String adminEmail) {
 		decisionFrame = new JFrame("Problem to be optimized");
 		setFrame(decisionFrame, 0.25);
 		setDecisionContent(decisionFrame);
 		decisionFrame.setVisible(true);
-		
 		this.adminEmail = adminEmail;
 	}
 
@@ -458,6 +457,7 @@ public class Interface {
 			public void actionPerformed(ActionEvent e) {
 				setDecisionFrame(decisionVarFrame);
 				decisionVarFrame.setVisible(true);
+				fillDecisionVariableForm();
 			}
 
 		});
@@ -1057,14 +1057,15 @@ public class Interface {
 				"short", "String" };
 		JComboBox<String> cmbVariableDataTypesXML = new JComboBox<>(variableDataTypesXML);
 
-		for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
-			List<Variable> variablesList = problem.getVariables();
+		for (int i = 0; i < problem.getNumberVariables(); i++) {
+		List<Variable> variablesList = problem.getVariables();
+		
 			if (i < variablesList.size()) {
 				dtmDecisionVariablesXML.addRow(new Object[] { variablesList.get(i).getName(),
 						variablesList.get(i).getType(), variablesList.get(i).getMin(), variablesList.get(i).getMax(),
 						variablesList.get(i).getRestriction() });
 			} else {
-				dtmDecisionVariablesXML.addRow(new Object[] { "", "", "" });
+				dtmDecisionVariablesXML.addRow(new Object[] { "", "", "","" });
 			}
 			tblDecisionVariables.getColumnModel().getColumn(1)
 					.setCellEditor(new DefaultCellEditor(cmbVariableDataTypesXML));
@@ -1083,13 +1084,13 @@ public class Interface {
 
 			DefaultTableModel dtmDecisionVariables = (DefaultTableModel) tblDecisionVariables.getModel();
 			int numberOfRows = dtmDecisionVariables.getRowCount();
-			for (int i = 0; i < numberOfRows; i++) {
+			for (int i = 0; i < numberOfRows ; i++) {
 				String decisionVariableName = "";
 				String decisionVariableType = "";
 				String decisionVariableMinValue = "";
 				String decisionVariableMaxValue = "";
 				String decisionVariableRestriction = "";
-
+				
 				if (dtmDecisionVariables.getValueAt(i, 0).toString() != null)
 					decisionVariableName = dtmDecisionVariables.getValueAt(i, 0).toString();
 				if (dtmDecisionVariables.getValueAt(i, 1).toString() != null)
