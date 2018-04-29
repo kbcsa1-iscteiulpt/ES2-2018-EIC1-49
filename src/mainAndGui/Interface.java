@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,9 +38,12 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import problem.Criteria;
@@ -97,21 +102,20 @@ public class Interface {
 	private JButton btnCriteria;
 	private JButton btnAddCriteria;
 	private JButton btnReadJar;
+	private int criteriaAdded = 0;
 	private JButton btnCriteriaFinish;
 
 	private JButton btnSaveToXML;
 	private JButton btnExecuteProcess;
 	private JButton btnExecuteGraphics;
-	
-	private List<JTextField> criteriaNames = new ArrayList<JTextField>();
-	private List<JFileChooser> criteriaPaths = new ArrayList<JFileChooser>();
-	private List<JComboBox<String>> criteriaTypes = new ArrayList<JComboBox<String>>();
+
+	private Map<Integer, String> criteriaNames = new HashMap<Integer, String>();
+	private Map<Integer, String> criteriaPaths = new HashMap<Integer, String>();
+	private Map<Integer, String> criteriaTypes = new HashMap<Integer, String>();
 
 	private Support support = new Support();
 	private XML_Editor xml = new XML_Editor();
 	private Problem problem = new Problem();
-
-	private JTable tblCriteria;
 
 	public Interface() {
 		decisionFrame = new JFrame("Problem to be optimized");
@@ -121,8 +125,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a frame with two options: read a problem from a XML file or
-	 * create a new one.
+	 * Returns a frame with two options: read a problem from a XML file or create a
+	 * new one.
 	 **/
 	private void setDecisionContent(JFrame frame) {
 		GridLayout gly = new GridLayout(0, 2);
@@ -145,6 +149,7 @@ public class Interface {
 						String filePath = fchReadXML.getSelectedFile().getPath();
 						problem = xml.read(filePath);
 						fillInicialForm(filePath);
+						fillDecisionVariableForm();
 					}
 				}
 				readProblemFrame.setVisible(true);
@@ -199,9 +204,9 @@ public class Interface {
 
 	/**
 	 * Returns a panel with a question mark placed at the top-right and a return
-	 * button at the top-left of the frame. When the question mark is clicked, a
-	 * new frame is displayed to show the FAQ. When the return symbol is
-	 * clicked, it returns to the initial decision panel.
+	 * button at the top-left of the frame. When the question mark is clicked, a new
+	 * frame is displayed to show the FAQ. When the return symbol is clicked, it
+	 * returns to the initial decision panel.
 	 * 
 	 **/
 	private JPanel helpFAQPanel(JFrame frame) {
@@ -245,8 +250,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JTextField filled automatically with the file path
-	 * (to read XML) through the button.
+	 * Returns a panel with a JTextField filled automatically with the file path (to
+	 * read XML) through the button.
 	 **/
 	private JPanel readPanel() {
 		JPanel pnlRead = new JPanel();
@@ -266,6 +271,7 @@ public class Interface {
 					pnlRead.add(txtFilePathXML);
 					pnlRead.revalidate();
 					fillInicialForm(filePath);
+					fillDecisionVariableForm();
 				}
 			}
 		});
@@ -275,8 +281,7 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JTextField for user to fill with the problem's
-	 * name.
+	 * Returns a panel with a JTextField for user to fill with the problem's name.
 	 **/
 	private JPanel problemNamePanel() {
 		JPanel pnlProblemName = new JPanel();
@@ -312,8 +317,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JTextField to fill with user's email. When the
-	 * button is clicked, a new frame is displayed to write and send the email.
+	 * Returns a panel with a JTextField to fill with user's email. When the button
+	 * is clicked, a new frame is displayed to write and send the email.
 	 **/
 	private JPanel emailPanel(JFrame frame) {
 		JPanel pnlEmail = new JPanel(new FlowLayout());
@@ -378,8 +383,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JSpinner for user to select the maximum time to
-	 * wait for the optimization.
+	 * Returns a panel with a JSpinner for user to select the maximum time to wait
+	 * for the optimization.
 	 **/
 	private JPanel maxTimePanel() {
 		JPanel pnlMaxTime = new JPanel(new FlowLayout());
@@ -404,8 +409,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JSpinner for user to select the ideal time to wait
-	 * for the optimization.
+	 * Returns a panel with a JSpinner for user to select the ideal time to wait for
+	 * the optimization.
 	 **/
 	private JPanel idealTimePanel() {
 		JPanel pnlIdealTime = new JPanel(new FlowLayout());
@@ -430,39 +435,37 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a panel with a JSpinner to select the number of decision
-	 * variables and button. When clicked, a new frame is displayed to write the
-	 * decision variable group name and to fill the table of the variable
-	 * decision.
+	 * Returns a panel with a JSpinner to select the number of decision variables
+	 * and button. When clicked, a new frame is displayed to write the decision
+	 * variable group name and to fill the table of the variable decision.
 	 **/
 
 	private JPanel decisionVarPanel() {
 		JPanel pnlDecisionVar = new JPanel(new FlowLayout());
-		JLabel lblNumberOfDecisionVariable = new JLabel("Number of Decision Variables");
-		spnNumberOfDecisionVariables = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+
 		btnDecisionVariables = new JButton("Decision Variables");
 		btnDecisionVariables.setContentAreaFilled(false);
+		spnNumberOfDecisionVariables = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+		txtNameOfDecisionVariablesGroup = new JTextField();
+		tblDecisionVariables = new JTable();
+		JFrame decisionVarFrame = new JFrame("Decision Variables");
+		setFrame(decisionVarFrame, 0.5);
 		btnDecisionVariables.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame decisionVarFrame = new JFrame("Decision Variables");
-				setFrame(decisionVarFrame, 0.5);
 				setDecisionFrame(decisionVarFrame);
 				decisionVarFrame.setVisible(true);
-				fillDecisionVariableForm();
 			}
 
 		});
-		pnlDecisionVar.add(lblNumberOfDecisionVariable);
-		pnlDecisionVar.add(spnNumberOfDecisionVariables);
+
 		pnlDecisionVar.add(btnDecisionVariables);
 		return pnlDecisionVar;
 	}
 
 	/**
-	 * Returns a panel with a JButton that saves the configuration to a XML
-	 * file.
+	 * Returns a panel with a JButton that saves the configuration to a XML file.
 	 **/
 	private JPanel savePanel() {
 		JPanel pnlSave = new JPanel();
@@ -505,13 +508,13 @@ public class Interface {
 		JPanel pnlCriteria = new JPanel();
 		btnCriteria = new JButton("Criteria to be optimized");
 		btnCriteria.setContentAreaFilled(false);
+		JFrame criteriaFrame = new JFrame("Criterias");
+		setFrame(criteriaFrame, 0.5);
+		setCriteriaFrame(criteriaFrame);
 		btnCriteria.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame criteriaFrame = new JFrame("Criterias");
-				setFrame(criteriaFrame, 0.5);
-				setCriteriaFrame(criteriaFrame);
 				criteriaFrame.setVisible(true);
 			}
 		});
@@ -532,8 +535,8 @@ public class Interface {
 		btnExecuteProcess.addActionListener(new ActionListener() {
 
 			/**
-			 * For now the only thing it does is send an email to the user with
-			 * information concerning the optimization
+			 * For now the only thing it does is send an email to the user with information
+			 * concerning the optimization
 			 **/
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -545,21 +548,24 @@ public class Interface {
 					try {
 						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 						Date date = new Date();
-						
-						
-						String subject = "Otimização em curso: " + txtProblemName.getText() + " " +  dateFormat.format(date);
-//						String name = "Nome do Problema: \n" + txtProblemName.getText();
-//						String description = "Descrição do problema: \n" + txaProblemDescription.getText();
-//						String maxTime = "Tempo máximo de otimização: \n" + spnMaxNumberOfDays.getValue().toString()
-//								+ "dias" + spnMaxNumberOfHours.getValue().toString() + "horas"
-//								+ spnMaxNumberOfMinutes.getValue().toString() + "minutos";
-//						String idealTime = "Tempo ideal de otimização: \n" + spnIdealNumberOfDays.getValue().toString()
-//								+ "dias" + spnIdealNumberOfHours.getValue().toString() + "horas"
-//								+ spnIdealNumberOfMinutes.getValue().toString() + "minutos";
-						String message = "Muito obrigado por usar esta plataforma de otimização. Será informado por email\r\n" + 
-								"sobre o progresso do processo de otimização, quando o processo de otimização tiver atingido 25%,\r\n" + 
-								"50%, 75% do total do (número de avaliações ou) tempo estimado, e também quando o processo tiver\r\n" + 
-								"terminado, com sucesso ou devido à ocorrência de erros.";
+
+						String subject = "Otimização em curso: " + txtProblemName.getText() + " "
+								+ dateFormat.format(date);
+						// String name = "Nome do Problema: \n" + txtProblemName.getText();
+						// String description = "Descrição do problema: \n" +
+						// txaProblemDescription.getText();
+						// String maxTime = "Tempo máximo de otimização: \n" +
+						// spnMaxNumberOfDays.getValue().toString()
+						// + "dias" + spnMaxNumberOfHours.getValue().toString() + "horas"
+						// + spnMaxNumberOfMinutes.getValue().toString() + "minutos";
+						// String idealTime = "Tempo ideal de otimização: \n" +
+						// spnIdealNumberOfDays.getValue().toString()
+						// + "dias" + spnIdealNumberOfHours.getValue().toString() + "horas"
+						// + spnIdealNumberOfMinutes.getValue().toString() + "minutos";
+						String message = "Muito obrigado por usar esta plataforma de otimização. Será informado por email\r\n"
+								+ "sobre o progresso do processo de otimização, quando o processo de otimização tiver atingido 25%,\r\n"
+								+ "50%, 75% do total do (número de avaliações ou) tempo estimado, e também quando o processo tiver\r\n"
+								+ "terminado, com sucesso ou devido à ocorrência de erros.";
 
 						support.SendEmail(adminEmail, txtEmail.getText(), subject, message);
 
@@ -570,11 +576,10 @@ public class Interface {
 			}
 		});
 
-		
-		btnExecuteGraphics= new JButton("Graphics");
+		btnExecuteGraphics = new JButton("Graphics");
 		btnExecuteGraphics.setContentAreaFilled(false);
 		btnExecuteGraphics.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				graphicsFrame = new JFrame("Graphics");
@@ -588,9 +593,8 @@ public class Interface {
 	}
 
 	/**
-	 * Returns a frame with two JTextField to fill and a button to send the
-	 * email. One with the subject of the email and the other with the email
-	 * body.
+	 * Returns a frame with two JTextField to fill and a button to send the email.
+	 * One with the subject of the email and the other with the email body.
 	 **/
 	private JFrame setEmailFrame(JFrame frame) {
 		JFrame sendEmailFrame = new JFrame("Email");
@@ -624,8 +628,8 @@ public class Interface {
 		btnMessageSend.addActionListener(new ActionListener() {
 
 			/**
-			 * Closes the email frame and sends the intended email, if the
-			 * operation fails shows a warning message.
+			 * Closes the email frame and sends the intended email, if the operation fails
+			 * shows a warning message.
 			 **/
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -657,38 +661,65 @@ public class Interface {
 	}
 
 	/**
-	 * Adds content to the frame given with a table to write the decision
-	 * variable group name and to fill the table of the variable decision. Each
-	 * decision variable has a name, type, and potential intervals and
-	 * restrictions.
+	 * Adds content to the frame given with a table to write the decision variable
+	 * group name and to fill the table of the variable decision. Each decision
+	 * variable has a name, type, and potential intervals and restrictions.
 	 **/
 	private void setDecisionFrame(JFrame decisionVarFrame) {
 		JPanel pnlDecision = new JPanel(new BorderLayout());
 
 		JPanel pnlNameOfDecisionVariablesGroup = new JPanel();
 		JLabel lblNameOfDecisionVariablesGroup = new JLabel("Name of Decision Variable Group:");
-		txtNameOfDecisionVariablesGroup = new JTextField();
-		txtNameOfDecisionVariablesGroup.setColumns(50);
+		txtNameOfDecisionVariablesGroup.setColumns(25);
+		JLabel lblNumberOfDecisionVariable = new JLabel("Number of Decision Variables");
+		pnlNameOfDecisionVariablesGroup.add(lblNumberOfDecisionVariable, BorderLayout.NORTH);
+		pnlNameOfDecisionVariablesGroup.add(spnNumberOfDecisionVariables, BorderLayout.NORTH);
 
 		DefaultTableModel dtmDecisionVariables = new DefaultTableModel();
-		tblDecisionVariables = new JTable();
+
 		tblDecisionVariables.setModel(dtmDecisionVariables);
 
 		dtmDecisionVariables.addColumn("Name");
 		dtmDecisionVariables.addColumn("Type");
-		dtmDecisionVariables.addColumn("Interval");
+		dtmDecisionVariables.addColumn("Minimum Value");
+		dtmDecisionVariables.addColumn("Maximum Value");
 		dtmDecisionVariables.addColumn("Restrictions");
 
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setToolTipText("Please use ; to separate the restrictions");
+		tblDecisionVariables.getColumnModel().getColumn(4).setCellRenderer(renderer);
 		String[] variableDataTypes = { "boolean", "byte", "char", "double", "float", "integer", "long", "real", "short",
 				"String" };
 		JComboBox<String> cmbVariableDataTypes = new JComboBox<>(variableDataTypes);
 
-		for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
-			dtmDecisionVariables.addRow(new Object[] { "", "", "" });
-			tblDecisionVariables.getColumnModel().getColumn(1)
-					.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
+		if (Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()) != 0) {
+			for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
+				dtmDecisionVariables.addRow(new Object[] { "", "", "" });
+				tblDecisionVariables.getColumnModel().getColumn(1)
+						.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
+			}
 		}
 
+		spnNumberOfDecisionVariables.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				int spinnerValue = Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString());
+				if (dtmDecisionVariables.getRowCount() < spinnerValue) {
+					for (int j = 0; j < spinnerValue - dtmDecisionVariables.getRowCount(); j++) {
+						dtmDecisionVariables.addRow(new Object[] { "", "", "" });
+						tblDecisionVariables.getColumnModel().getColumn(1)
+								.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
+					}
+				} else if (dtmDecisionVariables.getRowCount() > spinnerValue) {
+					for (int k = 0; k < Math.abs(spinnerValue - dtmDecisionVariables.getRowCount()); k++) {
+						dtmDecisionVariables.removeRow(dtmDecisionVariables.getRowCount() - 1);
+						tblDecisionVariables.revalidate();
+					}
+				}
+
+			}
+		});
 		pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
 		pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
 		pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
@@ -698,14 +729,38 @@ public class Interface {
 		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
 				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
 		btnDecisionVariablesFinish.setIcon(icoFinish);
-		
 		btnDecisionVariablesFinish.addActionListener(new ActionListener() {
-			
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				decisionVarFrame.dispose();
+			public void actionPerformed(ActionEvent arg0) {
+				boolean varsReady = true;
+				for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
+					if (dtmDecisionVariables.getValueAt(i, 0).equals("")
+							|| dtmDecisionVariables.getValueAt(i, 1).equals("")
+							|| dtmDecisionVariables.getValueAt(i, 2).equals("")
+							|| dtmDecisionVariables.getValueAt(i, 3).equals("")) {
+						JOptionPane.showMessageDialog(null, "Please fill the variable's name, type and interval fields",
+								"Warning", JOptionPane.WARNING_MESSAGE);
+						varsReady = false;
+						break;
+					}
+				}
+
+				if (varsReady) {
+					tblDecisionVariables.getCellEditor().stopCellEditing();
+
+					for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
+						Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
+								dtmDecisionVariables.getValueAt(j, 1).toString(),
+								dtmDecisionVariables.getValueAt(j, 2).toString(),
+								dtmDecisionVariables.getValueAt(j, 3).toString(),
+								dtmDecisionVariables.getValueAt(j, 4).toString());
+						problem.addVariable(variable);
+					}
+				}
 			}
 		});
+
 		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
 		decisionVarFrame.add(pnlDecision);
 	}
@@ -720,7 +775,7 @@ public class Interface {
 		JPanel pnlCriteriaList = new JPanel();
 		pnlCriteriaList.setLayout(new BoxLayout(pnlCriteriaList, BoxLayout.Y_AXIS));
 		JPanel pnlCriteriaFinish = new JPanel();
-		
+
 		btnAddCriteria = new JButton("Add criteria");
 		btnAddCriteria.setContentAreaFilled(false);
 		btnAddCriteria.setFocusable(false);
@@ -728,11 +783,12 @@ public class Interface {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+
 				pnlCriteriaList.add(addCriteria());
 				pnlCriteria.revalidate();
 			}
 		});
-	
+
 		btnCriteriaFinish = new JButton("Finish");
 		btnCriteriaFinish.setContentAreaFilled(false);
 		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
@@ -740,36 +796,47 @@ public class Interface {
 		btnCriteriaFinish.setContentAreaFilled(false);
 		btnCriteriaFinish.setIcon(icoFinish);
 		btnCriteriaFinish.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for(int i=0;i<criteriaNames.size() && i<criteriaPaths.size() && i<criteriaTypes.size(); i++) {
-					  Criteria criteria = new Criteria(
-								criteriaNames.get(i).getText(),
-								criteriaPaths.get(i).getSelectedFile().getPath(),
-								criteriaTypes.get(i).getSelectedItem().toString());
-						problem.addCriteria(criteria);
+				boolean criteriaReady = true;
+				for (int i = 1; i <= criteriaAdded; i++) {
+					if ((criteriaTypes.isEmpty() || criteriaTypes.get(i).equals("Select a data type"))
+							|| criteriaPaths.isEmpty() || criteriaNames.isEmpty()) {
+
+						JOptionPane.showMessageDialog(null, "Please fill all criteria fields", "Warning",
+								JOptionPane.WARNING_MESSAGE);
+						criteriaReady = false;
+						break;
+					}
 				}
-								
+				if (criteriaReady) {
+					for (int j = 1; j <= criteriaAdded; j++) {
+						Criteria criteria = new Criteria(criteriaNames.get(j), criteriaPaths.get(j),
+								criteriaTypes.get(j));
+						problem.addCriteria(criteria);
+					}
+				}
 			}
 		});
-		
+
 		pnlAddCriteria.add(btnAddCriteria);
 		pnlCriteriaList.add(addCriteria());
 		pnlCriteriaFinish.add(btnCriteriaFinish);
-		
+
 		pnlCriteria.add(pnlAddCriteria, BorderLayout.PAGE_START);
 		pnlCriteria.add(pnlCriteriaList, BorderLayout.CENTER);
 		pnlCriteria.add(pnlCriteriaFinish, BorderLayout.PAGE_END);
-		
+
 		criteriaFrame.add(new JScrollPane(pnlCriteria));
 	}
 
 	/**
-	 * Returns a JPanel with a JTextField to define the criteria(s) and a button
-	 * to upload the .jar file.
+	 * Returns a JPanel with a JTextField to define the criteria(s) and a button to
+	 * upload the .jar file.
 	 **/
 	private JPanel addCriteria() {
+		criteriaAdded++;
 		JPanel pnlCriteria = new JPanel(new FlowLayout());
 		JPanel pnlCriteriaName = new JPanel();
 		JPanel pnlCriteriaJar = new JPanel();
@@ -777,18 +844,40 @@ public class Interface {
 
 		JLabel lblCriteriaName = new JLabel("Criteria Name:");
 		JTextField txtCriteriaName = new JTextField();
-		criteriaNames.add(txtCriteriaName);
 		txtCriteriaName.setColumns(30);
+
+		txtCriteriaName.addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				criteriaNames.put(criteriaAdded, txtCriteriaName.getText());
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				criteriaNames.remove(criteriaAdded);
+			}
+		});
 
 		JLabel lblJarPath = new JLabel("Jar Path");
 		JTextField txtJarPath = new JTextField();
 		txtJarPath.setColumns(15);
+		txtJarPath.addFocusListener(new FocusListener() {
 
-		JLabel lblDataTypeCriteria = new JLabel("Data Type:");
-		String[] dataTypeCriteria = { "Binary", "Double", "Integer"};
-		JComboBox<String> cmbDataType = new JComboBox<String>(dataTypeCriteria);	
-		criteriaTypes.add(cmbDataType);
-		
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (criteriaPaths.containsKey(criteriaAdded)) {
+					criteriaPaths.remove(criteriaAdded);
+				}
+				criteriaPaths.put(criteriaAdded, txtJarPath.getText());
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				criteriaPaths.remove(criteriaAdded);
+			}
+		});
+
 		btnReadJar = new JButton("Add jar");
 		btnReadJar.setContentAreaFilled(false);
 		btnReadJar.addActionListener(new ActionListener() {
@@ -796,30 +885,38 @@ public class Interface {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fchUploadJar = new JFileChooser();
-				criteriaPaths.add(fchUploadJar);
 				if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-					txtJarPath.setText(fchUploadJar.getSelectedFile().getPath());
-			
+					String jarPath = fchUploadJar.getSelectedFile().getPath();
+					txtJarPath.setText(jarPath);
+					if (criteriaPaths.containsKey(criteriaAdded)) {
+						criteriaPaths.remove(criteriaAdded);
+					}
+					criteriaPaths.put(criteriaAdded, jarPath);
 				}
 			}
 		});
-		
-		cmbDataType.addActionListener(new ActionListener() {
-			
+
+		String[] dataTypeCriteria = { "Select a data type", "Binary", "Double", "Integer" };
+		JComboBox<String> cmbDataType = new JComboBox<String>(dataTypeCriteria);
+
+		cmbDataType.addFocusListener(new FocusListener() {
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				 JComboBox<String> cmbSelectedDataType = (JComboBox<String>)e.getSource();
-			     String dataTypeSelected = (String)cmbSelectedDataType.getSelectedItem();
+			public void focusLost(FocusEvent e) {
+				criteriaTypes.put(criteriaAdded, cmbDataType.getSelectedItem().toString());
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				criteriaTypes.remove(criteriaAdded);
 			}
 		});
-		
-		
+
 		pnlCriteriaName.add(lblCriteriaName);
 		pnlCriteriaName.add(txtCriteriaName);
 		pnlCriteriaJar.add(lblJarPath);
 		pnlCriteriaJar.add(txtJarPath);
 		pnlCriteriaJar.add(btnReadJar);
-		pnlCriteriaDataType.add(lblDataTypeCriteria);
 		pnlCriteriaDataType.add(cmbDataType);
 		pnlCriteria.add(pnlCriteriaName);
 		pnlCriteria.add(pnlCriteriaJar);
@@ -898,12 +995,12 @@ public class Interface {
 	}
 
 	/**
-	 *	Frame that shows the graphics from the optimization process 
+	 * Frame that shows the graphics from the optimization process
 	 **/
 	private void setGraphicsFrame(JFrame frame) {
 		frame.setVisible(true);
 	}
-	
+
 	/**
 	 * Defines the size of the given frame. The second parameter indicates the
 	 * number that the screen is divided by.
@@ -914,11 +1011,11 @@ public class Interface {
 
 		frame.setSize((int) (frameWidth * size), (int) (frameHeight * size));
 		frame.setLocationRelativeTo(null);
-		if(frame.getTitle().equals("Problem to be optimized")) {
+		if (frame.getTitle().equals("Problem to be optimized")) {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		}else if(frame.getTitle().equals("Criterias") || frame.getTitle().equals("Decision Variables")){
+		} else if (frame.getTitle().equals("Criterias") || frame.getTitle().equals("Decision Variables")) {
 			frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		}else {
+		} else {
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
 	}
@@ -937,7 +1034,6 @@ public class Interface {
 		spnIdealNumberOfDays.setValue(problem.getIdeal().getDays());
 		spnIdealNumberOfHours.setValue(problem.getIdeal().getHours());
 		spnIdealNumberOfMinutes.setValue(problem.getIdeal().getMinutes());
-		spnNumberOfDecisionVariables.setValue(problem.getNumberVariables());
 	}
 
 	/**
@@ -945,13 +1041,15 @@ public class Interface {
 	 **/
 	public void fillDecisionVariableForm() {
 		txtNameOfDecisionVariablesGroup.setText(problem.getGroupName());
+		spnNumberOfDecisionVariables.setValue(problem.getNumberVariables());
 
 		DefaultTableModel dtmDecisionVariablesXML = new DefaultTableModel();
 		tblDecisionVariables.setModel(dtmDecisionVariablesXML);
 
 		dtmDecisionVariablesXML.addColumn("Name");
 		dtmDecisionVariablesXML.addColumn("Type");
-		dtmDecisionVariablesXML.addColumn("Interval");
+		dtmDecisionVariablesXML.addColumn("Minimum Value");
+		dtmDecisionVariablesXML.addColumn("Maximum Value");
 		dtmDecisionVariablesXML.addColumn("Restrictions");
 		String[] variableDataTypesXML = { "boolean", "byte", "char", "double", "float", "integer", "long", "real",
 				"short", "String" };
@@ -960,10 +1058,9 @@ public class Interface {
 		for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
 			List<Variable> variablesList = problem.getVariables();
 			if (i < variablesList.size()) {
-				dtmDecisionVariablesXML
-						.addRow(new Object[] { variablesList.get(i).getName(), variablesList.get(i).getType(),
-								variablesList.get(i).getMin() + ":" + variablesList.get(i).getMax(),
-								variablesList.get(i).getRestriction() });
+				dtmDecisionVariablesXML.addRow(new Object[] { variablesList.get(i).getName(),
+						variablesList.get(i).getType(), variablesList.get(i).getMin(), variablesList.get(i).getMax(),
+						variablesList.get(i).getRestriction() });
 			} else {
 				dtmDecisionVariablesXML.addRow(new Object[] { "", "", "" });
 			}
@@ -990,23 +1087,25 @@ public class Interface {
 				String decisionVariableMinValue = "";
 				String decisionVariableMaxValue = "";
 				String decisionVariableRestriction = "";
-				String[] decisionVariableRange = dtmDecisionVariables.getValueAt(i, 2).toString().split(":");
 
 				if (dtmDecisionVariables.getValueAt(i, 0).toString() != null)
 					decisionVariableName = dtmDecisionVariables.getValueAt(i, 0).toString();
 				if (dtmDecisionVariables.getValueAt(i, 1).toString() != null)
 					decisionVariableType = dtmDecisionVariables.getValueAt(i, 1).toString();
-				if (decisionVariableRange.length > 0)
-					decisionVariableMinValue = decisionVariableRange[0];
-				if (decisionVariableRange.length > 1)
-					decisionVariableMaxValue = decisionVariableRange[1];
-				if (dtmDecisionVariables.getValueAt(i, 3).toString() != null)
-					decisionVariableRestriction = dtmDecisionVariables.getValueAt(i, 3).toString();
+				if (dtmDecisionVariables.getValueAt(i, 2).toString() != null) {
+					decisionVariableMinValue = dtmDecisionVariables.getValueAt(i, 2).toString();
+				}
+				if (dtmDecisionVariables.getValueAt(i, 3).toString() != null) {
+					decisionVariableMaxValue = dtmDecisionVariables.getValueAt(i, 3).toString();
+				}
+				if (dtmDecisionVariables.getValueAt(i, 4).toString() != null) {
+					decisionVariableRestriction = dtmDecisionVariables.getValueAt(i, 4).toString();
+				}
 				variablesList.add(new Variable(decisionVariableName, decisionVariableType, decisionVariableMinValue,
 						decisionVariableMaxValue, decisionVariableRestriction));
 			}
 		}
-		
+
 		problem.setName(txtProblemName.getText());
 		problem.setDescription(txaProblemDescription.getText());
 		problem.setEmail(txtEmail.getText());
@@ -1014,25 +1113,25 @@ public class Interface {
 				Integer.parseInt(spnMaxNumberOfHours.getValue().toString()),
 				Integer.parseInt(spnMaxNumberOfMinutes.getValue().toString())));
 		problem.setIdeal(new Time(Integer.parseInt(spnIdealNumberOfDays.getValue().toString()),
-						Integer.parseInt(spnIdealNumberOfHours.getValue().toString()),
-						Integer.parseInt(spnIdealNumberOfMinutes.getValue().toString())));
+				Integer.parseInt(spnIdealNumberOfHours.getValue().toString()),
+				Integer.parseInt(spnIdealNumberOfMinutes.getValue().toString())));
 		problem.setGroupName(groupName);
 		problem.setNumberVariables(Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
 		problem.setVariables(variablesList);
 	}
 
-	public JButton getCreateProblem(){
+	public JButton getCreateProblem() {
 		return btnCreateProblem;
 	}
-	
+
 	public JButton getReadProblem() {
 		return btnReadProblem;
 	}
-	
-	public JButton getGoBack(){
+
+	public JButton getGoBack() {
 		return btnGoBack;
 	}
-	
+
 	public JButton getHelpButton() {
 		return btnHelp;
 	}
@@ -1044,7 +1143,7 @@ public class Interface {
 	public JButton getMessageSendButton() {
 		return btnMessageSend;
 	}
-	
+
 	public void setEmail(String text) {
 		txtEmail.setText(text);
 	}
@@ -1052,19 +1151,23 @@ public class Interface {
 	public void setEmailTitle(String emailTitle) {
 		txtMessageTitle.setText(emailTitle);
 	}
-	
+
 	public void setEmailMessage(String emailMessage) {
 		txaMessageBody.setText(emailMessage);
 	}
-	
+
+	public void setSpnNumberOfDecisionVariables(int nrVarDecisions) {
+		spnNumberOfDecisionVariables.setValue(nrVarDecisions);
+	}
+
 	public JButton getDecisionVarButton() {
 		return btnDecisionVariables;
 	}
-	
+
 	public JButton getDecisionVariablesFinishButton() {
 		return btnDecisionVariablesFinish;
 	}
-	
+
 	public JButton getCriteriaFinishButton() {
 		return btnCriteriaFinish;
 	}

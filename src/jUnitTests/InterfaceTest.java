@@ -41,20 +41,17 @@ public class InterfaceTest {
 		
 		JButton btnMessageSend = interfaceTest.getMessageSendButton();
 		btnMessageSend.doClick();
-
-		JSpinner spnNumberOfVariableDecisions = interfaceTest.getSpnNumberOfDecisionVariables();
-		spnNumberOfVariableDecisions.setValue(Integer.valueOf(12));
 		
 		JButton btnDecisionVariables = interfaceTest.getDecisionVarButton();
 		btnDecisionVariables.doClick();
+
 		
 		JButton btnDecisionVariablesFinishButton = interfaceTest.getDecisionVariablesFinishButton();
+	
 		btnDecisionVariablesFinishButton.doClick();
 
 		JButton btnRead = interfaceTest.getReadButton();
-		btnRead.doClick();
-
-		
+		btnRead.doClick();		
 
 		JButton btnCriteria = interfaceTest.getCriteriaButton();
 		btnCriteria.doClick();

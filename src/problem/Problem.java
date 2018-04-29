@@ -85,6 +85,10 @@ public class Problem {
 	public void addCriteria(Criteria criteria) {
 		criterias.add(criteria);
 	}
+	
+	public void addVariable(Variable variable) {
+		variables.add(variable);
+	}
 
 
 	public String getDescription() {
