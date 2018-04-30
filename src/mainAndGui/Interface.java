@@ -61,7 +61,7 @@ import support.XML_Editor;
 
 public class Interface {
 
-	private String adminEmail ;
+	private String adminEmail;
 
 	private JFrame decisionFrame;
 	private JFrame readProblemFrame;
@@ -452,13 +452,12 @@ public class Interface {
 		tblDecisionVariables = new JTable();
 		JFrame decisionVarFrame = new JFrame("Decision Variables");
 		setFrame(decisionVarFrame, 0.5);
+		setDecisionFrame(decisionVarFrame);
 		btnDecisionVariables.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setDecisionFrame(decisionVarFrame);
 				decisionVarFrame.setVisible(true);
-				fillDecisionVariableForm();
 			}
 
 		});
@@ -697,7 +696,7 @@ public class Interface {
 
 		if (Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()) != 0) {
 			for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
-				dtmDecisionVariables.addRow(new Object[] { "", "", "","" ,""});
+				dtmDecisionVariables.addRow(new Object[] { "", "", "", "", "" });
 				tblDecisionVariables.getColumnModel().getColumn(1)
 						.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
 			}
@@ -710,7 +709,7 @@ public class Interface {
 				int spinnerValue = Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString());
 				if (dtmDecisionVariables.getRowCount() < spinnerValue) {
 					for (int j = 0; j < spinnerValue - dtmDecisionVariables.getRowCount(); j++) {
-						dtmDecisionVariables.addRow(new Object[] { "", "", "","" ,""});
+						dtmDecisionVariables.addRow(new Object[] { "", "", "", "", "" });
 						tblDecisionVariables.getColumnModel().getColumn(1)
 								.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
 					}
@@ -741,9 +740,7 @@ public class Interface {
 					if (dtmDecisionVariables.getValueAt(i, 0).toString().equals("")
 							|| dtmDecisionVariables.getValueAt(i, 1).toString().equals("")
 							|| dtmDecisionVariables.getValueAt(i, 2).toString().equals("")
-							|| dtmDecisionVariables.getValueAt(i, 3).toString().equals("")
-							|| dtmDecisionVariables.getValueAt(i, 4).toString().equals("")
-							) {
+							|| dtmDecisionVariables.getValueAt(i, 3).toString().equals("")) {
 						JOptionPane.showMessageDialog(null, "Please fill the variable's name, type and interval fields",
 								"Warning", JOptionPane.WARNING_MESSAGE);
 						varsReady = false;
@@ -752,8 +749,9 @@ public class Interface {
 				}
 
 				if (varsReady) {
-					//TODO
-			//		tblDecisionVariables.getCellEditor().stopCellEditing();
+					if (tblDecisionVariables.getCellEditor() != null) {
+						tblDecisionVariables.getCellEditor().stopCellEditing();
+					}
 
 					for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
 						Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
@@ -862,6 +860,7 @@ public class Interface {
 			@Override
 			public void focusGained(FocusEvent e) {
 				criteriaNames.remove(criteriaAdded);
+				criteriaAdded--;
 			}
 		});
 
@@ -874,6 +873,7 @@ public class Interface {
 			public void focusLost(FocusEvent e) {
 				if (criteriaPaths.containsKey(criteriaAdded)) {
 					criteriaPaths.remove(criteriaAdded);
+					criteriaAdded--;
 				}
 				criteriaPaths.put(criteriaAdded, txtJarPath.getText());
 			}
@@ -881,6 +881,7 @@ public class Interface {
 			@Override
 			public void focusGained(FocusEvent e) {
 				criteriaPaths.remove(criteriaAdded);
+				criteriaAdded--;
 			}
 		});
 
@@ -896,6 +897,7 @@ public class Interface {
 					txtJarPath.setText(jarPath);
 					if (criteriaPaths.containsKey(criteriaAdded)) {
 						criteriaPaths.remove(criteriaAdded);
+						criteriaAdded--;
 					}
 					criteriaPaths.put(criteriaAdded, jarPath);
 				}
@@ -915,6 +917,7 @@ public class Interface {
 			@Override
 			public void focusGained(FocusEvent e) {
 				criteriaTypes.remove(criteriaAdded);
+				criteriaAdded--;
 			}
 		});
 
@@ -1049,7 +1052,7 @@ public class Interface {
 		txtNameOfDecisionVariablesGroup.setText(problem.getGroupName());
 		spnNumberOfDecisionVariables.setValue(problem.getNumberVariables());
 
-		dtmDecisionVariables = new DefaultTableModel(); 
+		dtmDecisionVariables = new DefaultTableModel();
 		tblDecisionVariables.setModel(dtmDecisionVariables);
 
 		dtmDecisionVariables.addColumn("Name");
@@ -1062,14 +1065,14 @@ public class Interface {
 		JComboBox<String> cmbVariableDataTypesXML = new JComboBox<>(variableDataTypesXML);
 
 		for (int i = 0; i < problem.getNumberVariables(); i++) {
-		List<Variable> variablesList = problem.getVariables();
-		
+			List<Variable> variablesList = problem.getVariables();
+
 			if (i < variablesList.size()) {
 				dtmDecisionVariables.addRow(new Object[] { variablesList.get(i).getName(),
 						variablesList.get(i).getType(), variablesList.get(i).getMin(), variablesList.get(i).getMax(),
 						variablesList.get(i).getRestriction() });
 			} else {
-				dtmDecisionVariables.addRow(new Object[] { "", "", "","","" });
+				dtmDecisionVariables.addRow(new Object[] { "", "", "", "", "" });
 			}
 			tblDecisionVariables.getColumnModel().getColumn(1)
 					.setCellEditor(new DefaultCellEditor(cmbVariableDataTypesXML));
@@ -1088,13 +1091,13 @@ public class Interface {
 
 			DefaultTableModel dtmDecisionVariables = (DefaultTableModel) tblDecisionVariables.getModel();
 			int numberOfRows = dtmDecisionVariables.getRowCount();
-			for (int i = 0; i < numberOfRows ; i++) {
+			for (int i = 0; i < numberOfRows; i++) {
 				String decisionVariableName = "";
 				String decisionVariableType = "";
 				String decisionVariableMinValue = "";
 				String decisionVariableMaxValue = "";
 				String decisionVariableRestriction = "";
-				
+
 				if (dtmDecisionVariables.getValueAt(i, 0).toString() != null)
 					decisionVariableName = dtmDecisionVariables.getValueAt(i, 0).toString();
 				if (dtmDecisionVariables.getValueAt(i, 1).toString() != null)

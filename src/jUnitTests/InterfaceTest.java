@@ -60,13 +60,13 @@ public class InterfaceTest {
 		JButton btnCriteria = interfaceTest.getCriteriaButton();
 		btnCriteria.doClick();
 		
-		JButton btnAddCriterion = interfaceTest.getAddCriteriaButton();
+		JButton btnAddCriteria = interfaceTest.getAddCriteriaButton();
+		btnAddCriteria.doClick();
 		
 		JButton btnCriteriaFinish = interfaceTest.getCriteriaFinishButton();
-		btnAddCriterion.doClick();
-		
 		btnCriteriaFinish.doClick();
-
+		
+		
 		JButton btnReadJar = interfaceTest.getReadJarButton();
 		btnReadJar.doClick();
 		
