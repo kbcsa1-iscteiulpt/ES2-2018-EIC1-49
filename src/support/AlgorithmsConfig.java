@@ -1,7 +1,13 @@
 package support;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
@@ -33,8 +39,6 @@ import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
-
-
 
 public class AlgorithmsConfig {
 
@@ -341,5 +345,45 @@ public class AlgorithmsConfig {
 				.setMaxEvaluations(maxEvaluations)
 				.build();
 	    doubleAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "GDE3", tag));
+	}
+	
+	public void writeAutomaticConfig(List<String> algorithmIDs, String fileName) {
+		String userHomeFolder = System.getProperty("user.home");
+		File textFile = new File(userHomeFolder, fileName);
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(textFile));
+			
+			for(int i=0; i<algorithmIDs.size();i++) {
+				out.write(algorithmIDs.get(i)+";");
+			}	
+
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public List<String> readAutomaticConfi(File file) {
+		Scanner scanner = null;
+		List<String> algorithmIDs = new ArrayList<String>();
+		try {
+			scanner = new Scanner(file);
+			String line="";
+			while(scanner.hasNext()) {
+				line = scanner.nextLine();
+				String[] Tokens = line.split("/");
+				
+				for(int i=0;i<Tokens.length;i++) {
+					algorithmIDs.add(Tokens[i]);
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			scanner.close();
+		}
+		return algorithmIDs;
 	}
 }

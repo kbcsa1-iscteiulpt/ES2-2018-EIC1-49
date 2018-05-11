@@ -46,7 +46,7 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	    solutionString = bitset.toString();
 	    try {
 			String line;
-	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/Kursawe.jar" + " " + solutionString);
+	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/OneZeroMax.jar" + " " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 
 	    		{evaluationResultString+=line;}

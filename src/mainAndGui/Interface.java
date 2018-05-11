@@ -123,7 +123,7 @@ public class Interface {
 	private XML_Editor xml = new XML_Editor();
 	private UserProblem problem = new UserProblem();
 	
-	private String problemType = "Double" ; // TODO Alterar
+	private String problemType = "Binary" ; // TODO Alterar
 
 	public Interface(String adminEmail) {
 		decisionFrame = new JFrame("Problem to be optimized");
@@ -562,7 +562,8 @@ public class Interface {
 //					UserProblem problemToOptimize = new UserProblem(txtProblemName.getText(), txaProblemDescription.getText(), txtEmail.getText(), maxTime, idealTime,
 //							txtNameOfDecisionVariablesGroup.getText(),Integer.parseInt(txtNameOfDecisionVariablesGroup.getText()), createVariableList());
 					problem.setGroupName(txtNameOfDecisionVariablesGroup.getText());
-					problem.setNumberVariables(Integer.parseInt(txtNameOfDecisionVariablesGroup.getText()));
+					
+					problem.setNumberVariables(Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
 					try {
 						switch(problemType) {
 					    		case "Double":
