@@ -8,6 +8,8 @@ import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
+import problem.UserProblem;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,14 +18,17 @@ import java.util.List;
 public class IntegerExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
+  private UserProblem problem;
   
-  public IntegerExperiment() throws IOException {
+  public IntegerExperiment(UserProblem problem) throws IOException {
+	  
+	this.problem=problem;
     String experimentBaseDirectory = "experimentBaseDirectory";
 
     List<String> selectedAlgorithms = new ArrayList<String>();
     selectedAlgorithms.add("SMSEMOA");
     List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(10)));
+    problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem.getNumberVariables())));
 
     List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = algorithmConf.configureIntegerAlgorithms(problemList,selectedAlgorithms);
 

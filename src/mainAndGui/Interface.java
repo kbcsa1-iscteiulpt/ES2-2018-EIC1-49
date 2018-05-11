@@ -12,6 +12,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -47,9 +49,12 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import problem.Criteria;
-import problem.Problem;
+import problem.UserProblem;
 import problem.Time;
 import problem.Variable;
+import support.BinaryExperiment;
+import support.DoubleExperiment;
+import support.IntegerExperiment;
 import support.Support;
 import support.XML_Editor;
 
@@ -116,7 +121,9 @@ public class Interface {
 
 	private Support support = new Support();
 	private XML_Editor xml = new XML_Editor();
-	private Problem problem = new Problem();
+	private UserProblem problem = new UserProblem();
+	
+	private String problemType = "Double" ; // TODO Alterar
 
 	public Interface(String adminEmail) {
 		decisionFrame = new JFrame("Problem to be optimized");
@@ -536,10 +543,6 @@ public class Interface {
 		btnExecuteProcess.setIcon(icoExecute);
 		btnExecuteProcess.addActionListener(new ActionListener() {
 
-			/**
-			 * For now the only thing it does is send an email to the user with information
-			 * concerning the optimization
-			 **/
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (txtProblemName.getText().isEmpty() || txaProblemDescription.getText().isEmpty()
@@ -547,23 +550,50 @@ public class Interface {
 					JOptionPane.showMessageDialog(null, "Please fill all the mandatory fields", "Warning",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
+//					sdfdsf;
+//					Time idealTime = new Time(Integer.parseInt(spnMaxNumberOfDays.getValue().toString()),
+//							Integer.parseInt(spnMaxNumberOfHours.getValue().toString()),
+//							Integer.parseInt(spnMaxNumberOfMinutes.getValue().toString()));
+//					
+//					Time maxTime = new Time(Integer.parseInt(spnIdealNumberOfDays.getValue().toString()),
+//							Integer.parseInt(spnIdealNumberOfHours.getValue().toString()),
+//							Integer.parseInt(spnIdealNumberOfMinutes.getValue().toString()));
+//					
+//					UserProblem problemToOptimize = new UserProblem(txtProblemName.getText(), txaProblemDescription.getText(), txtEmail.getText(), maxTime, idealTime,
+//							txtNameOfDecisionVariablesGroup.getText(),Integer.parseInt(txtNameOfDecisionVariablesGroup.getText()), createVariableList());
+					problem.setGroupName(txtNameOfDecisionVariablesGroup.getText());
+					problem.setNumberVariables(Integer.parseInt(txtNameOfDecisionVariablesGroup.getText()));
+					try {
+						switch(problemType) {
+					    		case "Double":
+					    			new DoubleExperiment(problem);
+					    			break;
+					    		case "Integer":  
+					    			new IntegerExperiment(problem);
+			                    break;
+					    		case "Binary":
+					    			new BinaryExperiment(problem);
+			                    break;
+					    		default: 
+					    			return;
+						}
+					} catch (IOException e2) {
+						try {
+							support.SendEmail(adminEmail, txtEmail.getText(), "There was a problem", "There was a problem runnig the problem you requested, please try again."
+									+ "If the problem continues, contact us so we can help");
+							return;
+						} catch (AddressException e1) {
+							
+						} catch (MessagingException e1) {
+							
+						}
+					}
 					try {
 						DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 						Date date = new Date();
 
 						String subject = "Otimiza��o em curso: " + txtProblemName.getText() + " "
 								+ dateFormat.format(date);
-						// String name = "Nome do Problema: \n" + txtProblemName.getText();
-						// String description = "Descri��o do problema: \n" +
-						// txaProblemDescription.getText();
-						// String maxTime = "Tempo m�ximo de otimiza��o: \n" +
-						// spnMaxNumberOfDays.getValue().toString()
-						// + "dias" + spnMaxNumberOfHours.getValue().toString() + "horas"
-						// + spnMaxNumberOfMinutes.getValue().toString() + "minutos";
-						// String idealTime = "Tempo ideal de otimiza��o: \n" +
-						// spnIdealNumberOfDays.getValue().toString()
-						// + "dias" + spnIdealNumberOfHours.getValue().toString() + "horas"
-						// + spnIdealNumberOfMinutes.getValue().toString() + "minutos";
 						String message = "Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
 								+ "sobre o progresso do processo de otimiza��o, quando o processo de otimiza��o tiver atingido 25%,\r\n"
 								+ "50%, 75% do total do (n�mero de avalia��es ou) tempo estimado, e tamb�m quando o processo tiver\r\n"
@@ -572,7 +602,6 @@ public class Interface {
 						support.SendEmail(adminEmail, txtEmail.getText(), subject, message);
 
 					} catch (MessagingException e1) {
-
 					}
 				}
 			}
@@ -760,6 +789,7 @@ public class Interface {
 								dtmDecisionVariables.getValueAt(j, 3).toString(),
 								dtmDecisionVariables.getValueAt(j, 4).toString());
 						problem.addVariable(variable);
+					
 					}
 				}
 			}
@@ -1078,17 +1108,11 @@ public class Interface {
 					.setCellEditor(new DefaultCellEditor(cmbVariableDataTypesXML));
 		}
 	}
-
-	/**
-	 * Saves the problem with the data given by the fields that were filled.
-	 **/
-	public void saveProblem() {
-		String groupName = "";
+	
+	public List<Variable> createVariableList(){
 		List<Variable> variablesList = new ArrayList<Variable>();
 
-		if (txtNameOfDecisionVariablesGroup != null && tblDecisionVariables != null) {
-			groupName = txtNameOfDecisionVariablesGroup.getText();
-
+		if (tblDecisionVariables != null) {
 			DefaultTableModel dtmDecisionVariables = (DefaultTableModel) tblDecisionVariables.getModel();
 			int numberOfRows = dtmDecisionVariables.getRowCount();
 			for (int i = 0; i < numberOfRows; i++) {
@@ -1114,6 +1138,19 @@ public class Interface {
 				variablesList.add(new Variable(decisionVariableName, decisionVariableType, decisionVariableMinValue,
 						decisionVariableMaxValue, decisionVariableRestriction));
 			}
+		}
+		return variablesList;
+	}
+
+	/**
+	 * Saves the problem with the data given by the fields that were filled.
+	 **/
+	public void saveProblem() {
+		String groupName = "";
+		List<Variable> variablesList = createVariableList();
+		
+		if (txtNameOfDecisionVariablesGroup != null) {
+			groupName = txtNameOfDecisionVariablesGroup.getText();
 		}
 
 		problem.setName(txtProblemName.getText());

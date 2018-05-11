@@ -6,7 +6,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-import problem.Problem;
+import problem.UserProblem;
 import support.Config;
 import support.XML_Editor;
 

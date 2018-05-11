@@ -8,6 +8,8 @@ import org.uma.jmetal.util.experiment.component.*;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
+import problem.UserProblem;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,12 +18,15 @@ import java.util.List;
 public class DoubleExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
+  private UserProblem problem;
 
-  public DoubleExperiment() throws IOException {
+  public DoubleExperiment(UserProblem problem) throws IOException {
+	  
+	this.problem=problem;
+	
     String experimentBaseDirectory = "experimentBaseDirectory";
-
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new DoubleProblemEvaluator(10)));
+    problemList.add(new ExperimentProblem<>(new DoubleProblemEvaluator(problem.getNumberVariables())));
     List<String> selectedAlgorithms = new ArrayList<String>();
     selectedAlgorithms.add("SMSEMOA");
 
@@ -34,7 +39,7 @@ public class DoubleExperiment {
     
     
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ExperimentsDoubleExternalViaJAR")
+        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ExperimentsDouble")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setExperimentBaseDirectory(experimentBaseDirectory)

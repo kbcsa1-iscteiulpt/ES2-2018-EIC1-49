@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import problem.Problem;
+import problem.UserProblem;
 import problem.Time;
 import problem.Variable;
 import support.Config;
@@ -33,14 +33,14 @@ public class XML_EditorTest {
 		Variable v2= new Variable("Variable 2","double","0.5","2.5","0;1.0");
 		l.add(v1);l.add(v2);
 		
-		Problem p = new Problem("problemName","problemDescription","email",
+		UserProblem p = new UserProblem("problemName","problemDescription","email",
 				new Time(2,2,2),
 				new Time(3,3,3),
 				"decisionVariablesGroupName",2,l);
 		
 		xml.write("src/jUnitTests/test.xml", p);
 		
-		Problem problem = xml.read("src/jUnitTests/test.xml");
+		UserProblem problem = xml.read("src/jUnitTests/test.xml");
 		
 		assertTrue(p.getDescription().equals(problem.getDescription()));
 		

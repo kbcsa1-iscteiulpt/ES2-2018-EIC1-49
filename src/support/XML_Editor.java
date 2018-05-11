@@ -13,7 +13,7 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
-import problem.Problem;
+import problem.UserProblem;
 import problem.Time;
 import problem.Variable;
 
@@ -21,7 +21,7 @@ import problem.Variable;
  * Editor of XML
  * Reads and writes a XML file, using the Problem class
  * 
- * @author Kevin Corrales nº 73529
+ * @author Kevin Corrales nï¿½ 73529
  *
  */
 public class XML_Editor {
@@ -35,8 +35,8 @@ public class XML_Editor {
 		 * @param path of xml file
 		 * @return Problem
 		 */
-		public Problem read(String path) {
-			Problem problem = new Problem();
+		public UserProblem read(String path) {
+			UserProblem problem = new UserProblem();
 			try {
 
 				File fXmlFile = new File(path);
@@ -79,7 +79,7 @@ public class XML_Editor {
 							problemVariables.add(var);
 						}
 						
-						problem = new Problem(
+						problem = new UserProblem(
 								prob.getAttribute("name"),
 								prob.getAttribute("description"),
 								prob.getAttribute("email"),
@@ -110,7 +110,7 @@ public class XML_Editor {
 	 * @param path of file
 	 * @param problem
 	 */
-	public void write(String path,Problem problem) {
+	public void write(String path,UserProblem problem) {
 		try {
 
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

@@ -7,13 +7,13 @@ import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 
 import problem.Criteria;
-import problem.Problem;
+import problem.UserProblem;
 import problem.Variable;
 
 /**
  * Jmetal class to evaluate criteria with Integer arguments
  * 
- * @author Kevin Corrales nº 73529
+ * @author Kevin Corrales nï¿½ 73529
  *
  */
 public class EvaluateInteger extends AbstractIntegerProblem{
@@ -22,7 +22,7 @@ public class EvaluateInteger extends AbstractIntegerProblem{
 	private List<Variable> variables = new ArrayList<Variable>();
 	private List<Criteria> criterias = new ArrayList<Criteria>();
 	
-	 public EvaluateInteger(Integer numberOfVariables,Problem problem) {
+	 public EvaluateInteger(Integer numberOfVariables,UserProblem problem) {
 		 for(Variable var: problem.getVariables()) {
 			 if(var.getType().toLowerCase().equals("double"))
 				 variables.add(var);

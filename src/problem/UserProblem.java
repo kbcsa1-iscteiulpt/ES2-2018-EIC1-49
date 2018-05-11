@@ -20,10 +20,10 @@ import java.util.Date;
  * 		- list of the variables of decision
  * 		- list of criterias for evaluation
  * 
- * @author Kevin Corrales nº 73529
+ * @author Kevin Corrales nï¿½ 73529
  *
  */
-public class Problem {
+public class UserProblem {
 	private String name;
 	private String description;
 	private String email;
@@ -47,7 +47,7 @@ public class Problem {
 	 * @param numberVariables
 	 * @param variables
 	 */
-	public Problem(String name, String description, String email, Time max, Time ideal,
+	public UserProblem(String name, String description, String email, Time max, Time ideal,
 			String groupName,int numberVariables, List<Variable> variables) {
 		super();
 		this.name = name;
@@ -64,7 +64,7 @@ public class Problem {
 	}
 
 
-	public Problem() {
+	public UserProblem() {
 	}
 
 
@@ -195,8 +195,8 @@ public class Problem {
 		
 		return "Name:"+getName()+";Description:"+getDescription()+";E-mail:"+getEmail()+
 				";Date of creation:"+getCreationDate()+System.getProperty("line.separator")+
-				";Max time:"+getMax().toString()+System.getProperty("line.separator")+
-				";Ideal time:"+getIdeal().toString()+System.getProperty("line.separator")+
+//				";Max time:"+getMax().toString()+System.getProperty("line.separator")+
+//				";Ideal time:"+getIdeal().toString()+System.getProperty("line.separator")+
 				";Variable group name:"+getGroupName()+";Number of variables:"+getNumberVariables()+
 				System.getProperty("line.separator") + allVariables+
 				System.getProperty("line.separator") + allCriterias;

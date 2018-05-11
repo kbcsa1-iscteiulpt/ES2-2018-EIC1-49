@@ -7,13 +7,13 @@ import com.qoppa.pdfWriter.PDFDocument;
 import com.qoppa.pdfWriter.PDFGraphics;
 import com.qoppa.pdfWriter.PDFPage;
 
-import problem.Problem;
+import problem.UserProblem;
 
 /**
  * Editor of PDF
  * Reads and writes a PDF file, using the Problem class and evaluation results
  * 
- * @author Kevin Corrales nº 73529
+ * @author Kevin Corrales nï¿½ 73529
  *
  */
 public class PDF_Editor {
@@ -21,7 +21,7 @@ public class PDF_Editor {
 	public PDF_Editor() {
 	}
 	
-	public void write(Problem problem) {
+	public void write(UserProblem problem) {
 		try
     	{
 			 PDFDocument pdfDoc = new PDFDocument();
