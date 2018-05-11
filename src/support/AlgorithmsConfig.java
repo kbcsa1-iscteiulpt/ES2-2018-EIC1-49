@@ -41,56 +41,61 @@ public class AlgorithmsConfig {
 	private static final int INDEPENDENT_RUNS = 2;
 	private static final int maxEvaluations = 250;
 	
-	private List<String> algorithmsID = new ArrayList<String>();
 	private List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> doubleAlgorithms = new ArrayList<>();
 	private List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> integerAlgorithms = new ArrayList<>();
 	private List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> binaryAlgorithms = new ArrayList<>();
 	
-	public AlgorithmsConfig(List<String> algorithmsID) {
-		this.algorithmsID=algorithmsID;
-	}
 	public AlgorithmsConfig() {}
 	
-	public List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureDoubleAlgorithms(List<ExperimentProblem<DoubleSolution>> problemList) {
+	public List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureDoubleAlgorithms(List<ExperimentProblem<DoubleSolution>> problemList,List<String> algorithmsID) {
 		doubleAlgorithms.clear();
 		
 		Problem<DoubleSolution> problem ;
 		int numberOfVariables;
 		String tag;
-		
+		System.out.println(algorithmsID.get(0));
 		for (int i = 0; i < problemList.size(); i++) {
 			problem = problemList.get(i).getProblem();
 			numberOfVariables = problem.getNumberOfVariables();
 			tag=problemList.get(i).getTag();
 			
-			if(algorithmsID.contains("NSGAII"))
-				buildDoubleNSGAII(problem,numberOfVariables,tag);
-			
-			if(algorithmsID.contains("SMSEMOA"))
+			if(algorithmsID.contains("NGASAII")) {
+				System.out.println("in");
+				buildDoubleNGASAII(problem,numberOfVariables,tag);
+			}
+			if(algorithmsID.contains("SMSEMOA")) {
+				System.out.println("in");
 				buildDoubleSMSEMOA(problem,numberOfVariables,tag);
-			
-			if(algorithmsID.contains("GDE3"))
+			}
+			if(algorithmsID.contains("GDE3")) {
+				System.out.println("in");
 				buildDoubleGDE3(problem,tag);
-			
-			if(algorithmsID.contains("IBEA"))
+			}
+			if(algorithmsID.contains("IBEA")) {
+				System.out.println("in");
 				buildDoubleIBEA(problem,tag);
-			
-			if(algorithmsID.contains("MOCell"))
+			}
+			if(algorithmsID.contains("MOCell")) {
+				System.out.println("in");
 				buildDoubleMOCell(problem, numberOfVariables, tag);
-			
-			if(algorithmsID.contains("MOEAD"))
+			}
+			if(algorithmsID.contains("MOEAD")) {
+				System.out.println("in");
 				buildDoubleMOEAD(problem,tag);
-			
-			if(algorithmsID.contains("PAES"))
+			}
+			if(algorithmsID.contains("PAES")) {
+				System.out.println("in");
 				buildDoublePAES(problem,numberOfVariables,tag);
-			
-			if(algorithmsID.contains("RandomSearch"))
+			}
+			if(algorithmsID.contains("RandomSearch")) {
+				System.out.println("in");
 				buildDoubleRandomSearch(problem,tag);
+			}	
 		}
 		return doubleAlgorithms;
 	}
 	
-	public List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> configureIntegerAlgorithms(List<ExperimentProblem<IntegerSolution>> problemList) {
+	public List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> configureIntegerAlgorithms(List<ExperimentProblem<IntegerSolution>> problemList,List<String> algorithmsID) {
 		integerAlgorithms.clear();
 		
 		Problem<IntegerSolution> problem ;
@@ -102,11 +107,13 @@ public class AlgorithmsConfig {
 			numberOfVariables = problem.getNumberOfVariables();
 			tag=problemList.get(i).getTag();
 			
-			if(algorithmsID.contains("NSGAII"))
-				buildIntegerNSGAII(problem,numberOfVariables,tag);
+			if(algorithmsID.contains("NGASAII"))
+				buildIntegerNGASAII(problem,numberOfVariables,tag);
 			
-			if(algorithmsID.contains("SMSEMOA"))
+			if(algorithmsID.contains("SMSEMOA")) {
+				System.out.println("in");
 				buildIntegerSMSEMOA(problem,numberOfVariables,tag);
+			}	
 			
 			if(algorithmsID.contains("MOCell"))
 				buildIntegerMOCell(problem, numberOfVariables, tag);
@@ -120,7 +127,7 @@ public class AlgorithmsConfig {
 		return integerAlgorithms;
 	}
 	
-	public List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> configureBinaryAlgorithms(List<ExperimentProblem<BinarySolution>> problemList) {
+	public List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> configureBinaryAlgorithms(List<ExperimentProblem<BinarySolution>> problemList,List<String> algorithmsID) {
 		binaryAlgorithms.clear();
 		
 		Problem<BinarySolution> problem ;
@@ -132,8 +139,8 @@ public class AlgorithmsConfig {
 			numberOfVariables = problem.getNumberOfVariables();
 			tag=problemList.get(i).getTag();
 			
-			if(algorithmsID.contains("NSGAII"))
-				buildBinaryNSGAII(problem,tag);
+			if(algorithmsID.contains("NGASAII"))
+				buildBinaryNGASAII(problem,tag);
 			
 			if(algorithmsID.contains("SMSEMOA"))
 				buildBinarySMSEMOA(problem,tag);
@@ -213,7 +220,7 @@ public class AlgorithmsConfig {
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm2, "SMSEMOA", tag));
 	}
 	
-	private void buildBinaryNSGAII(Problem<BinarySolution> problem,String tag) {
+	private void buildBinaryNGASAII(Problem<BinarySolution> problem,String tag) {
 		Algorithm<List<BinarySolution>> algorithm = new NSGAIIBuilder<>(
 	              problem,
 	              new SinglePointCrossover(1.0),
@@ -259,7 +266,7 @@ public class AlgorithmsConfig {
 				.build();      
 		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm2, "SMSEMOA", tag));
 	}
-	private void buildIntegerNSGAII(Problem<IntegerSolution> problem, int numberOfVariables, String tag) {
+	private void buildIntegerNGASAII(Problem<IntegerSolution> problem, int numberOfVariables, String tag) {
 		 Algorithm<List<IntegerSolution>> algorithm1 = new NSGAIIBuilder<>(
 	              problem,
 	              new IntegerSBXCrossover(0.9, 20.0),
@@ -319,7 +326,7 @@ public class AlgorithmsConfig {
 		doubleAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "SMSEMOA", tag));
 	}
 
-	private void buildDoubleNSGAII(Problem<DoubleSolution> problem, int numberOfVariables, String tag) {
+	private void buildDoubleNGASAII(Problem<DoubleSolution> problem, int numberOfVariables, String tag) {
 		Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
 	              problem,
 	              new SBXCrossover(1.0, 5),
@@ -336,8 +343,4 @@ public class AlgorithmsConfig {
 				.build();
 	    doubleAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "GDE3", tag));
 	}
-	
-	
-	
-	
 }

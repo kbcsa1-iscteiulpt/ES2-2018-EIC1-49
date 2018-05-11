@@ -16,6 +16,7 @@ import org.uma.jmetal.operator.impl.selection.RankingAndCrowdingSelection;
 import org.uma.jmetal.problem.BinaryProblem;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.Experiment;
@@ -32,15 +33,18 @@ import java.util.List;
 public class ExperimentsBinaryExternalViaJAR {
   private static final int INDEPENDENT_RUNS = 2;
   private static final int maxEvaluations = 250;
+  private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
   
   public static void main(String[] args) throws IOException {
     String experimentBaseDirectory = "experimentBaseDirectory";
 
+    List<String> selectedAlgorithms = new ArrayList<String>();
+    selectedAlgorithms.add("NGASAII");
     List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new MyProblemBinaryExternalViaJAR()));
 
-    List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList =
-            configureAlgorithmList(problemList);
+    List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = algorithmConf.configureBinaryAlgorithms(problemList,selectedAlgorithms);
+
 
     Experiment<BinarySolution, List<BinarySolution>> experiment =
         new ExperimentBuilder<BinarySolution, List<BinarySolution>>("MyProblemBinaryExternalViaJAR")

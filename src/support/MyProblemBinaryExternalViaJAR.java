@@ -52,7 +52,7 @@ public class MyProblemBinaryExternalViaJAR extends AbstractBinaryProblem {
 	    solutionString = bitset.toString();
 	    try {
 			String line;
-	    	Process p = Runtime.getRuntime().exec("java -jar c:\\OneZeroMax.jar" + " " + solutionString);
+	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/Kursawe.jar" + " " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 
 	    		{evaluationResultString+=line;}

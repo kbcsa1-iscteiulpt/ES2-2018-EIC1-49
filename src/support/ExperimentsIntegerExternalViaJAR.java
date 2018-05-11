@@ -9,6 +9,7 @@ import org.uma.jmetal.algorithm.multiobjective.smsemoa.SMSEMOABuilder;
 import org.uma.jmetal.operator.impl.crossover.IntegerSBXCrossover;
 import org.uma.jmetal.operator.impl.mutation.IntegerPolynomialMutation;
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
+import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.experiment.Experiment;
@@ -22,18 +23,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ExperimentsIntegeExternalViaJAR {
+public class ExperimentsIntegerExternalViaJAR {
   private static final int INDEPENDENT_RUNS = 2;
   private static final int maxEvaluations = 250;
+  private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
   
   public static void main(String[] args) throws IOException {
     String experimentBaseDirectory = "experimentBaseDirectory";
 
+    List<String> selectedAlgorithms = new ArrayList<String>();
+    selectedAlgorithms.add("SMSEMOA");
     List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new MyProblemIntegerExternalViaJAR()));
 
-    List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList =
-            configureAlgorithmList(problemList);
+    List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = algorithmConf.configureIntegerAlgorithms(problemList,selectedAlgorithms);
 
     Experiment<IntegerSolution, List<IntegerSolution>> experiment =
         new ExperimentBuilder<IntegerSolution, List<IntegerSolution>>("ExperimentsIntegerExternalViaJAR")

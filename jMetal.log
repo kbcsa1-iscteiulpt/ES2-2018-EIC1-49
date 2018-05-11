@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-04T18:52:09</date>
-  <millis>1525456329465</millis>
+  <date>2018-05-08T19:14:52</date>
+  <millis>1525803292592</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -13,8 +13,8 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-04T18:52:09</date>
-  <millis>1525456329644</millis>
+  <date>2018-05-08T19:14:52</date>
+  <millis>1525803292636</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -24,14 +24,14 @@
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-04T18:52:09</date>
-  <millis>1525456329757</millis>
+  <date>2018-05-08T19:14:52</date>
+  <millis>1525803292645</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
-  <method>run</method>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
   <thread>1</thread>
-  <message>Computing indicator: HV</message>
+  <message> Running algorithm: SMSEMOA, problem: MyProblemIntegerExternalViaJAR, run: 0, funFile: experimentBaseDirectory/ExperimentsIntegerExternalViaJAR/data/SMSEMOA/MyProblemIntegerExternalViaJAR/FUN0.tsv</message>
 </record>
 </log>
