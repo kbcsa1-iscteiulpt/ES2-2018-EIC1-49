@@ -1,45 +1,36 @@
 package support;
 
-import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
-import org.uma.jmetal.solution.IntegerSolution;
-import org.uma.jmetal.util.JMetalException;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/* Implementa��o de um problema do tipo Integer que executa o .jar externo
-   NMMin.jar e pode ser usado como um dos problema de teste indicados 
-   no encunciado do trabalho */
+import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
+import org.uma.jmetal.solution.DoubleSolution;
+
 
 @SuppressWarnings("serial")
-public class MyProblemIntegerExternalViaJAR extends AbstractIntegerProblem {
-	
-	  public MyProblemIntegerExternalViaJAR() throws JMetalException {
-		// 10 decision variables by default  
-	    this(10);
-	  }
+public class DoubleProblemEvaluator extends AbstractDoubleProblem {
+		
 
-	  public MyProblemIntegerExternalViaJAR(Integer numberOfVariables) throws JMetalException {
+	  public DoubleProblemEvaluator(Integer numberOfVariables) {
 	    setNumberOfVariables(numberOfVariables);
 	    setNumberOfObjectives(2);
-	    setName("MyProblemIntegerExternalViaJAR");
+	    setName("DoubleProblem");
 
-	    List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
-	    List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
+	    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
+	    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
 	    for (int i = 0; i < getNumberOfVariables(); i++) {
-	      lowerLimit.add(-1000);
-	      upperLimit.add(+1000);
+	      lowerLimit.add(-5.0);
+	      upperLimit.add(5.0);
 	    }
 
 	    setLowerLimit(lowerLimit);
-	    setUpperLimit(upperLimit);
-
+	    setUpperLimit(upperLimit);	    	    
 	  }
 
-	  public void evaluate(IntegerSolution solution){
+	  public void evaluate(DoubleSolution solution){
 	    String solutionString ="";
 	    String evaluationResultString ="";
 	    for (int i = 0; i < solution.getNumberOfVariables(); i++) {
@@ -55,11 +46,10 @@ public class MyProblemIntegerExternalViaJAR extends AbstractIntegerProblem {
 	        p.waitFor();
 	      }
 	      catch (Exception err) { err.printStackTrace(); }
-	    
    		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
 	    // It is assumed that all evaluated criteria are returned in the same result string
 	    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-		    solution.setObjective(i, Integer.parseInt(individualEvaluationCriteria[i]));    
+	    	solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 	    }	    
-	  }	  
+	  }
 	}

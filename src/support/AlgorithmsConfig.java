@@ -38,7 +38,6 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 public class AlgorithmsConfig {
 
-	private static final int INDEPENDENT_RUNS = 2;
 	private static final int maxEvaluations = 250;
 	
 	private List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> doubleAlgorithms = new ArrayList<>();
@@ -168,7 +167,7 @@ public class AlgorithmsConfig {
 	private void buildBinarySPEA2(Problem<BinarySolution> problem, String tag) {
 		Algorithm<List<BinarySolution>> algorithm7 = new SPEA2Builder<>(problem,
 				new SinglePointCrossover(1.0),
-				new BitFlipMutation(1.0 / ((MyProblemBinaryExternalViaJAR) problem).getNumberOfBits(0)))
+				new BitFlipMutation(1.0 / ((BinaryProblemEvaluator) problem).getNumberOfBits(0)))
 				.setMaxIterations(maxEvaluations)
 				.build();
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm7, "SPEA2", tag));
@@ -198,7 +197,7 @@ public class AlgorithmsConfig {
 				.setMaxEvaluations(maxEvaluations)
 				.setArchiveSize(100)
 				.setBiSections(2)
-				.setMutationOperator(new BitFlipMutation(1.0 / ((MyProblemBinaryExternalViaJAR) problem).getNumberOfBits(0)))
+				.setMutationOperator(new BitFlipMutation(1.0 / ((BinaryProblemEvaluator) problem).getNumberOfBits(0)))
 				.build();
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm5, "PAES", tag));
 	}
@@ -206,7 +205,7 @@ public class AlgorithmsConfig {
 	private void buildBinaryMOCell(Problem<BinarySolution> problem,String tag) {
 		Algorithm<List<BinarySolution>> algorithm3 = new MOCellBuilder<>(problem,
 				new SinglePointCrossover(1.0),
-				new BitFlipMutation(1.0 / ((MyProblemBinaryExternalViaJAR) problem).getNumberOfBits(0)))
+				new BitFlipMutation(1.0 / ((BinaryProblemEvaluator) problem).getNumberOfBits(0)))
 				.setMaxEvaluations(maxEvaluations)
 				.build();
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm3, "MOCell", tag));
@@ -214,7 +213,7 @@ public class AlgorithmsConfig {
 	
 	private void buildBinarySMSEMOA(Problem<BinarySolution> problem,String tag) {
 		Algorithm<List<BinarySolution>> algorithm2 = new SMSEMOABuilder<>(problem,
-				new SinglePointCrossover(1.0), new BitFlipMutation(1.0 / ((MyProblemBinaryExternalViaJAR) problem).getNumberOfBits(0)))
+				new SinglePointCrossover(1.0), new BitFlipMutation(1.0 / ((BinaryProblemEvaluator) problem).getNumberOfBits(0)))
 				.setMaxEvaluations(maxEvaluations)
 				.build();      
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm2, "SMSEMOA", tag));
@@ -224,7 +223,7 @@ public class AlgorithmsConfig {
 		Algorithm<List<BinarySolution>> algorithm = new NSGAIIBuilder<>(
 	              problem,
 	              new SinglePointCrossover(1.0),
-	              new BitFlipMutation(1.0 / ((MyProblemBinaryExternalViaJAR) problem).getNumberOfBits(0)))
+	              new BitFlipMutation(1.0 / ((BinaryProblemEvaluator) problem).getNumberOfBits(0)))
 	              .setMaxEvaluations(maxEvaluations)
 	              .setPopulationSize(100)
 	              .build();

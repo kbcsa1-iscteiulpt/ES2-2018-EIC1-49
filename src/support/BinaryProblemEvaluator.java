@@ -14,15 +14,15 @@ import java.util.BitSet;
    no encunciado do trabalho */
 
 @SuppressWarnings("serial")
-public class MyProblemBinaryExternalViaJAR extends AbstractBinaryProblem {
+public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  private int bits ;
 
-	  public MyProblemBinaryExternalViaJAR() throws JMetalException {
+	  public BinaryProblemEvaluator() throws JMetalException {
 		// 10 decision variables by default  
 	    this(10);
 	  }
 
-	  public MyProblemBinaryExternalViaJAR(Integer numberOfBits) throws JMetalException {
+	  public BinaryProblemEvaluator(Integer numberOfBits) throws JMetalException {
 		setNumberOfVariables(1);
 	    setNumberOfObjectives(2);
 	    setName("MyProblemBinaryExternalViaJAR");
