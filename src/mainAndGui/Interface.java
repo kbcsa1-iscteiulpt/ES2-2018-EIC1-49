@@ -114,6 +114,8 @@ public class Interface {
 	private JButton btnSaveToXML;
 	private JButton btnExecuteProcess;
 	private JButton btnExecuteGraphics;
+	private JButton btnOpenFiles;
+	private JFrame afterOptimizationProcess;
 
 	private Map<Integer, String> criteriaNames = new HashMap<Integer, String>();
 	private Map<Integer, String> criteriaPaths = new HashMap<Integer, String>();
@@ -122,8 +124,8 @@ public class Interface {
 	private Support support = new Support();
 	private XML_Editor xml = new XML_Editor();
 	private UserProblem problem = new UserProblem();
-	
-	private String problemType = "Binary" ; // TODO Alterar
+
+	private String problemType = "Binary"; // TODO Alterar
 
 	public Interface(String adminEmail) {
 		decisionFrame = new JFrame("Problem to be optimized");
@@ -217,7 +219,7 @@ public class Interface {
 	 * frame is displayed to show the FAQ. When the return symbol is clicked, it
 	 * returns to the initial decision panel.
 	 * 
-	 **/
+	 **/ 
 	private JPanel helpFAQPanel(JFrame frame) {
 		JPanel pnlHelpFAQ = new JPanel(new BorderLayout());
 		btnGoBack = new JButton();
@@ -543,6 +545,7 @@ public class Interface {
 		btnExecuteProcess.setIcon(icoExecute);
 		btnExecuteProcess.addActionListener(new ActionListener() {
 
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (txtProblemName.getText().isEmpty() || txaProblemDescription.getText().isEmpty()
@@ -550,43 +553,48 @@ public class Interface {
 					JOptionPane.showMessageDialog(null, "Please fill all the mandatory fields", "Warning",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-//					sdfdsf;
-//					Time idealTime = new Time(Integer.parseInt(spnMaxNumberOfDays.getValue().toString()),
-//							Integer.parseInt(spnMaxNumberOfHours.getValue().toString()),
-//							Integer.parseInt(spnMaxNumberOfMinutes.getValue().toString()));
-//					
-//					Time maxTime = new Time(Integer.parseInt(spnIdealNumberOfDays.getValue().toString()),
-//							Integer.parseInt(spnIdealNumberOfHours.getValue().toString()),
-//							Integer.parseInt(spnIdealNumberOfMinutes.getValue().toString()));
-//					
-//					UserProblem problemToOptimize = new UserProblem(txtProblemName.getText(), txaProblemDescription.getText(), txtEmail.getText(), maxTime, idealTime,
-//							txtNameOfDecisionVariablesGroup.getText(),Integer.parseInt(txtNameOfDecisionVariablesGroup.getText()), createVariableList());
+					// sdfdsf;
+					// Time idealTime = new
+					// Time(Integer.parseInt(spnMaxNumberOfDays.getValue().toString()),
+					// Integer.parseInt(spnMaxNumberOfHours.getValue().toString()),
+					// Integer.parseInt(spnMaxNumberOfMinutes.getValue().toString()));
+					//
+					// Time maxTime = new
+					// Time(Integer.parseInt(spnIdealNumberOfDays.getValue().toString()),
+					// Integer.parseInt(spnIdealNumberOfHours.getValue().toString()),
+					// Integer.parseInt(spnIdealNumberOfMinutes.getValue().toString()));
+					//
+					// UserProblem problemToOptimize = new UserProblem(txtProblemName.getText(),
+					// txaProblemDescription.getText(), txtEmail.getText(), maxTime, idealTime,
+					// txtNameOfDecisionVariablesGroup.getText(),Integer.parseInt(txtNameOfDecisionVariablesGroup.getText()),
+					// createVariableList());
 					problem.setGroupName(txtNameOfDecisionVariablesGroup.getText());
-					
+
 					problem.setNumberVariables(Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
 					try {
-						switch(problemType) {
-					    		case "Double":
-					    			new DoubleExperiment(problem);
-					    			break;
-					    		case "Integer":  
-					    			new IntegerExperiment(problem);
-			                    break;
-					    		case "Binary":
-					    			new BinaryExperiment(problem);
-			                    break;
-					    		default: 
-					    			return;
+						switch (problemType) {
+						case "Double":
+							new DoubleExperiment(problem);
+							break;
+						case "Integer":
+							new IntegerExperiment(problem);
+							break;
+						case "Binary":
+							new BinaryExperiment(problem);
+							break;
+						default:
+							return;
 						}
 					} catch (IOException e2) {
 						try {
-							support.SendEmail(adminEmail, txtEmail.getText(), "There was a problem", "There was a problem runnig the problem you requested, please try again."
-									+ "If the problem continues, contact us so we can help");
+							support.SendEmail(adminEmail, txtEmail.getText(), "There was a problem",
+									"There was a problem runnig the problem you requested, please try again."
+											+ "If the problem continues, contact us so we can help");
 							return;
 						} catch (AddressException e1) {
-							
+
 						} catch (MessagingException e1) {
-							
+
 						}
 					}
 					try {
@@ -605,6 +613,7 @@ public class Interface {
 					} catch (MessagingException e1) {
 					}
 				}
+				
 			}
 		});
 
@@ -612,16 +621,102 @@ public class Interface {
 		btnExecuteGraphics.setContentAreaFilled(false);
 		btnExecuteGraphics.addActionListener(new ActionListener() {
 
+			// TODO
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				graphicsFrame = new JFrame("Graphics");
-				setFrame(graphicsFrame, 0.5);
-				setGraphicsFrame(graphicsFrame);
+//				graphicsFrame = new JFrame("Graphics");
+//				setFrame(graphicsFrame, 0.5);
+//				setGraphicsFrame(graphicsFrame);
+				afterOptimizationProcess = new JFrame("Results");
+				setFrame(afterOptimizationProcess, 0.25);
+				setAfterOptimizationProcess(afterOptimizationProcess);
+				afterOptimizationProcess.setVisible(true);
 			}
+
+			
 		});
 		executeProcessPanel.add(btnExecuteProcess);
 		executeProcessPanel.add(btnExecuteGraphics);
 		return executeProcessPanel;
+	}
+	private void setAfterOptimizationProcess(JFrame frame) {
+		JPanel pnlOptProcess= new JPanel(new GridLayout(3, 0));
+		JButton btnGraphics = new JButton("Graphics");
+		JButton btnEpsFile = new JButton(".eps File");
+		JButton btnPdfFile = new JButton(".pdf File");
+		btnGraphics.setContentAreaFilled(false);
+		btnEpsFile.setContentAreaFilled(false);
+		btnPdfFile.setContentAreaFilled(false);
+		
+		btnGraphics.setBorderPainted(true);
+		btnEpsFile.setBorderPainted(true);
+		btnPdfFile.setBorderPainted(true);
+		
+		btnGraphics.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				setGraphicsFrame(graphicsFrame);
+			}
+		});
+		
+		btnEpsFile.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String[] params = new String[2];
+				params[0] = "C:\\Program Files\\R\\R-3.5.0\\bin\\x64\\Rscript.exe";
+				params[1] = "C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\experimentBaseDirectory\\ExperimentsDoubleExternalViaJAR\\R\\HV.Boxplot.R";
+
+				String[] envp = new String[1];
+				envp[0] = "Path=C:\\Program Files\\R\\R-3.5.0\\bin\\x64";
+
+				Process p;
+				try {
+					p = Runtime.getRuntime().exec(params, envp,
+							new File("C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files"));
+					p.waitFor();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}			
+			}
+		});
+		
+		btnPdfFile.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String[] params = new String[2];
+
+					params[0] = "C:\\Users\\ASUS\\Desktop\\pdflatex.exe";
+
+					params[1] = "C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\experimentBaseDirectory\\ExperimentsDoubleExternalViaJAR\\latex\\ExperimentsDoubleExternalViaJAR.tex";
+
+					String[] envp = new String[1];
+
+					envp[0] = "Path=C:\\Program Files\\MiKTeX 2.9\\miktex\\bin\\x64";
+
+					Process p = Runtime.getRuntime().exec(params, envp,
+							new File("C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files"));
+
+					p.waitFor();
+					Runtime.getRuntime()
+							.exec("open C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files\\ExperimentsDoubleExternalViaJAR.pdf");
+
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}				
+			}
+		});
+		pnlOptProcess.add(btnGraphics);
+		pnlOptProcess.add(btnEpsFile);
+		pnlOptProcess.add(btnPdfFile);		
+		
+		frame.add(pnlOptProcess);
 	}
 
 	/**
@@ -790,7 +885,7 @@ public class Interface {
 								dtmDecisionVariables.getValueAt(j, 3).toString(),
 								dtmDecisionVariables.getValueAt(j, 4).toString());
 						problem.addVariable(variable);
-					
+
 					}
 				}
 			}
@@ -1109,8 +1204,8 @@ public class Interface {
 					.setCellEditor(new DefaultCellEditor(cmbVariableDataTypesXML));
 		}
 	}
-	
-	public List<Variable> createVariableList(){
+
+	public List<Variable> createVariableList() {
 		List<Variable> variablesList = new ArrayList<Variable>();
 
 		if (tblDecisionVariables != null) {
@@ -1149,7 +1244,7 @@ public class Interface {
 	public void saveProblem() {
 		String groupName = "";
 		List<Variable> variablesList = createVariableList();
-		
+
 		if (txtNameOfDecisionVariablesGroup != null) {
 			groupName = txtNameOfDecisionVariablesGroup.getText();
 		}
