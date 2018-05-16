@@ -40,6 +40,12 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
+/**
+ * This class has every configuration needed for any algorithm 
+ * 
+ * @author Ricardo Santos n 72973 e Gustavo Morais n 73036
+ *
+ */
 public class AlgorithmsConfig {
 
 	private static final int maxEvaluations = 250;
@@ -50,6 +56,13 @@ public class AlgorithmsConfig {
 	
 	public AlgorithmsConfig() {}
 	
+	/**
+	 * This method will configure the necessary double algorithms to a problem chosen by the user   
+	 * 
+	 * @param problemList - list of problems to configure the algorithms to the problem
+	 * @param algorithmsID - list of algorithms to configure
+	 * @return 	list of the configured algorithms
+	 * */
 	public List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> configureDoubleAlgorithms(List<ExperimentProblem<DoubleSolution>> problemList,List<String> algorithmsID) {
 		doubleAlgorithms.clear();
 		
@@ -98,6 +111,14 @@ public class AlgorithmsConfig {
 		return doubleAlgorithms;
 	}
 	
+	
+	/**
+	 * This method will configure the necessary Integer algorithms to a problem chosen by the user   
+	 * 
+	 * @param problemList - list of problems to configure the algorithms to the problem
+	 * @param algorithmsID - list of algorithms to configure
+	 * @return 	list of the configured algorithms
+	 * */
 	public List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> configureIntegerAlgorithms(List<ExperimentProblem<IntegerSolution>> problemList,List<String> algorithmsID) {
 		integerAlgorithms.clear();
 		
@@ -130,16 +151,21 @@ public class AlgorithmsConfig {
 		return integerAlgorithms;
 	}
 	
+	/**
+	 * This method will configure the necessary Binary algorithms to a problem chosen by the user   
+	 * 
+	 * @param problemList - list of problems to configure the algorithms to the problem
+	 * @param algorithmsID - list of algorithms to configure
+	 * @return 	list of the configured algorithms
+	 * */
 	public List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> configureBinaryAlgorithms(List<ExperimentProblem<BinarySolution>> problemList,List<String> algorithmsID) {
 		binaryAlgorithms.clear();
 		
 		Problem<BinarySolution> problem ;
-		int numberOfVariables;
 		String tag;
 		
 		for (int i = 0; i < problemList.size(); i++) {
 			problem = problemList.get(i).getProblem();
-			numberOfVariables = problem.getNumberOfVariables();
 			tag=problemList.get(i).getTag();
 			
 			if(algorithmsID.contains("NGASAII"))
@@ -167,7 +193,13 @@ public class AlgorithmsConfig {
 	}
 	
 	
-	
+	/**
+	 * This method will build the SPEA2 algorithm with a problem and add it to the binaryAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildBinarySPEA2(Problem<BinarySolution> problem, String tag) {
 		Algorithm<List<BinarySolution>> algorithm7 = new SPEA2Builder<>(problem,
 				new SinglePointCrossover(1.0),
@@ -177,6 +209,13 @@ public class AlgorithmsConfig {
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm7, "SPEA2", tag));
 	}
 	
+	/**
+	 * This method will build the MOCHC algorithm with a problem and add it to the binaryAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildBinaryMOCHC(Problem<BinarySolution> problem, String tag) {
 		Algorithm<List<BinarySolution>> algorithm4 = new MOCHCBuilder((BinaryProblem) problem)
 				.setMaxEvaluations(maxEvaluations)
@@ -189,6 +228,13 @@ public class AlgorithmsConfig {
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm4, "MOCH", tag));
 	}
 	
+	/**
+	 * This method will build the RandomSearch algorithm with a problem and add it to the binaryAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildBinaryRandomSearch(Problem<BinarySolution> problem, String tag) {
 		Algorithm<List<BinarySolution>> algorithm6 = new RandomSearchBuilder<>(problem)
 				.setMaxEvaluations(maxEvaluations)
@@ -196,6 +242,13 @@ public class AlgorithmsConfig {
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm6, "RandomSearch", tag));
 	}
 	
+	/**
+	 * This method will build the PAES algorithm with a problem and add it to the binaryAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildBinaryPAES(Problem<BinarySolution> problem, String tag) {
 		Algorithm<List<BinarySolution>> algorithm5 = new PAESBuilder<>(problem)
 				.setMaxEvaluations(maxEvaluations)
@@ -206,6 +259,13 @@ public class AlgorithmsConfig {
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm5, "PAES", tag));
 	}
 	
+	/**
+	 * This method will build the MOCell algorithm with a problem and add it to the binaryAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildBinaryMOCell(Problem<BinarySolution> problem,String tag) {
 		Algorithm<List<BinarySolution>> algorithm3 = new MOCellBuilder<>(problem,
 				new SinglePointCrossover(1.0),
@@ -215,6 +275,13 @@ public class AlgorithmsConfig {
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm3, "MOCell", tag));
 	}
 	
+	/**
+	 * This method will build the SMSEMOA algorithm with a problem and add it to the binaryAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildBinarySMSEMOA(Problem<BinarySolution> problem,String tag) {
 		Algorithm<List<BinarySolution>> algorithm2 = new SMSEMOABuilder<>(problem,
 				new SinglePointCrossover(1.0), new BitFlipMutation(1.0 / ((BinaryProblemEvaluator) problem).getNumberOfBits(0)))
@@ -223,6 +290,13 @@ public class AlgorithmsConfig {
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm2, "SMSEMOA", tag));
 	}
 	
+	/**
+	 * This method will build the NGASAII algorithm with a problem and add it to the binaryAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildBinaryNGASAII(Problem<BinarySolution> problem,String tag) {
 		Algorithm<List<BinarySolution>> algorithm = new NSGAIIBuilder<>(
 	              problem,
@@ -234,6 +308,13 @@ public class AlgorithmsConfig {
 		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAII", tag));
 	}
 	
+	/**
+	 * This method will build the RandomSearch algorithm with a problem and add it to the integerAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildIntegerRandomSearch(Problem<IntegerSolution> problem, String tag) {
 		Algorithm<List<IntegerSolution>> algorithm5 = new RandomSearchBuilder<>(problem)
 				.setMaxEvaluations(maxEvaluations)
@@ -242,6 +323,14 @@ public class AlgorithmsConfig {
 
 	}
 	
+	/**
+	 * This method will build the PAES algorithm with a problem and add it to the integerAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param numberOfVariables - the number of variables present in the problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildIntegerPAES(Problem<IntegerSolution> problem, int numberOfVariables, String tag) {
 		Algorithm<List<IntegerSolution>> algorithm4 = new PAESBuilder<>(problem)
 				.setMaxEvaluations(maxEvaluations).setArchiveSize(100)
@@ -251,7 +340,14 @@ public class AlgorithmsConfig {
 		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm4, "PAES", tag)); 	
 	}
 	
-	
+	/**
+	 * This method will build the MOCell algorithm with a problem and add it to the integerAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param numberOfVariables - the number of variables present in the problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildIntegerMOCell(Problem<IntegerSolution> problem, int numberOfVariables, String tag) {
 		Algorithm<List<IntegerSolution>> algorithm3 = new MOCellBuilder<>(problem,
 				new IntegerSBXCrossover(0.9, 20.0), 
@@ -261,6 +357,14 @@ public class AlgorithmsConfig {
 		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm3, "MOCell", tag));    
 	}
 	
+	/**
+	 * This method will build the SMSEMOA algorithm with a problem and add it to the integerAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param numberOfVariables - the number of variables present in the problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildIntegerSMSEMOA(Problem<IntegerSolution> problem, int numberOfVariables, String tag) {
 		Algorithm<List<IntegerSolution>> algorithm2 = new SMSEMOABuilder<>(problem,
 				new IntegerSBXCrossover(0.9, 20.0),
@@ -269,6 +373,15 @@ public class AlgorithmsConfig {
 				.build();      
 		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm2, "SMSEMOA", tag));
 	}
+	
+	/**
+	 * This method will build the NGASAII algorithm with a problem and add it to the integerAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param numberOfVariables - the number of variables present in the problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildIntegerNGASAII(Problem<IntegerSolution> problem, int numberOfVariables, String tag) {
 		 Algorithm<List<IntegerSolution>> algorithm1 = new NSGAIIBuilder<>(
 	              problem,
@@ -279,6 +392,14 @@ public class AlgorithmsConfig {
 	              .build();
 		 integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm1, "NSGAII", tag));
 	}
+	
+	/**
+	 * This method will build the RandomSearch algorithm with a problem and add it to the doubleAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildDoubleRandomSearch(Problem<DoubleSolution> problem, String tag) {
 		Algorithm<List<DoubleSolution>> algorithm = new RandomSearchBuilder<>(problem)
 				.setMaxEvaluations(maxEvaluations)
@@ -286,6 +407,14 @@ public class AlgorithmsConfig {
 		doubleAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "RandomSearch",tag));
 	}
 	
+	/**
+	 * This method will build the PAES algorithm with a problem and add it to the doubleAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param numberOfVariables - the number of variables present in the problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildDoublePAES(Problem<DoubleSolution> problem, int numberOfVariables, String tag) {
 		Algorithm<List<DoubleSolution>> algorithm = new PAESBuilder<>(problem)
 				.setMaxEvaluations(maxEvaluations)
@@ -296,6 +425,13 @@ public class AlgorithmsConfig {
 		doubleAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "PAES", tag)); 	
 	}
 	
+	/**
+	 * This method will build the MOEAD algorithm with a problem and add it to the doubleAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildDoubleMOEAD(Problem<DoubleSolution> problem, String tag) {
 		Algorithm<List<DoubleSolution>> algorithm = new MOEADBuilder(problem,Variant.MOEAD)
 				.setMaxEvaluations(maxEvaluations)
@@ -303,6 +439,14 @@ public class AlgorithmsConfig {
 		doubleAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "MOEAD",tag));
 	}
 	
+	/**
+	 * This method will build the MOCell algorithm with a problem and add it to the doubleAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param numberOfVariables - the number of variables present in the problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildDoubleMOCell(Problem<DoubleSolution> problem, int numberOfVariables, String tag) {
 		Algorithm<List<DoubleSolution>> algorithm = new MOCellBuilder<>(problem,
 				new SBXCrossover(1.0, 5), 
@@ -313,6 +457,13 @@ public class AlgorithmsConfig {
 		
 	}
 	
+	/**
+	 * This method will build the IBEA algorithm with a problem and add it to the doubleAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildDoubleIBEA(Problem<DoubleSolution> problem, String tag) {
 		Algorithm<List<DoubleSolution>> algorithm = new IBEABuilder(problem)
 				.setMaxEvaluations(maxEvaluations)
@@ -320,6 +471,14 @@ public class AlgorithmsConfig {
 		doubleAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "IBEA", tag));
 	}
 	
+	/**
+	 * This method will build the SMSEMOA algorithm with a problem and add it to the doubleAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param numberOfVariables - the number of variables present in the problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildDoubleSMSEMOA(Problem<DoubleSolution> problem, int numberOfVariables, String tag) {
 	 	Algorithm<List<DoubleSolution>> algorithm = new SMSEMOABuilder<>(problem,
 	 			new SBXCrossover(1.0, 5),
@@ -329,6 +488,14 @@ public class AlgorithmsConfig {
 		doubleAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "SMSEMOA", tag));
 	}
 
+	/**
+	 * This method will build the NGASAII algorithm with a problem and add it to the doubleAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param numberOfVariables - the number of variables present in the problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildDoubleNGASAII(Problem<DoubleSolution> problem, int numberOfVariables, String tag) {
 		Algorithm<List<DoubleSolution>> algorithm = new NSGAIIBuilder<>(
 	              problem,
@@ -340,6 +507,13 @@ public class AlgorithmsConfig {
 	     doubleAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAII", tag));
 	}
 
+	/**
+	 * This method will build the GDE3 algorithm with a problem and add it to the doubleAlgorithms list   
+	 * 
+	 * @param problem - problem to use in the builder
+	 * @param tag - tag to use in the builder
+	 * 
+	 * */
 	private void buildDoubleGDE3(Problem<DoubleSolution> problem, String tag) {
 		Algorithm<List<DoubleSolution>> algorithm = new GDE3Builder((DoubleProblem) problem)
 				.setMaxEvaluations(maxEvaluations)
@@ -347,6 +521,13 @@ public class AlgorithmsConfig {
 	    doubleAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "GDE3", tag));
 	}
 	
+	/**
+	 * This method will write a configuration of algorithms in a file so the users can just read the algorithms to use in a experiment    
+	 * 
+	 * @param algorithmIDs - algorithms to include in the conf file 
+	 * @param fileName - name of the file to write the automatic conf
+	 * 
+	 * */
 	public void writeAutomaticConfig(List<String> algorithmIDs, String fileName) {
 		String userHomeFolder = System.getProperty("user.home");
 		File textFile = new File(userHomeFolder, fileName);
@@ -364,6 +545,12 @@ public class AlgorithmsConfig {
 		}
 	}
 	
+	/**
+	 * This method will read a configuration of algorithms in a file     
+	 * 
+	 * @param file - file from wic to read the algorithms
+	 * 
+	 * */
 	public List<String> readAutomaticConfi(File file) {
 		Scanner scanner = null;
 		List<String> algorithmIDs = new ArrayList<String>();
