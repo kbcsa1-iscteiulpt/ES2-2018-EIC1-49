@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 public class FrameSize {
 	/**
 	 * Defines the size of the given frame. The second parameter indicates the
-	 * number that the screen is divided by.
+	 * number that the screen is multiplied by.
 	 **/
 	public static void setFrame(JFrame frame, double size) {
 		double frameWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();

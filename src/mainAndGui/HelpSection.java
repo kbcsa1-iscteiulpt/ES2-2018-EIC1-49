@@ -28,31 +28,19 @@ public class HelpSection {
 	 * button at the top-left of the frame. When the question mark is clicked, a new
 	 * frame is displayed to show the FAQ. When the return symbol is clicked, it
 	 * returns to the initial decision panel.
-	 * 
-	 * @param email
-	 * @param adminEmail
-	 * @param support
-	 * 
 	 **/
 
 	public JPanel getHelpPanel(JFrame frame, JFrame decisionFrame, EmailSection email, Support support,
 			String adminEmail) {
 		JPanel pnlHelp = new JPanel(new BorderLayout());
-		btnGoBack = new JButton();
-		ImageIcon icoGoBack = new ImageIcon(((new ImageIcon("./src/images/goBack.png")).getImage())
-				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
-		btnGoBack.setContentAreaFilled(false);
-		btnGoBack.setBorderPainted(false);
-		btnGoBack.setFocusPainted(false);
-		btnGoBack.setIcon(icoGoBack);
-		btnGoBack.addActionListener(new ActionListener() {
+		goBackButton(frame, decisionFrame);
+		helpButton(frame, email, support, adminEmail);
+		pnlHelp.add(btnGoBack, BorderLayout.LINE_START);
+		pnlHelp.add(btnHelp, BorderLayout.LINE_END);
+		return pnlHelp;
+	}
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				decisionFrame.setVisible(true);
-				frame.setVisible(false);
-			}
-		});
+	private void helpButton(JFrame frame, EmailSection email, Support support, String adminEmail) {
 		btnHelp = new JButton();
 		ImageIcon icoQuestion_mark = new ImageIcon(((new ImageIcon("./src/images/question_mark.png")).getImage())
 				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
@@ -71,29 +59,37 @@ public class HelpSection {
 				helpFrame.setVisible(true);
 			}
 		});
-		pnlHelp.add(btnGoBack, BorderLayout.LINE_START);
-		pnlHelp.add(btnHelp, BorderLayout.LINE_END);
-		return pnlHelp;
+	}
+
+	private void goBackButton(JFrame frame, JFrame decisionFrame) {
+		btnGoBack = new JButton();
+		ImageIcon icoGoBack = new ImageIcon(((new ImageIcon("./src/images/goBack.png")).getImage())
+				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		btnGoBack.setContentAreaFilled(false);
+		btnGoBack.setBorderPainted(false);
+		btnGoBack.setFocusPainted(false);
+		btnGoBack.setIcon(icoGoBack);
+		btnGoBack.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				decisionFrame.setVisible(true);
+				frame.setVisible(false);
+			}
+		});
 	}
 
 	/**
 	 * Adds content to the Help frame
-	 * 
-	 * @param email
-	 * @param adminEmail
-	 * @param support
 	 **/
 	private void setHelpFrame(JFrame frame, JFrame helpFrame, EmailSection email, Support support, String adminEmail) {
-
 		JPanel pnlHelp = new JPanel(new BorderLayout());
-
 		JPanel pnlFAQ = new JPanel(new GridLayout(6, 0));
 		JPanel pnlSendEmail = new JPanel();
 		btnWriteEmailFAQ = new JButton("Write Email");
 		btnWriteEmailFAQ.setContentAreaFilled(false);
 		btnWriteEmailFAQ.setFocusable(false);
 		btnWriteEmailFAQ.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				email.setEmailFrame(helpFrame, support, adminEmail);
@@ -110,7 +106,6 @@ public class HelpSection {
 		pnlHelp.add(pnlFAQ, BorderLayout.CENTER);
 		pnlHelp.add(pnlSendEmail, BorderLayout.PAGE_END);
 		helpFrame.add(pnlHelp);
-
 	}
 
 	/**

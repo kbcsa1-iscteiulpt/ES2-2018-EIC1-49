@@ -73,6 +73,10 @@ public class Interface {
 		frame.add(decisionPanel);
 	}
 
+	/**
+	 * When the "Create a new problem" button is clicked, a new frame is created and
+	 * shown
+	 **/
 	private void createButton() {
 		btnCreateProblem.addActionListener(new ActionListener() {
 
@@ -89,6 +93,10 @@ public class Interface {
 		});
 	}
 
+	/**
+	 * When the "Read problem from XML file" button is clicked, a new frame is
+	 * created and shown with the form filled with the data given by the XML file
+	 **/
 	private void readButton() {
 		btnReadProblem.addActionListener(new ActionListener() {
 
@@ -103,7 +111,8 @@ public class Interface {
 					if (fchReadXML.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 						String filePath = fchReadXML.getSelectedFile().getPath();
 						problem = xml.read(filePath);
-						fillForms.fillInicialForm(filePath, nameDescription, problem, email, timeOptimization, readSection.getTxtFilePathXML());
+						fillForms.fillInicialForm(filePath, nameDescription, problem, email, timeOptimization,
+								readSection.getFilePathXML());
 						fillForms.fillDecisionVariableForm(decisionVariables, problem);
 					}
 				}
@@ -134,46 +143,74 @@ public class Interface {
 		problemSave(initialPanel);
 		problemCriteria(initialPanel);
 		problemExecution(initialPanel);
-		frame.add(initialPanel);	
+		frame.add(initialPanel);
 	}
 
+	/**
+	 * Adds the help panel to the initial frame
+	 **/
 	private void problemHelp(JFrame frame, JPanel initialPanel) {
 		initialPanel.add(helpSection.getHelpPanel(frame, decisionFrame, email, support, adminEmail));
 	}
 
+	/**
+	 * Adds the read problem panel to the initial frame
+	 **/
 	private void problemRead(JPanel initialPanel) {
-		initialPanel.add(readSection.readPanel(nameDescription, email, problem, xml, decisionVariables,
-				timeOptimization));
+		initialPanel
+				.add(readSection.readPanel(nameDescription, email, problem, xml, decisionVariables, timeOptimization));
 	}
 
-	private void problemExecution(JPanel initialPanel) {
-		initialPanel.add(execution.executeProcessPanel(nameDescription, email, problem, decisionVariables, problemType, support, adminEmail));
+	/**
+	 * Adds the problem name and description panel to the initial frame
+	 **/
+	private void problemNameDescription(JPanel initialPanel) {
+		initialPanel.add(nameDescription.problemNamePanel());
+		initialPanel.add(nameDescription.problemDescriptionPanel());
 	}
 
-	private void problemCriteria(JPanel initialPanel) {
-		initialPanel.add(criteriaSection.criteriaPanel(criteriaAdded, problem));
+	/**
+	 * Adds the email panel to the initial frame
+	 **/
+	private void problemUserEmail(JFrame frame, JPanel initialPanel, Support support, String adminEmail) {
+		initialPanel.add(email.emailPanel(frame, support, adminEmail));
 	}
 
-	private void problemSave(JPanel initialPanel) {
-		initialPanel.add(saveSection.savePanel(nameDescription, email, problem, xml, decisionVariables,
-				timeOptimization));
-	}
-
-	private void problemDecisionVariables(JPanel initialPanel) {
-		initialPanel.add(decisionVariables.decisionVarPanel(problem));
-	}
-
+	/**
+	 * Adds the ideal and maximum time for optimization panel to the initial frame
+	 **/
 	private void problemTime(JPanel initialPanel) {
 		initialPanel.add(timeOptimization.maxTimePanel());
 		initialPanel.add(timeOptimization.idealTimePanel());
 	}
 
-	private void problemUserEmail(JFrame frame, JPanel initialPanel, Support support, String adminEmail) {
-		initialPanel.add(email.emailPanel(frame, support, adminEmail));
+	/**
+	 * Adds the decision variable panel to the initial frame
+	 **/
+	private void problemDecisionVariables(JPanel initialPanel) {
+		initialPanel.add(decisionVariables.decisionVarPanel(problem));
 	}
 
-	private void problemNameDescription(JPanel initialPanel) {
-		initialPanel.add(nameDescription.problemNamePanel());
-		initialPanel.add(nameDescription.problemDescriptionPanel());
+	/**
+	 * Adds the save problem panel to the initial frame
+	 **/
+	private void problemSave(JPanel initialPanel) {
+		initialPanel
+				.add(saveSection.savePanel(nameDescription, email, problem, xml, decisionVariables, timeOptimization));
+	}
+
+	/**
+	 * Adds the criteria panel to the initial frame
+	 **/
+	private void problemCriteria(JPanel initialPanel) {
+		initialPanel.add(criteriaSection.criteriaPanel(criteriaAdded, problem));
+	}
+
+	/**
+	 * Adds the execution panel to the initial frame
+	 **/
+	private void problemExecution(JPanel initialPanel) {
+		initialPanel.add(execution.executeProcessPanel(nameDescription, email, problem, decisionVariables, problemType,
+				support, adminEmail));
 	}
 }

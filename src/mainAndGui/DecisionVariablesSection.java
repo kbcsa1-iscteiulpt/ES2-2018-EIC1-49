@@ -77,8 +77,28 @@ public class DecisionVariablesSection {
 		txtNameOfDecisionVariablesGroup.setColumns(25);
 		JLabel lblNumberOfDecisionVariable = new JLabel("Number of Decision Variables");
 		pnlNameOfDecisionVariablesGroup.add(lblNumberOfDecisionVariable, BorderLayout.NORTH);
-		pnlNameOfDecisionVariablesGroup.add(spnNumberOfDecisionVariables, BorderLayout.NORTH);
 
+		JComboBox<String> cmbVariableDataTypes = createDecisionVariableTable();
+
+		spinnerHandler(pnlNameOfDecisionVariablesGroup, cmbVariableDataTypes);
+		pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
+		pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
+		pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
+		pnlDecision.add(new JScrollPane(tblDecisionVariables));
+		btnDecisionVariablesFinish = new JButton("Finish");
+		btnDecisionVariablesFinish.setContentAreaFilled(false);
+		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
+				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
+		btnDecisionVariablesFinish.setIcon(icoFinish);
+		decisionVariablesFinish(problem);
+		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
+		decisionVarFrame.add(pnlDecision);
+	}
+
+	/**
+	 * Creates the decision variable table 
+	 **/
+	private JComboBox<String> createDecisionVariableTable() {
 		dtmDecisionVariables = new DefaultTableModel();
 
 		tblDecisionVariables.setModel(dtmDecisionVariables);
@@ -94,7 +114,14 @@ public class DecisionVariablesSection {
 		tblDecisionVariables.getColumnModel().getColumn(4).setCellRenderer(renderer);
 		String[] variableDataTypes = { "Binary", "Double", "Integer"};
 		JComboBox<String> cmbVariableDataTypes = new JComboBox<>(variableDataTypes);
+		return cmbVariableDataTypes;
+	}
 
+	/**
+	 * Adds or deletes decision variable table rows according to the spinner number
+	 **/
+	private void spinnerHandler(JPanel pnlNameOfDecisionVariablesGroup, JComboBox<String> cmbVariableDataTypes) {
+		pnlNameOfDecisionVariablesGroup.add(spnNumberOfDecisionVariables, BorderLayout.NORTH);
 		if (Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()) != 0) {
 			for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
 				dtmDecisionVariables.addRow(new Object[] { "", "", "", "", "" });
@@ -123,20 +150,11 @@ public class DecisionVariablesSection {
 
 			}
 		});
-		pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
-		pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
-		pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
-		pnlDecision.add(new JScrollPane(tblDecisionVariables));
-		btnDecisionVariablesFinish = new JButton("Finish");
-		btnDecisionVariablesFinish.setContentAreaFilled(false);
-		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
-				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
-		btnDecisionVariablesFinish.setIcon(icoFinish);
-		decisionVariablesFinish(problem);
-		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
-		decisionVarFrame.add(pnlDecision);
 	}
 
+	/**
+	 * Sets the problem variable if the name type and variable's values are filled 
+	 **/
 	private void decisionVariablesFinish(UserProblem problem) {
 		btnDecisionVariablesFinish.addActionListener(new ActionListener() {
 

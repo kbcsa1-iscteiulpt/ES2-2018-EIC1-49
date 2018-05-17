@@ -34,6 +34,10 @@ public class SaveSection {
 		pnlSave.add(btnSaveToXML, decisionVariables);
 		return pnlSave;
 	}
+	
+	/**
+	 * Saves the problem in a XML file
+	 **/
 	private void saveXMLProblem(NameDescriptionSection nameDescriptionProblem, EmailSection email, UserProblem problem,
 			XML_Editor xml, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization)
 			throws java.awt.HeadlessException {
@@ -43,7 +47,7 @@ public class SaveSection {
 			public void actionPerformed(ActionEvent arg0) {
 				if (nameDescriptionProblem.getProblemName().getText().isEmpty()
 						|| nameDescriptionProblem.getProblemDescription().getText().isEmpty()
-						|| email.getTxtEmail().getText().isEmpty()) {
+						|| email.getEmail().getText().isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Please fill all the mandatory fields", "Warning",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
@@ -62,6 +66,7 @@ public class SaveSection {
 			}
 		});
 	}
+	
 	/**
 	 * Saves the problem with the data given by the fields that were filled.
 	 **/
@@ -70,21 +75,29 @@ public class SaveSection {
 							DecisionVariablesSection decisionVariables,
 							EmailSection email,
 							TimeOptimizationSection timeOptimization) {
-		String groupName = "";
+		String groupName = groupName(decisionVariables);
 		List<Variable> variablesList = createVariableList(decisionVariables);
-		
-		if (decisionVariables.getTxtNameOfDecisionVariablesGroup() != null) {
-			groupName = decisionVariables.getTxtNameOfDecisionVariablesGroup().getText();
-		}
 		
 		setProblem(nameDescriptionProblem, problem, decisionVariables, email, timeOptimization, groupName, variablesList);
 	}
+
+	private String groupName(DecisionVariablesSection decisionVariables) {
+		String groupName = "";
+		if (decisionVariables.getTxtNameOfDecisionVariablesGroup() != null) {
+			groupName = decisionVariables.getTxtNameOfDecisionVariablesGroup().getText();
+		}
+		return groupName;
+	}
+	
+	/**
+	 *  Sets the problem with the data given by the fields
+	 **/
 	private void setProblem(NameDescriptionSection nameDescriptionProblem, UserProblem problem,
 			DecisionVariablesSection decisionVariables, EmailSection email, TimeOptimizationSection timeOptimization,
 			String groupName, List<Variable> variablesList) throws java.lang.NumberFormatException {
 		problem.setName(nameDescriptionProblem.getProblemName().getText());
 		problem.setDescription(nameDescriptionProblem.getProblemDescription().getText());
-		problem.setEmail(email.getTxtEmail().getText());
+		problem.setEmail(email.getEmail().getText());
 		problem.setMax(new Time(Integer.parseInt(timeOptimization.getSpnMaxNumberOfDays().getValue().toString()),
 				Integer.parseInt(timeOptimization.getSpnMaxNumberOfHours().getValue().toString()),
 				Integer.parseInt(timeOptimization.getSpnMaxNumberOfMinutes().getValue().toString())));
@@ -97,6 +110,9 @@ public class SaveSection {
 		problem.setVariables(variablesList);
 	}
 	
+	/**
+	 * Creates a list of the Variables that were filled
+	 **/
 	public List<Variable> createVariableList(DecisionVariablesSection decisionVariables) {
 		List<Variable> variablesList = new ArrayList<Variable>();
 
@@ -115,33 +131,10 @@ public class SaveSection {
 		}
 		return variablesList;
 	}
-	private String decisionVariableRestriction(DefaultTableModel dtmDecisionVariables, int i) {
-		String decisionVariableRestriction = "";
-		if (dtmDecisionVariables.getValueAt(i, 4).toString() != null) {
-			decisionVariableRestriction = dtmDecisionVariables.getValueAt(i, 4).toString();
-		}
-		return decisionVariableRestriction;
-	}
-	private String decisionVariableMaxValue(DefaultTableModel dtmDecisionVariables, int i) {
-		String decisionVariableMaxValue = "";
-		if (dtmDecisionVariables.getValueAt(i, 3).toString() != null) {
-			decisionVariableMaxValue = dtmDecisionVariables.getValueAt(i, 3).toString();
-		}
-		return decisionVariableMaxValue;
-	}
-	private String decisionVariableMinValue(DefaultTableModel dtmDecisionVariables, int i) {
-		String decisionVariableMinValue = "";
-		if (dtmDecisionVariables.getValueAt(i, 2).toString() != null) {
-			decisionVariableMinValue = dtmDecisionVariables.getValueAt(i, 2).toString();
-		}
-		return decisionVariableMinValue;
-	}
-	private String decisionVariableType(DefaultTableModel dtmDecisionVariables, int i) {
-		String decisionVariableType = "";
-		if (dtmDecisionVariables.getValueAt(i, 1).toString() != null)
-			decisionVariableType = dtmDecisionVariables.getValueAt(i, 1).toString();
-		return decisionVariableType;
-	}
+	
+	/**
+	 * Checks if the decision variable name was filled, if it was, returns the restriction, else the returns an empty string 
+	 **/
 	private String decisionVariableName(DefaultTableModel dtmDecisionVariables, int i) {
 		String decisionVariableName = "";
 		if (dtmDecisionVariables.getValueAt(i, 0).toString() != null)
@@ -149,5 +142,46 @@ public class SaveSection {
 		return decisionVariableName;
 	}
 
+	/**
+	 * Checks if the decision variable type was filled, if it was, returns the restriction, else the returns an empty string 
+	 **/
+	private String decisionVariableType(DefaultTableModel dtmDecisionVariables, int i) {
+		String decisionVariableType = "";
+		if (dtmDecisionVariables.getValueAt(i, 1).toString() != null)
+			decisionVariableType = dtmDecisionVariables.getValueAt(i, 1).toString();
+		return decisionVariableType;
+	}
 
+	/**
+	 * Checks if the decision variable minumum value was filled, if it was, returns the restriction, else the returns an empty string 
+	 **/
+	private String decisionVariableMinValue(DefaultTableModel dtmDecisionVariables, int i) {
+		String decisionVariableMinValue = "";
+		if (dtmDecisionVariables.getValueAt(i, 2).toString() != null) {
+			decisionVariableMinValue = dtmDecisionVariables.getValueAt(i, 2).toString();
+		}
+		return decisionVariableMinValue;
+	}
+
+	/**
+	 * Checks if the decision variable maximum value was filled, if it was, returns the restriction, else the returns an empty string 
+	 **/
+	private String decisionVariableMaxValue(DefaultTableModel dtmDecisionVariables, int i) {
+		String decisionVariableMaxValue = "";
+		if (dtmDecisionVariables.getValueAt(i, 3).toString() != null) {
+			decisionVariableMaxValue = dtmDecisionVariables.getValueAt(i, 3).toString();
+		}
+		return decisionVariableMaxValue;
+	}
+	
+	/**
+	 * Checks if the decision variable restriction was filled, if it was, returns the restriction, else the returns an empty string 
+	 **/
+	private String decisionVariableRestriction(DefaultTableModel dtmDecisionVariables, int i) {
+		String decisionVariableRestriction = "";
+		if (dtmDecisionVariables.getValueAt(i, 4).toString() != null) {
+			decisionVariableRestriction = dtmDecisionVariables.getValueAt(i, 4).toString();
+		}
+		return decisionVariableRestriction;
+	}
 }

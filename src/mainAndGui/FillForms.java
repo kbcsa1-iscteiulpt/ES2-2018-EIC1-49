@@ -16,7 +16,6 @@ public class FillForms {
 
 	/**
 	 * Fills the form with the data from a XML file.
-	 * @param timeOptimization 
 	 **/
 	public void fillInicialForm(String filePath, NameDescriptionSection nameDescriptionProblem,
 			UserProblem problem, EmailSection email, TimeOptimizationSection timeOptimization,
@@ -24,7 +23,7 @@ public class FillForms {
 		txtFilePathXML.setText(filePath);
 		nameDescriptionProblem.getProblemName().setText(problem.getName());
 		nameDescriptionProblem.getProblemDescription().setText(problem.getDescription());
-		email.getTxtEmail().setText(problem.getEmail());
+		email.getEmail().setText(problem.getEmail());
 		timeOptimization.getSpnMaxNumberOfDays().setValue(problem.getMax().getDays());
 		timeOptimization.getSpnMaxNumberOfHours().setValue(problem.getMax().getHours());
 		timeOptimization.getSpnMaxNumberOfMinutes().setValue(problem.getMax().getMinutes());
@@ -35,8 +34,6 @@ public class FillForms {
 
 	/**
 	 * Fills the decision variable table with the data from a XML file.
-	 * @param decisionVariables 
-	 * @param problem 
 	 **/
 	public void fillDecisionVariableForm(DecisionVariablesSection decisionVariables, UserProblem problem) {
 		decisionVariables.getTxtNameOfDecisionVariablesGroup().setText(problem.getGroupName());
@@ -68,7 +65,4 @@ public class FillForms {
 					.setCellEditor(new DefaultCellEditor(cmbVariableDataTypesXML));
 		}
 	}
-
-
-	
 }

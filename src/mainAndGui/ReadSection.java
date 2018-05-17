@@ -15,6 +15,10 @@ public class ReadSection {
 	private JTextField txtFilePathXML;
 	private FillForms fillForms = new FillForms();
 
+	/**
+	 * Returns the panel with a button that reads a problem from a XML file and writes the respective path.
+	 * When clicked, reads a XML file and fills the form the data from a XML file
+	 **/
 	public JPanel readPanel(NameDescriptionSection nameDescriptionProblem, EmailSection email,
 			UserProblem problem, XML_Editor xml, DecisionVariablesSection decisionVariables,
 			TimeOptimizationSection timeOptimization) {
@@ -23,6 +27,18 @@ public class ReadSection {
 		btnReadXML.setToolTipText("Read a XML file. This action will replace the fields already filled");
 		txtFilePathXML = new JTextField();
 		txtFilePathXML.setEditable(false);
+		readFromFile(nameDescriptionProblem, email, problem, xml, decisionVariables, timeOptimization, pnlRead);
+		pnlRead.add(btnReadXML);
+		pnlRead.add(txtFilePathXML);
+		return pnlRead;
+	}
+
+	/**
+	 * Reads a XML file and fills the from with the data from a XML file 
+	 **/
+	private void readFromFile(NameDescriptionSection nameDescriptionProblem, EmailSection email, UserProblem problem,
+			XML_Editor xml, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization,
+			JPanel pnlRead) {
 		btnReadXML.addActionListener(new ActionListener() {
 
 			@Override
@@ -38,12 +54,9 @@ public class ReadSection {
 				}
 			}
 		});
-		pnlRead.add(btnReadXML);
-		pnlRead.add(txtFilePathXML);
-		return pnlRead;
 	}
 
-	public JTextField getTxtFilePathXML() {
+	public JTextField getFilePathXML() {
 		return txtFilePathXML;
 	}
 

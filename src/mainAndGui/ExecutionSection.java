@@ -27,43 +27,45 @@ import support.Support;
 public class ExecutionSection {
 	private JFrame afterOptimizationProcess;
 	private JButton btnExecuteProcess;
-	private JButton btnExecuteGraphics;
+	private JButton btnResults;
+
 	/**
 	 * Returns a panel with the button to execute the optimization process.
 	 **/
-	public JPanel executeProcessPanel(NameDescriptionSection nameDescription, 
-									  EmailSection email, UserProblem problem, 
-									  DecisionVariablesSection decisionVariables,
-									  String problemType, Support support, String adminEmail) {
+	public JPanel executeProcessPanel(NameDescriptionSection nameDescription, EmailSection email, UserProblem problem,
+			DecisionVariablesSection decisionVariables, String problemType, Support support, String adminEmail) {
 		JPanel executeProcessPanel = new JPanel(new FlowLayout());
 		problem(nameDescription, email, problem, decisionVariables, problemType, support, adminEmail);
 		ImageIcon icoExecute = new ImageIcon(((new ImageIcon("./src/images/execute.png")).getImage())
 				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
 		btnExecuteProcess.setContentAreaFilled(false);
 		btnExecuteProcess.setIcon(icoExecute);
-		btnExecuteGraphics = new JButton("Graphics");
-		btnExecuteGraphics.setContentAreaFilled(false);
-		btnExecuteGraphics.addActionListener(new ActionListener() {
-
+		btnResults = new JButton("Results");
+		btnResults.setContentAreaFilled(false);
+		btnResults.addActionListener(new ActionListener() {
 
 			// TODO
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				graphicsFrame = new JFrame("Graphics");
-//				setFrame(graphicsFrame, 0.5);
-//				setGraphicsFrame(graphicsFrame);
+				// graphicsFrame = new JFrame("Graphics");
+				// setFrame(graphicsFrame, 0.5);
+				// setGraphicsFrame(graphicsFrame);
 				afterOptimizationProcess = new JFrame("Results");
 				FrameSize.setFrame(afterOptimizationProcess, 0.25);
 				setAfterOptimizationProcess(afterOptimizationProcess);
 				afterOptimizationProcess.setVisible(true);
 			}
 
-			
 		});
 		executeProcessPanel.add(btnExecuteProcess);
-		executeProcessPanel.add(btnExecuteGraphics);
+		executeProcessPanel.add(btnResults);
 		return executeProcessPanel;
 	}
+	
+	/**
+	 * Checks if the mandatory fields are completed and executes the optimization process
+	 * Sends an email warning if there was an error while running the problem requested.
+	 **/
 	private void problem(NameDescriptionSection nameDescription, EmailSection email, UserProblem problem,
 			DecisionVariablesSection decisionVariables, String problemType, Support support, String adminEmail)
 			throws java.awt.HeadlessException, java.lang.NumberFormatException {
@@ -96,8 +98,8 @@ public class ExecutionSection {
 						}
 					} catch (IOException e2) {
 						try {
-							support.SendEmail(adminEmail, email.getTxtEmail().getText(), "There was a problem",
-									"There was a problem runnig the problem you requested, please try again."
+							support.SendEmail(adminEmail, email.getEmail().getText(), "There was a problem",
+									"There was a problem running the problem you requested, please try again."
 											+ "If the problem continues, contact us so we can help");
 							return;
 						} catch (AddressException e1) {
@@ -113,35 +115,39 @@ public class ExecutionSection {
 								+ "sobre o progresso do processo de otimiza��o, quando o processo de otimiza��o tiver atingido 25%,\r\n"
 								+ "50%, 75% do total do (n�mero de avalia��es ou) tempo estimado, e tamb�m quando o processo tiver\r\n"
 								+ "terminado, com sucesso ou devido � ocorr�ncia de erros.";
-						support.SendEmail(adminEmail, email.getTxtEmail().getText(), subject, message);
+						support.SendEmail(adminEmail, email.getEmail().getText(), subject, message);
 					} catch (MessagingException e1) {
 					}
 				}
 			}
 		});
 	}
+
+	/**
+	 * Sets the content of the Results frame 
+	 **/
 	private void setAfterOptimizationProcess(JFrame frame) {
-		JPanel pnlOptProcess= new JPanel(new GridLayout(3, 0));
+		JPanel pnlOptProcess = new JPanel(new GridLayout(3, 0));
 		JButton btnGraphics = new JButton("Graphics");
 		JButton btnEpsFile = new JButton(".eps File");
 		JButton btnPdfFile = new JButton(".pdf File");
 		btnGraphics.setContentAreaFilled(false);
 		btnEpsFile.setContentAreaFilled(false);
 		btnPdfFile.setContentAreaFilled(false);
-		
+
 		btnGraphics.setBorderPainted(true);
 		btnEpsFile.setBorderPainted(true);
 		btnPdfFile.setBorderPainted(true);
-		
+
 		btnGraphics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-//				setGraphicsFrame(graphicsFrame);
+				// setGraphicsFrame(graphicsFrame);
 			}
 		});
-		
+
 		btnEpsFile.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String[] params = new String[2];
@@ -160,12 +166,12 @@ public class ExecutionSection {
 					e1.printStackTrace();
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
-				}			
+				}
 			}
 		});
-		
+
 		btnPdfFile.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -183,20 +189,20 @@ public class ExecutionSection {
 							new File("C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files"));
 
 					p.waitFor();
-					Runtime.getRuntime()
-							.exec("open C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files\\ExperimentsDoubleExternalViaJAR.pdf");
+					Runtime.getRuntime().exec(
+							"open C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files\\ExperimentsDoubleExternalViaJAR.pdf");
 
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
-				}				
+				}
 			}
 		});
 		pnlOptProcess.add(btnGraphics);
 		pnlOptProcess.add(btnEpsFile);
-		pnlOptProcess.add(btnPdfFile);		
-		
+		pnlOptProcess.add(btnPdfFile);
+
 		frame.add(pnlOptProcess);
 	}
 

@@ -63,12 +63,27 @@ public class EmailSection {
 				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
 		btnMessageSend.setContentAreaFilled(false);
 		btnMessageSend.setIcon(icoSendMessage);
+		sendEmail(frame, support, adminEmail, sendEmailFrame, pnlSendEmail);
+
+		pnlMessageSend.add(btnMessageSend, BorderLayout.SOUTH);
+
+		pnlSendEmail.add(pnlMessageTitle, BorderLayout.NORTH);
+		pnlSendEmail.add(pnlMessageBody, BorderLayout.CENTER);
+		pnlSendEmail.add(pnlMessageSend, BorderLayout.SOUTH);
+
+		sendEmailFrame.add(pnlSendEmail);
+		sendEmailFrame.setVisible(true);
+		return sendEmailFrame;
+	}
+
+	/**
+	 * Closes the email frame and sends the intended email, if the operation fails
+	 * shows a warning message.
+	 **/
+	private void sendEmail(JFrame frame, Support support, String adminEmail, JFrame sendEmailFrame,
+			JPanel pnlSendEmail) {
 		btnMessageSend.addActionListener(new ActionListener() {
 
-			/**
-			 * Closes the email frame and sends the intended email, if the operation fails
-			 * shows a warning message.
-			 **/
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (txtMessageTitle.getText().isEmpty() || txaMessageBody.getText().isEmpty()) {
@@ -86,16 +101,6 @@ public class EmailSection {
 				}
 			}
 		});
-
-		pnlMessageSend.add(btnMessageSend, BorderLayout.SOUTH);
-
-		pnlSendEmail.add(pnlMessageTitle, BorderLayout.NORTH);
-		pnlSendEmail.add(pnlMessageBody, BorderLayout.CENTER);
-		pnlSendEmail.add(pnlMessageSend, BorderLayout.SOUTH);
-
-		sendEmailFrame.add(pnlSendEmail);
-		sendEmailFrame.setVisible(true);
-		return sendEmailFrame;
 	}
 
 	/**
@@ -132,6 +137,9 @@ public class EmailSection {
 		return pnlEmail;
 	}
 
+	/**
+	 * Checks if the email given by the user is valid 
+	 **/
 	private void checkEmail() {
 		txtEmail.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -168,7 +176,7 @@ public class EmailSection {
 		});
 	}
 
-	public JTextField getTxtEmail() {
+	public JTextField getEmail() {
 		return txtEmail;
 	}
 
