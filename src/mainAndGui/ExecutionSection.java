@@ -73,7 +73,7 @@ public class ExecutionSection {
 			public void actionPerformed(ActionEvent e) {
 				if (nameDescription.getProblemName().getText().isEmpty()
 						|| nameDescription.getProblemDescription().getText().isEmpty()
-						|| email.getTxtEmail().getText().isEmpty()) {
+						|| !email.getBtnWriteEmail().isEnabled()) {
 					JOptionPane.showMessageDialog(null, "Please fill all the mandatory fields", "Warning",
 							JOptionPane.WARNING_MESSAGE);
 				} else {

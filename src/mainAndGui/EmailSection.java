@@ -7,10 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.regex.Pattern;
-
 import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-import javax.swing.AbstractButton;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -29,7 +26,7 @@ public class EmailSection {
 	private JTextField txtEmail;
 	private JTextField txtMessageTitle;
 	private JTextArea txaMessageBody;
-	private AbstractButton btnMessageSend;
+	private JButton btnMessageSend;
 	private JButton btnWriteEmail;
 	private JButton btnWriteEmailFAQ;
 
@@ -173,5 +170,9 @@ public class EmailSection {
 
 	public JTextField getTxtEmail() {
 		return txtEmail;
+	}
+
+	public JButton getBtnWriteEmail() {
+		return btnWriteEmail;
 	}
 }
