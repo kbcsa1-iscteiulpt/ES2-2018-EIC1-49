@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.jfree.ui.RefineryUtilities;
+
 import problem.UserProblem;
 import support.BinaryExperiment;
 import support.DoubleExperiment;
@@ -44,12 +46,8 @@ public class ExecutionSection {
 		btnResults.setContentAreaFilled(false);
 		btnResults.addActionListener(new ActionListener() {
 
-			// TODO
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// graphicsFrame = new JFrame("Graphics");
-				// setFrame(graphicsFrame, 0.5);
-				// setGraphicsFrame(graphicsFrame);
 				afterOptimizationProcess = new JFrame("Results");
 				FrameSize.setFrame(afterOptimizationProcess, 0.25);
 				setAfterOptimizationProcess(afterOptimizationProcess);
@@ -142,7 +140,10 @@ public class ExecutionSection {
 		btnGraphics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// setGraphicsFrame(graphicsFrame);
+				Graph chart = new Graph();
+				chart.pack();
+				RefineryUtilities.centerFrameOnScreen(chart);
+				chart.setVisible(true);
 			}
 		});
 
