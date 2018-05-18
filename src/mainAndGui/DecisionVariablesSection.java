@@ -90,7 +90,7 @@ public class DecisionVariablesSection {
 		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
 				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
 		btnDecisionVariablesFinish.setIcon(icoFinish);
-		decisionVariablesFinish(problem);
+		decisionVariablesFinish(problem, decisionVarFrame);
 		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
 		decisionVarFrame.add(pnlDecision);
 	}
@@ -154,8 +154,9 @@ public class DecisionVariablesSection {
 
 	/**
 	 * Sets the problem variable if the name type and variable's values are filled 
+	 * @param decisionVarFrame 
 	 **/
-	private void decisionVariablesFinish(UserProblem problem) {
+	private void decisionVariablesFinish(UserProblem problem, JFrame decisionVarFrame) {
 		btnDecisionVariablesFinish.addActionListener(new ActionListener() {
 
 			@Override
@@ -186,6 +187,7 @@ public class DecisionVariablesSection {
 								dtmDecisionVariables.getValueAt(j, 4).toString());
 						problem.addVariable(variable);
 					}
+					decisionVarFrame.dispose();
 				}
 			}
 		});
