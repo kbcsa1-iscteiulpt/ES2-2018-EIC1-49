@@ -1,5 +1,7 @@
 package problem;
 
+import java.util.BitSet;
+
 /**
  * Class that represents a variable of decision
  * contains:
@@ -9,7 +11,7 @@ package problem;
  * 		- maximum range of the variable value
  * 		- restricted values of the variable
  * 
- * @author Kevin Corrales nº 73529
+ * @author Kevin Corrales nï¿½ 73529
  *
  */
 public class Variable {
@@ -19,6 +21,8 @@ public class Variable {
 	private String min; //Start of the range
 	private String max;	//End of the range
 	private String restriction;
+	
+	private BitSet bits = new BitSet();
 	
 	/**
 	 * Class constructor
@@ -37,7 +41,15 @@ public class Variable {
 		this.max = max;
 		this.restriction = restriction;
 	}
+	
+	public Variable(BitSet bits) {
+		this.bits=bits;
+	}
 
+
+	public BitSet getBits() {
+		return bits;
+	}
 
 	public String getName() {
 		return name;
