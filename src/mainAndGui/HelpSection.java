@@ -18,6 +18,10 @@ import javax.swing.JPanel;
 
 import support.Support;
 
+/**
+ * This class represents the help section.
+ * @author Diana nr 72898
+ **/
 public class HelpSection {
 	private JButton btnGoBack;
 	private JButton btnHelp;

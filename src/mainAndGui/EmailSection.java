@@ -21,7 +21,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import support.Support;
-
+/**
+ * This class represents the email section.
+ * @author Diana nr 72898
+ **/
 public class EmailSection {
 	private JTextField txtEmail;
 	private JTextField txtMessageTitle;

@@ -19,7 +19,11 @@ import support.Config;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-
+/**
+ * This class creates a frame that shows a graphic with the values of the rf and rs files that contains
+ * the JMetal results. 
+ * @author Kevin Corrales nº 73529
+ **/
 public class Graphic extends  ApplicationFrame {
 		
 	private final double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2;
@@ -30,6 +34,7 @@ public class Graphic extends  ApplicationFrame {
 			config.getrfPathBinary(),config.getrfPathDouble(),config.getrfPathInteger(),
 			config.getrsPathBinary(),config.getrsPathDouble(),config.getrsPathInteger()};
 
+	
 		public Graphic(  ) {
 		      super("");
 		      
@@ -50,6 +55,12 @@ public class Graphic extends  ApplicationFrame {
 		      setContentPane( chartPanel );
 		   }
 
+		
+		  /**
+		   * 
+		   * This method generates a dataset from the list that contains the results
+		   * @return dataset
+		   */
 		   private DefaultCategoryDataset createDataset( ) {
 		
 			   DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
@@ -65,6 +76,10 @@ public class Graphic extends  ApplicationFrame {
 		   }
 		
 		 		   
+		   /**
+		    * This method reads JMetal results from a file
+		    * @param path
+		    */
 		   public void readResults(String path) {
 				Scanner scanner = null;
 				try{

@@ -25,7 +25,10 @@ import javax.swing.table.DefaultTableModel;
 
 import problem.UserProblem;
 import problem.Variable;
-
+/**
+ * This class represents the decision variables section.
+ * @author Diana nr 72898
+ **/
 public class DecisionVariablesSection {
 	private JButton btnDecisionVariables;
 	private JSpinner spnNumberOfDecisionVariables;

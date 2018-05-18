@@ -25,7 +25,10 @@ import support.BinaryExperiment;
 import support.DoubleExperiment;
 import support.IntegerExperiment;
 import support.Support;
-
+/**
+ * This class represents the execution process section.
+ * @author Diana nr 72898
+ **/
 public class ExecutionSection {
 	private JFrame afterOptimizationProcess;
 	private JButton btnExecuteProcess;

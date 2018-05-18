@@ -10,6 +10,10 @@ import javax.swing.JTextField;
 import problem.UserProblem;
 import support.XML_Editor;
 
+/**
+ * This class represents the read file section.
+ * @author Diana nr 72898
+ **/
 public class ReadSection {
 	private JButton btnReadXML;
 	private JTextField txtFilePathXML;

@@ -9,6 +9,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+/**
+ * This class represents the name and description of the problem section.
+ * @author Diana nr 72898
+ **/
 public class NameDescriptionSection {
 	private JTextField txtProblemName;
 	private JTextArea txaProblemDescription;
