@@ -13,6 +13,9 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
+
+import support.Config;
+
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
@@ -22,11 +25,18 @@ public class Graphic extends  ApplicationFrame {
 	private final double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2;
 	private final double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2;
 	private List<double[]> xAxis = new ArrayList<double[]>();
-	private final String path="./src/files/exemplo.txt";
+	private Config config = new Config();
+	private String[] paths = new String[] {
+			config.getrfPathBinary(),config.getrfPathDouble(),config.getrfPathInteger(),
+			config.getrsPathBinary(),config.getrsPathDouble(),config.getrsPathInteger()};
 
 		public Graphic(  ) {
 		      super("");
-		      readResults();
+		      
+		      for(int i=0; i<paths.length; i++) {
+		    	 if(!(paths[i].isEmpty() || paths[i].equals("")))
+		    		 readResults(paths[i]);
+		      }
 		      JFreeChart lineChart = ChartFactory.createLineChart(
 		         "JMetal Results",
 		         "","",
@@ -54,7 +64,7 @@ public class Graphic extends  ApplicationFrame {
 		   }
 		
 		 		   
-		   public void readResults() {
+		   public void readResults(String path) {
 				Scanner scanner = null;
 				try{
 					scanner = new Scanner(new File(path));

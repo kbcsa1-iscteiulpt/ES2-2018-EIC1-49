@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<administrator email="projetodees7@gmail.com" emailPassword="P@ssw0rd123"></administrator>
+	<jmetal maxEvaluations="250">
+		<paths rsPathInteger="" rsPathDouble="" rsPathBinary="" rfPathInteger="" rfPathDouble="" rfPathBinary=""></paths></jmetal>
+	<eps epsEnvironmentVar="">
+		<paths epsDestinationPath="" epsLatexPath="" rPath=""></paths></eps>
+	<pdf pdfEnvironmentVar="">
+		<paths pdfDestinationPath="" pdfLatexPath="" pdfPath="" latexPath=""></paths></pdf></config>
