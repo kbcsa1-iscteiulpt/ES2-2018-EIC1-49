@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Calendar;
 import java.util.List;
 
@@ -68,14 +69,25 @@ public class XMLEditor {
 						for (int i = 0; i < varList.getLength(); i++) {
 							
 							Element varElement = (Element) varList.item(i);
-							Variable var = new Variable(
+							Variable var=null;
+							if(varElement.getAttribute("variableType").equals("Binary")) {
+								System.out.println("heyo");
+								var = new Variable(new BitSet(1100));
+								problemVariables.add(var);
+								break;
+							}else {
+								System.out.println(varElement.getAttribute("variableType"));
+								var = new Variable(
 									varElement.getAttribute("variableName"),
 									varElement.getAttribute("variableMin"),
 									varElement.getAttribute("variableMax"),
 									varElement.getAttribute("variableRestriction")
 									);
+							}	
 							problemVariables.add(var);
+							
 						}
+						System.out.println(problemVariables.size());
 						
 						problem = new UserProblem(
 								prob.getAttribute("name"),
