@@ -14,6 +14,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import problem.UserProblem;
 import support.Config;
 
 import org.jfree.chart.plot.PlotOrientation;
@@ -35,7 +36,7 @@ public class Graphic extends  ApplicationFrame {
 			config.getrsPathBinary(),config.getrsPathDouble(),config.getrsPathInteger()};
 
 	
-		public Graphic(  ) {
+		public Graphic(UserProblem problem) {
 		      super("");
 		      
 		      for(int i=0; i<paths.length; i++) {
@@ -46,7 +47,7 @@ public class Graphic extends  ApplicationFrame {
 		      JFreeChart lineChart = ChartFactory.createLineChart(
 		         "JMetal Results",
 		         "","",
-		         createDataset(),
+		         createDataset(problem),
 		         PlotOrientation.VERTICAL,
 		         true,true,false);
 		         
@@ -61,14 +62,17 @@ public class Graphic extends  ApplicationFrame {
 		   * This method generates a dataset from the list that contains the results
 		   * @return dataset
 		   */
-		   private DefaultCategoryDataset createDataset( ) {
+		   private DefaultCategoryDataset createDataset( UserProblem problem) {
 		
 			   DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
 			   for(int x=0; x<xAxis.size();x++) {
 				   double[] yAxis = xAxis.get(x);
 				   
 				   for(int y=0; y<yAxis.length;y++) {
-					   dataset.addValue(yAxis[y], "Variable "+x, "Criteria " +y);
+					   if(y<problem.getCriterias().size())
+						   dataset.addValue(yAxis[y], "Variable "+x, problem.getCriterias().get(y).getName());
+					   else
+						   dataset.addValue(yAxis[y], "Variable "+x, "Criteria "+y);
 				   }
 			   }
 			   

@@ -53,7 +53,7 @@ public class ExecutionSection {
 			public void actionPerformed(ActionEvent e) {
 				afterOptimizationProcess = new JFrame("Results");
 				FrameSize.setFrame(afterOptimizationProcess, 0.25);
-				setAfterOptimizationProcess(afterOptimizationProcess);
+				setAfterOptimizationProcess(afterOptimizationProcess,problem);
 				afterOptimizationProcess.setVisible(true);
 			}
 
@@ -126,7 +126,7 @@ public class ExecutionSection {
 	/**
 	 * Sets the content of the Results frame 
 	 **/
-	private void setAfterOptimizationProcess(JFrame frame) {
+	private void setAfterOptimizationProcess(JFrame frame,UserProblem problem) {
 		JPanel pnlOptProcess = new JPanel(new GridLayout(3, 0));
 		JButton btnGraphics = new JButton("Graphics");
 		JButton btnEpsFile = new JButton(".eps File");
@@ -142,7 +142,7 @@ public class ExecutionSection {
 		btnGraphics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Graphic chart = new Graphic();
+				Graphic chart = new Graphic(problem);
 				chart.pack();
 				RefineryUtilities.centerFrameOnScreen(chart);
 				chart.setVisible(true);
