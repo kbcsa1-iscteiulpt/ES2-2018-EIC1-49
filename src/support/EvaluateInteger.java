@@ -22,16 +22,7 @@ public class EvaluateInteger extends AbstractIntegerProblem{
 	private List<Variable> variables = new ArrayList<Variable>();
 	private List<Criteria> criterias = new ArrayList<Criteria>();
 	
-	 public EvaluateInteger(Integer numberOfVariables,UserProblem problem) {
-		 for(Variable var: problem.getVariables()) {
-			 if(var.getType().toLowerCase().equals("double"))
-				 variables.add(var);
-		 }
-		 for(Criteria crit: problem.getCriterias()) {
-			 if(crit.getType().toLowerCase().equals("double"))
-				 criterias.add(crit);
-		 }
-		 
+	 public EvaluateInteger(Integer numberOfVariables,UserProblem problem) {		 
 		 setNumberOfVariables(numberOfVariables);
 		    setNumberOfObjectives(2);
 		    setName("EvaluateInteger");

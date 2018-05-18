@@ -24,7 +24,7 @@ import problem.Variable;
  * @author Kevin Corrales n� 73529
  *
  */
-public class XML_Editor {
+public class XMLEditor {
 	
 		
 		/**
@@ -69,7 +69,6 @@ public class XML_Editor {
 							Element varElement = (Element) varList.item(i);
 							Variable var = new Variable(
 									varElement.getAttribute("variableName"),
-									varElement.getAttribute("variableType"),
 									varElement.getAttribute("variableMin"),
 									varElement.getAttribute("variableMax"),
 									varElement.getAttribute("variableRestriction")
@@ -81,6 +80,7 @@ public class XML_Editor {
 								prob.getAttribute("name"),
 								prob.getAttribute("description"),
 								prob.getAttribute("email"),
+								prob.getAttribute("type"),
 								new Time(Integer.parseInt(maxTime.getAttribute("maxdays")),
 										Integer.parseInt(maxTime.getAttribute("maxhours")),
 										Integer.parseInt(maxTime.getAttribute("maxminutes"))),
@@ -152,7 +152,6 @@ public class XML_Editor {
 				
 				Element varTag = doc.createElement("variable");
 				varTag.setAttribute("variableName", var.getName());
-				varTag.setAttribute("variableType", var.getType());
 				varTag.setAttribute("variableMin",var.getMin());
 				varTag.setAttribute("variableMax",var.getMax());
 				varTag.setAttribute("variableRestriction",var.getRestriction());

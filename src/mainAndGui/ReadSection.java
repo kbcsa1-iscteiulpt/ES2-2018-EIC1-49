@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import problem.UserProblem;
-import support.XML_Editor;
+import support.XMLEditor;
 
 /**
  * This class represents the read file section.
@@ -24,7 +24,7 @@ public class ReadSection {
 	 * When clicked, reads a XML file and fills the form the data from a XML file
 	 **/
 	public JPanel readPanel(NameDescriptionSection nameDescriptionProblem, EmailSection email,
-			UserProblem problem, XML_Editor xml, DecisionVariablesSection decisionVariables,
+			UserProblem problem, XMLEditor xml, DecisionVariablesSection decisionVariables,
 			TimeOptimizationSection timeOptimization) {
 		JPanel pnlRead = new JPanel();
 		btnReadXML = new JButton("Read from a XML File:");
@@ -41,7 +41,7 @@ public class ReadSection {
 	 * Reads a XML file and fills the from with the data from a XML file 
 	 **/
 	private void readFromFile(NameDescriptionSection nameDescriptionProblem, EmailSection email, UserProblem problem,
-			XML_Editor xml, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization,
+			XMLEditor xml, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization,
 			JPanel pnlRead) {
 		btnReadXML.addActionListener(new ActionListener() {
 

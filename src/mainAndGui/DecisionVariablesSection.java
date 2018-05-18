@@ -25,10 +25,7 @@ import javax.swing.table.DefaultTableModel;
 
 import problem.UserProblem;
 import problem.Variable;
-/**
- * This class represents the decision variables section.
- * @author Diana nr 72898
- **/
+
 public class DecisionVariablesSection {
 	private JButton btnDecisionVariables;
 	private JSpinner spnNumberOfDecisionVariables;
@@ -127,7 +124,7 @@ public class DecisionVariablesSection {
 		pnlNameOfDecisionVariablesGroup.add(spnNumberOfDecisionVariables, BorderLayout.NORTH);
 		if (Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()) != 0) {
 			for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
-				dtmDecisionVariables.addRow(new Object[] { "", "", "", "", "" });
+				dtmDecisionVariables.addRow(new Object[] { "", "", "", "" });
 				tblDecisionVariables.getColumnModel().getColumn(1)
 						.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
 			}
@@ -141,7 +138,7 @@ public class DecisionVariablesSection {
 				int nrRows = spinnerValue - dtmDecisionVariables.getRowCount();
 				if (dtmDecisionVariables.getRowCount() < spinnerValue) {
 					for (int j = 0; j < nrRows; j++) {
-						dtmDecisionVariables.addRow(new Object[] { "", "", "", "", "" });
+						dtmDecisionVariables.addRow(new Object[] { "", "", "", ""});
 						tblDecisionVariables.getColumnModel().getColumn(1)
 								.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
 					}
@@ -170,8 +167,7 @@ public class DecisionVariablesSection {
 				for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
 					if (dtmDecisionVariables.getValueAt(i, 0).toString().equals("")
 							|| dtmDecisionVariables.getValueAt(i, 1).toString().equals("")
-							|| dtmDecisionVariables.getValueAt(i, 2).toString().equals("")
-							|| dtmDecisionVariables.getValueAt(i, 3).toString().equals("")) {
+							|| dtmDecisionVariables.getValueAt(i, 2).toString().equals("")) {
 						JOptionPane.showMessageDialog(null, "Please fill the variable's name, type and interval fields",
 								"Warning", JOptionPane.WARNING_MESSAGE);
 						varsReady = false;
@@ -181,8 +177,9 @@ public class DecisionVariablesSection {
 				}
 				if(varsReadyToCheck) {
 					for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
-						int minValue = Integer.parseInt(dtmDecisionVariables.getValueAt(j, 2).toString());
-						int maxValue = Integer.parseInt(dtmDecisionVariables.getValueAt(j, 3).toString());
+						
+						double minValue = Double.parseDouble(dtmDecisionVariables.getValueAt(j, 2).toString());
+						double maxValue = Double.parseDouble(dtmDecisionVariables.getValueAt(j, 3).toString());
 						System.out.println(minValue);
 						System.out.println(maxValue);
 						if(maxValue < minValue) {
@@ -204,8 +201,7 @@ public class DecisionVariablesSection {
 						Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
 								dtmDecisionVariables.getValueAt(j, 1).toString(),
 								dtmDecisionVariables.getValueAt(j, 2).toString(),
-								dtmDecisionVariables.getValueAt(j, 3).toString(),
-								dtmDecisionVariables.getValueAt(j, 4).toString());
+								dtmDecisionVariables.getValueAt(j, 3).toString());
 						problem.addVariable(variable);
 					}
 					decisionVarFrame.dispose();

@@ -33,7 +33,6 @@ public class CriteriaSection {
 	private int criteriaAdded;
 	private Map<Integer, String> criteriaNames = new HashMap<Integer, String>();
 	private Map<Integer, String> criteriaPaths = new HashMap<Integer, String>();
-	private Map<Integer, String> criteriaTypes = new HashMap<Integer, String>();
 	private JButton btnRemoveCriteria;
 
 	/**
@@ -137,13 +136,11 @@ public class CriteriaSection {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(criteriaNames.toString());
-				System.out.println(criteriaTypes.toString());
 				System.out.println(criteriaPaths.toString());
-				if (criteriaTypes.size() == criteriaAdded && criteriaPaths.size() == criteriaAdded
+				if (criteriaPaths.size() == criteriaAdded
 						&& criteriaNames.size() == criteriaAdded) {
 					for (int j = 1; j <=criteriaAdded; j++) {
-						Criteria criteria = new Criteria(criteriaNames.get(j), criteriaPaths.get(j),
-								criteriaTypes.get(j));
+						Criteria criteria = new Criteria(criteriaNames.get(j), criteriaPaths.get(j));
 						problem.addCriteria(criteria);
 					}
 //					frame.dispose();
@@ -180,7 +177,6 @@ public class CriteriaSection {
 		String[] dataTypeCriteria = { "Select a data type", "Binary", "Double", "Integer" };
 		JComboBox<String> cmbDataType = new JComboBox<String>(dataTypeCriteria);
 
-		criteriaDataType(cmbDataType);
 
 		pnlCriteriaName.add(lblCriteriaName);
 		pnlCriteriaName.add(txtCriteriaName);
@@ -192,26 +188,6 @@ public class CriteriaSection {
 		pnlCriteria.add(pnlCriteriaJar);
 		pnlCriteria.add(pnlCriteriaDataType);
 		return pnlCriteria;
-	}
-
-	/**
-	 * Sets a criteria data type if a data type is selected 
-	 **/
-	private void criteriaDataType(JComboBox<String> cmbDataType) {
-		cmbDataType.addFocusListener(new FocusListener() {
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (cmbDataType.getSelectedItem() != "Select a data type") {
-					criteriaTypes.put(criteriaAdded, cmbDataType.getSelectedItem().toString());
-				}
-			}
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				criteriaTypes.remove(criteriaAdded);
-			}
-		});
 	}
 
 	/**

@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import problem.Time;
 import problem.UserProblem;
 import problem.Variable;
-import support.XML_Editor;
+import support.XMLEditor;
 /**
  * This class represents the save file section.
  * @author Diana nr 72898
@@ -28,7 +28,7 @@ public class SaveSection {
 	 * Returns a panel with a JButton that saves the configuration to a XML file.
 	 **/
 	public JPanel savePanel(NameDescriptionSection nameDescriptionProblem, EmailSection email,
-			UserProblem problem, XML_Editor xml, DecisionVariablesSection decisionVariables,
+			UserProblem problem, XMLEditor xml, DecisionVariablesSection decisionVariables,
 			TimeOptimizationSection timeOptimization) {
 		JPanel pnlSave = new JPanel();
 		saveXMLProblem(nameDescriptionProblem, email, problem, xml, decisionVariables, timeOptimization);
@@ -42,7 +42,7 @@ public class SaveSection {
 	 * Saves the problem in a XML file
 	 **/
 	private void saveXMLProblem(NameDescriptionSection nameDescriptionProblem, EmailSection email, UserProblem problem,
-			XML_Editor xml, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization)
+			XMLEditor xml, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization)
 			throws java.awt.HeadlessException {
 		btnSaveToXML = new JButton("Save XML File");
 		btnSaveToXML.addActionListener(new ActionListener() {
@@ -124,11 +124,10 @@ public class SaveSection {
 			int numberOfRows = dtmDecisionVariables.getRowCount();
 			for (int i = 0; i < numberOfRows; i++) {
 				String decisionVariableName = decisionVariableName(dtmDecisionVariables, i);
-				String decisionVariableType = decisionVariableType(dtmDecisionVariables, i);
 				String decisionVariableMinValue = decisionVariableMinValue(dtmDecisionVariables, i);
 				String decisionVariableMaxValue = decisionVariableMaxValue(dtmDecisionVariables, i);
 				String decisionVariableRestriction = decisionVariableRestriction(dtmDecisionVariables, i);
-				variablesList.add(new Variable(decisionVariableName, decisionVariableType, decisionVariableMinValue,
+				variablesList.add(new Variable(decisionVariableName, decisionVariableMinValue,
 						decisionVariableMaxValue, decisionVariableRestriction));
 			}
 		}
