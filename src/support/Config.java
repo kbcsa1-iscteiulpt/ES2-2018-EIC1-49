@@ -139,7 +139,7 @@ public class Config {
 	
 			doc.getDocumentElement().normalize();
 						
-			Node mainNode = (Element) doc.getElementsByTagName("config");
+			Node mainNode = (Element) doc.getElementsByTagName("config").item(0);
 			
 			if(mainNode.getNodeType() == Node.ELEMENT_NODE) {
 				Element config = (Element) mainNode;
