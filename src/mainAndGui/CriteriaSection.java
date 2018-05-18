@@ -174,16 +174,11 @@ public class CriteriaSection {
 		btnReadJar = new JButton("Add jar");
 		criteriaJarRead(txtJarPath);
 
-		String[] dataTypeCriteria = { "Select a data type", "Binary", "Double", "Integer" };
-		JComboBox<String> cmbDataType = new JComboBox<String>(dataTypeCriteria);
-
-
 		pnlCriteriaName.add(lblCriteriaName);
 		pnlCriteriaName.add(txtCriteriaName);
 		pnlCriteriaJar.add(lblJarPath);
 		pnlCriteriaJar.add(txtJarPath);
 		pnlCriteriaJar.add(btnReadJar);
-		pnlCriteriaDataType.add(cmbDataType);
 		pnlCriteria.add(pnlCriteriaName);
 		pnlCriteria.add(pnlCriteriaJar);
 		pnlCriteria.add(pnlCriteriaDataType);

@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class TypeVarSection {
+	private String dataType;
 	public JPanel setVarType(DecisionVariablesSection decisionVariables) {
 
 		JPanel pnlVarType = new JPanel(new FlowLayout());
@@ -17,15 +18,14 @@ public class TypeVarSection {
 		cmbVariableDataTypes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				dataType = (String) cmbVariableDataTypes.getSelectedItem();
 				if (decisionVariables.getTblDecisionVariables().getRowCount() == 0) {
 					System.out.println("null");
 				} else {
-					int nrRows = decisionVariables.getTblDecisionVariables().getRowCount();
-					for (int i = 0; i < nrRows; i++) {
-						System.out.println(i);
-						decisionVariables.getDtmDecisionVariables().removeRow(i);
-						decisionVariables.getSpnNumberOfDecisionVariables().setValue(0);
+					while (decisionVariables.getDtmDecisionVariables().getRowCount() > 0) {
+						decisionVariables.getDtmDecisionVariables().removeRow(0);
 					}
+					decisionVariables.getSpnNumberOfDecisionVariables().setValue(0);
 				}
 			}
 		});
@@ -33,4 +33,8 @@ public class TypeVarSection {
 		pnlVarType.add(cmbVariableDataTypes);
 		return pnlVarType;
 	}
+	public String getDataType() {
+		return dataType;
+	}
+	
 }
