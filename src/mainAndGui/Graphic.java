@@ -97,7 +97,8 @@ public class Graphic extends  ApplicationFrame {
 						double[] yAxis = new double[splitLine.length];
 						
 						for(int i=0;i<splitLine.length;i++) {
-							yAxis[i] = Double.parseDouble(splitLine[i]);
+							if(!splitLine[i].equals("X"))
+								yAxis[i] = Double.parseDouble(splitLine[i]);
 						}
 						xAxis.add(yAxis);
 						
