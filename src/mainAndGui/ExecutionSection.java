@@ -24,7 +24,7 @@ import problem.UserProblem;
 import support.BinaryExperiment;
 import support.DoubleExperiment;
 import support.IntegerExperiment;
-import support.Support;
+import support.EmailHandler;
 /**
  * This class represents the execution process section.
  * @author Diana nr 72898
@@ -38,7 +38,7 @@ public class ExecutionSection {
 	 * Returns a panel with the button to execute the optimization process.
 	 **/
 	public JPanel executeProcessPanel(NameDescriptionSection nameDescription, EmailSection email, UserProblem problem,
-			DecisionVariablesSection decisionVariables, String problemType, Support support, String adminEmail) {
+			DecisionVariablesSection decisionVariables, String problemType, EmailHandler support, String adminEmail) {
 		JPanel executeProcessPanel = new JPanel(new FlowLayout());
 		problem(nameDescription, email, problem, decisionVariables, problemType, support, adminEmail);
 		ImageIcon icoExecute = new ImageIcon(((new ImageIcon("./src/images/execute.png")).getImage())
@@ -68,7 +68,7 @@ public class ExecutionSection {
 	 * Sends an email warning if there was an error while running the problem requested.
 	 **/
 	private void problem(NameDescriptionSection nameDescription, EmailSection email, UserProblem problem,
-			DecisionVariablesSection decisionVariables, String problemType, Support support, String adminEmail)
+			DecisionVariablesSection decisionVariables, String problemType, EmailHandler support, String adminEmail)
 			throws java.awt.HeadlessException, java.lang.NumberFormatException {
 		btnExecuteProcess = new JButton("Execute Optimization Process");
 		btnExecuteProcess.addActionListener(new ActionListener() {

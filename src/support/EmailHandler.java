@@ -13,9 +13,9 @@ import com.sun.mail.smtp.SMTPTransport;
 import java.util.Date;
 import javax.mail.internet.AddressException;
 
-public class Support {
+public class EmailHandler {
 	
-	public Support() {
+	public EmailHandler() {
 		
 	}
 

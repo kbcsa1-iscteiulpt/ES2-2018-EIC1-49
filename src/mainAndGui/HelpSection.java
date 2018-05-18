@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import support.Support;
+import support.EmailHandler;
 
 /**
  * This class represents the help section.
@@ -34,7 +34,7 @@ public class HelpSection {
 	 * returns to the initial decision panel.
 	 **/
 
-	public JPanel getHelpPanel(JFrame frame, JFrame decisionFrame, EmailSection email, Support support,
+	public JPanel getHelpPanel(JFrame frame, JFrame decisionFrame, EmailSection email, EmailHandler support,
 			String adminEmail) {
 		JPanel pnlHelp = new JPanel(new BorderLayout());
 		goBackButton(frame, decisionFrame);
@@ -44,7 +44,7 @@ public class HelpSection {
 		return pnlHelp;
 	}
 
-	private void helpButton(JFrame frame, EmailSection email, Support support, String adminEmail) {
+	private void helpButton(JFrame frame, EmailSection email, EmailHandler support, String adminEmail) {
 		btnHelp = new JButton();
 		ImageIcon icoQuestion_mark = new ImageIcon(((new ImageIcon("./src/images/question_mark.png")).getImage())
 				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
@@ -86,7 +86,7 @@ public class HelpSection {
 	/**
 	 * Adds content to the Help frame
 	 **/
-	private void setHelpFrame(JFrame frame, JFrame helpFrame, EmailSection email, Support support, String adminEmail) {
+	private void setHelpFrame(JFrame frame, JFrame helpFrame, EmailSection email, EmailHandler support, String adminEmail) {
 		JPanel pnlHelp = new JPanel(new BorderLayout());
 		JPanel pnlFAQ = new JPanel(new GridLayout(6, 0));
 		JPanel pnlSendEmail = new JPanel();
