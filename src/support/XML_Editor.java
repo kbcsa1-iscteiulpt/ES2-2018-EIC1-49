@@ -13,7 +13,12 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
+<<<<<<< Updated upstream
 import problem.UserProblem;
+=======
+import classes.Config;
+import problem.Problem;
+>>>>>>> Stashed changes
 import problem.Time;
 import problem.Variable;
 
