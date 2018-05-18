@@ -143,7 +143,7 @@ public class Interface {
 		problemUserEmail(frame, initialPanel, support, adminEmail);
 		problemTime(initialPanel);
 		problemType(initialPanel, decisionVariables);
-		problemDecisionVariables(initialPanel);
+		problemDecisionVariables(initialPanel, problemDataType);
 
 		problemSave(initialPanel);
 		problemCriteria(initialPanel);
@@ -197,8 +197,8 @@ public class Interface {
 	/**
 	 * Adds the decision variable panel to the initial frame
 	 **/
-	private void problemDecisionVariables(JPanel initialPanel) {
-		initialPanel.add(decisionVariables.decisionVarPanel(problem));
+	private void problemDecisionVariables(JPanel initialPanel, TypeVarSection problemDatatType) {
+		initialPanel.add(decisionVariables.decisionVarPanel(problem, problemDatatType));
 	}
 
 	/**

@@ -7,20 +7,23 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import problem.Type;
+
 public class TypeVarSection {
-	private String dataType;
+	private Type dataType;
 	public JPanel setVarType(DecisionVariablesSection decisionVariables) {
 
 		JPanel pnlVarType = new JPanel(new FlowLayout());
 		JLabel lblVarType = new JLabel("Problem variable's type: ");
-		String[] variableDataTypes = { "Select a data type", "Binary", "Double", "Integer" };
+		String[] variableDataTypes = {"Binary", "Double", "Integer" };
 		JComboBox<String> cmbVariableDataTypes = new JComboBox<>(variableDataTypes);
+		cmbVariableDataTypes.setSelectedIndex(-1);
 		cmbVariableDataTypes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dataType = (String) cmbVariableDataTypes.getSelectedItem();
+				String data= (String) cmbVariableDataTypes.getSelectedItem();
+					dataType = Type.valueOf(data.toUpperCase());
 				if (decisionVariables.getTblDecisionVariables().getRowCount() == 0) {
-					System.out.println("null");
 				} else {
 					while (decisionVariables.getDtmDecisionVariables().getRowCount() > 0) {
 						decisionVariables.getDtmDecisionVariables().removeRow(0);
@@ -33,7 +36,7 @@ public class TypeVarSection {
 		pnlVarType.add(cmbVariableDataTypes);
 		return pnlVarType;
 	}
-	public String getDataType() {
+	public Type getDataType() {
 		return dataType;
 	}
 	
