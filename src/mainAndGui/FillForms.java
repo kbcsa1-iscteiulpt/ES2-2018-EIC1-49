@@ -9,7 +9,10 @@ import javax.swing.table.DefaultTableModel;
 
 import problem.UserProblem;
 import problem.Variable;
-
+/**
+ * This class objetive is to fill the forms with a problem.
+ * @author Diana nr 72898
+ **/
 public class FillForms {
 
 	private DefaultTableModel dtmDecisionVariables;
@@ -43,7 +46,6 @@ public class FillForms {
 		decisionVariables.getTblDecisionVariables().setModel(dtmDecisionVariables);
 
 		dtmDecisionVariables.addColumn("Name");
-		dtmDecisionVariables.addColumn("Type");
 		dtmDecisionVariables.addColumn("Minimum Value");
 		dtmDecisionVariables.addColumn("Maximum Value");
 		dtmDecisionVariables.addColumn("Restrictions");
@@ -55,8 +57,7 @@ public class FillForms {
 			List<Variable> variablesList = problem.getVariables();
 
 			if (i < variablesList.size()) {
-				dtmDecisionVariables.addRow(new Object[] { variablesList.get(i).getName(),
-						variablesList.get(i).getType(), variablesList.get(i).getMin(), variablesList.get(i).getMax(),
+				dtmDecisionVariables.addRow(new Object[] { variablesList.get(i).getName(), variablesList.get(i).getMin(), variablesList.get(i).getMax(),
 						variablesList.get(i).getRestriction() });
 			} else {
 				dtmDecisionVariables.addRow(new Object[] { "", "", "", "", "" });

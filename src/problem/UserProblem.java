@@ -28,6 +28,7 @@ public class UserProblem {
 	private String description;
 	private String email;
 	private String creationDate;
+	private String type;
 	private Time max;
 	private Time ideal;
 	private String groupName;
@@ -41,13 +42,14 @@ public class UserProblem {
 	 * @param name
 	 * @param description
 	 * @param email
+	 * @param type
 	 * @param max
 	 * @param ideal
 	 * @param groupName
 	 * @param numberVariables
 	 * @param variables
 	 */
-	public UserProblem(String name, String description, String email, Time max, Time ideal,
+	public UserProblem(String name, String description, String email, String type, Time max, Time ideal,
 			String groupName,int numberVariables, List<Variable> variables) {
 		super();
 		this.name = name;
@@ -56,6 +58,7 @@ public class UserProblem {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date current = new Date();  
 		this.creationDate = dateFormat.format(current);
+		this.type = type;
 		this.max = max;
 		this.ideal = ideal;
 		this.groupName = groupName;
@@ -103,6 +106,11 @@ public class UserProblem {
 
 	public String getCreationDate() {
 		return creationDate;
+	}
+
+
+	public String getType() {
+		return type;
 	}
 
 

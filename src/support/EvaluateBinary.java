@@ -23,14 +23,7 @@ public class EvaluateBinary extends AbstractBinaryProblem{
 	private List<Criteria> criterias = new ArrayList<Criteria>();
 	
 	 public EvaluateBinary(byte numberOfVariables,UserProblem problem) {
-		 for(Variable var: problem.getVariables()) {
-			 if(var.getType().toLowerCase().equals("double"))
-				 variables.add(var);
-		 }
-		 for(Criteria crit: problem.getCriterias()) {
-			 if(crit.getType().toLowerCase().equals("double"))
-				 criterias.add(crit);
-		 }
+		
 		 
 		 	setNumberOfVariables(numberOfVariables);
 		    setNumberOfObjectives(2);

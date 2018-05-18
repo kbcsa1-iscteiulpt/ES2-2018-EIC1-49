@@ -3,13 +3,16 @@ package mainAndGui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.naming.InitialContext;
+import javax.naming.ldap.InitialLdapContext;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import problem.UserProblem;
-import support.Support;
-import support.XML_Editor;
+import support.EmailHandler;
+import support.XMLEditor;
 
 /**
  * This class represents the interface
@@ -24,14 +27,15 @@ public class Interface {
 	private JFrame decisionFrame;
 	private JFrame readProblemFrame;
 	private JFrame createProblemFrame;
-	private Support support = new Support();
-	private XML_Editor xml = new XML_Editor();
+	private EmailHandler support = new EmailHandler();
+	private XMLEditor xml = new XMLEditor();
 	private UserProblem problem = new UserProblem();
 
 	private EmailSection email = new EmailSection();
 	private HelpSection helpSection = new HelpSection();
 	private TimeOptimizationSection timeOptimization = new TimeOptimizationSection();
 	private NameDescriptionSection nameDescription = new NameDescriptionSection();
+	private TypeVarSection problemDataType = new TypeVarSection();
 	private DecisionVariablesSection decisionVariables = new DecisionVariablesSection();
 	private CriteriaSection criteriaSection = new CriteriaSection();
 	private SaveSection saveSection = new SaveSection();
@@ -127,7 +131,7 @@ public class Interface {
 	 * JPanel.
 	 **/
 	private void setContent(JFrame frame, boolean problemReadFromXML) {
-		JPanel initialPanel = new JPanel(new GridLayout(problemReadFromXML ? 11 : 10, 0));
+		JPanel initialPanel = new JPanel(new GridLayout(problemReadFromXML ? 12 : 11, 0));
 
 		problemHelp(frame, initialPanel);
 
@@ -138,6 +142,7 @@ public class Interface {
 		problemNameDescription(initialPanel);
 		problemUserEmail(frame, initialPanel, support, adminEmail);
 		problemTime(initialPanel);
+		problemType(initialPanel, decisionVariables);
 		problemDecisionVariables(initialPanel);
 
 		problemSave(initialPanel);
@@ -172,10 +177,15 @@ public class Interface {
 	/**
 	 * Adds the email panel to the initial frame
 	 **/
-	private void problemUserEmail(JFrame frame, JPanel initialPanel, Support support, String adminEmail) {
+	private void problemUserEmail(JFrame frame, JPanel initialPanel, EmailHandler support, String adminEmail) {
 		initialPanel.add(email.emailPanel(frame, support, adminEmail));
 	}
-
+	/**
+	 * Adds the type problem panel to the initial frame
+	 **/
+	private void problemType(JPanel initialPanel, DecisionVariablesSection decisionVariable) {
+		initialPanel.add(problemDataType.setVarType(decisionVariable));
+	}
 	/**
 	 * Adds the ideal and maximum time for optimization panel to the initial frame
 	 **/

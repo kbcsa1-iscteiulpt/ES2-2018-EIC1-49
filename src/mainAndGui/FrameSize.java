@@ -3,7 +3,10 @@ package mainAndGui;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
-
+/**
+ * This class is used by all interface classes, represents the size of the frame.
+ * @author Diana nr 72898
+ **/
 public class FrameSize {
 	/**
 	 * Defines the size of the given frame. The second parameter indicates the

@@ -6,7 +6,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-
+/**
+ * This class represents the ideal and max time of the problem selection section.
+ * @author Diana nr 72898
+ **/
 public class TimeOptimizationSection {
 
 	private JSpinner spnMaxNumberOfDays;

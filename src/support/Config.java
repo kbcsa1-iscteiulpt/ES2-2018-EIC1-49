@@ -15,7 +15,7 @@ import org.w3c.dom.Node;
  * 		- email of the administrator
 
  * 
- * @author Kevin Corrales nï¿½ 73529
+ * @author Gustavo Morais nº 73036
  *
  */
 public class Config {
