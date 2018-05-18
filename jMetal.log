@@ -2,8 +2,8 @@
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-11T19:37:57</date>
-  <millis>1526063877860</millis>
+  <date>2018-05-18T11:39:51</date>
+  <millis>1526639991735</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -13,8 +13,8 @@
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-11T19:37:57</date>
-  <millis>1526063877883</millis>
+  <date>2018-05-18T11:39:51</date>
+  <millis>1526639991763</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -24,8 +24,8 @@
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-11T19:37:57</date>
-  <millis>1526063877890</millis>
+  <date>2018-05-18T11:39:51</date>
+  <millis>1526639991776</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
@@ -34,4 +34,3 @@
   <thread>13</thread>
   <message> Running algorithm: NSGAII, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/MyProblemBinaryExternalViaJAR/data/NSGAII/BinaryProblem/FUN0.tsv</message>
 </record>
-</log>

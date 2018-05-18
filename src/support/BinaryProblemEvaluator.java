@@ -32,7 +32,7 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  	return bits ;
 	  }
 
-	  @Override
+	  @Override	
 	  public BinarySolution createSolution() {
 	    return new DefaultBinarySolution(this) ;
 	  }

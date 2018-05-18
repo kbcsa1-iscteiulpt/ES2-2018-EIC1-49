@@ -529,8 +529,8 @@ public class AlgorithmsConfig {
 	 * 
 	 * */
 	public void writeAutomaticConfig(List<String> algorithmIDs, String fileName) {
-		String userHomeFolder = System.getProperty("user.home");
-		File textFile = new File(userHomeFolder, fileName);
+		String userHomeFolder = System.getProperty("user.home/");
+		File textFile = new File(userHomeFolder, fileName+".txt");
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(textFile));
 			
@@ -571,6 +571,7 @@ public class AlgorithmsConfig {
 		}finally {
 			scanner.close();
 		}
+		System.out.println(algorithmIDs);
 		return algorithmIDs;
 	}
 }
