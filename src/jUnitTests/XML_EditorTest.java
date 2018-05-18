@@ -52,7 +52,7 @@ public class XML_EditorTest {
 	@Test
 	public void readConfigTest() {
 
-		Config conf = xml.readConfig();
+		Config conf = new Config();
 		assertTrue(!conf.getEmailAdmin().equals(""));
 	}
 	

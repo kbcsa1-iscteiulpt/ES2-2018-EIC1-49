@@ -27,8 +27,6 @@ import problem.Variable;
  */
 public class XML_Editor {
 	
-	
-	
 		
 		/**
 		 * Reads a XML file from the received path and creates a Problem(Class) 

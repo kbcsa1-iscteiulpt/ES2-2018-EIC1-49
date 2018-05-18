@@ -20,7 +20,6 @@ import org.w3c.dom.Node;
  */
 public class Config {
 	
-	private final static Config INSTANCE = new Config();
 	private final String configPath = "./config.xml";
 	
 	//E-mail
@@ -55,9 +54,6 @@ public class Config {
 		return emailAdmin;
 	}
 	
-	public static Config getInstance() {
-		return INSTANCE;
-	}
 
 	public String getConfigPath() {
 		return configPath;
@@ -182,5 +178,9 @@ public class Config {
 	    }
 		
 		
+	}
+
+	public String getEmailPassword() {
+		return emailPassword;
 	}
 }

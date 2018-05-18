@@ -3,4 +3,7 @@
 	<administrator email="projetodees7@gmail.com" emailPassword="P@ssw0rd123"></administrator>
 	<jmetal maxEvaluations="250">
 		<paths rsPathInteger="" rsPathDouble="" rsPathBinary="" rfPathInteger="" rfPathDouble="" rfPathBinary=""></paths></jmetal>
-	<eps></eps></config>
+	<eps epsEnvironmentVar="">
+		<paths epsDestinationPath="" epsLatexPath="" rPath=""></paths></eps>
+	<pdf pdfEnvironmentVar="">
+		<paths pdfDestinationPath="" pdfLatexPath="" pdfPath="" latexPath=""></paths></pdf></config>

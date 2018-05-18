@@ -31,7 +31,7 @@ public class Main {
 	*/
 		
 		XML_Editor xml = new XML_Editor();
-		Config config = xml.readConfig();
+		Config config = new Config();
 		
 		new Interface(config.getEmailAdmin());
 		

@@ -12,13 +12,13 @@ import support.XML_Editor;
 
 /**
  * This is a jUnitTestCase that tests the interface
- * @author Diana Lopes nº 72898 
+ * @author Diana Lopes nï¿½ 72898 
  **/
 public class InterfaceTest {
 
 	private Interface interfaceTest;
 	private XML_Editor xml = new XML_Editor();
-	private Config config = xml.readConfig();
+	private Config config = new Config();
 
 	@Test
 	public void inicialInterface() {
