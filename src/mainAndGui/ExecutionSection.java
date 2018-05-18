@@ -96,9 +96,7 @@ public class ExecutionSection {
 						}
 					} catch (IOException e2) {
 						try {
-							support.SendEmail(adminEmail, email.getEmail().getText(), "There was a problem",
-									"There was a problem running the problem you requested, please try again."
-											+ "If the problem continues, contact us so we can help");
+							support.SendEmail(adminEmail, email.getEmail().getText(), "There was a problem",false);
 							return;
 						} catch (AddressException e1) {
 						} catch (MessagingException e1) {
@@ -109,11 +107,8 @@ public class ExecutionSection {
 						Date date = new Date();
 						String subject = "Otimiza��o em curso: " + nameDescription.getProblemName().getText() + " "
 								+ dateFormat.format(date);
-						String message = "Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
-								+ "sobre o progresso do processo de otimiza��o, quando o processo de otimiza��o tiver atingido 25%,\r\n"
-								+ "50%, 75% do total do (n�mero de avalia��es ou) tempo estimado, e tamb�m quando o processo tiver\r\n"
-								+ "terminado, com sucesso ou devido � ocorr�ncia de erros.";
-						support.SendEmail(adminEmail, email.getEmail().getText(), subject, message);
+						
+						support.SendEmail(adminEmail, email.getEmail().getText(), subject, true);
 					} catch (MessagingException e1) {
 					}
 				}
@@ -140,7 +135,7 @@ public class ExecutionSection {
 		btnGraphics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Graph chart = new Graph();
+				Graphic chart = new Graphic();
 				chart.pack();
 				RefineryUtilities.centerFrameOnScreen(chart);
 				chart.setVisible(true);

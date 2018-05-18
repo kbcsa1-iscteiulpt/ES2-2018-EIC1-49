@@ -17,14 +17,14 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 
-public class Graph extends  ApplicationFrame {
+public class Graphic extends  ApplicationFrame {
 		
 	private final double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2;
 	private final double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2;
 	private List<double[]> xAxis = new ArrayList<double[]>();
 	private final String path="./src/files/exemplo.txt";
 
-		public Graph(  ) {
+		public Graphic(  ) {
 		      super("");
 		      readResults();
 		      JFreeChart lineChart = ChartFactory.createLineChart(

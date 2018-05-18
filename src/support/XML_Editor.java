@@ -13,12 +13,8 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
-<<<<<<< Updated upstream
+
 import problem.UserProblem;
-=======
-import classes.Config;
-import problem.Problem;
->>>>>>> Stashed changes
 import problem.Time;
 import problem.Variable;
 
@@ -31,7 +27,7 @@ import problem.Variable;
  */
 public class XML_Editor {
 	
-	private final String configPath = "./config.xml";
+	
 	
 		
 		/**
@@ -183,36 +179,7 @@ public class XML_Editor {
 	}
 	
 	
-	/**
-	 * Reads a XML file from the received path and creates a Configuration (Config Class) 
-	 * 
-	 * @param path of xml file
-	 * @return Config
-	 */	
-	public Config readConfig() {
-		Config config = new Config("");
-		try {
 	
-			File fXmlFile = new File(configPath);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
-	
-			doc.getDocumentElement().normalize();
-						
-			Node node = (Element) doc.getElementsByTagName("Administrator").item(0);
-			
-			if(node.getNodeType() == Node.ELEMENT_NODE) {
-				Element conf = (Element) node;
-								
-				config = new Config(conf.getAttribute("email"));
-			}
-		
-		    } catch (Exception e) {
-			e.printStackTrace();
-		    }
-		return config;
-	}
 		
 	
 	

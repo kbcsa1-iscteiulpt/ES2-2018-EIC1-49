@@ -25,9 +25,7 @@ public class Support {
 	public Support() {
 		
 	}
-	
 
-	
 	/**
      * Send email using GMail SMTP server.
      *
@@ -38,10 +36,19 @@ public class Support {
      * @throws AddressException if the email address parse failed
      * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
      */
-    public void SendEmail(   String fromEmail, String ToEmail  ,String title, String message) throws AddressException, MessagingException {
+    public void SendEmail(   String fromEmail, String ToEmail  ,String title, boolean success) throws AddressException, MessagingException {
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-
+        String message="";
+        if(success) {
+	        message = "Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
+					+ "sobre o progresso do processo de otimiza��o, quando o processo de otimiza��o tiver atingido 25%,\r\n"
+					+ "50%, 75% do total do (n�mero de avalia��es ou) tempo estimado, e tamb�m quando o processo tiver\r\n"
+					+ "terminado, com sucesso ou devido � ocorr�ncia de erros.";
+        }else {
+        		message=	"There was a problem running the problem you requested, please try again.\r\n"
+					+ "If the problem continues, contact us so we can help";
+        }
         // Get a Properties object
         Properties props = System.getProperties();
         props.setProperty("mail.smtps.host", "smtp.gmail.com");
