@@ -28,7 +28,7 @@ public class UserProblem {
 	private String description;
 	private String email;
 	private String creationDate;
-	private String type;
+	private Type type;
 	private Time max;
 	private Time ideal;
 	private String groupName;
@@ -49,7 +49,7 @@ public class UserProblem {
 	 * @param numberVariables
 	 * @param variables
 	 */
-	public UserProblem(String name, String description, String email, String type, Time max, Time ideal,
+	public UserProblem(String name, String description, String email, Type type, Time max, Time ideal,
 			String groupName,int numberVariables, List<Variable> variables) {
 		super();
 		this.name = name;
@@ -109,7 +109,7 @@ public class UserProblem {
 	}
 
 
-	public String getType() {
+	public Type getType() {
 		return type;
 	}
 

@@ -15,6 +15,7 @@ import org.w3c.dom.*;
 
 import problem.UserProblem;
 import problem.Time;
+import problem.Type;
 import problem.Variable;
 
 /**
@@ -80,7 +81,7 @@ public class XMLEditor {
 								prob.getAttribute("name"),
 								prob.getAttribute("description"),
 								prob.getAttribute("email"),
-								prob.getAttribute("type"),
+								Type.valueOf(prob.getAttribute("type").toUpperCase()),
 								new Time(Integer.parseInt(maxTime.getAttribute("maxdays")),
 										Integer.parseInt(maxTime.getAttribute("maxhours")),
 										Integer.parseInt(maxTime.getAttribute("maxminutes"))),
