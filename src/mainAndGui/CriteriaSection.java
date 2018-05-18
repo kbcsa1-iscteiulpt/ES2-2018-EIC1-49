@@ -130,17 +130,9 @@ public class CriteriaSection {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(criteriaAdded);
-				System.out.println(criteriaTypes.size() + "-Type");
-				System.out.println(criteriaNames.size() + "-Name");
-				System.out.println(criteriaPaths.size() + "-Path");
 				if (criteriaTypes.size() == criteriaAdded && criteriaPaths.size() == criteriaAdded
 						&& criteriaNames.size() == criteriaAdded) {
 					for (int j = 1; j <=criteriaAdded; j++) {
-						System.out.println(criteriaTypes.get(j));
-						System.out.println(criteriaNames.get(j));
-						System.out.println(criteriaPaths.get(j));
-						
 						Criteria criteria = new Criteria(criteriaNames.get(j), criteriaPaths.get(j),
 								criteriaTypes.get(j));
 						problem.addCriteria(criteria);
