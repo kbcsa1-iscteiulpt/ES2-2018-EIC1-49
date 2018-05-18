@@ -34,8 +34,9 @@ public class Graphic extends  ApplicationFrame {
 		      super("");
 		      
 		      for(int i=0; i<paths.length; i++) {
-		    	 if(!(paths[i].isEmpty() || paths[i].equals("")))
-		    		 readResults(paths[i]);
+		    	 if(paths[i]!=null)
+		    		 if(!(paths[i].isEmpty() || paths[i].equals("")))
+		    			 readResults(paths[i]);
 		      }
 		      JFreeChart lineChart = ChartFactory.createLineChart(
 		         "JMetal Results",
@@ -67,7 +68,9 @@ public class Graphic extends  ApplicationFrame {
 		   public void readResults(String path) {
 				Scanner scanner = null;
 				try{
-					scanner = new Scanner(new File(path));
+					File file = new File(path);
+					if(file.exists() && !file.isDirectory()) {
+					scanner = new Scanner(file);
 					
 					while(scanner.hasNextLine()){
 						String line = scanner.nextLine();
@@ -79,6 +82,7 @@ public class Graphic extends  ApplicationFrame {
 						}
 						xAxis.add(yAxis);
 						
+					}
 					}
 				}catch(FileNotFoundException e){
 						e.printStackTrace();
