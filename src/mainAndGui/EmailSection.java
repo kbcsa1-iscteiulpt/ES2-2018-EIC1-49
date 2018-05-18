@@ -20,8 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import support.Support;
-
+import support.EmailHandler;
+/**
+ * This class represents the email section.
+ * @author Diana nr 72898
+ **/
 public class EmailSection {
 	private JTextField txtEmail;
 	private JTextField txtMessageTitle;
@@ -34,7 +37,7 @@ public class EmailSection {
 	 * Returns a frame with two JTextField to fill and a button to send the email.
 	 * One with the subject of the email and the other with the email body.
 	 **/
-	public JFrame setEmailFrame(JFrame frame, Support support, String adminEmail) {
+	public JFrame setEmailFrame(JFrame frame, EmailHandler support, String adminEmail) {
 		JFrame sendEmailFrame = new JFrame("Email");
 		FrameSize.setFrame(sendEmailFrame, 0.5);
 		JPanel pnlSendEmail = new JPanel(new BorderLayout());
@@ -80,7 +83,7 @@ public class EmailSection {
 	 * Closes the email frame and sends the intended email, if the operation fails
 	 * shows a warning message.
 	 **/
-	private void sendEmail(JFrame frame, Support support, String adminEmail, JFrame sendEmailFrame,
+	private void sendEmail(JFrame frame, EmailHandler support, String adminEmail, JFrame sendEmailFrame,
 			JPanel pnlSendEmail) {
 		btnMessageSend.addActionListener(new ActionListener() {
 
@@ -107,7 +110,7 @@ public class EmailSection {
 	 * Returns a panel with a JTextField to fill with user's email. When the button
 	 * is clicked, a new frame is displayed to write and send the email.
 	 **/
-	public JPanel emailPanel(JFrame frame, Support support, String adminEmail) {
+	public JPanel emailPanel(JFrame frame, EmailHandler support, String adminEmail) {
 		JPanel pnlEmail = new JPanel(new FlowLayout());
 		JLabel lblEmailMandatory = new JLabel("*");
 		lblEmailMandatory.setForeground(Color.red);

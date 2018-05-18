@@ -9,7 +9,10 @@ import javax.swing.table.DefaultTableModel;
 
 import problem.UserProblem;
 import problem.Variable;
-
+/**
+ * This class objetive is to fill the forms with a problem.
+ * @author Diana nr 72898
+ **/
 public class FillForms {
 
 	private DefaultTableModel dtmDecisionVariables;

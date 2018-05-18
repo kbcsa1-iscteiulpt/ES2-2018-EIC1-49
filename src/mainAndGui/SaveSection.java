@@ -16,7 +16,10 @@ import problem.Time;
 import problem.UserProblem;
 import problem.Variable;
 import support.XML_Editor;
-
+/**
+ * This class represents the save file section.
+ * @author Diana nr 72898
+ **/
 public class SaveSection {
 
 	private JButton btnSaveToXML;

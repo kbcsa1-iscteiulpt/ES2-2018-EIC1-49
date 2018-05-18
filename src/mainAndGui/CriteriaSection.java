@@ -21,7 +21,10 @@ import javax.swing.JTextField;
 
 import problem.Criteria;
 import problem.UserProblem;
-
+/**
+ * This class represents the criteria section.
+ * @author Diana nr 72898
+ **/
 public class CriteriaSection {
 	private JButton btnCriteria;
 	private JButton btnAddCriteria;

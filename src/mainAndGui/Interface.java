@@ -8,7 +8,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import problem.UserProblem;
-import support.Support;
+import support.EmailHandler;
 import support.XML_Editor;
 
 /**
@@ -24,7 +24,7 @@ public class Interface {
 	private JFrame decisionFrame;
 	private JFrame readProblemFrame;
 	private JFrame createProblemFrame;
-	private Support support = new Support();
+	private EmailHandler support = new EmailHandler();
 	private XML_Editor xml = new XML_Editor();
 	private UserProblem problem = new UserProblem();
 
@@ -172,7 +172,7 @@ public class Interface {
 	/**
 	 * Adds the email panel to the initial frame
 	 **/
-	private void problemUserEmail(JFrame frame, JPanel initialPanel, Support support, String adminEmail) {
+	private void problemUserEmail(JFrame frame, JPanel initialPanel, EmailHandler support, String adminEmail) {
 		initialPanel.add(email.emailPanel(frame, support, adminEmail));
 	}
 

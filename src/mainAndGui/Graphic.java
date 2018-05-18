@@ -13,20 +13,36 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
+
+import support.Config;
+
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-
+/**
+ * This class creates a frame that shows a graphic with the values of the rf and rs files that contains
+ * the JMetal results. 
+ * @author Kevin Corrales nº 73529
+ **/
 public class Graphic extends  ApplicationFrame {
 		
 	private final double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2;
 	private final double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2;
 	private List<double[]> xAxis = new ArrayList<double[]>();
-	private final String path="./src/files/exemplo.txt";
+	private Config config = new Config();
+	private String[] paths = new String[] {
+			config.getrfPathBinary(),config.getrfPathDouble(),config.getrfPathInteger(),
+			config.getrsPathBinary(),config.getrsPathDouble(),config.getrsPathInteger()};
 
+	
 		public Graphic(  ) {
 		      super("");
-		      readResults();
+		      
+		      for(int i=0; i<paths.length; i++) {
+		    	 if(paths[i]!=null)
+		    		 if(!(paths[i].isEmpty() || paths[i].equals("")))
+		    			 readResults(paths[i]);
+		      }
 		      JFreeChart lineChart = ChartFactory.createLineChart(
 		         "JMetal Results",
 		         "","",
@@ -39,6 +55,12 @@ public class Graphic extends  ApplicationFrame {
 		      setContentPane( chartPanel );
 		   }
 
+		
+		  /**
+		   * 
+		   * This method generates a dataset from the list that contains the results
+		   * @return dataset
+		   */
 		   private DefaultCategoryDataset createDataset( ) {
 		
 			   DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
@@ -54,10 +76,16 @@ public class Graphic extends  ApplicationFrame {
 		   }
 		
 		 		   
-		   public void readResults() {
+		   /**
+		    * This method reads JMetal results from a file
+		    * @param path
+		    */
+		   public void readResults(String path) {
 				Scanner scanner = null;
 				try{
-					scanner = new Scanner(new File(path));
+					File file = new File(path);
+					if(file.exists() && !file.isDirectory()) {
+					scanner = new Scanner(file);
 					
 					while(scanner.hasNextLine()){
 						String line = scanner.nextLine();
@@ -69,6 +97,7 @@ public class Graphic extends  ApplicationFrame {
 						}
 						xAxis.add(yAxis);
 						
+					}
 					}
 				}catch(FileNotFoundException e){
 						e.printStackTrace();
