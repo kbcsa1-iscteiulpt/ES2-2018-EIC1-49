@@ -92,7 +92,7 @@ public class EmailSection {
 				} else {
 					try {
 						sendEmailFrame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-						String subject = "From: " + txtEmail.getText() + txtMessageTitle.getText();
+						String subject = "From: " + txtEmail.getText() +"  "+  txtMessageTitle.getText();
 						support.SendEmail(txtEmail.getText(), adminEmail, subject, txaMessageBody.getText());
 					} catch (MessagingException e1) {
 						JOptionPane.showMessageDialog(pnlSendEmail, "Error sending email, connection issue!", "Warning",

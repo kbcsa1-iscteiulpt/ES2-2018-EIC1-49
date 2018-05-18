@@ -74,23 +74,23 @@ public class DecisionVariablesSection {
 
 		JPanel pnlNameOfDecisionVariablesGroup = new JPanel();
 		JLabel lblNameOfDecisionVariablesGroup = new JLabel("Name of Decision Variable Group:");
-		txtNameOfDecisionVariablesGroup.setColumns(25);
+		txtNameOfDecisionVariablesGroup.setColumns(15);
 		JLabel lblNumberOfDecisionVariable = new JLabel("Number of Decision Variables");
 		pnlNameOfDecisionVariablesGroup.add(lblNumberOfDecisionVariable, BorderLayout.NORTH);
 
 		JComboBox<String> cmbVariableDataTypes = createDecisionVariableTable();
 
 		spinnerHandler(pnlNameOfDecisionVariablesGroup, cmbVariableDataTypes);
-		pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
-		pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
-		pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
-		pnlDecision.add(new JScrollPane(tblDecisionVariables));
 		btnDecisionVariablesFinish = new JButton("Finish");
 		btnDecisionVariablesFinish.setContentAreaFilled(false);
 		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
 				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
 		btnDecisionVariablesFinish.setIcon(icoFinish);
 		decisionVariablesFinish(problem, decisionVarFrame);
+		pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
+		pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
+		pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
+		pnlDecision.add(new JScrollPane(tblDecisionVariables));
 		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
 		decisionVarFrame.add(pnlDecision);
 	}
@@ -135,8 +135,9 @@ public class DecisionVariablesSection {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				int spinnerValue = Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString());
+				int nrRows = spinnerValue - dtmDecisionVariables.getRowCount();
 				if (dtmDecisionVariables.getRowCount() < spinnerValue) {
-					for (int j = 0; j < spinnerValue - dtmDecisionVariables.getRowCount(); j++) {
+					for (int j = 0; j < nrRows; j++) {
 						dtmDecisionVariables.addRow(new Object[] { "", "", "", "", "" });
 						tblDecisionVariables.getColumnModel().getColumn(1)
 								.setCellEditor(new DefaultCellEditor(cmbVariableDataTypes));
@@ -161,6 +162,7 @@ public class DecisionVariablesSection {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				boolean varsReadyToCheck = true;
 				boolean varsReady = true;
 				for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
 					if (dtmDecisionVariables.getValueAt(i, 0).toString().equals("")
@@ -170,11 +172,27 @@ public class DecisionVariablesSection {
 						JOptionPane.showMessageDialog(null, "Please fill the variable's name, type and interval fields",
 								"Warning", JOptionPane.WARNING_MESSAGE);
 						varsReady = false;
+						varsReadyToCheck = false;
 						break;
+					}
+				}
+				if(varsReadyToCheck) {
+					for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
+						int minValue = Integer.parseInt(dtmDecisionVariables.getValueAt(j, 2).toString());
+						int maxValue = Integer.parseInt(dtmDecisionVariables.getValueAt(j, 3).toString());
+						System.out.println(minValue);
+						System.out.println(maxValue);
+						if(maxValue < minValue) {
+							JOptionPane.showMessageDialog(null, "The maximum value should be greater than the minimum value",
+									"Warning", JOptionPane.WARNING_MESSAGE);
+							varsReady = false;
+							break;
+						}
 					}
 				}
 
 				if (varsReady) {
+					
 					if (tblDecisionVariables.getCellEditor() != null) {
 						tblDecisionVariables.getCellEditor().stopCellEditing();
 					}
