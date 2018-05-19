@@ -5,12 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,8 +22,10 @@ import javax.swing.JTextField;
 
 import problem.Criteria;
 import problem.UserProblem;
+
 /**
  * This class represents the criteria section.
+ * 
  * @author Diana nr 72898
  **/
 public class CriteriaSection {
@@ -31,8 +34,7 @@ public class CriteriaSection {
 	private JButton btnCriteriaFinish;
 	private JButton btnReadJar;
 	private int criteriaAdded;
-	private Map<Integer, String> criteriaNames = new HashMap<Integer, String>();
-	private Map<Integer, String> criteriaPaths = new HashMap<Integer, String>();
+	private Map<String, List<String>> criteriaPanel = new HashMap<String, List<String>>();
 	private JButton btnRemoveCriteria;
 
 	/**
@@ -70,10 +72,10 @@ public class CriteriaSection {
 		JPanel pnlCriteriaFinish = new JPanel();
 
 		btnRemoveCriteria = new JButton("Remove criteria");
+		addCriteria(pnlCriteria, pnlCriteriaList);
 		removeCriteria(pnlCriteria, pnlCriteriaList);
 
-		addCriteria(pnlCriteria, pnlCriteriaList);
-		criteriaFinish(problem);
+		criteriaFinish(problem, criteriaFrame);
 		pnlAddCriteria.add(btnAddCriteria);
 		pnlAddCriteria.add(btnRemoveCriteria);
 		pnlCriteriaList.add(addCriteriaPanel());
@@ -86,7 +88,7 @@ public class CriteriaSection {
 	}
 
 	/**
-	 * When the add criteria button is clicked, it adds a new criteria 
+	 * When the add criteria button is clicked, it adds a new criteria
 	 **/
 	private void addCriteria(JPanel pnlCriteria, JPanel pnlCriteriaList) {
 		btnAddCriteria = new JButton("Add criteria");
@@ -102,7 +104,7 @@ public class CriteriaSection {
 	}
 
 	/**
-	 * When the remove criteria button is clicked, it removes the last criteria 
+	 * When the remove criteria button is clicked, it removes the last criteria
 	 **/
 	private void removeCriteria(JPanel pnlCriteria, JPanel pnlCriteriaList) {
 		btnRemoveCriteria.setContentAreaFilled(false);
@@ -112,8 +114,11 @@ public class CriteriaSection {
 			public void actionPerformed(ActionEvent e) {
 				if (criteriaAdded > 1) {
 					criteriaAdded--;
+
+					// index
 					pnlCriteriaList.remove(criteriaAdded);
-					criteriaNames.size();
+					List<String> keys = new ArrayList<String>(criteriaPanel.keySet());
+					criteriaPanel.remove(keys.get(keys.size() - 1));
 					pnlCriteria.revalidate();
 				}
 			}
@@ -123,8 +128,9 @@ public class CriteriaSection {
 	/**
 	 * Creates the criteria finished button and when clicked, sets the problem
 	 * criteria
+	 * @param criteriaFrame 
 	 **/
-	private void criteriaFinish(UserProblem problem) {
+	private void criteriaFinish(UserProblem problem, JFrame criteriaFrame) {
 		btnCriteriaFinish = new JButton("Finish");
 		btnCriteriaFinish.setContentAreaFilled(false);
 		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
@@ -135,20 +141,35 @@ public class CriteriaSection {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(criteriaNames.toString());
-				System.out.println(criteriaPaths.toString());
-				if (criteriaPaths.size() == criteriaAdded
-						&& criteriaNames.size() == criteriaAdded) {
-					for (int j = 1; j <=criteriaAdded; j++) {
-						Criteria criteria = new Criteria(criteriaNames.get(j), criteriaPaths.get(j));
-						problem.addCriteria(criteria);
+				boolean criteriaReady = true;
+				boolean addToProblem = true;
+				for (String key : criteriaPanel.keySet()) {
+					List<String> list = criteriaPanel.get(key);
+					if (list.contains("")) {
+						criteriaReady = false;
+						break;
 					}
-//					frame.dispose();
+				}
+
+				if (criteriaReady) {
+					for (String key : criteriaPanel.keySet()) {
+						List<String> list = criteriaPanel.get(key);
+						Criteria criteria = new Criteria(list.get(0), list.get(1));
+						for (int i = 0; i < problem.getCriterias().size(); i++) {
+							if (problem.getCriterias().get(i).toString().equals(criteria.toString())) {
+								addToProblem = false;
+								break;
+							}
+						}
+						if (addToProblem == true) {
+							problem.addCriteria(criteria);
+						}
+						criteriaFrame.dispose();
+					}
 				} else {
 					JOptionPane.showMessageDialog(null, "Please fill all criteria fields", "Warning",
 							JOptionPane.WARNING_MESSAGE);
 				}
-				
 			}
 		});
 	}
@@ -160,19 +181,25 @@ public class CriteriaSection {
 	private JPanel addCriteriaPanel() {
 		criteriaAdded++;
 		JPanel pnlCriteria = new JPanel();
+		pnlCriteria.setName("Panel number " + criteriaAdded);
 		JPanel pnlCriteriaName = new JPanel();
 		JPanel pnlCriteriaJar = new JPanel();
 		JPanel pnlCriteriaDataType = new JPanel();
 
 		JLabel lblCriteriaName = new JLabel("Criteria Name:");
 		JTextField txtCriteriaName = new JTextField();
-		criteriaName(txtCriteriaName);
-
 		JLabel lblJarPath = new JLabel("Jar Path");
 		JTextField txtJarPath = new JTextField();
-		criteriaJarPath(txtJarPath);
+
+		List<String> listOfComponents = new ArrayList<String>();
+		listOfComponents.add(txtCriteriaName.getText());
+		listOfComponents.add(txtJarPath.getText());
+		criteriaPanel.put(pnlCriteria.getName(), listOfComponents);
+
+		criteriaName(txtCriteriaName, pnlCriteria);
+		criteriaJarPath(txtJarPath, pnlCriteria);
 		btnReadJar = new JButton("Add jar");
-		criteriaJarRead(txtJarPath);
+		criteriaJarRead(txtJarPath, pnlCriteria);
 
 		pnlCriteriaName.add(lblCriteriaName);
 		pnlCriteriaName.add(txtCriteriaName);
@@ -188,7 +215,8 @@ public class CriteriaSection {
 	/**
 	 * Sets a criteria jar path when the button is clicked, and a file is chosen
 	 **/
-	private void criteriaJarRead(JTextField txtJarPath) {
+	private void criteriaJarRead(JTextField txtJarPath, JPanel pnlCriteria) {
+		List<String> values = criteriaPanel.get(pnlCriteria.getName());
 		btnReadJar.setContentAreaFilled(false);
 		btnReadJar.addActionListener(new ActionListener() {
 
@@ -198,56 +226,52 @@ public class CriteriaSection {
 				if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					String jarPath = fchUploadJar.getSelectedFile().getPath();
 					txtJarPath.setText(jarPath);
-					 if (criteriaPaths.containsKey(criteriaAdded)) {
-					 criteriaPaths.remove(criteriaAdded);
-					 }
-					 criteriaPaths.put(criteriaAdded, jarPath);
+					values.set(1, txtJarPath.getText());
 				}
 			}
 		});
 	}
+
 	/**
 	 * Sets a criteria jar path if a path is written
 	 **/
-	private void criteriaJarPath(JTextField txtJarPath) {
+	private void criteriaJarPath(JTextField txtJarPath, JPanel pnlCriteria) {
 		txtJarPath.setColumns(15);
-
+		List<String> values = criteriaPanel.get(pnlCriteria.getName());
 		txtJarPath.addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (criteriaPaths.containsKey(criteriaAdded)) {
-					criteriaPaths.remove(criteriaAdded);
-				}
-				if (!txtJarPath.getText().isEmpty()) {
-					criteriaPaths.put(criteriaAdded, txtJarPath.getText());
-				}
+				values.set(1, txtJarPath.getText());
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				criteriaPaths.remove(criteriaAdded);
+				values.set(1, "");
 			}
 		});
 	}
 
 	/**
 	 * Sets a criteria name if a name is written
+	 * 
+	 * @param pnlCriteria
 	 **/
-	private void criteriaName(JTextField txtCriteriaName) {
+	private void criteriaName(JTextField txtCriteriaName, JPanel pnlCriteria) {
 		txtCriteriaName.setColumns(30);
+		List<String> values = criteriaPanel.get(pnlCriteria.getName());
 		txtCriteriaName.addFocusListener(new FocusListener() {
-
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (!txtCriteriaName.getText().isEmpty()) {
-					criteriaNames.put(criteriaAdded, txtCriteriaName.getText());
+					values.set(0, txtCriteriaName.getText());
+
 				}
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				criteriaNames.remove(criteriaAdded);
+				values.set(0, "");
 			}
 		});
 	}
