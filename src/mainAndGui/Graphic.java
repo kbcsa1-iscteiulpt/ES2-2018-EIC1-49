@@ -31,19 +31,31 @@ public class Graphic extends  ApplicationFrame {
 	private final double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2;
 	private List<double[]> xAxis = new ArrayList<double[]>();
 	private Config config = new Config();
-	private String[] paths = new String[] {
-			config.getrfPathBinary(),config.getrfPathDouble(),config.getrfPathInteger(),
-			config.getrsPathBinary(),config.getrsPathDouble(),config.getrsPathInteger()};
+	
+	private String rfPath="";
+	private String rsPath="";
 
 	
 		public Graphic(UserProblem problem) {
 		      super("");
 		      
-		      for(int i=0; i<paths.length; i++) {
-		    	 if(paths[i]!=null)
-		    		 if(!(paths[i].isEmpty() || paths[i].equals("")))
-		    			 readResults(paths[i]);
+		      switch(problem.getType()) {
+		      	case DOUBLE:
+		      		rfPath=config.getrfPathDouble();
+		      		rsPath=config.getrsPathDouble();
+		      		break;
+		      	case BINARY:
+		      		rfPath=config.getrfPathBinary();
+		      		rsPath=config.getrsPathBinary();
+		      		break;
+		      	case INTEGER:
+		      		rfPath=config.getrfPathInteger();
+		      		rsPath=config.getrsPathInteger();
 		      }
+		      
+		    readResults(rfPath);
+		    readResults(rsPath);
+
 		      JFreeChart lineChart = ChartFactory.createLineChart(
 		         "JMetal Results",
 		         "","",
