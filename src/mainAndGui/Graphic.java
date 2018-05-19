@@ -5,6 +5,7 @@ import org.jfree.chart.ChartPanel;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,7 +13,6 @@ import java.util.Scanner;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
 
 import problem.UserProblem;
 import support.Config;
@@ -29,6 +29,8 @@ public class Graphic extends  ApplicationFrame {
 		
 	private final double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2;
 	private final double height = Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2;
+	
+	private UserProblem problem;
 	private List<double[]> xAxis = new ArrayList<double[]>();
 	private Config config = new Config();
 	
@@ -38,6 +40,7 @@ public class Graphic extends  ApplicationFrame {
 	
 		public Graphic(UserProblem problem) {
 		      super("");
+		      this.problem=problem;
 		      
 		      switch(problem.getType()) {
 		      	case DOUBLE:
@@ -56,18 +59,25 @@ public class Graphic extends  ApplicationFrame {
 		      
 		    readResults(rfPath);
 		    readResults(rsPath);
-
-		      JFreeChart lineChart = ChartFactory.createLineChart(
-		         "JMetal Results",
-		         "","",
-		         createDataset(problem),
-		         PlotOrientation.VERTICAL,
-		         true,true,false);
-		         
-		      ChartPanel chartPanel = new ChartPanel( lineChart );
-		      chartPanel.setPreferredSize( new java.awt.Dimension((int) width ,(int) height) );
-		      setContentPane( chartPanel );
+		    setContent();
+		      
 		   }
+		
+			/**
+			 * This method sets the panel content of the graphic with the results 
+			 */
+			public void setContent() {
+				JFreeChart lineChart = ChartFactory.createLineChart(
+				         "JMetal Results",
+				         "","",
+				         createDataset(problem),
+				         PlotOrientation.VERTICAL,
+				         true,true,false);
+				         
+				      ChartPanel chartPanel = new ChartPanel( lineChart );
+				      chartPanel.setPreferredSize( new java.awt.Dimension((int) width ,(int) height) );
+				      setContentPane( chartPanel );
+			}
 
 		
 		  /**
@@ -99,30 +109,33 @@ public class Graphic extends  ApplicationFrame {
 		    */
 		   public void readResults(String path) {
 				Scanner scanner = null;
+				
+				if(Paths.get(path).toFile().exists()) {
 				try{
-					File file = new File(path);
-					if(file.exists() && !file.isDirectory()) {
-					scanner = new Scanner(file);
-					
-					while(scanner.hasNextLine()){
-						String line = scanner.nextLine();
-						String[] splitLine = line.split(" ");
-						double[] yAxis = new double[splitLine.length];
+							File file = new File(path);
+						scanner = new Scanner(file);
 						
-						for(int i=0;i<splitLine.length;i++) {
-							if(!splitLine[i].equals("X"))
-								yAxis[i] = Double.parseDouble(splitLine[i]);
+						while(scanner.hasNextLine()){
+							String line = scanner.nextLine();
+							String[] splitLine = line.split(" ");
+							double[] yAxis = new double[splitLine.length];
+							
+							for(int i=0;i<splitLine.length;i++) {
+								if(!splitLine[i].equals("X"))
+									yAxis[i] = Double.parseDouble(splitLine[i]);
+							}
+							xAxis.add(yAxis);
+							
+						
 						}
-						xAxis.add(yAxis);
-						
+					}catch(FileNotFoundException e){
+							e.printStackTrace();
+					}finally{
+							scanner.close();
 					}
-					}
-				}catch(FileNotFoundException e){
-						e.printStackTrace();
-				}finally{
-						scanner.close();
 				}
-			}
+				
+		   }
 		}
 
 

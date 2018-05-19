@@ -71,12 +71,10 @@ public class XMLEditor {
 							Element varElement = (Element) varList.item(i);
 							Variable var=null;
 							if(varElement.getAttribute("variableType").equals("Binary")) {
-								System.out.println("heyo");
 								var = new Variable(new BitSet(1100));
 								problemVariables.add(var);
 								break;
 							}else {
-								System.out.println(varElement.getAttribute("variableType"));
 								var = new Variable(
 									varElement.getAttribute("variableName"),
 									varElement.getAttribute("variableMin"),
@@ -134,6 +132,7 @@ public class XMLEditor {
 			probTag.setAttribute("description", problem.getDescription());
 			probTag.setAttribute("email", problem.getEmail());
 			probTag.setAttribute("creationDate", problem.getCreationDate());
+			probTag.setAttribute("type", problem.getType().toString());
 			doc.appendChild(probTag);
 
 			// Problem elements

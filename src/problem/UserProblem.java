@@ -113,6 +113,9 @@ public class UserProblem {
 		return type;
 	}
 
+	public void setType(Type type) {
+		this.type=type;
+	}
 
 	public Time getMax() {
 		return max;
