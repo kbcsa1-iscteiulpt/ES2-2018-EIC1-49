@@ -1,6 +1,7 @@
 package mainAndGui;
 
 import java.awt.BorderLayout;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -68,21 +69,23 @@ public class CriteriaSection {
 		JPanel pnlCriteria = new JPanel(new BorderLayout());
 		JPanel pnlAddCriteria = new JPanel();
 		JPanel pnlCriteriaList = new JPanel();
+		JLabel lblInform = new JLabel(
+				"This platform assumes in the optimization process that optimizing means minimizing the optimization criteria expressed through the objective functions");
+		btnRemoveCriteria = new JButton("Remove criteria");
 		pnlCriteriaList.setLayout(new BoxLayout(pnlCriteriaList, BoxLayout.Y_AXIS));
 		JPanel pnlCriteriaFinish = new JPanel();
-
-		btnRemoveCriteria = new JButton("Remove criteria");
 		addCriteria(pnlCriteria, pnlCriteriaList);
 		removeCriteria(pnlCriteria, pnlCriteriaList);
 
 		criteriaFinish(problem, criteriaFrame);
 		pnlAddCriteria.add(btnAddCriteria);
 		pnlAddCriteria.add(btnRemoveCriteria);
+		pnlCriteriaList.add(lblInform);
 		pnlCriteriaList.add(addCriteriaPanel());
 		pnlCriteriaFinish.add(btnCriteriaFinish);
 
 		pnlCriteria.add(pnlAddCriteria, BorderLayout.PAGE_START);
-		pnlCriteria.add(pnlCriteriaList, BorderLayout.CENTER);
+		pnlCriteria.add(pnlCriteriaList);
 		pnlCriteria.add(pnlCriteriaFinish, BorderLayout.PAGE_END);
 		criteriaFrame.add(new JScrollPane(pnlCriteria));
 	}
@@ -128,7 +131,8 @@ public class CriteriaSection {
 	/**
 	 * Creates the criteria finished button and when clicked, sets the problem
 	 * criteria
-	 * @param criteriaFrame 
+	 * 
+	 * @param criteriaFrame
 	 **/
 	private void criteriaFinish(UserProblem problem, JFrame criteriaFrame) {
 		btnCriteriaFinish = new JButton("Finish");
