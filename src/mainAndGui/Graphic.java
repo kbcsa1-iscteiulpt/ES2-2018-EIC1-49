@@ -51,6 +51,7 @@ public class Graphic extends  ApplicationFrame {
 		      	case INTEGER:
 		      		rfPath=config.getrfPathInteger();
 		      		rsPath=config.getrsPathInteger();
+		      		break;
 		      }
 		      
 		    readResults(rfPath);
