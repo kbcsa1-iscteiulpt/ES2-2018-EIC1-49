@@ -60,8 +60,8 @@ public class FillForms {
 			for (int i = 0; i < problem.getNumberVariables(); i++) {
 				if (i < variablesList.size()) {
 					tblDecisionVariables.setValueAt(variablesList.get(i).getName(), i, 0);
-					tblDecisionVariables.setValueAt(variablesList.get(i).getMin(), i, 1);
-					tblDecisionVariables.setValueAt(variablesList.get(i).getMax(), i, 2);
+					tblDecisionVariables.setValueAt(variablesList.get(i).getMinRange(), i, 1);
+					tblDecisionVariables.setValueAt(variablesList.get(i).getMaxRange(), i, 2);
 					tblDecisionVariables.setValueAt(variablesList.get(i).getRestriction(), i, 3);
 				}
 			}
