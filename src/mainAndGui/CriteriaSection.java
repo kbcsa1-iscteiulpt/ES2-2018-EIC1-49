@@ -131,7 +131,6 @@ public class CriteriaSection {
 	 * Creates the criteria finished button and when clicked, sets the problem
 	 * criteria
 	 * 
-	 * @param criteriaFrame
 	 **/
 	private void criteriaFinish(UserProblem problem, JFrame criteriaFrame) {
 		btnCriteriaFinish = new JButton("Finish");
@@ -148,7 +147,6 @@ public class CriteriaSection {
 				boolean addToProblem = true;
 				for (String key : criteriaPanel.keySet()) {
 					List<String> list = criteriaPanel.get(key);
-					System.out.println(list);
 					if (list.contains("")) {
 						criteriaReady = false;
 						break;
@@ -259,7 +257,6 @@ public class CriteriaSection {
 	/**
 	 * Sets a criteria name if a name is written
 	 * 
-	 * @param pnlCriteria
 	 **/
 	private void criteriaName(JTextField txtCriteriaName, JPanel pnlCriteria) {
 		txtCriteriaName.setColumns(30);

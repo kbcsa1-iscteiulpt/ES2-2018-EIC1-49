@@ -645,13 +645,13 @@ public class AlgorithmsConfig {
 		
 		try {
 			if(counter == (int)(maxIterations * 0.25) ) {
-					emailHandler.SendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "25%");
+					emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "25%");
 			}else if(counter == (int)(maxIterations* 0.5) ) {
-				emailHandler.SendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "50%");
+				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "50%");
 			}else if(counter == (int)(maxIterations * 0.75) ) {
-				emailHandler.SendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "75%");
+				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "75%");
 			}else if(counter == (int)(maxIterations * 0.75) ) {
-				emailHandler.SendEmail(adminEmail, problem.getEmail(),adminEmail,subject,"The otimization of your problem is concluded");
+				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,"The otimization of your problem is concluded");
 			}
 		} catch (AddressException e) {
 			 JOptionPane.showMessageDialog(new JFrame(), "Invalid email address", "Dialog",

@@ -24,6 +24,10 @@ import problem.Type;
 import problem.UserProblem;
 import problem.Variable;
 
+/**
+ * This class represents the section of the problem decision variables.
+ * @author Diana nr 72898
+ **/
 public class DecisionVariablesSection {
 	private JButton btnDecisionVariables;
 	private JSpinner spnNumberOfDecisionVariables;
@@ -40,7 +44,6 @@ public class DecisionVariablesSection {
 	 * and button. When clicked, a new frame is displayed to write the decision
 	 * variable group name and to fill the table of the variable decision.
 	 * 
-	 * @param frame
 	 **/
 
 	public JPanel decisionVarPanel(UserProblem problem, JFrame frame) {
@@ -168,7 +171,6 @@ public class DecisionVariablesSection {
 	/**
 	 * Sets the problem variable if the name type and variable's values are filled
 	 * 
-	 * @param decisionVarFrame
 	 **/
 	private void decisionVariablesFinish(UserProblem problem, JFrame decisionVarFrame) {
 		btnDecisionVariablesFinish.addActionListener(new ActionListener() {
@@ -201,8 +203,6 @@ public class DecisionVariablesSection {
 
 								double minValue = Double.parseDouble(dtmDecisionVariables.getValueAt(j, 1).toString());
 								double maxValue = Double.parseDouble(dtmDecisionVariables.getValueAt(j, 2).toString());
-								System.out.println(minValue);
-								System.out.println(maxValue);
 								if (maxValue < minValue) {
 									JOptionPane.showMessageDialog(null,
 											"The maximum value should be greater than the minimum value", "Warning",

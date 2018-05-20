@@ -10,7 +10,7 @@ import problem.UserProblem;
 import problem.Variable;
 
 /**
- * This class objetive is to fill the forms with a problem.
+ * This class fills the forms with a problem read from a XML file.
  * 
  * @author Diana nr 72898
  **/

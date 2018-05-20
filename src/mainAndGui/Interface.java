@@ -39,8 +39,7 @@ public class Interface {
 	private SaveSection saveSection = new SaveSection();
 	private ReadSection readSection = new ReadSection();
 	private FillForms fillForms = new FillForms();
-	private ExecutionSection executionSection = new ExecutionSection();
-	private String problemType = "Double"; // TODO Alterar
+	private AlgorithmSelectionSection algorithmSelectionSection = new AlgorithmSelectionSection();
 
 	private int criteriaAdded = 0;
 	private JButton btnReadProblem;
@@ -140,12 +139,12 @@ public class Interface {
 		problemNameDescription(initialPanel);
 		problemUserEmail(frame, initialPanel, support, adminEmail, helpSection);
 		problemTime(initialPanel);
-		problemType(initialPanel, decisionVariablesSection);
+		problemType(initialPanel, decisionVariablesSection, algorithmSelectionSection);
 		problemDecisionVariables(initialPanel, frame);
 
 		problemSave(initialPanel, typeVarSection);
 		problemCriteria(initialPanel);
-		problemExecution(initialPanel);
+		problemAlgorithmSelection(initialPanel);
 		frame.add(initialPanel);
 	}
 
@@ -181,8 +180,8 @@ public class Interface {
 	/**
 	 * Adds the type problem panel to the initial frame
 	 **/
-	private void problemType(JPanel initialPanel, DecisionVariablesSection decisionVariable) {
-		initialPanel.add(typeVarSection.setVarType(decisionVariable));
+	private void problemType(JPanel initialPanel, DecisionVariablesSection decisionVariable, AlgorithmSelectionSection algorithmSelection) {
+		initialPanel.add(typeVarSection.setVarType(decisionVariable, algorithmSelection));
 	}
 	/**
 	 * Adds the ideal and maximum time for optimization panel to the initial frame
@@ -215,11 +214,10 @@ public class Interface {
 	}
 
 	/**
-	 * Adds the execution panel to the initial frame
+	 * Adds the algorithm selection panel to the initial frame
 	 **/
-	private void problemExecution(JPanel initialPanel) {
-		initialPanel.add(executionSection.executeProcessPanel(nameDescriptionSection, emailSection, problem, decisionVariablesSection, problemType,
-				support, adminEmail));
+	private void problemAlgorithmSelection(JPanel initialPanel) {
+		initialPanel.add(algorithmSelectionSection.algorithmSelection(nameDescriptionSection, emailSection, problem, typeVarSection, support, adminEmail));
 	}
 
 	public JButton getBtnReadProblem() {

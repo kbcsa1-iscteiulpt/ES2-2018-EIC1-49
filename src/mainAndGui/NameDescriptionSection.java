@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * This class represents the name and description of the problem section.
+ * This class represents the section of the problem name and description.
  * @author Diana nr 72898
  **/
 public class NameDescriptionSection {

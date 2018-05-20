@@ -43,7 +43,11 @@ public class HelpSection {
 		pnlHelp.add(btnHelp, BorderLayout.LINE_END);
 		return pnlHelp;
 	}
-
+	
+	
+	/**
+	 * Creates a question mark icon placed at the top-right that is a button. When clicked, shows the help frame with FAQs.
+	 **/
 	private void helpButton(JFrame frame, EmailSection email, EmailHandler support, String adminEmail) {
 		btnHelp = new JButton();
 		
@@ -66,6 +70,9 @@ public class HelpSection {
 		});
 	}
 
+	/**
+	 * Creates a return icon placed at the top-left that is a button. When clicked, returns to the previous frame.
+	 **/
 	private void goBackButton(JFrame frame, JFrame decisionFrame) {
 		btnGoBack = new JButton();
 		ImageIcon icoGoBack = new ImageIcon(((new ImageIcon("./src/images/goBack.png")).getImage())
