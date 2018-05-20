@@ -5,6 +5,7 @@ import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 
 import problem.UserProblem;
+import problem.Variable;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -33,10 +34,13 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	    List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
 	    List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
-	    for (int i = 0; i < getNumberOfVariables(); i++) {
-	      lowerLimit.add(-1000);
-	      upperLimit.add(+1000);
-	    }
+ List<Variable> variables = problem.getVariables() ;
+	    
+	    for (int i = 0; i < variables.size(); i++) {
+	    	lowerLimit.add(Integer.parseInt(variables.get(i).getMinRange()));
+	    	upperLimit.add(Integer.parseInt(variables.get(i).getMaxRange()));
+		}
+	    
 
 	    setLowerLimit(lowerLimit);
 	    setUpperLimit(upperLimit);

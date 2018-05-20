@@ -14,6 +14,7 @@ import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
 
 import problem.UserProblem;
+import problem.Variable;
 
 
 @SuppressWarnings("serial")
@@ -33,6 +34,13 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	    List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
 	    List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
+	    List<Variable> variables = problem.getVariables() ;
+	    
+	    for (int i = 0; i < variables.size(); i++) {
+	    	lowerLimit.add(Double.parseDouble(variables.get(i).getMinRange()));
+	    	upperLimit.add(Double.parseDouble(variables.get(i).getMaxRange()));
+		}
+	    
 	    for (int i = 0; i < getNumberOfVariables(); i++) {
 	      lowerLimit.add(-5.0);
 	      upperLimit.add(5.0);
