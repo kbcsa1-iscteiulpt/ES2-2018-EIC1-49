@@ -7,7 +7,7 @@ import java.util.BitSet;
  * - minimum range of the variable value - maximum range of the variable value -
  * restricted values of the variable
  * 
- * @author Kevin Corrales n� 73529
+ * @author Kevin Corrales nr 73529
  *
  */
 public class Variable {
