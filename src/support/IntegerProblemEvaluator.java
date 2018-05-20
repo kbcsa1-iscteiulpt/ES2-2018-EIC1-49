@@ -4,6 +4,8 @@ import org.uma.jmetal.problem.impl.AbstractIntegerProblem;
 import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.JMetalException;
 
+import problem.UserProblem;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -16,9 +18,15 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	
+	private int counter = 0 ;
+	private UserProblem problem;
+	private AlgorithmsConfig algorithmsConfig = new AlgorithmsConfig();
+	
 
-	  public IntegerProblemEvaluator(Integer numberOfVariables) throws JMetalException {
-	    setNumberOfVariables(numberOfVariables);
+	  public IntegerProblemEvaluator(UserProblem problem) throws JMetalException {
+		this.problem= problem;  
+		  
+	    setNumberOfVariables(problem.getNumberVariables());
 	    setNumberOfObjectives(2);
 	    setName("IntegerProblem");
 
@@ -36,6 +44,10 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	  }
 
 	  public void evaluate(IntegerSolution solution){
+		  
+		algorithmsConfig.otimizationEmails(problem,counter);
+		counter ++;
+		  
 	    String solutionString ="";
 	    String evaluationResultString ="";
 	    for (int i = 0; i < solution.getNumberOfVariables(); i++) {

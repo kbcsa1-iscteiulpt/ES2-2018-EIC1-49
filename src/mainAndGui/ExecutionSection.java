@@ -101,7 +101,7 @@ public class ExecutionSection {
 						}
 					} catch (IOException e2) {
 						try {
-							support.SendEmail(adminEmail, email.getEmail().getText(), "There was a problem","There was a problem running the problem you requested, please try again.\r\n"
+							support.SendEmail(adminEmail, email.getEmail().getText(), adminEmail, "There was a problem","There was a problem running the problem you requested, please try again.\r\n"
 									+ "If the problem continues, contact us so we can help");
 							return;
 						} catch (AddressException e1) {
@@ -114,7 +114,7 @@ public class ExecutionSection {
 						String subject = "Otimiza��o em curso: " + nameDescription.getProblemName().getText() + " "
 								+ dateFormat.format(date);
 						
-						support.SendEmail(adminEmail, email.getEmail().getText(), subject, "Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
+						support.SendEmail(adminEmail, email.getEmail().getText(),adminEmail, subject, "Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
 								+ "sobre o progresso do processo de otimiza��o, quando o processo de otimiza��o tiver atingido 25%,\r\n"
 								+ "50%, 75% do total do (n�mero de avalia��es ou) tempo estimado, e tamb�m quando o processo tiver\r\n"
 								+ "terminado, com sucesso ou devido � ocorr�ncia de erros.");

@@ -26,7 +26,7 @@ public class IntegerExperiment {
     List<String> selectedAlgorithms = new ArrayList<String>();
     selectedAlgorithms.add("SMSEMOA");
     List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem.getNumberVariables())));
+    problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem )));
 
     List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = algorithmConf.configureIntegerAlgorithms(problemList,selectedAlgorithms);
 

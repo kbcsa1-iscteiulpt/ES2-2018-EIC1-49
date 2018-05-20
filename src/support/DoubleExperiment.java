@@ -23,7 +23,7 @@ public class DoubleExperiment {
 	
     String experimentBaseDirectory = "experimentBaseDirectory";
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new DoubleProblemEvaluator(problem.getNumberVariables())));
+    problemList.add(new ExperimentProblem<>(new DoubleProblemEvaluator(problem)));
     List<String> selectedAlgorithms = new ArrayList<String>();
     selectedAlgorithms.add("SMSEMOA");
 
