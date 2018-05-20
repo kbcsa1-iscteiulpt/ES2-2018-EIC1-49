@@ -148,4 +148,14 @@ public class HelpSection {
 		pnlFAQ.add(lblAnswer);
 		return pnlFAQ;
 	}
+
+	public JButton getBtnGoBack() {
+		return btnGoBack;
+	}
+
+	public JButton getBtnHelp() {
+		return btnHelp;
+	}
+	
+	
 }

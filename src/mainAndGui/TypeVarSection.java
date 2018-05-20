@@ -11,18 +11,20 @@ import problem.Type;
 
 public class TypeVarSection {
 	private Type dataType;
+	private JComboBox<String> cmbVariableDataTypes;
 	public JPanel setVarType(DecisionVariablesSection decisionVariables) {
 
 		JPanel pnlVarType = new JPanel(new FlowLayout());
 		JLabel lblVarType = new JLabel("Problem variable's type: ");
 		String[] variableDataTypes = {"Binary", "Double", "Integer" };
-		JComboBox<String> cmbVariableDataTypes = new JComboBox<>(variableDataTypes);
+		cmbVariableDataTypes = new JComboBox<>(variableDataTypes);
 		cmbVariableDataTypes.setSelectedIndex(-1);
 		cmbVariableDataTypes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String data= (String) cmbVariableDataTypes.getSelectedItem();
 					dataType = Type.valueOf(data.toUpperCase());
+					decisionVariables.setDataType(dataType);
 				if (decisionVariables.getTblDecisionVariables().getRowCount() == 0) {
 				} else {
 					while (decisionVariables.getDtmDecisionVariables().getRowCount() > 0) {
@@ -38,6 +40,13 @@ public class TypeVarSection {
 	}
 	public Type getDataType() {
 		return dataType;
+	}
+	public JComboBox<String> getCmbVariableDataTypes() {
+		return cmbVariableDataTypes;
+	}
+	
+	public void setDataType(int index) {
+		cmbVariableDataTypes.setSelectedIndex(index);
 	}
 	
 }

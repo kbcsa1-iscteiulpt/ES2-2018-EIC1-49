@@ -22,16 +22,17 @@ public class ReadSection {
 	/**
 	 * Returns the panel with a button that reads a problem from a XML file and writes the respective path.
 	 * When clicked, reads a XML file and fills the form the data from a XML file
+	 * @param problemDataTypeSection 
 	 **/
 	public JPanel readPanel(NameDescriptionSection nameDescriptionProblem, EmailSection email,
-			UserProblem problem, XMLEditor xml, DecisionVariablesSection decisionVariables,
+			UserProblem problem, XMLEditor xml, TypeVarSection problemDataTypeSection, DecisionVariablesSection decisionVariables,
 			TimeOptimizationSection timeOptimization) {
 		JPanel pnlRead = new JPanel();
 		btnReadXML = new JButton("Read from a XML File:");
 		btnReadXML.setToolTipText("Read a XML file. This action will replace the fields already filled");
 		txtFilePathXML = new JTextField();
 		txtFilePathXML.setEditable(false);
-		readFromFile(nameDescriptionProblem, email, problem, xml, decisionVariables, timeOptimization, pnlRead);
+		readFromFile(nameDescriptionProblem, email, problem, xml, problemDataTypeSection, decisionVariables, timeOptimization, pnlRead);
 		pnlRead.add(btnReadXML);
 		pnlRead.add(txtFilePathXML);
 		return pnlRead;
@@ -41,7 +42,7 @@ public class ReadSection {
 	 * Reads a XML file and fills the from with the data from a XML file 
 	 **/
 	private void readFromFile(NameDescriptionSection nameDescriptionProblem, EmailSection email, UserProblem problem,
-			XMLEditor xml, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization,
+			XMLEditor xml, TypeVarSection problemDataTypeSection, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization,
 			JPanel pnlRead) {
 		btnReadXML.addActionListener(new ActionListener() {
 
@@ -53,8 +54,8 @@ public class ReadSection {
 					pnlRead.add(txtFilePathXML);
 					pnlRead.revalidate();
 					fillForms.fillInicialForm(filePath, nameDescriptionProblem, xml.read(filePath), email,
-							timeOptimization, txtFilePathXML);
-					fillForms.fillDecisionVariableForm(decisionVariables, problem);
+							problemDataTypeSection, timeOptimization, txtFilePathXML);
+					fillForms.fillDecisionVariableForm(decisionVariables, xml.read(filePath));
 				}
 			}
 		});
@@ -63,5 +64,10 @@ public class ReadSection {
 	public JTextField getFilePathXML() {
 		return txtFilePathXML;
 	}
+
+	public JButton getBtnReadXML() {
+		return btnReadXML;
+	}
+	
 
 }

@@ -4,8 +4,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.naming.InitialContext;
-import javax.naming.ldap.InitialLdapContext;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -31,18 +29,18 @@ public class Interface {
 	private XMLEditor xml = new XMLEditor();
 	private UserProblem problem = new UserProblem();
 
-	private EmailSection email = new EmailSection();
+	private EmailSection emailSection = new EmailSection();
 	private HelpSection helpSection = new HelpSection();
-	private TimeOptimizationSection timeOptimization = new TimeOptimizationSection();
-	private NameDescriptionSection nameDescription = new NameDescriptionSection();
-	private TypeVarSection problemDataType = new TypeVarSection();
-	private DecisionVariablesSection decisionVariables = new DecisionVariablesSection();
+	private TimeOptimizationSection timeOptimizationSection = new TimeOptimizationSection();
+	private NameDescriptionSection nameDescriptionSection = new NameDescriptionSection();
+	private TypeVarSection problemDataTypeSection = new TypeVarSection();
+	private DecisionVariablesSection decisionVariablesSection = new DecisionVariablesSection();
 	private CriteriaSection criteriaSection = new CriteriaSection();
 	private SaveSection saveSection = new SaveSection();
 	private ReadSection readSection = new ReadSection();
 	private FillForms fillForms = new FillForms();
-	private ExecutionSection execution = new ExecutionSection();
-	private String problemType = "Binary"; // TODO Alterar
+	private ExecutionSection executionSection = new ExecutionSection();
+	private String problemType = "Double"; // TODO Alterar
 
 	private int criteriaAdded = 0;
 	private JButton btnReadProblem;
@@ -115,9 +113,9 @@ public class Interface {
 					if (fchReadXML.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 						String filePath = fchReadXML.getSelectedFile().getPath();
 						problem = xml.read(filePath);
-						fillForms.fillInicialForm(filePath, nameDescription, problem, email, timeOptimization,
+						fillForms.fillInicialForm(filePath, nameDescriptionSection, problem, emailSection, problemDataTypeSection, timeOptimizationSection,
 								readSection.getFilePathXML());
-						fillForms.fillDecisionVariableForm(decisionVariables, problem);
+						fillForms.fillDecisionVariableForm(decisionVariablesSection, problem);
 					}
 				}
 				readProblemFrame.setVisible(true);
@@ -142,8 +140,8 @@ public class Interface {
 		problemNameDescription(initialPanel);
 		problemUserEmail(frame, initialPanel, support, adminEmail);
 		problemTime(initialPanel);
-		problemType(initialPanel, decisionVariables);
-		problemDecisionVariables(initialPanel, problemDataType);
+		problemType(initialPanel, decisionVariablesSection);
+		problemDecisionVariables(initialPanel, frame);
 
 		problemSave(initialPanel);
 		problemCriteria(initialPanel);
@@ -155,7 +153,7 @@ public class Interface {
 	 * Adds the help panel to the initial frame
 	 **/
 	private void problemHelp(JFrame frame, JPanel initialPanel) {
-		initialPanel.add(helpSection.getHelpPanel(frame, decisionFrame, email, support, adminEmail));
+		initialPanel.add(helpSection.getHelpPanel(frame, decisionFrame, emailSection, support, adminEmail));
 	}
 
 	/**
@@ -163,42 +161,42 @@ public class Interface {
 	 **/
 	private void problemRead(JPanel initialPanel) {
 		initialPanel
-				.add(readSection.readPanel(nameDescription, email, problem, xml, decisionVariables, timeOptimization));
+				.add(readSection.readPanel(nameDescriptionSection, emailSection, problem, xml, problemDataTypeSection ,decisionVariablesSection, timeOptimizationSection));
 	}
 
 	/**
 	 * Adds the problem name and description panel to the initial frame
 	 **/
 	private void problemNameDescription(JPanel initialPanel) {
-		initialPanel.add(nameDescription.problemNamePanel());
-		initialPanel.add(nameDescription.problemDescriptionPanel());
+		initialPanel.add(nameDescriptionSection.problemNamePanel());
+		initialPanel.add(nameDescriptionSection.problemDescriptionPanel());
 	}
 
 	/**
 	 * Adds the email panel to the initial frame
 	 **/
 	private void problemUserEmail(JFrame frame, JPanel initialPanel, EmailHandler support, String adminEmail) {
-		initialPanel.add(email.emailPanel(frame, support, adminEmail));
+		initialPanel.add(emailSection.emailPanel(frame, support, adminEmail));
 	}
 	/**
 	 * Adds the type problem panel to the initial frame
 	 **/
 	private void problemType(JPanel initialPanel, DecisionVariablesSection decisionVariable) {
-		initialPanel.add(problemDataType.setVarType(decisionVariable));
+		initialPanel.add(problemDataTypeSection.setVarType(decisionVariable));
 	}
 	/**
 	 * Adds the ideal and maximum time for optimization panel to the initial frame
 	 **/
 	private void problemTime(JPanel initialPanel) {
-		initialPanel.add(timeOptimization.maxTimePanel());
-		initialPanel.add(timeOptimization.idealTimePanel());
+		initialPanel.add(timeOptimizationSection.maxTimePanel());
+		initialPanel.add(timeOptimizationSection.idealTimePanel());
 	}
 
 	/**
 	 * Adds the decision variable panel to the initial frame
 	 **/
-	private void problemDecisionVariables(JPanel initialPanel, TypeVarSection problemDatatType) {
-		initialPanel.add(decisionVariables.decisionVarPanel(problem, problemDatatType));
+	private void problemDecisionVariables(JPanel initialPanel, JFrame frame) {
+		initialPanel.add(decisionVariablesSection.decisionVarPanel(problem, frame));
 	}
 
 	/**
@@ -206,7 +204,7 @@ public class Interface {
 	 **/
 	private void problemSave(JPanel initialPanel) {
 		initialPanel
-				.add(saveSection.savePanel(nameDescription, email, problem, xml, decisionVariables, timeOptimization));
+				.add(saveSection.savePanel(nameDescriptionSection, emailSection, problem, xml, decisionVariablesSection, timeOptimizationSection));
 	}
 
 	/**
@@ -220,7 +218,41 @@ public class Interface {
 	 * Adds the execution panel to the initial frame
 	 **/
 	private void problemExecution(JPanel initialPanel) {
-		initialPanel.add(execution.executeProcessPanel(nameDescription, email, problem, decisionVariables, problemType,
+		initialPanel.add(executionSection.executeProcessPanel(nameDescriptionSection, emailSection, problem, decisionVariablesSection, problemType,
 				support, adminEmail));
 	}
+
+	public JButton getBtnReadProblem() {
+		return btnReadProblem;
+	}
+
+	public JButton getBtnCreateProblem() {
+		return btnCreateProblem;
+	}
+
+	public HelpSection getHelpSection() {
+		return helpSection;
+	}
+
+	public EmailSection getEmailSection() {
+		return emailSection;
+	}
+
+	public DecisionVariablesSection getDecisionVariablesSection() {
+		return decisionVariablesSection;
+	}
+
+	public CriteriaSection getCriteriaSection() {
+		return criteriaSection;
+	}
+
+	public ReadSection getReadSection() {
+		return readSection;
+	}
+
+	public TypeVarSection getProblemDataTypeSection() {
+		return problemDataTypeSection;
+	}
+
+	
 }

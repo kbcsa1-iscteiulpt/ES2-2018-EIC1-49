@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class CriteriaSection {
 	private int criteriaAdded;
 	private Map<String, List<String>> criteriaPanel = new HashMap<String, List<String>>();
 	private JButton btnRemoveCriteria;
+	private JTextField txtCriteriaName;
 
 	/**
 	 * Returns a panel with a button. When clicked, a new frame is displayed to
@@ -116,12 +118,11 @@ public class CriteriaSection {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (criteriaAdded > 1) {
-					criteriaAdded--;
 
-					// index
-					pnlCriteriaList.remove(criteriaAdded);
 					List<String> keys = new ArrayList<String>(criteriaPanel.keySet());
+					pnlCriteriaList.remove(criteriaAdded);
 					criteriaPanel.remove(keys.get(keys.size() - 1));
+					criteriaAdded--;
 					pnlCriteria.revalidate();
 				}
 			}
@@ -149,6 +150,7 @@ public class CriteriaSection {
 				boolean addToProblem = true;
 				for (String key : criteriaPanel.keySet()) {
 					List<String> list = criteriaPanel.get(key);
+					System.out.println(list);
 					if (list.contains("")) {
 						criteriaReady = false;
 						break;
@@ -185,13 +187,13 @@ public class CriteriaSection {
 	private JPanel addCriteriaPanel() {
 		criteriaAdded++;
 		JPanel pnlCriteria = new JPanel();
-		pnlCriteria.setName("Panel number " + criteriaAdded);
+		pnlCriteria.setName(Integer.toString(criteriaAdded));
 		JPanel pnlCriteriaName = new JPanel();
 		JPanel pnlCriteriaJar = new JPanel();
 		JPanel pnlCriteriaDataType = new JPanel();
 
 		JLabel lblCriteriaName = new JLabel("Criteria Name:");
-		JTextField txtCriteriaName = new JTextField();
+		txtCriteriaName = new JTextField();
 		JLabel lblJarPath = new JLabel("Jar Path");
 		JTextField txtJarPath = new JTextField();
 
@@ -279,4 +281,30 @@ public class CriteriaSection {
 			}
 		});
 	}
+
+	public JButton getBtnCriteria() {
+		return btnCriteria;
+	}
+
+	public JButton getBtnAddCriteria() {
+		return btnAddCriteria;
+	}
+
+	public JButton getBtnCriteriaFinish() {
+		return btnCriteriaFinish;
+	}
+
+	public JButton getBtnReadJar() {
+		return btnReadJar;
+	}
+
+	public JButton getBtnRemoveCriteria() {
+		return btnRemoveCriteria;
+	}
+
+	public JTextField getTxtCriteriaName() {
+		return txtCriteriaName;
+	}
+	
+	
 }

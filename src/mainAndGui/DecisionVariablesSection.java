@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -37,35 +39,41 @@ public class DecisionVariablesSection {
 	private JTable tblDecisionVariables;
 	private DefaultTableModel dtmDecisionVariables;
 	private JButton btnDecisionVariablesFinish;
-	private Type dataType;
+	private JFrame decisionVarFrame;
+	private Type dataType = null;
+	private boolean filled = false;
 
 	/**
 	 * Returns a panel with a JSpinner to select the number of decision variables
 	 * and button. When clicked, a new frame is displayed to write the decision
 	 * variable group name and to fill the table of the variable decision.
+	 * 
+	 * @param frame
 	 **/
 
-	public JPanel decisionVarPanel(UserProblem problem, TypeVarSection type) {
-		this.dataType = type.getDataType();
+	public JPanel decisionVarPanel(UserProblem problem, JFrame frame) {
 		JPanel pnlDecisionVar = new JPanel(new FlowLayout());
-
 		btnDecisionVariables = new JButton("Decision Variables");
 		btnDecisionVariables.setContentAreaFilled(false);
+		decisionVarFrame = new JFrame("Decision Variables");
 		spnNumberOfDecisionVariables = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
 		txtNameOfDecisionVariablesGroup = new JTextField();
 		tblDecisionVariables = new JTable();
-		JFrame decisionVarFrame = new JFrame("Decision Variables");
-		FrameSize.setFrame(decisionVarFrame, 0.5);
+		setDecisionFrame(decisionVarFrame, problem);
 		btnDecisionVariables.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (type.getDataType() != null) {
-					if (!type.getDataType().equals(dataType)) {
-						setDecisionFrame(decisionVarFrame, problem, type.getDataType());
+				if (dataType != null) {
+
+					if (filled == false) {
+						decisionVarFrame = new JFrame("Decision Variables");
+						setDecisionFrame(decisionVarFrame, problem);
 					}
-					dataType = type.getDataType();
+					FrameSize.setFrame(decisionVarFrame, 0.5);
 					decisionVarFrame.setVisible(true);
+					filled = false;
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Please, select the problem data type", "Warning",
 							JOptionPane.WARNING_MESSAGE);
@@ -76,16 +84,15 @@ public class DecisionVariablesSection {
 
 		pnlDecisionVar.add(btnDecisionVariables);
 		return pnlDecisionVar;
+
 	}
 
 	/**
 	 * Adds content to the frame given with a table to write the decision variable
 	 * group name and to fill the table of the variable decision. Each decision
 	 * variable has a name, type, and potential intervals and restrictions.
-	 * 
-	 * @param type
 	 **/
-	private void setDecisionFrame(JFrame decisionVarFrame, UserProblem problem, Type type) {
+	private void setDecisionFrame(JFrame decisionVarFrame, UserProblem problem) {
 		JPanel pnlDecision = new JPanel(new BorderLayout());
 		JPanel pnlNameOfDecisionVariablesGroup = new JPanel();
 		JLabel lblNameOfDecisionVariablesGroup = new JLabel("Name of Decision Variable Group:");
@@ -95,16 +102,16 @@ public class DecisionVariablesSection {
 		pnlNameOfDecisionVariablesGroup.add(lblNumberOfDecisionVariable, BorderLayout.NORTH);
 
 		spnNumberOfDecisionVariables = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-		spinnerHandler(pnlNameOfDecisionVariablesGroup, type);
+		spinnerHandler(pnlNameOfDecisionVariablesGroup);
 		tblDecisionVariables = new JTable();
-		createDecisionVariableTable(type);
+		createDecisionVariableTable();
 
 		btnDecisionVariablesFinish = new JButton("Finish");
 		btnDecisionVariablesFinish.setContentAreaFilled(false);
 		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
 				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
 		btnDecisionVariablesFinish.setIcon(icoFinish);
-		decisionVariablesFinish(problem, decisionVarFrame, type);
+		decisionVariablesFinish(problem, decisionVarFrame);
 
 		pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
 		pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
@@ -117,16 +124,14 @@ public class DecisionVariablesSection {
 	/**
 	 * Creates the decision variable table
 	 **/
-	private void createDecisionVariableTable(Type type) {
+	public void createDecisionVariableTable() {
 		dtmDecisionVariables = new DefaultTableModel();
 		tblDecisionVariables.setModel(dtmDecisionVariables);
 		tblDecisionVariables.getTableHeader().setReorderingAllowed(false);
-		
-		if (type != null) {
-			if (!type.equals(Type.BINARY)) {
+
+		if (dataType != null) {
 			dtmDecisionVariables.addColumn("Name");
-			}else {
-				dtmDecisionVariables.addColumn("Name");
+			if (!dataType.equals(Type.BINARY)) {
 				dtmDecisionVariables.addColumn("Minimum Value");
 				dtmDecisionVariables.addColumn("Maximum Value");
 				dtmDecisionVariables.addColumn("Restrictions");
@@ -141,18 +146,8 @@ public class DecisionVariablesSection {
 	/**
 	 * Adds or deletes decision variable table rows according to the spinner number
 	 **/
-	private void spinnerHandler(JPanel pnlNameOfDecisionVariablesGroup, Type type) {
+	private void spinnerHandler(JPanel pnlNameOfDecisionVariablesGroup) {
 		pnlNameOfDecisionVariablesGroup.add(spnNumberOfDecisionVariables, BorderLayout.NORTH);
-		if (Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()) != 0) {
-			for (int i = 0; i < Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()); i++) {
-				if (type.equals(Type.BINARY)) {
-					dtmDecisionVariables.addRow(new Object[] { "" });
-				} else {
-					dtmDecisionVariables.addRow(new Object[] { "", "", "", "" });
-				}
-			}
-		}
-
 		spnNumberOfDecisionVariables.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -161,7 +156,8 @@ public class DecisionVariablesSection {
 				int nrRows = spinnerValue - dtmDecisionVariables.getRowCount();
 				if (dtmDecisionVariables.getRowCount() < spinnerValue) {
 					for (int j = 0; j < nrRows; j++) {
-						if (type.equals(Type.BINARY)) {
+
+						if (dataType.equals(Type.BINARY)) {
 							dtmDecisionVariables.addRow(new Object[] { "" });
 						} else {
 							dtmDecisionVariables.addRow(new Object[] { "", "", "", "" });
@@ -173,7 +169,6 @@ public class DecisionVariablesSection {
 						tblDecisionVariables.revalidate();
 					}
 				}
-
 			}
 		});
 	}
@@ -183,7 +178,7 @@ public class DecisionVariablesSection {
 	 * 
 	 * @param decisionVarFrame
 	 **/
-	private void decisionVariablesFinish(UserProblem problem, JFrame decisionVarFrame, Type type) {
+	private void decisionVariablesFinish(UserProblem problem, JFrame decisionVarFrame) {
 		btnDecisionVariablesFinish.addActionListener(new ActionListener() {
 
 			@Override
@@ -191,7 +186,7 @@ public class DecisionVariablesSection {
 				boolean varsReadyToCheck = true;
 				boolean varsReady = true;
 				for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
-					if (type.equals(Type.BINARY)) {
+					if (dataType.equals(Type.BINARY)) {
 						if (dtmDecisionVariables.getValueAt(i, 0).toString().equals("")) {
 							JOptionPane.showMessageDialog(null, "Please fill the variable name", "Warning",
 									JOptionPane.WARNING_MESSAGE);
@@ -209,20 +204,20 @@ public class DecisionVariablesSection {
 							varsReadyToCheck = false;
 							break;
 						}
-					}
-					if (varsReadyToCheck) {
-						for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
+						if (varsReadyToCheck) {
+							for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
 
-							double minValue = Double.parseDouble(dtmDecisionVariables.getValueAt(j, 2).toString());
-							double maxValue = Double.parseDouble(dtmDecisionVariables.getValueAt(j, 3).toString());
-							System.out.println(minValue);
-							System.out.println(maxValue);
-							if (maxValue < minValue) {
-								JOptionPane.showMessageDialog(null,
-										"The maximum value should be greater than the minimum value", "Warning",
-										JOptionPane.WARNING_MESSAGE);
-								varsReady = false;
-								break;
+								double minValue = Double.parseDouble(dtmDecisionVariables.getValueAt(j, 1).toString());
+								double maxValue = Double.parseDouble(dtmDecisionVariables.getValueAt(j, 2).toString());
+								System.out.println(minValue);
+								System.out.println(maxValue);
+								if (maxValue < minValue) {
+									JOptionPane.showMessageDialog(null,
+											"The maximum value should be greater than the minimum value", "Warning",
+											JOptionPane.WARNING_MESSAGE);
+									varsReady = false;
+									break;
+								}
 							}
 						}
 					}
@@ -232,16 +227,22 @@ public class DecisionVariablesSection {
 						if (tblDecisionVariables.getCellEditor() != null) {
 							tblDecisionVariables.getCellEditor().stopCellEditing();
 						}
-
-						for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
-							Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
-									dtmDecisionVariables.getValueAt(j, 1).toString(),
-									dtmDecisionVariables.getValueAt(j, 2).toString(),
-									dtmDecisionVariables.getValueAt(j, 3).toString());
-							problem.addVariable(variable);
+						if (dataType.equals(Type.BINARY)) {
+							for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
+								Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString());
+								problem.addVariable(variable);
+							}
+						} else {
+							for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
+								Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
+										dtmDecisionVariables.getValueAt(j, 1).toString(),
+										dtmDecisionVariables.getValueAt(j, 2).toString(),
+										dtmDecisionVariables.getValueAt(j, 3).toString());
+								problem.addVariable(variable);
+							}
 						}
-						decisionVarFrame.dispose();
 					}
+					decisionVarFrame.dispose();
 				}
 			}
 		});
@@ -261,6 +262,22 @@ public class DecisionVariablesSection {
 
 	public DefaultTableModel getDtmDecisionVariables() {
 		return dtmDecisionVariables;
+	}
+
+	public JButton getBtnDecisionVariablesFinish() {
+		return btnDecisionVariablesFinish;
+	}
+
+	public void setDataType(Type dataType) {
+		this.dataType = dataType;
+	}
+
+	public void setFilled(boolean b) {
+		this.filled = true;
+	}
+
+	public JButton getBtnDecisionVariables() {
+		return btnDecisionVariables;
 	}
 
 }

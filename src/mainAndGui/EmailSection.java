@@ -186,4 +186,18 @@ public class EmailSection {
 	public JButton getBtnWriteEmail() {
 		return btnWriteEmail;
 	}
+
+	public JTextField getTxtMessageTitle() {
+		return txtMessageTitle;
+	}
+
+	public JTextArea getTxaMessageBody() {
+		return txaMessageBody;
+	}
+
+	public JButton getBtnMessageSend() {
+		return btnMessageSend;
+	}
+	
+	
 }

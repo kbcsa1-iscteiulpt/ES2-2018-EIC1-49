@@ -44,6 +44,10 @@ public class Variable {
 	}
 
 
+	public Variable(String name) {
+		this.name=name;
+	}
+
 	public BitSet getBits() {
 		return bits;
 	}
