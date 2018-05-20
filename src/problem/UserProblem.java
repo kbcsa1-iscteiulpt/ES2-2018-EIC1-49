@@ -37,7 +37,7 @@ public class UserProblem {
 	private List<Criteria> criterias = new ArrayList<Criteria>();
 	
 	
-	public UserProblem(String name, String description, String email, Type type, Time max, Time ideal,
+	public UserProblem(String name, String description, String email, Time max, Time ideal, Type type,
 			String groupName,int numberVariables, List<Variable> variables) {
 		super();
 		this.name = name;

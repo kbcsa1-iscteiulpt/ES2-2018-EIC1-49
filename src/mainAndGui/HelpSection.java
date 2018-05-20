@@ -25,7 +25,7 @@ import support.EmailHandler;
 public class HelpSection {
 	private JButton btnGoBack;
 	private JButton btnHelp;
-	private JButton btnWriteEmailFAQ;
+	private JButton btnWriteEmailFAQ = new JButton("Write Email");
 
 	/**
 	 * Returns a panel with a question mark placed at the top-right and a return
@@ -46,6 +46,7 @@ public class HelpSection {
 
 	private void helpButton(JFrame frame, EmailSection email, EmailHandler support, String adminEmail) {
 		btnHelp = new JButton();
+		
 		ImageIcon icoQuestion_mark = new ImageIcon(((new ImageIcon("./src/images/question_mark.png")).getImage())
 				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
 		btnHelp.setIcon(icoQuestion_mark);
@@ -90,7 +91,6 @@ public class HelpSection {
 		JPanel pnlHelp = new JPanel(new BorderLayout());
 		JPanel pnlFAQ = new JPanel(new GridLayout(6, 0));
 		JPanel pnlSendEmail = new JPanel();
-		btnWriteEmailFAQ = new JButton("Write Email");
 		btnWriteEmailFAQ.setContentAreaFilled(false);
 		btnWriteEmailFAQ.setFocusable(false);
 		btnWriteEmailFAQ.addActionListener(new ActionListener() {
@@ -156,6 +156,10 @@ public class HelpSection {
 	public JButton getBtnHelp() {
 		return btnHelp;
 	}
-	
+
+	public JButton getBtnWriteEmailFAQ() {
+		return btnWriteEmailFAQ;
+	}
+
 	
 }

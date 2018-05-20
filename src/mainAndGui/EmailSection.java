@@ -110,7 +110,8 @@ public class EmailSection {
 	 * Returns a panel with a JTextField to fill with user's email. When the button
 	 * is clicked, a new frame is displayed to write and send the email.
 	 **/
-	public JPanel emailPanel(JFrame frame, EmailHandler support, String adminEmail) {
+	public JPanel emailPanel(JFrame frame, EmailHandler support, String adminEmail, HelpSection help) {
+		btnWriteEmailFAQ = help.getBtnWriteEmailFAQ();
 		JPanel pnlEmail = new JPanel(new FlowLayout());
 		JLabel lblEmailMandatory = new JLabel("*");
 		lblEmailMandatory.setForeground(Color.red);
@@ -118,9 +119,7 @@ public class EmailSection {
 		txtEmail = new JTextField();
 		txtEmail.setColumns(20);
 		btnWriteEmail = new JButton("Write Email");
-		btnWriteEmailFAQ = new JButton("Write Email");
 		btnWriteEmail.setToolTipText("Enter your email, then you can write one.");
-		btnWriteEmailFAQ.setToolTipText("Enter your email, then you can write one.");
 		btnWriteEmail.setContentAreaFilled(false);
 		btnWriteEmail.setEnabled(false);
 		btnWriteEmailFAQ.setEnabled(false);
@@ -136,7 +135,7 @@ public class EmailSection {
 		pnlEmail.add(lblEmailMandatory);
 		pnlEmail.add(lblEmail);
 		pnlEmail.add(txtEmail);
-		pnlEmail.add(btnWriteEmail);
+		pnlEmail.add(btnWriteEmail); 
 		return pnlEmail;
 	}
 
@@ -153,21 +152,20 @@ public class EmailSection {
 			@Override
 			public void removeUpdate(DocumentEvent e) {
 				if (!patEmail.matcher(txtEmail.getText()).matches()) {
-					btnWriteEmail.setEnabled(false);
 					btnWriteEmailFAQ.setEnabled(false);
+					btnWriteEmail.setEnabled(false);
 					btnWriteEmail.setToolTipText("Enter your email, then you can write one.");
-					btnWriteEmailFAQ.setToolTipText("Enter your email, then you can write one.");
 
 				}
 			}
 
 			@Override
 			public void insertUpdate(DocumentEvent e) {
+				
 				if (patEmail.matcher(txtEmail.getText()).matches()) {
 					btnWriteEmail.setEnabled(true);
 					btnWriteEmailFAQ.setEnabled(true);
 					btnWriteEmail.setToolTipText("Write an email");
-					btnWriteEmailFAQ.setToolTipText("Write an email.");
 
 				}
 			}

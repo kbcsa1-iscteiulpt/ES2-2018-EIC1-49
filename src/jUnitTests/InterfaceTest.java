@@ -42,6 +42,8 @@ public class InterfaceTest {
 		decVarSection.getSpnNumberOfDecisionVariables().setValue(0);
 		decVarSection.getBtnDecisionVariablesFinish().doClick();
 		
+		interfaceTest.getSaveSection().getBtnSaveToXML().doClick();
+		
 		interfaceTest.getHelpSection().getBtnGoBack().doClick();
 
 		interfaceTest.getBtnReadProblem().doClick();
@@ -66,6 +68,8 @@ public class InterfaceTest {
 		decVarSection.getSpnNumberOfDecisionVariables().setValue(0);
 		decVarSection.getTxtNameOfDecisionVariablesGroup().setText("Group name");
 		decVarSection.getBtnDecisionVariablesFinish().doClick();
+		
+		interfaceTest.getSaveSection().getBtnSaveToXML().doClick();
 		
 		CriteriaSection criteriaSection = interfaceTest.getCriteriaSection();
 		criteriaSection.getBtnCriteria().doClick();

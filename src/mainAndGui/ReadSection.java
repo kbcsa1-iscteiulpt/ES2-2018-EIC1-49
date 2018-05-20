@@ -29,6 +29,7 @@ public class ReadSection {
 			TimeOptimizationSection timeOptimization) {
 		JPanel pnlRead = new JPanel();
 		btnReadXML = new JButton("Read from a XML File:");
+		btnReadXML.setContentAreaFilled(false);
 		btnReadXML.setToolTipText("Read a XML file. This action will replace the fields already filled");
 		txtFilePathXML = new JTextField();
 		txtFilePathXML.setEditable(false);

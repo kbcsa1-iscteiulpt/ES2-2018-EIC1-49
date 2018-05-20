@@ -22,40 +22,34 @@ import support.XMLEditor;
  */
 public class XMLEditorTest {
 	private XMLEditor xml = new XMLEditor();
-	
-	
+
 	/**
 	 * Test cases for writing and reading a xml file (problem and config)
 	 */
 	@Test
 	public void writeReadTest() {
 		List<Variable> l = new ArrayList<Variable>();
-		Variable v1= new Variable("Variable 1","-1","5","0");
-		Variable v2= new Variable("Variable 2","0.5","2.5","0;1.0");
-		l.add(v1);l.add(v2);
-		
-		UserProblem p = new UserProblem("problemName","problemDescription","email",Type.DOUBLE,
-				new Time(2,2,2),
-				new Time(3,3,3),
-				"decisionVariablesGroupName",2,l);
-		
-		xml.write("src/jUnitTests/test.xml", p);
-		
-		UserProblem problem = xml.read("src/jUnitTests/test.xml");
-		
-		assertTrue(p.getDescription().equals(problem.getDescription()));
-		
+		Variable v1 = new Variable("Variable 1", "-1", "5", "0");
+		Variable v2 = new Variable("Variable 2", "0.5", "2.5", "0;1.0");
+		l.add(v1);
+		l.add(v2);
 
-		
-		
+		UserProblem p = new UserProblem("problemName", "problemDescription", "email", new Time(2, 2, 2),
+				new Time(3, 3, 3), Type.DOUBLE, "decisionVariablesGroupName", 2, l);
+
+		xml.write("src/jUnitTests/test.xml", p);
+
+		UserProblem problem = xml.read("src/jUnitTests/test.xml");
+
+		assertTrue(p.getDescription().equals(problem.getDescription()));
+
 	}
-	
+
 	@Test
 	public void readConfigTest() {
 
 		Config conf = new Config();
 		assertTrue(!conf.getEmailAdmin().equals(""));
 	}
-	
 
 }

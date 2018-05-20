@@ -33,7 +33,7 @@ public class Interface {
 	private HelpSection helpSection = new HelpSection();
 	private TimeOptimizationSection timeOptimizationSection = new TimeOptimizationSection();
 	private NameDescriptionSection nameDescriptionSection = new NameDescriptionSection();
-	private TypeVarSection problemDataTypeSection = new TypeVarSection();
+	private TypeVarSection typeVarSection = new TypeVarSection();
 	private DecisionVariablesSection decisionVariablesSection = new DecisionVariablesSection();
 	private CriteriaSection criteriaSection = new CriteriaSection();
 	private SaveSection saveSection = new SaveSection();
@@ -113,7 +113,7 @@ public class Interface {
 					if (fchReadXML.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 						String filePath = fchReadXML.getSelectedFile().getPath();
 						problem = xml.read(filePath);
-						fillForms.fillInicialForm(filePath, nameDescriptionSection, problem, emailSection, problemDataTypeSection, timeOptimizationSection,
+						fillForms.fillInicialForm(filePath, nameDescriptionSection, problem, emailSection, typeVarSection, timeOptimizationSection,
 								readSection.getFilePathXML());
 						fillForms.fillDecisionVariableForm(decisionVariablesSection, problem);
 					}
@@ -138,12 +138,12 @@ public class Interface {
 		}
 
 		problemNameDescription(initialPanel);
-		problemUserEmail(frame, initialPanel, support, adminEmail);
+		problemUserEmail(frame, initialPanel, support, adminEmail, helpSection);
 		problemTime(initialPanel);
 		problemType(initialPanel, decisionVariablesSection);
 		problemDecisionVariables(initialPanel, frame);
 
-		problemSave(initialPanel);
+		problemSave(initialPanel, typeVarSection);
 		problemCriteria(initialPanel);
 		problemExecution(initialPanel);
 		frame.add(initialPanel);
@@ -161,7 +161,7 @@ public class Interface {
 	 **/
 	private void problemRead(JPanel initialPanel) {
 		initialPanel
-				.add(readSection.readPanel(nameDescriptionSection, emailSection, problem, xml, problemDataTypeSection ,decisionVariablesSection, timeOptimizationSection));
+				.add(readSection.readPanel(nameDescriptionSection, emailSection, problem, xml, typeVarSection ,decisionVariablesSection, timeOptimizationSection));
 	}
 
 	/**
@@ -175,14 +175,14 @@ public class Interface {
 	/**
 	 * Adds the email panel to the initial frame
 	 **/
-	private void problemUserEmail(JFrame frame, JPanel initialPanel, EmailHandler support, String adminEmail) {
-		initialPanel.add(emailSection.emailPanel(frame, support, adminEmail));
+	private void problemUserEmail(JFrame frame, JPanel initialPanel, EmailHandler support, String adminEmail, HelpSection help) {
+		initialPanel.add(emailSection.emailPanel(frame, support, adminEmail, help));
 	}
 	/**
 	 * Adds the type problem panel to the initial frame
 	 **/
 	private void problemType(JPanel initialPanel, DecisionVariablesSection decisionVariable) {
-		initialPanel.add(problemDataTypeSection.setVarType(decisionVariable));
+		initialPanel.add(typeVarSection.setVarType(decisionVariable));
 	}
 	/**
 	 * Adds the ideal and maximum time for optimization panel to the initial frame
@@ -202,9 +202,9 @@ public class Interface {
 	/**
 	 * Adds the save problem panel to the initial frame
 	 **/
-	private void problemSave(JPanel initialPanel) {
+	private void problemSave(JPanel initialPanel, TypeVarSection typeVarSection) {
 		initialPanel
-				.add(saveSection.savePanel(nameDescriptionSection, emailSection, problem, xml, decisionVariablesSection, timeOptimizationSection));
+				.add(saveSection.savePanel(nameDescriptionSection, emailSection, problem, xml, decisionVariablesSection, timeOptimizationSection, typeVarSection));
 	}
 
 	/**
@@ -251,7 +251,11 @@ public class Interface {
 	}
 
 	public TypeVarSection getProblemDataTypeSection() {
-		return problemDataTypeSection;
+		return typeVarSection;
+	}
+
+	public SaveSection getSaveSection() {
+		return saveSection;
 	}
 
 	
