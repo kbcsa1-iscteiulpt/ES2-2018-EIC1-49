@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.multiobjective.gde3.GDE3Builder;
 import org.uma.jmetal.algorithm.multiobjective.ibea.IBEABuilder;
@@ -53,6 +58,7 @@ import problem.Variable;
 public class AlgorithmsConfig {
 
 	private static final int maxEvaluations = 250;
+	private Config config = Config.getInstance();
 	
 	private List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> doubleAlgorithms = new ArrayList<>();
 	private List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> integerAlgorithms = new ArrayList<>();
@@ -629,5 +635,32 @@ public class AlgorithmsConfig {
 		}
 	}
 	
+	public void otimizationEmails(UserProblem problem,int counter) {
+		
+		EmailHandler emailHandler = new EmailHandler();
+		String adminEmail = config.getEmailAdmin();
+		String subject = "Update on " + problem.getName();
+		String content = "Your otimization Process is currently at ";
+		int maxIterations = Config.getInstance().getMaxEvaluations() ;
+		
+		try {
+			if(counter == (int)(maxIterations * 0.25) ) {
+					emailHandler.SendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "25%");
+			}else if(counter == (int)(maxIterations* 0.5) ) {
+				emailHandler.SendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "50%");
+			}else if(counter == (int)(maxIterations * 0.75) ) {
+				emailHandler.SendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "75%");
+			}else if(counter == (int)(maxIterations * 0.75) ) {
+				emailHandler.SendEmail(adminEmail, problem.getEmail(),adminEmail,subject,"The otimization of your problem is concluded");
+			}
+		} catch (AddressException e) {
+			 JOptionPane.showMessageDialog(new JFrame(), "Invalid email address", "Dialog",
+				        JOptionPane.WARNING_MESSAGE);
+		} catch (MessagingException e) {
+			 JOptionPane.showMessageDialog(new JFrame(), "There seems to be some connection issues", "Dialog",
+				        JOptionPane.WARNING_MESSAGE);
+		}
+		
+	}
 	
 }

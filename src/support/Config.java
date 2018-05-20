@@ -36,6 +36,7 @@ import org.w3c.dom.Node;
 public class Config {
 	
 	private final String configPath = "./config.xml";
+	private static final Config INSTANCE = new Config();
 	
 	//E-mail
 	private String emailAdmin;
@@ -64,6 +65,10 @@ public class Config {
 		
 	public Config(){
 		readConfig();
+	}
+	
+	public static Config getInstance() {
+		return INSTANCE;
 	}
 
 	public String getEmailAdmin() {

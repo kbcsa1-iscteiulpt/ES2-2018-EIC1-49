@@ -5,6 +5,8 @@ import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.solution.impl.DefaultBinarySolution;
 import org.uma.jmetal.util.JMetalException;
 
+import problem.UserProblem;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.BitSet;
@@ -13,11 +15,16 @@ import java.util.BitSet;
 @SuppressWarnings("serial")
 public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  private int bits ;
-
+	  
+	  private int counter = 0 ;
+		private UserProblem problem;
+		private AlgorithmsConfig algorithmsConfig = new AlgorithmsConfig();
 	  
 
-	  public BinaryProblemEvaluator(int numberOfVariables) throws JMetalException {
-		setNumberOfVariables(numberOfVariables);
+	  public BinaryProblemEvaluator(UserProblem problem) throws JMetalException {
+		this.problem = problem;  
+		  
+		setNumberOfVariables(problem.getNumberVariables());
 	    setNumberOfObjectives(2);
 	    setName("BinaryProblem");
 //	    bits = numberOfBits ;
@@ -39,11 +46,15 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 
 	  @Override
 	  public void evaluate(BinarySolution solution){
+		  
+		algorithmsConfig.otimizationEmails(problem,counter);
+		counter ++;
 
 	    String solutionString ="";
 	    String evaluationResultString ="";
 	    BitSet bitset = solution.getVariableValue(0) ;
 	    solutionString = bitset.toString();
+	    
 	    try {
 			String line;
 	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/OneZeroMax.jar" + " " + solutionString);

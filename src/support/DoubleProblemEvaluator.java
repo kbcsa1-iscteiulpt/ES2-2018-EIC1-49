@@ -1,20 +1,32 @@
-package support;
+ package support;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import org.uma.jmetal.problem.impl.AbstractDoubleProblem;
 import org.uma.jmetal.solution.DoubleSolution;
+
+import problem.UserProblem;
 
 
 @SuppressWarnings("serial")
 public class DoubleProblemEvaluator extends AbstractDoubleProblem {
-		
+	private int counter = 0 ;
+	private UserProblem problem;
+	private AlgorithmsConfig algorithmsConfig = new AlgorithmsConfig();
+	
 
-	  public DoubleProblemEvaluator(Integer numberOfVariables) {
-	    setNumberOfVariables(numberOfVariables);
+	  public DoubleProblemEvaluator( UserProblem problem) {
+		this.problem = problem;  
+		  
+	    setNumberOfVariables(problem.getNumberVariables());
 	    setNumberOfObjectives(2);
 	    setName("DoubleProblem");
 
@@ -31,6 +43,10 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	  }
 
 	  public void evaluate(DoubleSolution solution){
+		  
+		algorithmsConfig.otimizationEmails(problem,counter);
+		counter ++;
+		
 	    String solutionString ="";
 	    String evaluationResultString ="";
 	    for (int i = 0; i < solution.getNumberOfVariables(); i++) {

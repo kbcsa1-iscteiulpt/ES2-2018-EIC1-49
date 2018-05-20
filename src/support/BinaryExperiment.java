@@ -28,7 +28,7 @@ public class BinaryExperiment {
     List<String> selectedAlgorithms = new ArrayList<String>();
     selectedAlgorithms.add("NGASAII");
     List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new BinaryProblemEvaluator(problem.getNumberVariables())));
+    problemList.add(new ExperimentProblem<>(new BinaryProblemEvaluator(problem)));
 
     List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = algorithmConf.configureBinaryAlgorithms(problemList,selectedAlgorithms);
 

@@ -29,7 +29,7 @@ public class EmailHandler {
      * @throws AddressException if the email address parse failed
      * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
      */
-    public void SendEmail(   String fromEmail, String ToEmail  ,String title, String message) throws AddressException, MessagingException {
+    public void SendEmail(String fromEmail, String ToEmail ,String ccEmail  ,String title, String message) throws AddressException, MessagingException {
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         
@@ -61,9 +61,9 @@ public class EmailHandler {
         msg.setFrom(new InternetAddress(fromEmail));
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(ToEmail, false));
 
-//        if (ccEmail.length() > 0) {
-//            msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
-//        }
+        if (!ccEmail.equals("none")) {
+            msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
+        }
 
         msg.setSubject(title);
         msg.setText(message, "utf-8");
