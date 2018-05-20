@@ -37,8 +37,8 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	    List<Variable> variables = problem.getVariables() ;
 	    
 	    for (int i = 0; i < variables.size(); i++) {
-	    	lowerLimit.add(Double.parseDouble(variables.get(i).getMin()));
-	    	upperLimit.add(Double.parseDouble(variables.get(i).getMax()));
+	    	lowerLimit.add(Double.parseDouble(variables.get(i).getMinRange()));
+	    	upperLimit.add(Double.parseDouble(variables.get(i).getMaxRange()));
 		}
 	    
 	    for (int i = 0; i < getNumberOfVariables(); i++) {

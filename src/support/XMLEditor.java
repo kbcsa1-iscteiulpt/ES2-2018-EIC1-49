@@ -157,8 +157,8 @@ public class XMLEditor {
 				
 				Element varTag = doc.createElement("variable");
 				varTag.setAttribute("variableName", var.getName());
-				varTag.setAttribute("variableMin",var.getMin());
-				varTag.setAttribute("variableMax",var.getMax());
+				varTag.setAttribute("variableMin",var.getMinRange());
+				varTag.setAttribute("variableMax",var.getMaxRange());
 				varTag.setAttribute("variableRestriction",var.getRestriction());
 				groupTag.appendChild(varTag);
 			}
