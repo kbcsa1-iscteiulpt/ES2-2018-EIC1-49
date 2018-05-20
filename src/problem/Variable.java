@@ -22,15 +22,7 @@ public class Variable {
 	
 	private BitSet bits = new BitSet();
 	
-	/**
-	 * Class constructor
-	 * 
-	 * @param name
-	 * @param type
-	 * @param min
-	 * @param max
-	 * @param restriction
-	 */
+	
 	public Variable(String name, String min, String max, String restriction) {
 		super();
 		this.name = name;

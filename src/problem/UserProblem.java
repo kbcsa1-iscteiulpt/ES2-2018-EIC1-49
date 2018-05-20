@@ -20,7 +20,7 @@ import java.util.Date;
  * 		- list of the variables of decision
  * 		- list of criterias for evaluation
  * 
- * @author Kevin Corrales n� 73529
+ * @author Kevin Corrales nr 73529
  *
  */
 public class UserProblem {
@@ -36,19 +36,7 @@ public class UserProblem {
 	private List<Variable> variables = new ArrayList<Variable>();
 	private List<Criteria> criterias = new ArrayList<Criteria>();
 	
-	/**
-	 * Class constructor
-	 * 
-	 * @param name
-	 * @param description
-	 * @param email
-	 * @param type
-	 * @param max
-	 * @param ideal
-	 * @param groupName
-	 * @param numberVariables
-	 * @param variables
-	 */
+	
 	public UserProblem(String name, String description, String email, Type type, Time max, Time ideal,
 			String groupName,int numberVariables, List<Variable> variables) {
 		super();
@@ -113,6 +101,9 @@ public class UserProblem {
 		return type;
 	}
 
+	public void setType(Type type) {
+		this.type=type;
+	}
 
 	public Time getMax() {
 		return max;
@@ -203,8 +194,8 @@ public class UserProblem {
 		
 		return "Name:"+getName()+";Description:"+getDescription()+";E-mail:"+getEmail()+
 				";Date of creation:"+getCreationDate()+System.getProperty("line.separator")+
-//				";Max time:"+getMax().toString()+System.getProperty("line.separator")+
-//				";Ideal time:"+getIdeal().toString()+System.getProperty("line.separator")+
+				";Max time:"+getMax().toString()+System.getProperty("line.separator")+
+				";Ideal time:"+getIdeal().toString()+System.getProperty("line.separator")+
 				";Variable group name:"+getGroupName()+";Number of variables:"+getNumberVariables()+
 				System.getProperty("line.separator") + allVariables+
 				System.getProperty("line.separator") + allCriterias;

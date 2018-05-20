@@ -13,12 +13,7 @@ public class Criteria {
 	private String name;
 	private String path;
 	
-	/**
-	 * Class constructor
-	 * 
-	 * @param name
-	 * @param path
-	 */
+	
 	public Criteria(String name, String path) {
 		super();
 		this.name = name;

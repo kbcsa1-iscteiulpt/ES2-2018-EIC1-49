@@ -20,7 +20,7 @@ import support.XMLEditor;
  * @author Kevin Corrales n� 73529
  *
  */
-public class XML_EditorTest {
+public class XMLEditorTest {
 	private XMLEditor xml = new XMLEditor();
 	
 	
@@ -34,7 +34,7 @@ public class XML_EditorTest {
 		Variable v2= new Variable("Variable 2","0.5","2.5","0;1.0");
 		l.add(v1);l.add(v2);
 		
-		UserProblem p = new UserProblem("problemName","problemDescription","email",Type.BINARY,
+		UserProblem p = new UserProblem("problemName","problemDescription","email",Type.DOUBLE,
 				new Time(2,2,2),
 				new Time(3,3,3),
 				"decisionVariablesGroupName",2,l);

@@ -3,6 +3,7 @@ package support;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +40,9 @@ import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+
+import problem.UserProblem;
+import problem.Variable;
 
 /**
  * This class has every configuration needed for any algorithm 
@@ -573,4 +577,57 @@ public class AlgorithmsConfig {
 		}
 		return algorithmIDs;
 	}
+	
+	
+	
+//	TODO
+	public void applyRestrictions(List<Variable> variables ,String path) {
+		List<String[]> restrictions = new ArrayList<String[]>();
+		List<String[]> fileOutputVector = new ArrayList<String[]>();
+		String[] fileVector = new String[0];
+		String fileOutput ="";
+		
+		for (int i = 0; i < variables.size(); i++) {
+			restrictions.add(variables.get(i).getRestriction().split(";"));
+		}
+		
+		Scanner in;
+		try {
+			in = new Scanner(new FileReader(path));
+			StringBuilder sb = new StringBuilder();
+			
+			while(in.hasNext()) {
+				fileVector = in.next().split(" ");
+				for (int i = 0; i < fileVector.length; i++) {
+					for (int j = 0; j < restrictions.get(i).length; j++) {
+						if(fileVector[i].trim() == restrictions.get(i)[j].trim() ){
+							fileVector[i]="x";
+						}
+					}
+				}
+				fileOutputVector.add(fileVector);
+			}
+			in.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("Problem rs file not found");
+		}
+		
+
+		for (int i = 0; i < fileOutputVector.size(); i++) {
+			for (int j = 0; j < fileOutputVector.get(i).length; j++) {
+				fileOutput +=  fileOutputVector.get(i)[j] ;
+			}
+			fileOutput += "\n";
+		}
+		
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
+			writer.write(fileOutput);
+			writer.close();
+		} catch (IOException e) {
+			System.out.println("Problem rs file not found");
+		}
+	}
+	
+	
 }

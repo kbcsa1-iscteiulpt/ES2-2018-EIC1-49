@@ -1,11 +1,8 @@
 package support;
 
 import java.io.File; 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.parsers.*;
@@ -23,7 +20,7 @@ import problem.Variable;
  * Editor of XML
  * Reads and writes a XML file, using the Problem class
  * 
- * @author Kevin Corrales n� 73529
+ * @author Kevin Corrales nr 73529
  *
  */
 public class XMLEditor {
@@ -48,10 +45,6 @@ public class XMLEditor {
 							
 				NodeList nodeList = doc.getElementsByTagName("problem");
 				
-				//Set the date format of actual date
-				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				Calendar current = Calendar.getInstance();
-				
 				for (int k = 0; k < nodeList.getLength(); k++) {
 					Node node = nodeList.item(k);
 					
@@ -71,12 +64,10 @@ public class XMLEditor {
 							Element varElement = (Element) varList.item(i);
 							Variable var=null;
 							if(varElement.getAttribute("variableType").equals("Binary")) {
-								System.out.println("heyo");
 								var = new Variable(new BitSet(1100));
 								problemVariables.add(var);
 								break;
 							}else {
-								System.out.println(varElement.getAttribute("variableType"));
 								var = new Variable(
 									varElement.getAttribute("variableName"),
 									varElement.getAttribute("variableMin"),
@@ -134,6 +125,7 @@ public class XMLEditor {
 			probTag.setAttribute("description", problem.getDescription());
 			probTag.setAttribute("email", problem.getEmail());
 			probTag.setAttribute("creationDate", problem.getCreationDate());
+			probTag.setAttribute("type", problem.getType().toString());
 			doc.appendChild(probTag);
 
 			// Problem elements

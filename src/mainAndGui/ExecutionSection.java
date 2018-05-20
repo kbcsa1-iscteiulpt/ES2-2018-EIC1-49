@@ -22,6 +22,7 @@ import org.jfree.ui.RefineryUtilities;
 
 import problem.UserProblem;
 import support.BinaryExperiment;
+import support.Config;
 import support.DoubleExperiment;
 import support.IntegerExperiment;
 import support.EmailHandler;
@@ -33,6 +34,7 @@ public class ExecutionSection {
 	private JFrame afterOptimizationProcess;
 	private JButton btnExecuteProcess;
 	private JButton btnResults;
+	private Config config = new Config();
 
 	/**
 	 * Returns a panel with the button to execute the optimization process.
@@ -154,17 +156,20 @@ public class ExecutionSection {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String[] params = new String[2];
-				params[0] = "C:\\Program Files\\R\\R-3.5.0\\bin\\x64\\Rscript.exe";
-				params[1] = "C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\experimentBaseDirectory\\ExperimentsDoubleExternalViaJAR\\R\\HV.Boxplot.R";
+				params[0] = config.getEpsRPath();
+				params[1] = config.getrPath();
 
 				String[] envp = new String[1];
-				envp[0] = "Path=C:\\Program Files\\R\\R-3.5.0\\bin\\x64";
+				envp[0] =  config.getEpsEnviromentVar();
 
 				Process p;
 				try {
 					p = Runtime.getRuntime().exec(params, envp,
-							new File("C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files"));
+							new File(config.getEpsDestinationPath()));
 					p.waitFor();
+					
+					Runtime.getRuntime().exec(
+							"open "+config.getEpsOpenPath());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				} catch (InterruptedException e1) {
@@ -180,20 +185,20 @@ public class ExecutionSection {
 				try {
 					String[] params = new String[2];
 
-					params[0] = "C:\\Users\\ASUS\\Desktop\\pdflatex.exe";
+					params[0] = config.getPdflatexPath();
 
-					params[1] = "C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\experimentBaseDirectory\\ExperimentsDoubleExternalViaJAR\\latex\\ExperimentsDoubleExternalViaJAR.tex";
+					params[1] = config.getLatexPath(); 
 
 					String[] envp = new String[1];
 
-					envp[0] = "Path=C:\\Program Files\\MiKTeX 2.9\\miktex\\bin\\x64";
+					envp[0] = config.getPdfEnviromentVar();
 
 					Process p = Runtime.getRuntime().exec(params, envp,
-							new File("C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files"));
+							new File(config.getPdfDestinationPath()));
 
 					p.waitFor();
 					Runtime.getRuntime().exec(
-							"open C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files\\ExperimentsDoubleExternalViaJAR.pdf");
+							"open "+config.getPdfOpenPath());
 
 				} catch (IOException e1) {
 					e1.printStackTrace();

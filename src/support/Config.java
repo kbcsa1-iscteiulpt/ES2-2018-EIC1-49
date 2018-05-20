@@ -13,7 +13,22 @@ import org.w3c.dom.Node;
  * Class that represents system configuration
  * contains:
  * 		- email of the administrator
-
+ * 		- email password of the administrador
+ * 		- maximum jmetal evaluations
+ * 		- Path of the rs file from the integer evaluation
+ * 		- Path of the rf file from the integer evaluation
+ * 		- Path of the rs file from the double evaluation
+ * 		- Path of the rf file from the double evaluation
+ * 		- Path of the rs file from the binary evaluation
+ * 		- Path of the rf file from the binary evaluation
+ * 		- Path of the compiler .exe file to convert R file to EPS
+ * 		- Path of the R file
+ * 		- Path of the EPS environment variable
+ * 		- Path of the EPS file result (after compiling)
+ * 		- Path of the compiler .exe to convert Latex file to PDF
+ * 		- Path of the Latex file
+ * 		- Path of the PDF environment variable
+ * 		- Path of the PDF file result (after compiling)
  * 
  * @author Gustavo Morais nº 73036
  *
@@ -34,16 +49,17 @@ public class Config {
 	private String rfPathDouble;
 	private String rfPathBinary;
 	//EPS Compiler
-	private String epsLatexPath;
+	private String epsRPath;
 	private String rPath;
 	private String epsEnvironmentVar;
 	private String epsDestinationPath;
+	private String epsOpenPath;
 	//PDF Compiler
 	private String pdfLatexPath;
 	private String latexPath;
 	private String pdfEnvironmentVar;
 	private String pdfDestinationPath;
-	private String pdfPath;
+	private String pdfOpenPath;
 	
 		
 	public Config(){
@@ -87,8 +103,8 @@ public class Config {
 		return rfPathBinary;
 	}
 
-	public String getEpslatexPath() {
-		return epsLatexPath;
+	public String getEpsRPath() {
+		return epsRPath;
 	}
 
 	public String getrPath() {
@@ -110,6 +126,10 @@ public class Config {
 	public String getLatexPath() {
 		return latexPath;
 	}
+	
+	public String getEpsOpenPath() {
+		return epsOpenPath;
+	}
 
 	public String getPdfEnviromentVar() {
 		return pdfEnvironmentVar;
@@ -119,9 +139,11 @@ public class Config {
 		return pdfDestinationPath;
 	}
 
-	public String getPdfPath() {
-		return pdfPath;
+	public String getPdfOpenPath() {
+		return pdfOpenPath;
 	}
+	
+	
 
 	/**
 	 * Reads a XML file from the received path and creates a Configuration (Config Class) 
@@ -159,17 +181,21 @@ public class Config {
 				Element epsPaths = (Element) EPS.getElementsByTagName("paths").item(0);
 				Element pdfPaths = (Element) PDF.getElementsByTagName("paths").item(0);
 				
-				this.rsPathInteger=jmetalPaths.getAttribute("rPathInteger");
-				this.rsPathDouble=jmetalPaths.getAttribute("rPathDouble");
-				this.rsPathBinary=jmetalPaths.getAttribute("rPathBinary");
+				this.rsPathInteger=jmetalPaths.getAttribute("rsPathInteger");
+				this.rsPathDouble=jmetalPaths.getAttribute("rsPathDouble");
+				this.rsPathBinary=jmetalPaths.getAttribute("rsPathBinary");
+				this.rfPathInteger=jmetalPaths.getAttribute("rfPathInteger");
+				this.rfPathDouble=jmetalPaths.getAttribute("rfPathDouble");
+				this.rfPathBinary=jmetalPaths.getAttribute("rfPathBinary");
 				
 				this.epsDestinationPath= epsPaths.getAttribute("epsDestinationPath");
-				this.epsLatexPath= epsPaths.getAttribute("epsLatexPath");
+				this.epsRPath= epsPaths.getAttribute("epsRPath");
+				this.epsOpenPath = epsPaths.getAttribute("epsOpenPath");
 				this.rPath= epsPaths.getAttribute("rPath");
 				
 				this.pdfDestinationPath= pdfPaths.getAttribute("pdfDestinationPath");
 				this.pdfLatexPath= pdfPaths.getAttribute("pdfLatexPath");
-				this.pdfPath= pdfPaths.getAttribute("pdfPath");
+				this.pdfOpenPath= pdfPaths.getAttribute("pdfOpenPath");
 				this.latexPath= pdfPaths.getAttribute("latexPath");
 			}
 			
