@@ -1,11 +1,8 @@
 package support;
 
 import java.io.File; 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.parsers.*;
@@ -23,7 +20,7 @@ import problem.Variable;
  * Editor of XML
  * Reads and writes a XML file, using the Problem class
  * 
- * @author Kevin Corrales n� 73529
+ * @author Kevin Corrales nr 73529
  *
  */
 public class XMLEditor {
@@ -47,10 +44,6 @@ public class XMLEditor {
 				doc.getDocumentElement().normalize();
 							
 				NodeList nodeList = doc.getElementsByTagName("problem");
-				
-				//Set the date format of actual date
-				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				Calendar current = Calendar.getInstance();
 				
 				for (int k = 0; k < nodeList.getLength(); k++) {
 					Node node = nodeList.item(k);

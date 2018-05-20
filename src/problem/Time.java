@@ -15,13 +15,7 @@ public class Time {
 	private int hours;
 	private int minutes;
 	
-	/**
-	 * Class constructor
-	 * 
-	 * @param days
-	 * @param hours
-	 * @param minutes
-	 */
+	
 	public Time(int days, int hours, int minutes) {
 		super();
 		this.days = days;
