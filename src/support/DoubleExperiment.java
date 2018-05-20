@@ -31,10 +31,6 @@ public class DoubleExperiment {
     selectedAlgorithms.add("SMSEMOA");
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList = algorithmConf.configureDoubleAlgorithms(problemList,selectedAlgorithms);
-    System.out.println(algorithmList.size());
-    for(int i=0; i<algorithmList.size(); i++) {
-    		System.out.println(algorithmList.get(i).getAlgorithmTag() + "      "+ algorithmList.get(i).getProblemTag() );
-    }
     		
     
     
