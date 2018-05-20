@@ -1,9 +1,10 @@
 package support;
 
-import java.io.File;
+import java.io.File; 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Calendar;
 import java.util.List;
 
@@ -13,13 +14,9 @@ import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 
-<<<<<<< Updated upstream
 import problem.UserProblem;
-=======
-import classes.Config;
-import problem.Problem;
->>>>>>> Stashed changes
 import problem.Time;
+import problem.Type;
 import problem.Variable;
 
 /**
@@ -29,9 +26,7 @@ import problem.Variable;
  * @author Kevin Corrales n� 73529
  *
  */
-public class XML_Editor {
-	
-	private final String configPath = "./config.xml";
+public class XMLEditor {
 	
 		
 		/**
@@ -74,20 +69,29 @@ public class XML_Editor {
 						for (int i = 0; i < varList.getLength(); i++) {
 							
 							Element varElement = (Element) varList.item(i);
-							Variable var = new Variable(
+							Variable var=null;
+							if(varElement.getAttribute("variableType").equals("Binary")) {
+								var = new Variable(new BitSet(1100));
+								problemVariables.add(var);
+								break;
+							}else {
+								var = new Variable(
 									varElement.getAttribute("variableName"),
-									varElement.getAttribute("variableType"),
 									varElement.getAttribute("variableMin"),
 									varElement.getAttribute("variableMax"),
 									varElement.getAttribute("variableRestriction")
 									);
+							}	
 							problemVariables.add(var);
+							
 						}
+						System.out.println(problemVariables.size());
 						
 						problem = new UserProblem(
 								prob.getAttribute("name"),
 								prob.getAttribute("description"),
 								prob.getAttribute("email"),
+								Type.valueOf(prob.getAttribute("type").toUpperCase()),
 								new Time(Integer.parseInt(maxTime.getAttribute("maxdays")),
 										Integer.parseInt(maxTime.getAttribute("maxhours")),
 										Integer.parseInt(maxTime.getAttribute("maxminutes"))),
@@ -128,6 +132,7 @@ public class XML_Editor {
 			probTag.setAttribute("description", problem.getDescription());
 			probTag.setAttribute("email", problem.getEmail());
 			probTag.setAttribute("creationDate", problem.getCreationDate());
+			probTag.setAttribute("type", problem.getType().toString());
 			doc.appendChild(probTag);
 
 			// Problem elements
@@ -159,7 +164,6 @@ public class XML_Editor {
 				
 				Element varTag = doc.createElement("variable");
 				varTag.setAttribute("variableName", var.getName());
-				varTag.setAttribute("variableType", var.getType());
 				varTag.setAttribute("variableMin",var.getMin());
 				varTag.setAttribute("variableMax",var.getMax());
 				varTag.setAttribute("variableRestriction",var.getRestriction());
@@ -183,36 +187,7 @@ public class XML_Editor {
 	}
 	
 	
-	/**
-	 * Reads a XML file from the received path and creates a Configuration (Config Class) 
-	 * 
-	 * @param path of xml file
-	 * @return Config
-	 */	
-	public Config readConfig() {
-		Config config = new Config("");
-		try {
 	
-			File fXmlFile = new File(configPath);
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(fXmlFile);
-	
-			doc.getDocumentElement().normalize();
-						
-			Node node = (Element) doc.getElementsByTagName("Administrator").item(0);
-			
-			if(node.getNodeType() == Node.ELEMENT_NODE) {
-				Element conf = (Element) node;
-								
-				config = new Config(conf.getAttribute("email"));
-			}
-		
-		    } catch (Exception e) {
-			e.printStackTrace();
-		    }
-		return config;
-	}
 		
 	
 	

@@ -13,14 +13,12 @@ import com.sun.mail.smtp.SMTPTransport;
 import java.util.Date;
 import javax.mail.internet.AddressException;
 
-public class Support {
+public class EmailHandler {
 	
-	public Support() {
+	public EmailHandler() {
 		
 	}
-	
 
-	
 	/**
      * Send email using GMail SMTP server.
      *
@@ -34,7 +32,7 @@ public class Support {
     public void SendEmail(   String fromEmail, String ToEmail  ,String title, String message) throws AddressException, MessagingException {
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-
+        
         // Get a Properties object
         Properties props = System.getProperties();
         props.setProperty("mail.smtps.host", "smtp.gmail.com");

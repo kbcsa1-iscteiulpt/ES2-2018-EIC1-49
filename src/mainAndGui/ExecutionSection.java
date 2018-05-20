@@ -22,20 +22,25 @@ import org.jfree.ui.RefineryUtilities;
 
 import problem.UserProblem;
 import support.BinaryExperiment;
+import support.Config;
 import support.DoubleExperiment;
 import support.IntegerExperiment;
-import support.Support;
-
+import support.EmailHandler;
+/**
+ * This class represents the execution process section.
+ * @author Diana nr 72898
+ **/
 public class ExecutionSection {
 	private JFrame afterOptimizationProcess;
 	private JButton btnExecuteProcess;
 	private JButton btnResults;
+	private Config config = new Config();
 
 	/**
 	 * Returns a panel with the button to execute the optimization process.
 	 **/
 	public JPanel executeProcessPanel(NameDescriptionSection nameDescription, EmailSection email, UserProblem problem,
-			DecisionVariablesSection decisionVariables, String problemType, Support support, String adminEmail) {
+			DecisionVariablesSection decisionVariables, String problemType, EmailHandler support, String adminEmail) {
 		JPanel executeProcessPanel = new JPanel(new FlowLayout());
 		problem(nameDescription, email, problem, decisionVariables, problemType, support, adminEmail);
 		ImageIcon icoExecute = new ImageIcon(((new ImageIcon("./src/images/execute.png")).getImage())
@@ -50,7 +55,7 @@ public class ExecutionSection {
 			public void actionPerformed(ActionEvent e) {
 				afterOptimizationProcess = new JFrame("Results");
 				FrameSize.setFrame(afterOptimizationProcess, 0.25);
-				setAfterOptimizationProcess(afterOptimizationProcess);
+				setAfterOptimizationProcess(afterOptimizationProcess,problem);
 				afterOptimizationProcess.setVisible(true);
 			}
 
@@ -65,7 +70,7 @@ public class ExecutionSection {
 	 * Sends an email warning if there was an error while running the problem requested.
 	 **/
 	private void problem(NameDescriptionSection nameDescription, EmailSection email, UserProblem problem,
-			DecisionVariablesSection decisionVariables, String problemType, Support support, String adminEmail)
+			DecisionVariablesSection decisionVariables, String problemType, EmailHandler support, String adminEmail)
 			throws java.awt.HeadlessException, java.lang.NumberFormatException {
 		btnExecuteProcess = new JButton("Execute Optimization Process");
 		btnExecuteProcess.addActionListener(new ActionListener() {
@@ -96,9 +101,8 @@ public class ExecutionSection {
 						}
 					} catch (IOException e2) {
 						try {
-							support.SendEmail(adminEmail, email.getEmail().getText(), "There was a problem",
-									"There was a problem running the problem you requested, please try again."
-											+ "If the problem continues, contact us so we can help");
+							support.SendEmail(adminEmail, email.getEmail().getText(), "There was a problem","There was a problem running the problem you requested, please try again.\r\n"
+									+ "If the problem continues, contact us so we can help");
 							return;
 						} catch (AddressException e1) {
 						} catch (MessagingException e1) {
@@ -109,11 +113,11 @@ public class ExecutionSection {
 						Date date = new Date();
 						String subject = "Otimiza��o em curso: " + nameDescription.getProblemName().getText() + " "
 								+ dateFormat.format(date);
-						String message = "Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
+						
+						support.SendEmail(adminEmail, email.getEmail().getText(), subject, "Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
 								+ "sobre o progresso do processo de otimiza��o, quando o processo de otimiza��o tiver atingido 25%,\r\n"
 								+ "50%, 75% do total do (n�mero de avalia��es ou) tempo estimado, e tamb�m quando o processo tiver\r\n"
-								+ "terminado, com sucesso ou devido � ocorr�ncia de erros.";
-						support.SendEmail(adminEmail, email.getEmail().getText(), subject, message);
+								+ "terminado, com sucesso ou devido � ocorr�ncia de erros.");
 					} catch (MessagingException e1) {
 					}
 				}
@@ -124,7 +128,7 @@ public class ExecutionSection {
 	/**
 	 * Sets the content of the Results frame 
 	 **/
-	private void setAfterOptimizationProcess(JFrame frame) {
+	private void setAfterOptimizationProcess(JFrame frame,UserProblem problem) {
 		JPanel pnlOptProcess = new JPanel(new GridLayout(3, 0));
 		JButton btnGraphics = new JButton("Graphics");
 		JButton btnEpsFile = new JButton(".eps File");
@@ -140,7 +144,7 @@ public class ExecutionSection {
 		btnGraphics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Graph chart = new Graph();
+				Graphic chart = new Graphic(problem);
 				chart.pack();
 				RefineryUtilities.centerFrameOnScreen(chart);
 				chart.setVisible(true);
@@ -152,17 +156,20 @@ public class ExecutionSection {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String[] params = new String[2];
-				params[0] = "C:\\Program Files\\R\\R-3.5.0\\bin\\x64\\Rscript.exe";
-				params[1] = "C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\experimentBaseDirectory\\ExperimentsDoubleExternalViaJAR\\R\\HV.Boxplot.R";
+				params[0] = config.getEpsRPath();
+				params[1] = config.getrPath();
 
 				String[] envp = new String[1];
-				envp[0] = "Path=C:\\Program Files\\R\\R-3.5.0\\bin\\x64";
+				envp[0] =  config.getEpsEnviromentVar();
 
 				Process p;
 				try {
 					p = Runtime.getRuntime().exec(params, envp,
-							new File("C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files"));
+							new File(config.getEpsDestinationPath()));
 					p.waitFor();
+					
+					Runtime.getRuntime().exec(
+							"open "+config.getEpsOpenPath());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				} catch (InterruptedException e1) {
@@ -178,20 +185,20 @@ public class ExecutionSection {
 				try {
 					String[] params = new String[2];
 
-					params[0] = "C:\\Users\\ASUS\\Desktop\\pdflatex.exe";
+					params[0] = config.getPdflatexPath();
 
-					params[1] = "C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\experimentBaseDirectory\\ExperimentsDoubleExternalViaJAR\\latex\\ExperimentsDoubleExternalViaJAR.tex";
+					params[1] = config.getLatexPath(); 
 
 					String[] envp = new String[1];
 
-					envp[0] = "Path=C:\\Program Files\\MiKTeX 2.9\\miktex\\bin\\x64";
+					envp[0] = config.getPdfEnviromentVar();
 
 					Process p = Runtime.getRuntime().exec(params, envp,
-							new File("C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files"));
+							new File(config.getPdfDestinationPath()));
 
 					p.waitFor();
 					Runtime.getRuntime().exec(
-							"open C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files\\ExperimentsDoubleExternalViaJAR.pdf");
+							"open "+config.getPdfOpenPath());
 
 				} catch (IOException e1) {
 					e1.printStackTrace();

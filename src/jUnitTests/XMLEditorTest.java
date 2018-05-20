@@ -9,9 +9,10 @@ import org.junit.Test;
 
 import problem.UserProblem;
 import problem.Time;
+import problem.Type;
 import problem.Variable;
 import support.Config;
-import support.XML_Editor;
+import support.XMLEditor;
 
 /**
  * JUnit test cases for XML_Editor
@@ -19,8 +20,8 @@ import support.XML_Editor;
  * @author Kevin Corrales n� 73529
  *
  */
-public class XML_EditorTest {
-	private XML_Editor xml = new XML_Editor();
+public class XMLEditorTest {
+	private XMLEditor xml = new XMLEditor();
 	
 	
 	/**
@@ -29,11 +30,11 @@ public class XML_EditorTest {
 	@Test
 	public void writeReadTest() {
 		List<Variable> l = new ArrayList<Variable>();
-		Variable v1= new Variable("Variable 1","int","-1","5","0");
-		Variable v2= new Variable("Variable 2","double","0.5","2.5","0;1.0");
+		Variable v1= new Variable("Variable 1","-1","5","0");
+		Variable v2= new Variable("Variable 2","0.5","2.5","0;1.0");
 		l.add(v1);l.add(v2);
 		
-		UserProblem p = new UserProblem("problemName","problemDescription","email",
+		UserProblem p = new UserProblem("problemName","problemDescription","email",Type.DOUBLE,
 				new Time(2,2,2),
 				new Time(3,3,3),
 				"decisionVariablesGroupName",2,l);
@@ -52,7 +53,7 @@ public class XML_EditorTest {
 	@Test
 	public void readConfigTest() {
 
-		Config conf = xml.readConfig();
+		Config conf = new Config();
 		assertTrue(!conf.getEmailAdmin().equals(""));
 	}
 	

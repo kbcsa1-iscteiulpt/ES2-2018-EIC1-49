@@ -1,24 +1,26 @@
 package problem;
 
+import java.util.BitSet;
+
 /**
  * Class that represents a variable of decision
  * contains:
  * 		- name of the variable
- * 		- type of the variable
  * 		- minimum range of the variable value
  * 		- maximum range of the variable value
  * 		- restricted values of the variable
  * 
- * @author Kevin Corrales nº 73529
+ * @author Kevin Corrales nï¿½ 73529
  *
  */
 public class Variable {
 	private String name;
-	private String type;
 	// Interval is String because we don't know the type of the variable yet
 	private String min; //Start of the range
 	private String max;	//End of the range
 	private String restriction;
+	
+	private BitSet bits = new BitSet();
 	
 	/**
 	 * Class constructor
@@ -29,25 +31,26 @@ public class Variable {
 	 * @param max
 	 * @param restriction
 	 */
-	public Variable(String name, String type, String min, String max, String restriction) {
+	public Variable(String name, String min, String max, String restriction) {
 		super();
 		this.name = name;
-		this.type = type;
 		this.min = min;
 		this.max = max;
 		this.restriction = restriction;
 	}
+	
+	public Variable(BitSet bits) {
+		this.bits=bits;
+	}
 
+
+	public BitSet getBits() {
+		return bits;
+	}
 
 	public String getName() {
 		return name;
 	}
-
-
-	public String getType() {
-		return type;
-	}
-
 
 	public String getMin() {
 		return min;
@@ -64,7 +67,7 @@ public class Variable {
 	}
 	
 	public String toString() {
-		return "Variable name:"+getName()+";Type:"+getType()+";Minimum range:"+getMin()+
+		return "Variable name:"+getName()+";Minimum range:"+getMin()+
 				";Maximum range:"+getMax()+";Restrictions:"+getRestriction().replace(";",":")
 				+System.getProperty("line.separator");
 	}

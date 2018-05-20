@@ -1,1 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><Administrator email="projetodees7@gmail.com"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<administrator email="projetodees7@gmail.com" emailPassword="P@ssw0rd123"></administrator>
+	<jmetal maxEvaluations="250">
+		<paths rsPathInteger="./temp.rs" rsPathDouble="./temp.rs" rsPathBinary="./temp.rs" rfPathInteger="./temp.rf" rfPathDouble="./temp.rf" rfPathBinary="./temp.rf"></paths></jmetal>
+	<eps epsEnvironmentVar="Path=C:\\Program Files\\R\\R-3.5.0\\bin\\x64">
+		<paths epsDestinationPath="C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files" rPath="C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\experimentBaseDirectory\\ExperimentsDoubleExternalViaJAR\\R\\HV.Boxplot.R" epsRPath='C:\\Program Files\\R\\R-3.5.0\\bin\\x64\\Rscript.exe' epsOpenPath="C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files\\"></paths></eps>
+	<pdf pdfEnvironmentVar="Path=C:\\Program Files\\MiKTeX 2.9\\miktex\\bin\\x64">
+		<paths pdfDestinationPath="C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files" pdfLatexPath="C:\\Users\\ASUS\\Desktop\\pdflatex.exe" latexPath="C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\experimentBaseDirectory\\ExperimentsDoubleExternalViaJAR\\latex\\ExperimentsDoubleExternalViaJAR.tex" pdfOpenPath="C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files\\ExperimentsDoubleExternalViaJAR.pdf"></paths></pdf></config>
