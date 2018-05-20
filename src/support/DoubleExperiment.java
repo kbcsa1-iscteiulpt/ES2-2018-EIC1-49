@@ -18,11 +18,8 @@ import java.util.List;
 public class DoubleExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
-  private UserProblem problem;
 
   public DoubleExperiment(UserProblem problem) throws IOException {
-	  
-	this.problem=problem;
 	
     String experimentBaseDirectory = "experimentBaseDirectory";
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
@@ -52,6 +49,9 @@ public class DoubleExperiment {
     new ComputeQualityIndicators<>(experiment).run() ;
     new GenerateLatexTablesWithStatistics(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
+    
+    algorithmConf.applyRestrictions(problem.getVariables(), "../../experimentBaseDirectory/referenceFronts/DoubleProblem.rs");
+    
   }
 
 

@@ -579,18 +579,6 @@ public class AlgorithmsConfig {
 	}
 	
 	
-	public void checkDoubleRestrictions(){
-		for (int i = 0; i < fileVector.length; i++) {
-			for (int j = 0; j < restrictions.get(i).length; j++) {
-//				UNIQ
-				if(Double.parseDouble(fileVector[i]) == Double.parseDouble(restrictions.get(i)[j]) ){
-					fileVector[i]="x";
-				}
-//					UNIQ
-			}
-		}
-	}
-	
 	
 //	TODO
 	public void applyRestrictions(List<Variable> variables ,String path) {
@@ -605,7 +593,6 @@ public class AlgorithmsConfig {
 		
 		Scanner in;
 		try {
-//			in = new Scanner(new FileReader("../../experimentBaseDirectory/referenceFronts/DoubleProblem.rs"));
 			in = new Scanner(new FileReader(path));
 			StringBuilder sb = new StringBuilder();
 			
@@ -613,11 +600,9 @@ public class AlgorithmsConfig {
 				fileVector = in.next().split(" ");
 				for (int i = 0; i < fileVector.length; i++) {
 					for (int j = 0; j < restrictions.get(i).length; j++) {
-//						UNIQ
-						if(Double.parseDouble(fileVector[i]) == Double.parseDouble(restrictions.get(i)[j]) ){
+						if(fileVector[i].trim() == restrictions.get(i)[j].trim() ){
 							fileVector[i]="x";
 						}
-//							UNIQ
 					}
 				}
 				fileOutputVector.add(fileVector);
@@ -636,9 +621,7 @@ public class AlgorithmsConfig {
 		}
 		
 		try {
-//			UNIQ
-			BufferedWriter writer = new BufferedWriter(new FileWriter("./experimentBaseDirectory/referenceFronts/DoubleProblem.rs"));
-//			UNIQ
+			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
 			writer.write(fileOutput);
 			writer.close();
 		} catch (IOException e) {
