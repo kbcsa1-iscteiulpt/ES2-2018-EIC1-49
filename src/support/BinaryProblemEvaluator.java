@@ -19,10 +19,12 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  private int counter = 0 ;
 		private UserProblem problem;
 		private AlgorithmsConfig algorithmsConfig = new AlgorithmsConfig();
+		private String jarPath;
 	  
 
-	  public BinaryProblemEvaluator(UserProblem problem, int numberOfBits) throws JMetalException {
+	  public BinaryProblemEvaluator(UserProblem problem, int numberOfBits , String jarPath) throws JMetalException {
 		this.problem = problem;  
+		this.jarPath = jarPath;
 		  
 		setNumberOfVariables(problem.getNumberVariables());
 	    setNumberOfObjectives(2);
@@ -57,7 +59,8 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	    
 	    try {
 			String line;
-	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/OneZeroMax.jar" + " " + solutionString);
+//	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/OneZeroMax.jar" + " " + solutionString);
+	    	Process p = Runtime.getRuntime().exec("java -jar "+ jarPath + " " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 
 	    		{evaluationResultString+=line;}

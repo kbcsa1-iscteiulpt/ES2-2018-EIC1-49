@@ -105,24 +105,25 @@ public class ExecutionProcess {
 	/**
 	 * Executes the optimization process according to the selected algorithm and
 	 * calls the method to show the graphics and the .eps and .pdf files.
+	 * @param criteriaSection 
 	 * 
 	 * @param dataType2
 	 **/
 	public void executeOptimization(UserProblem problem, NameDescriptionSection nameDescription, EmailSection email,
 			int decisionVariableNumber, String decisionVariableGroupName, EmailHandler emailHandler, String adminEmail,
-			Type dataType) {
+			Type dataType, CriteriaSection criteriaSection) {
 		problem.setGroupName(decisionVariableGroupName);
 		problem.setNumberVariables(decisionVariableNumber);
 		try {
 			switch (dataType) {
 			case DOUBLE:
-				new DoubleExperiment(problem);
+				new DoubleExperiment(problem,criteriaSection.getTxtJarPath().toString());
 				break;
 			case INTEGER:
-				new IntegerExperiment(problem);
+				new IntegerExperiment(problem,criteriaSection.getTxtJarPath().toString());
 				break;
 			case BINARY:
-				new BinaryExperiment(problem);
+				new BinaryExperiment(problem,criteriaSection.getTxtJarPath().toString());
 				break;
 			default:
 				return;

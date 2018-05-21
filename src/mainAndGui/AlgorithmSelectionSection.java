@@ -48,12 +48,16 @@ public class AlgorithmSelectionSection {
 	private int decisionVariablesNumber;
 	private String decisionVariablesGroupName;
 	private TimeOptimizationSection time;
+	private CriteriaSection criteriaSection;
+
 
 	public JPanel algorithmSelection(NameDescriptionSection nameDescription, EmailSection email,
-			TimeOptimizationSection time, UserProblem problem, EmailHandler support, String adminEmail) {
+			TimeOptimizationSection time, UserProblem problem, EmailHandler support, String adminEmail, CriteriaSection criteriaSection) {
 		this.nameDescription = nameDescription;
 		this.email = email;
 		this.time = time;
+		this.criteriaSection = criteriaSection;
+		
 		JPanel executeProcessPanel = new JPanel(new FlowLayout());
 		algorithmsList = new ArrayList<JCheckBox>();
 		algorithmsSelectedList = new ArrayList<String>();
@@ -130,7 +134,7 @@ public class AlgorithmSelectionSection {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				execute.executeOptimization(problem, nameDescription, email, decisionVariablesNumber,
-						decisionVariablesGroupName, emailHandler, adminEmail, dataType);
+						decisionVariablesGroupName, emailHandler, adminEmail, dataType, criteriaSection);
 			}
 		});
 		pnlTitleBeforeOptimization.add(lblBeforeOptimization);

@@ -217,7 +217,7 @@ public class Interface {
 	 * Adds the algorithm selection panel to the initial frame
 	 **/
 	private void problemAlgorithmSelection(JPanel initialPanel) {
-		initialPanel.add(algorithmSelectionSection.algorithmSelection(nameDescriptionSection, emailSection, timeOptimizationSection, problem, support, adminEmail));
+		initialPanel.add(algorithmSelectionSection.algorithmSelection(nameDescriptionSection, emailSection, timeOptimizationSection, problem, support, adminEmail,criteriaSection));
 	}
 
 	public JButton getBtnReadProblem() {

@@ -22,10 +22,12 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	private int counter = 0 ;
 	private UserProblem problem;
 	private AlgorithmsConfig algorithmsConfig = new AlgorithmsConfig();
+	private String jarPath;
 	
 
-	  public DoubleProblemEvaluator( UserProblem problem) {
+	  public DoubleProblemEvaluator( UserProblem problem,String jarPath) {
 		this.problem = problem;  
+		this.jarPath = jarPath;
 		  
 	    setNumberOfVariables(problem.getNumberVariables());
 	    setNumberOfObjectives(2);
@@ -58,7 +60,8 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	    }
 	    try {
 			String line;
-	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/Kursawe.jar" + " " + solutionString);
+//	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/Kursawe.jar" + " " + solutionString);
+	    	Process p = Runtime.getRuntime().exec("java -jar "+ jarPath + " " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 
 	    		{evaluationResultString+=line;}

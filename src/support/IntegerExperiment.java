@@ -1,4 +1,4 @@
-package support;
+ package support;
 
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.solution.IntegerSolution;
@@ -19,14 +19,14 @@ public class IntegerExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
   
-  public IntegerExperiment(UserProblem problem) throws IOException {
+  public IntegerExperiment(UserProblem problem, /*List<String> selctedAlgorithms,*/ String jarPath ) throws IOException {
 	  
     String experimentBaseDirectory = "experimentBaseDirectory";
 
     List<String> selectedAlgorithms = new ArrayList<String>();
     selectedAlgorithms.add("SMSEMOA");
     List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem )));
+    problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem ,jarPath)));
 
     List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = algorithmConf.configureIntegerAlgorithms(problemList,selectedAlgorithms);
 

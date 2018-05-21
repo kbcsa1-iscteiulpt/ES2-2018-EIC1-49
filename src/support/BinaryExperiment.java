@@ -20,7 +20,7 @@ public class BinaryExperiment {
   private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
   private UserProblem problem;
   
-  public BinaryExperiment(UserProblem problem) throws IOException {
+  public BinaryExperiment(UserProblem problem, /*List<String> selectedAlgorithms  ,*/String jarPath) throws IOException {
 	  
 	this.problem=problem;
     String experimentBaseDirectory = "experimentBaseDirectory";
@@ -28,7 +28,7 @@ public class BinaryExperiment {
     List<String> selectedAlgorithms = new ArrayList<String>();
     selectedAlgorithms.add("NGASAII");
     List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new BinaryProblemEvaluator(problem, problem.getVariables().get(0).getBits().length())));
+    problemList.add(new ExperimentProblem<>(new BinaryProblemEvaluator(problem, problem.getVariables().get(0).getBits().length(),jarPath)));
 
     List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = algorithmConf.configureBinaryAlgorithms(problemList,selectedAlgorithms);
 

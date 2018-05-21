@@ -38,6 +38,11 @@ public class CriteriaSection {
 	private Map<String, List<String>> criteriaPanel = new HashMap<String, List<String>>();
 	private JButton btnRemoveCriteria;
 	private JTextField txtCriteriaName;
+	private JTextField txtJarPath;
+
+	public JTextField getTxtJarPath() {
+		return txtJarPath;
+	}
 
 	/**
 	 * Returns a panel with a button. When clicked, a new frame is displayed to
@@ -95,7 +100,7 @@ public class CriteriaSection {
 	private JPanel jarPanel() {
 		JPanel pnlAddJar = new JPanel();
 		JLabel lblJarPath = new JLabel("Jar Path");
-		JTextField txtJarPath = new JTextField();
+		txtJarPath = new JTextField();
 		txtJarPath.setColumns(30);
 		btnReadJar = new JButton("Add jar");
 		pnlAddJar.add(lblJarPath);

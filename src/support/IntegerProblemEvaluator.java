@@ -22,10 +22,12 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	private int counter = 0 ;
 	private UserProblem problem;
 	private AlgorithmsConfig algorithmsConfig = new AlgorithmsConfig();
+	private String jarPath;
 	
 
-	  public IntegerProblemEvaluator(UserProblem problem) throws JMetalException {
-		this.problem= problem;  
+	  public IntegerProblemEvaluator(UserProblem problem,String jarPath) throws JMetalException {
+		this.problem= problem;
+		this.jarPath=jarPath;
 		  
 	    setNumberOfVariables(problem.getNumberVariables());
 	    setNumberOfObjectives(2);
@@ -59,7 +61,7 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	    }
 	    try {
 			String line;
-	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/NMMin.jar" + " " + solutionString);
+	    	Process p = Runtime.getRuntime().exec("java -jar "+ jarPath + " " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 
 	    		{evaluationResultString+=line;}
