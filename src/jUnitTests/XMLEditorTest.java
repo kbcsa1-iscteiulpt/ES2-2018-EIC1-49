@@ -2,7 +2,10 @@ package jUnitTests;
 
 import static org.junit.Assert.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -34,8 +37,10 @@ public class XMLEditorTest {
 		l.add(v1);
 		l.add(v2);
 
-		UserProblem p = new UserProblem("problemName", "problemDescription", "email", new Time(2, 2, 2),
-				new Time(3, 3, 3), Type.DOUBLE, "decisionVariablesGroupName", 2, l);
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date current = new Date();  
+		UserProblem p = new UserProblem("problemName", "problemDescription", "email",dateFormat.format(current)
+				, new Time(2, 2, 2),new Time(3, 3, 3), Type.INTEGER, "decisionVariablesGroupName", 2, l);
 
 		xml.write("src/jUnitTests/test.xml", p);
 

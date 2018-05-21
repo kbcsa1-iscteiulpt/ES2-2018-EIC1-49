@@ -1,8 +1,11 @@
 package support;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.parsers.*;
@@ -85,7 +88,7 @@ public class XMLEditor {
 					}
 
 					problem = new UserProblem(prob.getAttribute("name"), prob.getAttribute("description"),
-							prob.getAttribute("email"),
+							prob.getAttribute("email"),prob.getAttribute("creationDate"),
 							new Time(Integer.parseInt(maxTime.getAttribute("maxdays")),
 									Integer.parseInt(maxTime.getAttribute("maxhours")),
 									Integer.parseInt(maxTime.getAttribute("maxminutes"))),
@@ -123,7 +126,9 @@ public class XMLEditor {
 			probTag.setAttribute("name", problem.getName());
 			probTag.setAttribute("description", problem.getDescription());
 			probTag.setAttribute("email", problem.getEmail());
-			probTag.setAttribute("creationDate", problem.getCreationDate());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			Date current = new Date();  
+			probTag.setAttribute("creationDate", dateFormat.format(current));
 			probTag.setAttribute("type", problem.getType().toString());
 			doc.appendChild(probTag);
 
