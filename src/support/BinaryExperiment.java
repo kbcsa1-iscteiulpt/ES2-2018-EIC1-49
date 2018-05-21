@@ -53,7 +53,7 @@ public class BinaryExperiment {
     new GenerateLatexTablesWithStatistics(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
     
-    algorithmConf.applyRestrictions(problem.getVariables(), "../../experimentBaseDirectory/referenceFronts/BinaryProblem.rs");
+  //  algorithmConf.applyRestrictions(problem.getVariables(), "../../experimentBaseDirectory/referenceFronts/BinaryProblem.rs");
   }
 
  
