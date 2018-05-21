@@ -63,7 +63,7 @@ public class XMLEditor {
 							
 							Element varElement = (Element) varList.item(i);
 							Variable var=null;
-							if(varElement.getAttribute("variableType").equals("Binary")) {
+							if(prob.getAttribute("type").equals("BINARY")) {
 								var = new Variable(new BitSet(1100));
 								problemVariables.add(var);
 								break;

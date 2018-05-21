@@ -57,8 +57,8 @@ import problem.Variable;
  */
 public class AlgorithmsConfig {
 
-	private static final int maxEvaluations = 250;
 	private Config config = Config.getInstance();
+	private final int maxEvaluations = config.getMaxEvaluations();
 	
 	private List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> doubleAlgorithms = new ArrayList<>();
 	private List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> integerAlgorithms = new ArrayList<>();

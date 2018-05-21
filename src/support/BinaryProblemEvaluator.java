@@ -21,13 +21,13 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 		private AlgorithmsConfig algorithmsConfig = new AlgorithmsConfig();
 	  
 
-	  public BinaryProblemEvaluator(UserProblem problem) throws JMetalException {
+	  public BinaryProblemEvaluator(UserProblem problem, int numberOfBits) throws JMetalException {
 		this.problem = problem;  
 		  
 		setNumberOfVariables(problem.getNumberVariables());
 	    setNumberOfObjectives(2);
 	    setName("BinaryProblem");
-//	    bits = numberOfBits ;
+	    bits = numberOfBits ;
 
 	  }
 	  
