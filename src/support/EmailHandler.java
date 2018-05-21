@@ -58,7 +58,8 @@ public class EmailHandler {
         final MimeMessage msg = new MimeMessage(session);
 
         // -- Set the FROM and TO fields --
-        msg.setFrom(new InternetAddress(fromEmail));
+        msg.setFrom(new InternetAddress(fromEmail)); 
+        System.out.println(ToEmail);
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(ToEmail, false));
 
         if (!ccEmail.equals("none")) {

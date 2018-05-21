@@ -639,8 +639,8 @@ public class AlgorithmsConfig {
 		
 		EmailHandler emailHandler = new EmailHandler();
 		String adminEmail = config.getEmailAdmin();
-		String subject = "Update on " + problem.getName();
-		String content = "Your otimization Process is currently at ";
+		String subject = "Update on " + problem.getName() + " problem";
+		String content = "Your optimization process is currently at ";
 		int maxIterations = Config.getInstance().getMaxEvaluations() ;
 		
 		try {
@@ -650,7 +650,7 @@ public class AlgorithmsConfig {
 				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "50%");
 			}else if(counter == (int)(maxIterations * 0.75) ) {
 				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "75%");
-			}else if(counter == (int)(maxIterations * 0.75) ) {
+			}else if(counter == (int)(maxIterations) ) { 
 				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,"The otimization of your problem is concluded");
 			}
 		} catch (AddressException e) {

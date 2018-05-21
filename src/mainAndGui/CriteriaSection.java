@@ -143,6 +143,9 @@ public class CriteriaSection {
 					criteriaAdded--;
 					pnlCriteria.revalidate();
 				}
+				if(criteriaAdded == 1) {
+					
+				}
 			}
 		});
 	}
@@ -176,7 +179,7 @@ public class CriteriaSection {
 				if (criteriaReady) {
 					for (String key : criteriaPanel.keySet()) {
 						List<String> list = criteriaPanel.get(key);
-						Criteria criteria = new Criteria(list.get(0), list.get(1));
+						Criteria criteria = new Criteria(list.get(0), txtJarPath.getText());
 						for (int i = 0; i < problem.getCriterias().size(); i++) {
 							if (problem.getCriterias().get(i).toString().equals(criteria.toString())) {
 								addToProblem = false;
@@ -230,7 +233,6 @@ public class CriteriaSection {
 	 * Sets a criteria jar path when the button is clicked, and a file is chosen
 	 **/
 	private void criteriaJarRead(JTextField txtJarPath, JPanel pnlCriteria) {
-		List<String> values = criteriaPanel.get(pnlCriteria.getName());
 		btnReadJar.setContentAreaFilled(false);
 		btnReadJar.addActionListener(new ActionListener() {
 
@@ -240,7 +242,6 @@ public class CriteriaSection {
 				if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					String jarPath = fchUploadJar.getSelectedFile().getPath();
 					txtJarPath.setText(jarPath);
-					values.set(1, txtJarPath.getText());
 				}
 			}
 		});

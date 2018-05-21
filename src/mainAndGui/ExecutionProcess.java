@@ -114,19 +114,21 @@ public class ExecutionProcess {
 			Type dataType, CriteriaSection criteriaSection) {
 		problem.setGroupName(decisionVariableGroupName);
 		problem.setNumberVariables(decisionVariableNumber);
+		problem.setName(nameDescription.getProblemName().getText());
+		problem.setEmail(email.getEmail().getText());
 		try {
 			switch (dataType) {
 			case DOUBLE:
-				new DoubleExperiment(problem,criteriaSection.getTxtJarPath().toString());
+				new DoubleExperiment(problem,criteriaSection.getTxtJarPath().getText());
 				break;
 			case INTEGER:
-				new IntegerExperiment(problem,criteriaSection.getTxtJarPath().toString());
+				new IntegerExperiment(problem,criteriaSection.getTxtJarPath().getText());
 				break;
 			case BINARY:
-				new BinaryExperiment(problem,criteriaSection.getTxtJarPath().toString());
+				new BinaryExperiment(problem,criteriaSection.getTxtJarPath().getText());
 				break;
 			default:
-				return;
+				return; 
 			}
 			showGraphic(problem);
 			compileAndShowEps(problem);
@@ -154,5 +156,4 @@ public class ExecutionProcess {
 		} catch (MessagingException e1) {
 		}
 	}
-
 }

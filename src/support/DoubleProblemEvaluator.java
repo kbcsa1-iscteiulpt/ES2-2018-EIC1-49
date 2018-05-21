@@ -38,9 +38,11 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 
 	    List<Variable> variables = problem.getVariables() ;
 	    
-	    for (int i = 0; i < variables.size(); i++) {
-	    	lowerLimit.add(Double.parseDouble(variables.get(i).getMinRange()));
-	    	upperLimit.add(Double.parseDouble(variables.get(i).getMaxRange()));
+	    for (int i = 0; i < getNumberOfVariables(); i++) {
+//	    	lowerLimit.add(Double.parseDouble(variables.get(i).getMinRange()));
+	    	lowerLimit.add(-5.0);
+//	    	upperLimit.add(Double.parseDouble(variables.get(i).getMaxRange()));
+	    	upperLimit.add(5.0);
 		}
 	    
 
@@ -61,7 +63,8 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	    try {
 			String line;
 //	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/Kursawe.jar" + " " + solutionString);
-	    	Process p = Runtime.getRuntime().exec("java -jar "+ jarPath + " " + solutionString);
+	    	System.out.println(jarPath);
+			Process p = Runtime.getRuntime().exec("java -jar \""+ jarPath + "\" " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 
 	    		{evaluationResultString+=line;}
