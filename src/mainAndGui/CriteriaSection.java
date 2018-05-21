@@ -168,7 +168,7 @@ public class CriteriaSection {
 				boolean addToProblem = true;
 				for (String key : criteriaPanel.keySet()) {
 					String name = criteriaPanel.get(key);
-					if (name.contains("")) {
+					if (name.isEmpty()) {
 						criteriaReady = false;
 						break;
 					}
@@ -186,6 +186,7 @@ public class CriteriaSection {
 						}
 						if (addToProblem == true) {
 							problem.addCriteria(criteria);
+
 						}
 						criteriaFrame.dispose();
 					}
@@ -262,7 +263,6 @@ public class CriteriaSection {
 			public void focusLost(FocusEvent e) {
 				if (!txtCriteriaName.getText().isEmpty()) {
 					criteriaPanel.put(pnlCriteria.getName(), txtCriteriaName.getText());
-					System.out.println(criteriaPanel);
 				}
 			}
 

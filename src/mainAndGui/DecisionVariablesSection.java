@@ -197,82 +197,103 @@ public class DecisionVariablesSection {
 					varsReady = false;
 					varsReadyToCheck = false;
 				} else {
-					for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
-						if (dataType.equals(Type.BINARY)) {
-							if (dtmDecisionVariables.getValueAt(i, 0).toString().isEmpty()
-									|| dtmDecisionVariables.getValueAt(i, 1).toString().isEmpty()) {
-								JOptionPane.showMessageDialog(null, "Please fill the variable name and value",
-										"Warning", JOptionPane.WARNING_MESSAGE);
-								varsReady = false;
-								varsReadyToCheck = false;
-								break;
+					if (dataType.equals(Type.BINARY)) {
+						for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
+							if (dataType.equals(Type.BINARY)) {
+								if (dtmDecisionVariables.getValueAt(i, 0).toString().isEmpty()
+										|| dtmDecisionVariables.getValueAt(i, 1).toString().isEmpty()) {
+									JOptionPane.showMessageDialog(null, "Please fill the variable name and value",
+											"Warning", JOptionPane.WARNING_MESSAGE);
+									varsReady = false;
+									varsReadyToCheck = false;
+									break;
+								}
+								if (!isBinary(dtmDecisionVariables.getValueAt(i, 1).toString())) {
+									JOptionPane.showMessageDialog(null,
+											"Remember that the variable value must be binary!", "Warning",
+											JOptionPane.WARNING_MESSAGE);
+									varsReady = false;
+									varsReadyToCheck = false;
+									break;
+								}
 							}
-							if (!isBinary(dtmDecisionVariables.getValueAt(i, 1).toString())) {
-								JOptionPane.showMessageDialog(null, "Remember that the variable value must be binary!",
-										"Warning", JOptionPane.WARNING_MESSAGE);
-								varsReady = false;
-								varsReadyToCheck = false;
-								break;
-							}
-
-						} else {
-							if (dtmDecisionVariables.getValueAt(i, 0).toString().equals("")
-									|| dtmDecisionVariables.getValueAt(i, 1).toString().equals("")
-									|| dtmDecisionVariables.getValueAt(i, 2).toString().equals("")) {
+						}
+					} else {
+						boolean varsReadyToCheckType = true;
+						for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
+							if (dtmDecisionVariables.getValueAt(j, 0).toString().isEmpty()
+									|| dtmDecisionVariables.getValueAt(j, 1).toString().isEmpty()
+									|| dtmDecisionVariables.getValueAt(j, 2).toString().isEmpty()) {
 								JOptionPane.showMessageDialog(null, "Please fill the variable name and interval fields",
 										"Warning", JOptionPane.WARNING_MESSAGE);
 								varsReady = false;
 								varsReadyToCheck = false;
+								varsReadyToCheckType = false;
 								break;
 							}
+						}
+						if (varsReadyToCheckType) {
 							if (dataType.equals(Type.INTEGER)) {
-								if (!isInteger(dtmDecisionVariables.getValueAt(i, 1).toString())
-										|| !isInteger(dtmDecisionVariables.getValueAt(i, 2).toString())) {
-									JOptionPane.showMessageDialog(null,
-											"Remember that the variable values must be integer!", "Warning",
-											JOptionPane.WARNING_MESSAGE);
-									varsReady = false;
-									varsReadyToCheck = false;
-									break;
-								}
-							} else {
-								if (!isDouble(dtmDecisionVariables.getValueAt(i, 1).toString())
-										|| !isDouble(dtmDecisionVariables.getValueAt(i, 2).toString())) {
-									JOptionPane.showMessageDialog(null,
-											"Remember that the variable values must be double!", "Warning",
-											JOptionPane.WARNING_MESSAGE);
-									varsReady = false;
-									varsReadyToCheck = false;
-									break;
-								}
-							}
-							if (varsReadyToCheck) {
-								for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
-
-									double minValue = Double
-											.parseDouble(dtmDecisionVariables.getValueAt(j, 1).toString());
-									double maxValue = Double
-											.parseDouble(dtmDecisionVariables.getValueAt(j, 2).toString());
-									if (maxValue < minValue) {
+								for (int k = 0; k < tblDecisionVariables.getRowCount(); k++) {
+									if (!isInteger(dtmDecisionVariables.getValueAt(k, 1).toString())
+											|| !isInteger(dtmDecisionVariables.getValueAt(k, 2).toString())) {
 										JOptionPane.showMessageDialog(null,
-												"The maximum value should be greater than the minimum value", "Warning",
+												"Remember that the variable values must be integer!", "Warning",
 												JOptionPane.WARNING_MESSAGE);
 										varsReady = false;
+										varsReadyToCheck = false;
 										break;
 									}
-									if (maxValue < minValue) {
+								}
+								if (varsReadyToCheck) {
+									for (int l = 0; l < tblDecisionVariables.getRowCount(); l++) {
+										double minValue = Integer
+												.parseInt(dtmDecisionVariables.getValueAt(l, 1).toString());
+										double maxValue = Integer
+												.parseInt(dtmDecisionVariables.getValueAt(l, 2).toString());
+										if (maxValue < minValue) {
+											JOptionPane.showMessageDialog(null,
+													"The maximum value should be greater than the minimum value",
+													"Warning", JOptionPane.WARNING_MESSAGE);
+											varsReady = false;
+											break;
+										}
+									}
+								}
+							} else {
+								for (int m = 0; m < tblDecisionVariables.getRowCount(); m++) {
+									if (!isDouble(dtmDecisionVariables.getValueAt(m, 1).toString())
+											|| !isDouble(dtmDecisionVariables.getValueAt(m, 2).toString())) {
 										JOptionPane.showMessageDialog(null,
-												"The maximum value should be greater than the minimum value", "Warning",
+												"Remember that the variable values must be double!", "Warning",
 												JOptionPane.WARNING_MESSAGE);
 										varsReady = false;
+										varsReadyToCheck = false;
 										break;
+									}
+								}
+								if (varsReadyToCheck) {
+									for (int n = 0; n < tblDecisionVariables.getRowCount(); n++) {
+										double minValue = Double
+												.parseDouble(dtmDecisionVariables.getValueAt(n, 1).toString());
+										double maxValue = Double
+												.parseDouble(dtmDecisionVariables.getValueAt(n, 2).toString());
+										if (maxValue < minValue) {
+											JOptionPane.showMessageDialog(null,
+													"The maximum value should be greater than the minimum value",
+													"Warning", JOptionPane.WARNING_MESSAGE);
+											varsReady = false;
+											break;
+										}
 									}
 								}
 							}
 						}
 					}
 				}
+
 				if (varsReady) {
+					problem.getVariables().clear();
 
 					if (tblDecisionVariables.getCellEditor() != null) {
 						tblDecisionVariables.getCellEditor().stopCellEditing();
@@ -292,6 +313,7 @@ public class DecisionVariablesSection {
 							problem.addVariable(variable);
 						}
 					}
+
 					algorithmSelection.setNumberDecisionVariables(
 							Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
 					algorithmSelection.setDecisionVariablesGroupName(txtNameOfDecisionVariablesGroup.getText());
