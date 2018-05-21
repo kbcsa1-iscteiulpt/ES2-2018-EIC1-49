@@ -29,7 +29,7 @@ public class BinaryExperiment {
     selectedAlgorithms.add("NGASAII");
     List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
     //System.out.println(problem.getVariables().get(0).getBinaryValue());
-    problemList.add(new ExperimentProblem<>(new BinaryProblemEvaluator(problem, problem.getVariables().get(0).getBits().length())));
+    problemList.add(new ExperimentProblem<>(new BinaryProblemEvaluator(problem, problem.getVariables().get(0).getBits().length(), jarPath)));
 
     List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = algorithmConf.configureBinaryAlgorithms(problemList,selectedAlgorithms);
 
