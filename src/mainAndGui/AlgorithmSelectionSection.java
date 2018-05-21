@@ -88,13 +88,19 @@ public class AlgorithmSelectionSection {
 						|| !email.getBtnWriteEmail().isEnabled() || dataType == null) {
 					JOptionPane.showMessageDialog(null, "Please fill all fields!", "Warning",
 							JOptionPane.WARNING_MESSAGE);
-				} else {
+				} else if (problem.getVariables().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please fill the variable decisions table!","Warning",
+							JOptionPane.WARNING_MESSAGE);
+				} else if(problem.getCriterias().isEmpty()){
+					JOptionPane.showMessageDialog(null, "Please fill the jar path!","Warning",
+							JOptionPane.WARNING_MESSAGE);
+				}else {
 					if (timeCheck()) {
-						execute = new ExecutionProcess();
-						beforeOptimizationProcess = new JFrame("Select the algorithm");
-						FrameSize.setFrame(beforeOptimizationProcess, 0.25);
-						setBeforeOptimizationProcess(beforeOptimizationProcess, problem);
-						beforeOptimizationProcess.setVisible(true);
+					execute = new ExecutionProcess();
+					beforeOptimizationProcess = new JFrame("Select the algorithm");
+					FrameSize.setFrame(beforeOptimizationProcess, 0.25);
+					setBeforeOptimizationProcess(beforeOptimizationProcess, problem);
+					beforeOptimizationProcess.setVisible(true);
 					}
 				}
 
