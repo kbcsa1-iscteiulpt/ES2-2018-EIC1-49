@@ -118,13 +118,9 @@ public class DecisionVariablesSection {
 		btnDecisionVariablesFinish.setIcon(icoFinish);
 		decisionVariablesFinish(problem, decisionVarFrame);
 
-		if (dataType != null) {
-			if (!dataType.equals(Type.BINARY)) {
-				pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
-				pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
-				pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
-			}
-		}
+		pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
+		pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
+		pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
 		pnlDecision.add(new JScrollPane(tblDecisionVariables), BorderLayout.CENTER);
 		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
 		decisionVarFrame.add(pnlDecision);
@@ -142,7 +138,6 @@ public class DecisionVariablesSection {
 			dtmDecisionVariables.addColumn("Name");
 			if (dataType.equals(Type.BINARY)) {
 				dtmDecisionVariables.addColumn("Value");
-				dtmDecisionVariables.addRow(new Object[] { "", "" });
 			} else {
 				dtmDecisionVariables.addColumn("Minimum Value");
 				dtmDecisionVariables.addColumn("Maximum Value");
