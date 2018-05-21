@@ -86,7 +86,7 @@ public class ExecutionProcess {
 	public void compileAndShowPdf(UserProblem problem) {
 		String[] params = new String[2];
 		params[0] = config.getPdflatexPath();
-		params[1] = config.getLatexPath()+problem.getType().toString()+".tex";
+		params[1] = config.getLatexPath()+problem.getType().toString()+config.getLatexFilename()+problem.getType().toString()+".tex";
 
 		String[] envp = new String[1];
 		envp[0] = config.getPdfEnviromentVar();

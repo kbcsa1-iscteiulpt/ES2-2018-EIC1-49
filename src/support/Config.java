@@ -59,6 +59,7 @@ public class Config {
 	//PDF Compiler
 	private String pdfLatexPath;
 	private String latexPath;
+	private String latexFilename;
 	private String pdfEnvironmentVar;
 	private String pdfDestinationPath;
 	private String pdfOpenPath;
@@ -137,6 +138,10 @@ public class Config {
 		return latexPath;
 	}
 	
+	public String getLatexFilename() {
+		return latexFilename;
+	}
+	
 	public String getEpsOpenPath() {
 		return epsOpenPath;
 	}
@@ -208,6 +213,7 @@ public class Config {
 				this.pdfLatexPath= pdfPaths.getAttribute("pdfLatexPath");
 				this.pdfOpenPath= pdfPaths.getAttribute("pdfOpenPath");
 				this.latexPath= pdfPaths.getAttribute("latexPath");
+				this.latexFilename=pdfPaths.getAttribute("latexFilename");
 			}
 			
 	    } catch (Exception e) {
