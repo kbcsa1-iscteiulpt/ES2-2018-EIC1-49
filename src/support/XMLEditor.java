@@ -58,6 +58,7 @@ public class XMLEditor {
 
 					List<Variable> problemVariables = new ArrayList<Variable>();
 					NodeList varList = variables.getElementsByTagName("variable");
+					boolean exit=false;
 					for (int i = 0; i < varList.getLength(); i++) {
 
 						Element varElement = (Element) varList.item(i);
@@ -67,10 +68,19 @@ public class XMLEditor {
 									varElement.getAttribute("variableMin"), varElement.getAttribute("variableMax"),
 									varElement.getAttribute("variableRestriction"));
 						} else {
+							exit=true;
 							var = new Variable(varElement.getAttribute("variableName"),
 									varElement.getAttribute("binaryValue"));
+							for(int j=1;j<varList.getLength();j++) {
+								Element varAux = (Element) varList.item(j);
+//								System.out.println("hey"+varAux.getAttribute("binaryValue"));
+								var.addBits(varAux.getAttribute("binaryValue"));
+							}
 						}
+						
 						problemVariables.add(var);
+						System.out.println(problemVariables.size());
+						if(exit) break;
 
 					}
 
