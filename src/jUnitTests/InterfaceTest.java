@@ -23,12 +23,11 @@ import support.XMLEditor;
 public class InterfaceTest {
 
 	private Interface interfaceTest;
-	private Config config = new Config();
 	private DecisionVariablesSection decVarSection;
 	
 	@Test
 	public void createProblem() {
-		interfaceTest = new Interface(config.getEmailAdmin());
+		interfaceTest = new Interface();
 		
 		interfaceTest.getBtnCreateProblem().doClick();
 	

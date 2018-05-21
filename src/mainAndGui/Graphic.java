@@ -32,7 +32,7 @@ public class Graphic extends  ApplicationFrame {
 	
 	private UserProblem problem;
 	private List<double[]> xAxis = new ArrayList<double[]>();
-	private Config config = new Config();
+	private Config config = Config.getInstance();
 	
 	private String rfPath="";
 	private String rsPath="";

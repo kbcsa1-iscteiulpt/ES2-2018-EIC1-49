@@ -9,6 +9,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import problem.UserProblem;
+import support.Config;
 import support.EmailHandler;
 import support.XMLEditor;
 
@@ -20,7 +21,7 @@ import support.XMLEditor;
 
 public class Interface {
 
-	private String adminEmail;
+	private String adminEmail = Config.getInstance().getEmailAdmin();
 
 	private JFrame decisionFrame;
 	private JFrame readProblemFrame;
@@ -45,12 +46,11 @@ public class Interface {
 	private JButton btnReadProblem;
 	private JButton btnCreateProblem;
 
-	public Interface(String adminEmail) {
+	public Interface() {
 		decisionFrame = new JFrame("Problem to be optimized");
 		decisionFrame.setVisible(true);
 		FrameSize.setFrame(decisionFrame, 0.25);
 		setDecisionContent(decisionFrame);
-		this.adminEmail = adminEmail;
 	}
 
 	/**
