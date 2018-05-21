@@ -37,15 +37,13 @@ public class UserProblem {
 	private List<Criteria> criterias = new ArrayList<Criteria>();
 	
 	
-	public UserProblem(String name, String description, String email, Time max, Time ideal, Type type,
+	public UserProblem(String name, String description, String email,String creationDate, Time max, Time ideal, Type type,
 			String groupName,int numberVariables, List<Variable> variables) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.email = email;
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date current = new Date();  
-		this.creationDate = dateFormat.format(current);
+		this.creationDate= creationDate;
 		this.type = type;
 		this.max = max;
 		this.ideal = ideal;
