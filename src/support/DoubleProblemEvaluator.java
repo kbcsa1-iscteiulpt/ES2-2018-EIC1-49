@@ -41,10 +41,6 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	    	upperLimit.add(Double.parseDouble(variables.get(i).getMaxRange()));
 		}
 	    
-	    for (int i = 0; i < getNumberOfVariables(); i++) {
-	      lowerLimit.add(-5.0);
-	      upperLimit.add(5.0);
-	    }
 
 	    setLowerLimit(lowerLimit);
 	    setUpperLimit(upperLimit);	    	    

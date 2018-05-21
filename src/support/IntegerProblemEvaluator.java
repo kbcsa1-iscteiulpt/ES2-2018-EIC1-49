@@ -34,7 +34,7 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	    List<Integer> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
 	    List<Integer> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
 
- List<Variable> variables = problem.getVariables() ;
+	    List<Variable> variables = problem.getVariables() ;
 	    
 	    for (int i = 0; i < variables.size(); i++) {
 	    	lowerLimit.add(Integer.parseInt(variables.get(i).getMinRange()));
