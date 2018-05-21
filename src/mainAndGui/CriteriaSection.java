@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import problem.Criteria;
 import problem.UserProblem;
@@ -35,7 +36,7 @@ public class CriteriaSection {
 	private JButton btnCriteriaFinish;
 	private JButton btnReadJar;
 	private int criteriaAdded;
-	private Map<String, List<String>> criteriaPanel = new HashMap<String, List<String>>();
+	private Map<String, String> criteriaPanel = new HashMap<String, String>();
 	private JButton btnRemoveCriteria;
 	private JTextField txtCriteriaName;
 	private JTextField txtJarPath;
@@ -143,9 +144,6 @@ public class CriteriaSection {
 					criteriaAdded--;
 					pnlCriteria.revalidate();
 				}
-				if(criteriaAdded == 1) {
-					
-				}
 			}
 		});
 	}
@@ -169,8 +167,8 @@ public class CriteriaSection {
 				boolean criteriaReady = true;
 				boolean addToProblem = true;
 				for (String key : criteriaPanel.keySet()) {
-					List<String> list = criteriaPanel.get(key);
-					if (list.contains("")) {
+					String name = criteriaPanel.get(key);
+					if (name.contains("")) {
 						criteriaReady = false;
 						break;
 					}
@@ -178,8 +176,8 @@ public class CriteriaSection {
 
 				if (criteriaReady) {
 					for (String key : criteriaPanel.keySet()) {
-						List<String> list = criteriaPanel.get(key);
-						Criteria criteria = new Criteria(list.get(0), txtJarPath.getText());
+						String name = criteriaPanel.get(key);
+						Criteria criteria = new Criteria(name, txtJarPath.getText());
 						for (int i = 0; i < problem.getCriterias().size(); i++) {
 							if (problem.getCriterias().get(i).toString().equals(criteria.toString())) {
 								addToProblem = false;
@@ -212,9 +210,7 @@ public class CriteriaSection {
 		txtCriteriaName = new JTextField();
 
 		
-		List<String> listOfComponents = new ArrayList<String>();
-		listOfComponents.add(txtCriteriaName.getText());
-		criteriaPanel.put(pnlCriteria.getName(), listOfComponents);
+		criteriaPanel.put(pnlCriteria.getName(), txtCriteriaName.getText());
 
 		criteriaName(txtCriteriaName, pnlCriteria);
 		JPanel pnlCriteriaJar = new JPanel();
@@ -239,33 +235,21 @@ public class CriteriaSection {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fchUploadJar = new JFileChooser();
+				fchUploadJar.setFileFilter(new FileNameExtensionFilter("Jar files", "jar"));
 				if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					String jarPath = fchUploadJar.getSelectedFile().getPath();
-					txtJarPath.setText(jarPath);
+					if(jarPath.endsWith(".jar")) {
+						txtJarPath.setText(jarPath);
+					}else {
+						JOptionPane.showMessageDialog(null, "Please upload a jar file", "Warning",
+								JOptionPane.WARNING_MESSAGE);
+					}
 				}
 			}
 		});
 	}
 
-	/**
-	 * Sets a criteria jar path if a path is written
-	 **/
-	private void criteriaJarPath(JTextField txtJarPath, JPanel pnlCriteria) {
-		txtJarPath.setColumns(15);
-		List<String> values = criteriaPanel.get(pnlCriteria.getName());
-		txtJarPath.addFocusListener(new FocusListener() {
 
-			@Override
-			public void focusLost(FocusEvent e) {
-				values.set(1, txtJarPath.getText());
-			}
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				values.set(1, "");
-			}
-		});
-	}
 
 	/**
 	 * Sets a criteria name if a name is written
@@ -273,19 +257,18 @@ public class CriteriaSection {
 	 **/
 	private void criteriaName(JTextField txtCriteriaName, JPanel pnlCriteria) {
 		txtCriteriaName.setColumns(30);
-		List<String> values = criteriaPanel.get(pnlCriteria.getName());
 		txtCriteriaName.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (!txtCriteriaName.getText().isEmpty()) {
-					values.set(0, txtCriteriaName.getText());
-
+					criteriaPanel.put(pnlCriteria.getName(), txtCriteriaName.getText());
+					System.out.println(criteriaPanel);
 				}
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
-				values.set(0, "");
+				criteriaPanel.put(pnlCriteria.getName(), "");
 			}
 		});
 	}

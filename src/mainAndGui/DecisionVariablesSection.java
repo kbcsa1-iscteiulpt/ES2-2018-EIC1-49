@@ -191,80 +191,87 @@ public class DecisionVariablesSection {
 			public void actionPerformed(ActionEvent arg0) {
 				boolean varsReady = true;
 				boolean varsReadyToCheck = true;
-				for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
-					if (dataType.equals(Type.BINARY)) {
-						if (dtmDecisionVariables.getValueAt(i, 0).toString().isEmpty()
-								|| dtmDecisionVariables.getValueAt(i, 1).toString().isEmpty()
-								|| dtmDecisionVariables.getValueAt(i, 0).toString().equals("")
-								|| dtmDecisionVariables.getValueAt(i, 1).toString().equals("")) {
-							JOptionPane.showMessageDialog(null, "Please fill the variable name and value", "Warning",
-									JOptionPane.WARNING_MESSAGE);
-							varsReady = false;
-							varsReadyToCheck = false;
-							break;
-						}
-						if (!isBinary(dtmDecisionVariables.getValueAt(i, 1).toString())) {
-							JOptionPane.showMessageDialog(null, "Remember that the variable value must be binary!",
-									"Warning", JOptionPane.WARNING_MESSAGE);
-							varsReady = false;
-							varsReadyToCheck = false;
-							break;
-						}
-
-					} else {
-						if (dtmDecisionVariables.getValueAt(i, 0).toString().equals("")
-								|| dtmDecisionVariables.getValueAt(i, 1).toString().equals("")
-								|| dtmDecisionVariables.getValueAt(i, 2).toString().equals("")) {
-							JOptionPane.showMessageDialog(null, "Please fill the variable name and interval fields",
-									"Warning", JOptionPane.WARNING_MESSAGE);
-							varsReady = false;
-							varsReadyToCheck = false;
-							break;
-						}
-						if (dataType.equals(Type.INTEGER)) {
-							if (!isInteger(dtmDecisionVariables.getValueAt(i, 1).toString())
-									|| !isInteger(dtmDecisionVariables.getValueAt(i, 2).toString())) {
-								JOptionPane.showMessageDialog(null,
-										"Remember that the variable values must be integer!", "Warning",
-										JOptionPane.WARNING_MESSAGE);
-								varsReady = false;
-								varsReadyToCheck = false;
-								break;
-							}
-						} else {
-							if (!isDouble(dtmDecisionVariables.getValueAt(i, 1).toString())
-									|| !isDouble(dtmDecisionVariables.getValueAt(i, 2).toString())) {
-								JOptionPane.showMessageDialog(null, "Remember that the variable values must be double!",
+				if (txtNameOfDecisionVariablesGroup.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please fill the variable(s) group name", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+					varsReady = false;
+					varsReadyToCheck = false;
+				} else {
+					for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
+						if (dataType.equals(Type.BINARY)) {
+							if (dtmDecisionVariables.getValueAt(i, 0).toString().isEmpty()
+									|| dtmDecisionVariables.getValueAt(i, 1).toString().isEmpty()) {
+								JOptionPane.showMessageDialog(null, "Please fill the variable name and value",
 										"Warning", JOptionPane.WARNING_MESSAGE);
 								varsReady = false;
 								varsReadyToCheck = false;
 								break;
 							}
-						}
-						if (varsReadyToCheck) {
-							for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
+							if (!isBinary(dtmDecisionVariables.getValueAt(i, 1).toString())) {
+								JOptionPane.showMessageDialog(null, "Remember that the variable value must be binary!",
+										"Warning", JOptionPane.WARNING_MESSAGE);
+								varsReady = false;
+								varsReadyToCheck = false;
+								break;
+							}
 
-								double minValue = Double.parseDouble(dtmDecisionVariables.getValueAt(j, 1).toString());
-								double maxValue = Double.parseDouble(dtmDecisionVariables.getValueAt(j, 2).toString());
-								if (maxValue < minValue) {
+						} else {
+							if (dtmDecisionVariables.getValueAt(i, 0).toString().equals("")
+									|| dtmDecisionVariables.getValueAt(i, 1).toString().equals("")
+									|| dtmDecisionVariables.getValueAt(i, 2).toString().equals("")) {
+								JOptionPane.showMessageDialog(null, "Please fill the variable name and interval fields",
+										"Warning", JOptionPane.WARNING_MESSAGE);
+								varsReady = false;
+								varsReadyToCheck = false;
+								break;
+							}
+							if (dataType.equals(Type.INTEGER)) {
+								if (!isInteger(dtmDecisionVariables.getValueAt(i, 1).toString())
+										|| !isInteger(dtmDecisionVariables.getValueAt(i, 2).toString())) {
 									JOptionPane.showMessageDialog(null,
-											"The maximum value should be greater than the minimum value", "Warning",
+											"Remember that the variable values must be integer!", "Warning",
 											JOptionPane.WARNING_MESSAGE);
 									varsReady = false;
+									varsReadyToCheck = false;
 									break;
 								}
-								if (maxValue < minValue) {
+							} else {
+								if (!isDouble(dtmDecisionVariables.getValueAt(i, 1).toString())
+										|| !isDouble(dtmDecisionVariables.getValueAt(i, 2).toString())) {
 									JOptionPane.showMessageDialog(null,
-											"The maximum value should be greater than the minimum value", "Warning",
+											"Remember that the variable values must be double!", "Warning",
 											JOptionPane.WARNING_MESSAGE);
 									varsReady = false;
+									varsReadyToCheck = false;
 									break;
+								}
+							}
+							if (varsReadyToCheck) {
+								for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
+
+									double minValue = Double
+											.parseDouble(dtmDecisionVariables.getValueAt(j, 1).toString());
+									double maxValue = Double
+											.parseDouble(dtmDecisionVariables.getValueAt(j, 2).toString());
+									if (maxValue < minValue) {
+										JOptionPane.showMessageDialog(null,
+												"The maximum value should be greater than the minimum value", "Warning",
+												JOptionPane.WARNING_MESSAGE);
+										varsReady = false;
+										break;
+									}
+									if (maxValue < minValue) {
+										JOptionPane.showMessageDialog(null,
+												"The maximum value should be greater than the minimum value", "Warning",
+												JOptionPane.WARNING_MESSAGE);
+										varsReady = false;
+										break;
+									}
 								}
 							}
 						}
 					}
 				}
-
 				if (varsReady) {
 
 					if (tblDecisionVariables.getCellEditor() != null) {

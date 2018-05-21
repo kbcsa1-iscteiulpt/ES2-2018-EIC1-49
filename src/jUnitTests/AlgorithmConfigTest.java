@@ -34,7 +34,7 @@ public class AlgorithmConfigTest {
     String userHomeFolder = System.getProperty("user.home/"); 
     File textFile = new File(userHomeFolder, "algoConfig.txt"); 
      
-    ac.readAutomaticConfi(textFile); 
+    ac.readAutomaticConf(textFile); 
   } 
    
 } 

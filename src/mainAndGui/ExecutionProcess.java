@@ -119,6 +119,11 @@ public class ExecutionProcess {
 		problem.setNumberVariables(decisionVariableNumber);
 		problem.setName(nameDescription.getProblemName().getText());
 		problem.setEmail(email.getEmail().getText());
+		
+		for (int i = 0; i < problem.getVariables().size(); i++) {
+			System.out.println(problem.getVariables().get(i).getRestriction());
+		}
+		
 		try { 
 		 	switch (dataType) {
 			case DOUBLE:
@@ -138,6 +143,7 @@ public class ExecutionProcess {
 			compileAndShowPdf(problem);
 		} catch (IOException e2) {
 			try {
+				e2.printStackTrace();
 				emailHandler.sendEmail(adminEmail, email.getEmail().getText(), adminEmail, "There was a problem",
 						"There was a problem running the problem you requested, please try again.\r\n"
 								+ "If the problem continues, contact us so we can help");

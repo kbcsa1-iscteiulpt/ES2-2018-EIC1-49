@@ -535,12 +535,12 @@ public class AlgorithmsConfig {
 	 * This method will write a configuration of algorithms in a file so the users can just read the algorithms to use in a experiment    
 	 * 
 	 * @param algorithmIDs - algorithms to include in the conf file 
-	 * @param fileName - name of the file to write the automatic conf
+	 * @param path - name of the file to write the automatic conf
 	 * 
 	 * */
-	public void writeAutomaticConfig(List<String> algorithmIDs, String fileName) {
-		String userHomeFolder = System.getProperty("user.home");
-		File textFile = new File(userHomeFolder, fileName);
+	public void writeAutomaticConfig(List<String> algorithmIDs, String path ) {
+//		String userHomeFolder = System.getProperty("user.home");
+		File textFile = new File(path );
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(textFile));
 			
@@ -561,7 +561,7 @@ public class AlgorithmsConfig {
 	 * @param file - file from wic to read the algorithms
 	 * 
 	 * */
-	public List<String> readAutomaticConfi(File file) {
+	public List<String> readAutomaticConf(File file) {
 		Scanner scanner = null;
 		List<String> algorithmIDs = new ArrayList<String>();
 		try {
@@ -593,7 +593,10 @@ public class AlgorithmsConfig {
 		String[] fileVector = new String[0];
 		String fileOutput ="";
 		
+		
+		
 		for (int i = 0; i < variables.size(); i++) {
+			System.out.println(variables.get(i).getRestriction());
 			restrictions.add(variables.get(i).getRestriction().split(";"));
 		}
 		

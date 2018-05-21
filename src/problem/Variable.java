@@ -12,12 +12,12 @@ import java.util.BitSet;
  */
 public class Variable {
 	private String name;
-	private String minRange; 
+	private String minRange;
 	private String maxRange;
 	private String restriction;
 
 	private BitSet bits = new BitSet();
-	private int bitIndex=0;
+	private int bitIndex = 0;
 	private String binaryValue;
 
 	public Variable(String name, String minRange, String maxRange, String restriction) {
@@ -32,33 +32,31 @@ public class Variable {
 		this.name = name;
 		this.binaryValue = binaryValue;
 		System.out.println(binaryValue);
-		for(int i=0;i<binaryValue.length();i++) {
-			if(binaryValue.charAt(i) == '1')
+		for (int i = 0; i < binaryValue.length(); i++) {
+			if (binaryValue.charAt(i) == '1')
 				bits.set(i);
 		}
-		System.out.println("bits "+bits.get(1));
-		bitIndex= binaryValue.length();
+		System.out.println("bits " + bits.get(1));
+		bitIndex = binaryValue.length();
 	}
 
 	public BitSet getBits() {
 		return bits;
 	}
-	
+
 	public void addBits(String bitString) {
-		System.out.println("adding"+bitString);
-		for(int i=0; i<bitString.length();i++) {
-			if(bitString.charAt(i) == '1')
-				bits.set(i+bitIndex);
+		System.out.println("adding" + bitString);
+		for (int i = 0; i < bitString.length(); i++) {
+			if (bitString.charAt(i) == '1')
+				bits.set(i + bitIndex);
 		}
-		bitIndex+= bitString.length();
+		bitIndex += bitString.length();
 	}
-	
-	
 
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getBinaryValue() {
 		return binaryValue;
 	}
@@ -80,7 +78,7 @@ public class Variable {
 			return "Variable name:" + getName() + System.getProperty("line.separator");
 		} else {
 			return "Variable name:" + getName() + ";Minimum range:" + getMinRange() + ";Maximum range:" + getMaxRange()
-					+ ";Restrictions:" + getRestriction().replace(";", ":") + System.getProperty("line.separator");
+					+ ";Restrictions:" + getRestriction() + System.getProperty("line.separator");
 		}
 	}
 

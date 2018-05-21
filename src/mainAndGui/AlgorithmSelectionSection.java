@@ -11,13 +11,18 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+import jUnitTests.AlgorithmConfigTest;
 import problem.Type;
 import problem.UserProblem;
+import support.AlgorithmsConfig;
 import support.Config;
 import support.EmailHandler;
 
@@ -38,11 +43,12 @@ public class AlgorithmSelectionSection {
 	public JCheckBox algorithmSPEA2;
 	public List<JCheckBox> algorithmsList;
 	public List<String> algorithmsSelectedList;
-	public JButton btnSaveAlgorithms;
+	public JButton btnExecuteAlgorithms;
 	public NameDescriptionSection nameDescription;
 	public EmailSection email;
 	public DecisionVariablesSection decisionVariables;
-	public EmailHandler emailHandler;
+	public EmailHandler emailHandler = new EmailHandler();
+	public AlgorithmsConfig algorithmConfig = new AlgorithmsConfig();
 	public String adminEmail;
 	private ExecutionProcess execute;
 	private int decisionVariablesNumber;
@@ -50,14 +56,14 @@ public class AlgorithmSelectionSection {
 	private TimeOptimizationSection time;
 	private CriteriaSection criteriaSection;
 
-
 	public JPanel algorithmSelection(NameDescriptionSection nameDescription, EmailSection email,
-			TimeOptimizationSection time, UserProblem problem, EmailHandler support, String adminEmail, CriteriaSection criteriaSection) {
+			TimeOptimizationSection time, UserProblem problem, EmailHandler support, String adminEmail,
+			CriteriaSection criteriaSection) {
 		this.nameDescription = nameDescription;
 		this.email = email;
 		this.time = time;
 		this.criteriaSection = criteriaSection;
-		
+
 		JPanel executeProcessPanel = new JPanel(new FlowLayout());
 		algorithmsList = new ArrayList<JCheckBox>();
 		algorithmsSelectedList = new ArrayList<String>();
@@ -83,26 +89,27 @@ public class AlgorithmSelectionSection {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (nameDescription.getProblemName().getText().isEmpty()
-						|| nameDescription.getProblemDescription().getText().isEmpty()
-						|| !email.getBtnWriteEmail().isEnabled() || dataType == null) {
-					JOptionPane.showMessageDialog(null, "Please fill all fields!", "Warning",
-							JOptionPane.WARNING_MESSAGE);
-				} else if (problem.getVariables().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Please fill the variable decisions table!","Warning",
-							JOptionPane.WARNING_MESSAGE);
-				} else if(problem.getCriterias().isEmpty()){
-					JOptionPane.showMessageDialog(null, "Please fill the jar path!","Warning",
-							JOptionPane.WARNING_MESSAGE);
-				}else {
-					if (timeCheck()) {
-					execute = new ExecutionProcess();
-					beforeOptimizationProcess = new JFrame("Select the algorithm");
-					FrameSize.setFrame(beforeOptimizationProcess, 0.25);
-					setBeforeOptimizationProcess(beforeOptimizationProcess, problem);
-					beforeOptimizationProcess.setVisible(true);
-					}
-				}
+				// if (nameDescription.getProblemName().getText().isEmpty()
+				// || nameDescription.getProblemDescription().getText().isEmpty()
+				// || !email.getBtnWriteEmail().isEnabled() || dataType == null) {
+				// JOptionPane.showMessageDialog(null, "Please fill all fields!", "Warning",
+				// JOptionPane.WARNING_MESSAGE);
+				// } else if (problem.getVariables().isEmpty()) {
+				// JOptionPane.showMessageDialog(null, "Please fill the variable decisions
+				// table!","Warning",
+				// JOptionPane.WARNING_MESSAGE);
+				// } else if(problem.getCriterias().isEmpty()){
+				// JOptionPane.showMessageDialog(null, "Please fill the jar path!","Warning",
+				// JOptionPane.WARNING_MESSAGE);
+				// }else {
+				// if (timeCheck()) {
+				execute = new ExecutionProcess();
+				beforeOptimizationProcess = new JFrame("Select the algorithm");
+				FrameSize.setFrame(beforeOptimizationProcess, 0.5);
+				setBeforeOptimizationProcess(beforeOptimizationProcess, problem);
+				beforeOptimizationProcess.setVisible(true);
+				// }
+				// }
 
 			}
 
@@ -129,13 +136,49 @@ public class AlgorithmSelectionSection {
 		JPanel pnlBeforeOptimization = new JPanel(new BorderLayout());
 		JPanel pnlTitleBeforeOptimization = new JPanel();
 		JPanel pnlAlgorithms = new JPanel();
-		JPanel pnlSaveAlgorithms = new JPanel();
+		JPanel pnlLoadExecuteAlgorithms = new JPanel(new BorderLayout());
+		JPanel pnlLoadAlgorithms = new JPanel();
+		JPanel pnlExecuteAlgorithms = new JPanel();
+		JTextField txtAlgorithmsPath = new JTextField();
+		txtAlgorithmsPath.setColumns(30);
+		JButton btnLoadAlgorithms = new JButton("Load Algorithms:");
+		btnLoadAlgorithms.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// JFileChooser fchUploadJar = new JFileChooser();
+				// if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+				// String jarPath = fchUploadJar.getSelectedFile().getPath();
+				// txtAlgorithmsPath.setText(jarPath);
+				// List<String> a =
+				// algorithmConfig.readAutomaticConf(fchUploadJar.getSelectedFile());
+				// }
+				if (algorithmsSelectedList.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please select at least one algorithm", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					JFileChooser fchXMLSave = new JFileChooser();
+					fchXMLSave.setDialogTitle("Save");
+					fchXMLSave.setFileFilter(new FileNameExtensionFilter("txt Files", "txt"));
+					if (fchXMLSave.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+						String filePath = fchXMLSave.getSelectedFile().getPath();
+						if (!filePath.endsWith(".txt")) {
+							filePath += ".txt";
+						}
+						algorithmConfig.writeAutomaticConfig(algorithmsSelectedList, filePath);
+					}
+				}
+			}
+		});
+		btnLoadAlgorithms.setContentAreaFilled(false);
+
 		JLabel lblBeforeOptimization = new JLabel(
 				"Select the algorithm for " + dataType.toString().toLowerCase() + " problem's type: ");
 		setPnlAlgorithms(pnlAlgorithms);
-		btnSaveAlgorithms = new JButton("Start the optimization process");
-		btnSaveAlgorithms.setContentAreaFilled(false);
-		btnSaveAlgorithms.addActionListener(new ActionListener() {
+
+		btnExecuteAlgorithms = new JButton("Start the optimization process");
+		btnExecuteAlgorithms.setContentAreaFilled(false);
+		btnExecuteAlgorithms.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -144,10 +187,14 @@ public class AlgorithmSelectionSection {
 			}
 		});
 		pnlTitleBeforeOptimization.add(lblBeforeOptimization);
-		pnlSaveAlgorithms.add(btnSaveAlgorithms);
+		pnlLoadAlgorithms.add(btnLoadAlgorithms);
+		pnlLoadAlgorithms.add(txtAlgorithmsPath);
+		pnlLoadAlgorithms.add(btnExecuteAlgorithms);
+		pnlLoadExecuteAlgorithms.add(pnlLoadAlgorithms);
+		pnlLoadExecuteAlgorithms.add(pnlExecuteAlgorithms, BorderLayout.SOUTH);
 		pnlBeforeOptimization.add(pnlTitleBeforeOptimization, BorderLayout.NORTH);
 		pnlBeforeOptimization.add(pnlAlgorithms);
-		pnlBeforeOptimization.add(pnlSaveAlgorithms, BorderLayout.SOUTH);
+		pnlBeforeOptimization.add(pnlLoadExecuteAlgorithms, BorderLayout.SOUTH);
 		beforeOptimizationProcess.add(pnlBeforeOptimization);
 	}
 
@@ -215,6 +262,7 @@ public class AlgorithmSelectionSection {
 		algorithmsList.add(algorithmSMSEMOA);
 		algorithmsList.add(algorithmMOCell);
 		algorithmsList.add(algorithmPAES);
+		algorithmsList.add(algorithmRandomSearch);
 	}
 
 	private void algorithmsListener() {
