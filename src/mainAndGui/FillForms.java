@@ -72,8 +72,8 @@ public class FillForms {
 		} else {
 			for (int i = 0; i < problem.getNumberVariables(); i++) {
 				if (i < variablesList.size()) {
-					tblDecisionVariables.setValueAt(variablesList.get(0).getName(), 0, 0);
-					tblDecisionVariables.setValueAt(variablesList.get(0).getBinaryValue(), 0, 1);
+					tblDecisionVariables.setValueAt(variablesList.get(0).getName(), i, 0);
+					tblDecisionVariables.setValueAt(variablesList.get(0).getBinaryValue(), i, 1);
 				}
 			}
 		}
