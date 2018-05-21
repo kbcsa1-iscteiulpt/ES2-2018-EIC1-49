@@ -60,10 +60,10 @@ public class ExecutionProcess {
 	/**
 	 * This method compiles the script .R and shows the .eps file
 	 **/
-	public void compileAndShowEps() {
+	public void compileAndShowEps(UserProblem problem) {
 		String[] params = new String[2];
 		params[0] = config.getEpsRPath();
-		params[1] = config.getrPath();
+		params[1] = config.getRPath()+problem.getType().toString()+config.getRFilename();
 
 		String[] envp = new String[1];
 		envp[0] = config.getEpsEnviromentVar();
@@ -83,10 +83,10 @@ public class ExecutionProcess {
 	/**
 	 * This method compiles the script .tex and shows the .pdf file
 	 **/
-	public void compileAndShowPdf() {
+	public void compileAndShowPdf(UserProblem problem) {
 		String[] params = new String[2];
 		params[0] = config.getPdflatexPath();
-		params[1] = config.getLatexPath();
+		params[1] = config.getLatexPath()+problem.getType().toString()+".tex";
 
 		String[] envp = new String[1];
 		envp[0] = config.getPdfEnviromentVar();
@@ -94,7 +94,7 @@ public class ExecutionProcess {
 			Process p = Runtime.getRuntime().exec(params, envp, new File(config.getPdfDestinationPath()));
 			p.waitFor();
 
-			Runtime.getRuntime().exec("open " + config.getPdfOpenPath());
+			Runtime.getRuntime().exec("open " + config.getPdfOpenPath()+problem.getType().toString()+".pdf");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} catch (InterruptedException e1) {
@@ -129,30 +129,30 @@ public class ExecutionProcess {
 				return;
 			}
 			showGraphic(problem);
-			compileAndShowEps();
-			compileAndShowPdf();
-//		} catch (IOException e2) {
-//			try {
-//				emailHandler.sendEmail(adminEmail, email.getEmail().getText(), adminEmail, "There was a problem",
-//						"There was a problem running the problem you requested, please try again.\r\n"
-//								+ "If the problem continues, contact us so we can help");
-//				return;
-//			} catch (AddressException e1) {
-//			} catch (MessagingException e1) {
-//			}
-//		}
-//		try {
-//			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-//			Date date = new Date();
-//			String subject = "Otimiza��o em curso: " + nameDescription.getProblemName().getText() + " "
-//					+ dateFormat.format(date);
-//			emailHandler.sendEmail(adminEmail, email.getEmail().getText(), adminEmail, subject,
-//					"Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
-//							+ "sobre o progresso do processo de otimiza��o, quando o processo de otimiza��o tiver atingido 25%,\r\n"
-//							+ "50%, 75% do total do (n�mero de avalia��es ou) tempo estimado, e tamb�m quando o processo tiver\r\n"
-//							+ "terminado, com sucesso ou devido � ocorr�ncia de erros.");
-//		} catch (MessagingException e1) {
-//		}
+			compileAndShowEps(problem);
+			compileAndShowPdf(problem);
+		} catch (IOException e2) {
+			try {
+				emailHandler.sendEmail(adminEmail, email.getEmail().getText(), adminEmail, "There was a problem",
+						"There was a problem running the problem you requested, please try again.\r\n"
+								+ "If the problem continues, contact us so we can help");
+				return;
+			} catch (AddressException e1) {
+			} catch (MessagingException e1) {
+			}
+		}
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date date = new Date();
+			String subject = "Otimiza��o em curso: " + nameDescription.getProblemName().getText() + " "
+					+ dateFormat.format(date);
+			emailHandler.sendEmail(adminEmail, email.getEmail().getText(), adminEmail, subject,
+					"Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
+							+ "sobre o progresso do processo de otimiza��o, quando o processo de otimiza��o tiver atingido 25%,\r\n"
+							+ "50%, 75% do total do (n�mero de avalia��es ou) tempo estimado, e tamb�m quando o processo tiver\r\n"
+							+ "terminado, com sucesso ou devido � ocorr�ncia de erros.");
+		} catch (MessagingException e1) {
+		}
 	}
 
 }

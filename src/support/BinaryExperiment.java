@@ -34,7 +34,7 @@ public class BinaryExperiment {
 
 
     Experiment<BinarySolution, List<BinarySolution>> experiment =
-        new ExperimentBuilder<BinarySolution, List<BinarySolution>>("MyProblemBinaryExternalViaJAR")
+        new ExperimentBuilder<BinarySolution, List<BinarySolution>>("ProblemResultsBINARY")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setExperimentBaseDirectory(experimentBaseDirectory)

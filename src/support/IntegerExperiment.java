@@ -31,7 +31,7 @@ public class IntegerExperiment {
     List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = algorithmConf.configureIntegerAlgorithms(problemList,selectedAlgorithms);
 
     Experiment<IntegerSolution, List<IntegerSolution>> experiment =
-        new ExperimentBuilder<IntegerSolution, List<IntegerSolution>>("ExperimentsIntegerExternalViaJAR")
+        new ExperimentBuilder<IntegerSolution, List<IntegerSolution>>("ProblemResultsINTEGER")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setExperimentBaseDirectory(experimentBaseDirectory)

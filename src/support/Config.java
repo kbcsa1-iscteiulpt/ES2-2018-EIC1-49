@@ -52,6 +52,7 @@ public class Config {
 	//EPS Compiler
 	private String epsRPath;
 	private String rPath;
+	private String rFilename;
 	private String epsEnvironmentVar;
 	private String epsDestinationPath;
 	private String epsOpenPath;
@@ -112,8 +113,12 @@ public class Config {
 		return epsRPath;
 	}
 
-	public String getrPath() {
+	public String getRPath() {
 		return rPath;
+	}
+	
+	public String getRFilename() {
+		return rFilename;
 	}
 
 	public String getEpsEnviromentVar() {
@@ -197,6 +202,7 @@ public class Config {
 				this.epsRPath= epsPaths.getAttribute("epsRPath");
 				this.epsOpenPath = epsPaths.getAttribute("epsOpenPath");
 				this.rPath= epsPaths.getAttribute("rPath");
+				this.rFilename= epsPaths.getAttribute("rFilename");
 				
 				this.pdfDestinationPath= pdfPaths.getAttribute("pdfDestinationPath");
 				this.pdfLatexPath= pdfPaths.getAttribute("pdfLatexPath");

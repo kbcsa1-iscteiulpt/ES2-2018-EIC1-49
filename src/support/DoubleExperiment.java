@@ -32,7 +32,7 @@ public class DoubleExperiment {
     
     
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
-        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ExperimentsDouble")
+        new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ProblemResultsDOUBLE")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
             .setExperimentBaseDirectory(experimentBaseDirectory)
