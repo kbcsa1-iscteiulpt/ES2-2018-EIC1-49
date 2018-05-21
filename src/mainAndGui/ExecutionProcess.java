@@ -64,6 +64,7 @@ public class ExecutionProcess {
 		String[] params = new String[2];
 		params[0] = config.getEpsRPath();
 		params[1] = config.getRPath()+problem.getType().toString()+config.getRFilename();
+		System.out.println(config.getRPath()+problem.getType().toString()+config.getRFilename());
 
 		String[] envp = new String[1];
 		envp[0] = config.getEpsEnviromentVar();
@@ -88,6 +89,8 @@ public class ExecutionProcess {
 		params[0] = config.getPdflatexPath();
 		params[1] = config.getLatexPath()+problem.getType().toString()+config.getLatexFilename()+problem.getType().toString()+".tex";
 
+		System.out.println(config.getLatexPath()+problem.getType().toString()+config.getLatexFilename()+problem.getType().toString()+".tex");
+		
 		String[] envp = new String[1];
 		envp[0] = config.getPdfEnviromentVar();
 		try {
@@ -116,8 +119,8 @@ public class ExecutionProcess {
 		problem.setNumberVariables(decisionVariableNumber);
 		problem.setName(nameDescription.getProblemName().getText());
 		problem.setEmail(email.getEmail().getText());
-		try {
-			switch (dataType) {
+		try { 
+		 	switch (dataType) {
 			case DOUBLE:
 				new DoubleExperiment(problem,criteriaSection.getTxtJarPath().getText());
 				break;

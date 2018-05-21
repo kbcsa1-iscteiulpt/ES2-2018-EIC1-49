@@ -181,7 +181,7 @@ public class Interface {
 	 * Adds the type problem panel to the initial frame
 	 **/
 	private void problemType(JPanel initialPanel, DecisionVariablesSection decisionVariable, AlgorithmSelectionSection algorithmSelection) {
-		initialPanel.add(typeVarSection.setVarType(decisionVariable, algorithmSelection));
+		initialPanel.add(typeVarSection.setVarType(decisionVariable, problem, algorithmSelection));
 	}
 	/**
 	 * Adds the ideal and maximum time for optimization panel to the initial frame

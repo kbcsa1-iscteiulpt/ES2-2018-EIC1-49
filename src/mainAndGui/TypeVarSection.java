@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import problem.Type;
+import problem.UserProblem;
 /**
  * This class represents the section of the problem type.
  * @author Diana nr 72898
@@ -20,7 +21,7 @@ public class TypeVarSection {
 	/**
 	 * Returns a panel with a combo box for the user to select the problem type
 	 **/
-	public JPanel setVarType(DecisionVariablesSection decisionVariables, AlgorithmSelectionSection algorithmSelection) {
+	public JPanel setVarType(DecisionVariablesSection decisionVariables, UserProblem problem, AlgorithmSelectionSection algorithmSelection) {
 
 		JPanel pnlVarType = new JPanel(new FlowLayout());
 		JLabel lblTypeMandatory = new JLabel("*");
@@ -36,6 +37,7 @@ public class TypeVarSection {
 					dataType = Type.valueOf(data.toUpperCase());
 					decisionVariables.setDataType(dataType);
 					algorithmSelection.setDataType(dataType);
+					problem.setType(dataType);
 				if (decisionVariables.getTblDecisionVariables().getRowCount() == 0) {
 				} else {
 					while (decisionVariables.getDtmDecisionVariables().getRowCount() > 0) {
