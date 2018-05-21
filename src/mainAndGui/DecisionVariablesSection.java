@@ -41,6 +41,7 @@ public class DecisionVariablesSection {
 	private Type previousDataType = null;
 	private boolean filled = false;
 	private AlgorithmSelectionSection algorithmSelection;
+
 	/**
 	 * Returns a panel with a JSpinner to select the number of decision variables
 	 * and button. When clicked, a new frame is displayed to write the decision
@@ -54,8 +55,6 @@ public class DecisionVariablesSection {
 		btnDecisionVariables = new JButton("Decision Variables");
 		btnDecisionVariables.setContentAreaFilled(false);
 		decisionVarFrame = new JFrame("Decision Variables");
-		spnNumberOfDecisionVariables = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
-		txtNameOfDecisionVariablesGroup = new JTextField();
 		tblDecisionVariables = new JTable();
 		setDecisionFrame(decisionVarFrame, problem);
 		btnDecisionVariables.addActionListener(new ActionListener() {
@@ -99,6 +98,8 @@ public class DecisionVariablesSection {
 	private void setDecisionFrame(JFrame decisionVarFrame, UserProblem problem) {
 		JPanel pnlDecision = new JPanel(new BorderLayout());
 		JPanel pnlNameOfDecisionVariablesGroup = new JPanel();
+		spnNumberOfDecisionVariables = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
+		txtNameOfDecisionVariablesGroup = new JTextField();
 		JLabel lblNameOfDecisionVariablesGroup = new JLabel("Name of Decision Variable Group:");
 		txtNameOfDecisionVariablesGroup = new JTextField();
 		txtNameOfDecisionVariablesGroup.setColumns(15);
@@ -117,9 +118,13 @@ public class DecisionVariablesSection {
 		btnDecisionVariablesFinish.setIcon(icoFinish);
 		decisionVariablesFinish(problem, decisionVarFrame);
 
-		pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
-		pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
-		pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
+		if (dataType != null) {
+			if (!dataType.equals(Type.BINARY)) {
+				pnlNameOfDecisionVariablesGroup.add(lblNameOfDecisionVariablesGroup);
+				pnlNameOfDecisionVariablesGroup.add(txtNameOfDecisionVariablesGroup);
+				pnlDecision.add(pnlNameOfDecisionVariablesGroup, BorderLayout.NORTH);
+			}
+		}
 		pnlDecision.add(new JScrollPane(tblDecisionVariables), BorderLayout.CENTER);
 		pnlDecision.add(btnDecisionVariablesFinish, BorderLayout.PAGE_END);
 		decisionVarFrame.add(pnlDecision);
@@ -137,6 +142,7 @@ public class DecisionVariablesSection {
 			dtmDecisionVariables.addColumn("Name");
 			if (dataType.equals(Type.BINARY)) {
 				dtmDecisionVariables.addColumn("Value");
+				dtmDecisionVariables.addRow(new Object[] { "", "" });
 			} else {
 				dtmDecisionVariables.addColumn("Minimum Value");
 				dtmDecisionVariables.addColumn("Maximum Value");
@@ -164,7 +170,7 @@ public class DecisionVariablesSection {
 					for (int j = 0; j < nrRows; j++) {
 
 						if (dataType.equals(Type.BINARY)) {
-							dtmDecisionVariables.addRow(new Object[] { "" });
+							dtmDecisionVariables.addRow(new Object[] { "", "" });
 						} else {
 							dtmDecisionVariables.addRow(new Object[] { "", "", "", "" });
 						}
@@ -188,8 +194,8 @@ public class DecisionVariablesSection {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-			boolean varsReady = true;
-			boolean varsReadyToCheck = true;
+				boolean varsReady = true;
+				boolean varsReadyToCheck = true;
 				for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
 					if (dataType.equals(Type.BINARY)) {
 						if (dtmDecisionVariables.getValueAt(i, 0).toString().isEmpty()
@@ -264,26 +270,26 @@ public class DecisionVariablesSection {
 					}
 				}
 
-					if (varsReady) {
+				if (varsReady) {
 
-						if (tblDecisionVariables.getCellEditor() != null) {
-							tblDecisionVariables.getCellEditor().stopCellEditing();
+					if (tblDecisionVariables.getCellEditor() != null) {
+						tblDecisionVariables.getCellEditor().stopCellEditing();
+					}
+					if (dataType.equals(Type.BINARY)) {
+						for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
+							Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
+									dtmDecisionVariables.getValueAt(j, 1).toString());
+							problem.addVariable(variable);
 						}
-						if (dataType.equals(Type.BINARY)) {
-							for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
-								Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
-										dtmDecisionVariables.getValueAt(j, 1).toString());
-								problem.addVariable(variable);
-							}
-						} else {
-							for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
-								Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
-										dtmDecisionVariables.getValueAt(j, 1).toString(),
-										dtmDecisionVariables.getValueAt(j, 2).toString(),
-										dtmDecisionVariables.getValueAt(j, 3).toString());
-								problem.addVariable(variable);
-							}
+					} else {
+						for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
+							Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
+									dtmDecisionVariables.getValueAt(j, 1).toString(),
+									dtmDecisionVariables.getValueAt(j, 2).toString(),
+									dtmDecisionVariables.getValueAt(j, 3).toString());
+							problem.addVariable(variable);
 						}
+					}
 					algorithmSelection.setNumberDecisionVariables(
 							Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
 					algorithmSelection.setDecisionVariablesGroupName(txtNameOfDecisionVariablesGroup.getText());
