@@ -45,12 +45,15 @@ public class AlgorithmSelectionSection {
 	public EmailHandler emailHandler;
 	public String adminEmail;
 	private ExecutionProcess execute;
+	private int decisionVariablesNumber;
+	private String decisionVariablesGroupName;
+	private TimeOptimizationSection time;
 
-	public JPanel algorithmSelection(NameDescriptionSection nameDescription, EmailSection email, UserProblem problem,
-			TypeVarSection typeVarSection, EmailHandler support, String adminEmail) {
-		this.dataType = typeVarSection.getDataType();
+	public JPanel algorithmSelection(NameDescriptionSection nameDescription, EmailSection email,
+			TimeOptimizationSection time, UserProblem problem, EmailHandler support, String adminEmail) {
 		this.nameDescription = nameDescription;
 		this.email = email;
+		this.time = time;
 		JPanel executeProcessPanel = new JPanel(new FlowLayout());
 		algorithmsList = new ArrayList<JCheckBox>();
 		algorithmsSelectedList = new ArrayList<String>();
@@ -79,16 +82,35 @@ public class AlgorithmSelectionSection {
 				if (nameDescription.getProblemName().getText().isEmpty()
 						|| nameDescription.getProblemDescription().getText().isEmpty()
 						|| !email.getBtnWriteEmail().isEnabled() || dataType == null) {
-					JOptionPane.showMessageDialog(null, "Please fill all the mandatory fields", "Warning",
+					JOptionPane.showMessageDialog(null, "Please fill all fields!", "Warning",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					execute =  new ExecutionProcess();
-					beforeOptimizationProcess = new JFrame("Select the algorithm");
-					FrameSize.setFrame(beforeOptimizationProcess, 0.25);
-					setBeforeOptimizationProcess(beforeOptimizationProcess, problem);
-					beforeOptimizationProcess.setVisible(true);
+					if (timeCheck()) {
+						execute = new ExecutionProcess();
+						beforeOptimizationProcess = new JFrame("Select the algorithm");
+						FrameSize.setFrame(beforeOptimizationProcess, 0.25);
+						setBeforeOptimizationProcess(beforeOptimizationProcess, problem);
+						beforeOptimizationProcess.setVisible(true);
+					}
 				}
 
+			}
+
+			private boolean timeCheck() {
+				if ((Integer.parseInt(time.getSpnIdealNumberOfDays().getValue().toString()) == 0
+						&& Integer.parseInt(time.getSpnIdealNumberOfHours().getValue().toString()) == 0
+						&& Integer.parseInt(time.getSpnIdealNumberOfMinutes().getValue().toString()) == 0)
+						|| (Integer.parseInt(time.getSpnMaxNumberOfDays().getValue().toString()) == 0
+								&& Integer.parseInt(time.getSpnMaxNumberOfHours().getValue().toString()) == 0
+								&& Integer.parseInt(time.getSpnMaxNumberOfMinutes().getValue().toString()) == 0)
+
+				) {
+					JOptionPane.showMessageDialog(null, "Please fill the maximum and ideal time", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+					return false;
+				} else {
+					return true;
+				}
 			}
 		});
 	}
@@ -104,10 +126,11 @@ public class AlgorithmSelectionSection {
 		btnSaveAlgorithms = new JButton("Start the optimization process");
 		btnSaveAlgorithms.setContentAreaFilled(false);
 		btnSaveAlgorithms.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				execute.executeOptimization(problem, nameDescription, email, decisionVariables, emailHandler, adminEmail);
+				execute.executeOptimization(problem, nameDescription, email, decisionVariablesNumber,
+						decisionVariablesGroupName, emailHandler, adminEmail, dataType);
 			}
 		});
 		pnlTitleBeforeOptimization.add(lblBeforeOptimization);
@@ -202,8 +225,15 @@ public class AlgorithmSelectionSection {
 		}
 	}
 
-	
 	public void setDataType(Type type) {
 		dataType = type;
+	}
+
+	public void setNumberDecisionVariables(int value) {
+		this.decisionVariablesNumber = value;
+	}
+
+	public void setDecisionVariablesGroupName(String text) {
+		this.decisionVariablesGroupName = text;
 	}
 }

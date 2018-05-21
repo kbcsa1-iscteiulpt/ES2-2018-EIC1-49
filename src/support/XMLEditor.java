@@ -1,6 +1,6 @@
 package support;
 
-import java.io.File; 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
@@ -17,102 +17,91 @@ import problem.Type;
 import problem.Variable;
 
 /**
- * Editor of XML
- * Reads and writes a XML file, using the Problem class
+ * Editor of XML Reads and writes a XML file, using the Problem class
  * 
  * @author Kevin Corrales nr 73529
  *
  */
 public class XMLEditor {
-	
-		
-		/**
-		 * Reads a XML file from the received path and creates a Problem(Class) 
-		 * 
-		 * @param path of xml file
-		 * @return Problem
-		 */
-		public UserProblem read(String path) {
-			UserProblem problem = new UserProblem();
-			try {
 
-				File fXmlFile = new File(path);
-				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-				Document doc = dBuilder.parse(fXmlFile);
+	/**
+	 * Reads a XML file from the received path and creates a Problem(Class)
+	 * 
+	 * @param path
+	 *            of xml file
+	 * @return Problem
+	 */
+	public UserProblem read(String path) {
+		UserProblem problem = new UserProblem();
+		try {
 
-				doc.getDocumentElement().normalize();
-							
-				NodeList nodeList = doc.getElementsByTagName("problem");
-				
-				for (int k = 0; k < nodeList.getLength(); k++) {
-					Node node = nodeList.item(k);
-					
-					if (node.getNodeType() == Node.ELEMENT_NODE) {
+			File fXmlFile = new File(path);
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+			Document doc = dBuilder.parse(fXmlFile);
 
-						Element prob = (Element) node;
-							
-						Element time =(Element) prob.getElementsByTagName("time").item(0);
-						Element maxTime = (Element)time.getElementsByTagName("max").item(0);
-						Element idealTime = (Element)time.getElementsByTagName("ideal").item(0);
-						Element variables = (Element) prob.getElementsByTagName("groupVariables").item(0);
-						
-						List<Variable> problemVariables = new ArrayList<Variable>();
-						NodeList varList = variables.getElementsByTagName("variable");
-						for (int i = 0; i < varList.getLength(); i++) {
-							
-							Element varElement = (Element) varList.item(i);
-							Variable var=null;
-							if(prob.getAttribute("type").equals("BINARY")) {
-								var = new Variable(new BitSet(1100));
-								problemVariables.add(var);
-								break;
-							}else {
-								var = new Variable(
-									varElement.getAttribute("variableName"),
-									varElement.getAttribute("variableMin"),
-									varElement.getAttribute("variableMax"),
-									varElement.getAttribute("variableRestriction")
-									);
-							}	
-							problemVariables.add(var);
-							
+			doc.getDocumentElement().normalize();
+
+			NodeList nodeList = doc.getElementsByTagName("problem");
+
+			for (int k = 0; k < nodeList.getLength(); k++) {
+				Node node = nodeList.item(k);
+
+				if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+					Element prob = (Element) node;
+
+					Element time = (Element) prob.getElementsByTagName("time").item(0);
+					Element maxTime = (Element) time.getElementsByTagName("max").item(0);
+					Element idealTime = (Element) time.getElementsByTagName("ideal").item(0);
+					Element variables = (Element) prob.getElementsByTagName("groupVariables").item(0);
+
+					List<Variable> problemVariables = new ArrayList<Variable>();
+					NodeList varList = variables.getElementsByTagName("variable");
+					for (int i = 0; i < varList.getLength(); i++) {
+
+						Element varElement = (Element) varList.item(i);
+						Variable var = null;
+						if (!prob.getAttribute("type").toUpperCase().equals("BINARY")) {
+							var = new Variable(varElement.getAttribute("variableName"),
+									varElement.getAttribute("variableMin"), varElement.getAttribute("variableMax"),
+									varElement.getAttribute("variableRestriction"));
+						} else {
+							var = new Variable(varElement.getAttribute("variableName"),
+									varElement.getAttribute("binaryValue"));
 						}
-						System.out.println(problemVariables.size());
-						
-						problem = new UserProblem(
-								prob.getAttribute("name"),
-								prob.getAttribute("description"),
-								prob.getAttribute("email"),
-								new Time(Integer.parseInt(maxTime.getAttribute("maxdays")),
-										Integer.parseInt(maxTime.getAttribute("maxhours")),
-										Integer.parseInt(maxTime.getAttribute("maxminutes"))),
-								new Time(Integer.parseInt(idealTime.getAttribute("idealdays")),
-										Integer.parseInt(idealTime.getAttribute("idealhours")),
-										Integer.parseInt(idealTime.getAttribute("idealminutes"))),
-								Type.valueOf(prob.getAttribute("type").toUpperCase()),
-								variables.getAttribute("groupName"),
-								Integer.parseInt(variables.getAttribute("numberVariables")),
-								problemVariables
-								);
+						problemVariables.add(var);
+
 					}
+
+					problem = new UserProblem(prob.getAttribute("name"), prob.getAttribute("description"),
+							prob.getAttribute("email"),
+							new Time(Integer.parseInt(maxTime.getAttribute("maxdays")),
+									Integer.parseInt(maxTime.getAttribute("maxhours")),
+									Integer.parseInt(maxTime.getAttribute("maxminutes"))),
+							new Time(Integer.parseInt(idealTime.getAttribute("idealdays")),
+									Integer.parseInt(idealTime.getAttribute("idealhours")),
+									Integer.parseInt(idealTime.getAttribute("idealminutes"))),
+							Type.valueOf(prob.getAttribute("type").toUpperCase()), variables.getAttribute("groupName"),
+							Integer.parseInt(variables.getAttribute("numberVariables")), problemVariables);
 				}
-			
-			    } catch (Exception e) {
-				e.printStackTrace();
-			    }
-			
-			return problem;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return problem;
 	}
-		
-	
+
 	/**
 	 * Writes the Problem into XML file
 	 * 
-	 * @param path of file
+	 * @param path
+	 *            of file
 	 * @param problem
 	 */
-	public void write(String path,UserProblem problem) {
+	public void write(String path, UserProblem problem) {
 		try {
 
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -129,40 +118,44 @@ public class XMLEditor {
 			doc.appendChild(probTag);
 
 			// Problem elements
-			
+
 			Element timeTag = doc.createElement("time");
 			probTag.appendChild(timeTag);
-			
+
 			Element groupTag = doc.createElement("groupVariables");
 			groupTag.setAttribute("groupName", problem.getGroupName());
 			groupTag.setAttribute("numberVariables", Integer.toString(problem.getNumberVariables()));
 			probTag.appendChild(groupTag);
-			
+
 			// Time Elements
 			Element maxTimeTag = doc.createElement("max");
 			maxTimeTag.setAttribute("maxdays", Integer.toString(problem.getMax().getDays()));
 			maxTimeTag.setAttribute("maxhours", Integer.toString(problem.getMax().getHours()));
 			maxTimeTag.setAttribute("maxminutes", Integer.toString(problem.getMax().getMinutes()));
 			timeTag.appendChild(maxTimeTag);
-			
+
 			Element idealTimeTag = doc.createElement("ideal");
 			idealTimeTag.setAttribute("idealdays", Integer.toString(problem.getIdeal().getDays()));
 			idealTimeTag.setAttribute("idealhours", Integer.toString(problem.getIdeal().getHours()));
 			idealTimeTag.setAttribute("idealminutes", Integer.toString(problem.getIdeal().getMinutes()));
 			timeTag.appendChild(idealTimeTag);
-			
+
 			// Group Variables elements
-			for(int i=0;i<problem.getNumberVariables() && i<problem.getVariables().size();i++) {
+			for (int i = 0; i < problem.getNumberVariables() && i < problem.getVariables().size(); i++) {
 				Variable var = problem.getVariables().get(i);
-				
+
 				Element varTag = doc.createElement("variable");
 				varTag.setAttribute("variableName", var.getName());
-				varTag.setAttribute("variableMin",var.getMinRange());
-				varTag.setAttribute("variableMax",var.getMaxRange());
-				varTag.setAttribute("variableRestriction",var.getRestriction());
+				if (problem.getType() != Type.BINARY) {
+					varTag.setAttribute("variableMin", var.getMinRange());
+					varTag.setAttribute("variableMax", var.getMaxRange());
+				} else {
+					varTag.setAttribute("binaryValue", var.getBinaryValue());
+				}
+				varTag.setAttribute("variableRestriction", var.getRestriction());
 				groupTag.appendChild(varTag);
 			}
-			
+
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
@@ -172,19 +165,11 @@ public class XMLEditor {
 
 			System.out.println("File saved!");
 
-		  } catch (ParserConfigurationException pce) {
+		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
-		  } catch (TransformerException tfe) {
+		} catch (TransformerException tfe) {
 			tfe.printStackTrace();
-		  }
+		}
 	}
-	
-	
-	
-		
-	
-	
-	
-	
 
 }

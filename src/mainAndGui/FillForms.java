@@ -49,7 +49,9 @@ public class FillForms {
 		tblDecisionVariables = decisionVariables.getTblDecisionVariables();
 		tblDecisionVariables.setModel(dtmDecisionVariables);
 		dtmDecisionVariables.addColumn("Name");
-		if (!problem.getType().equals(Type.BINARY)) {
+		if (problem.getType().equals(Type.BINARY)) {
+			dtmDecisionVariables.addColumn("Value");
+		} else {
 			dtmDecisionVariables.addColumn("Minimum Value");
 			dtmDecisionVariables.addColumn("Maximum Value");
 			dtmDecisionVariables.addColumn("Restrictions");
@@ -69,6 +71,7 @@ public class FillForms {
 			for (int i = 0; i < problem.getNumberVariables(); i++) {
 				if (i < variablesList.size()) {
 					tblDecisionVariables.setValueAt(variablesList.get(i).getName(), i, 0);
+					tblDecisionVariables.setValueAt(variablesList.get(i).getBinaryValue(), i, 1);
 				}
 			}
 		}

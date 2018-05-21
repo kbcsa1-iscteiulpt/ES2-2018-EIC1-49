@@ -17,6 +17,7 @@ public class Variable {
 	private String restriction;
 
 	private BitSet bits = new BitSet();
+	private String binaryValue;
 
 	public Variable(String name, String minRange, String maxRange, String restriction) {
 		super();
@@ -26,12 +27,9 @@ public class Variable {
 		this.restriction = restriction;
 	}
 
-	public Variable(BitSet bits) {
-		this.bits = bits;
-	}
-
-	public Variable(String name) {
+	public Variable(String name, String binaryValue) {
 		this.name = name;
+		this.binaryValue = binaryValue;
 	}
 
 	public BitSet getBits() {
@@ -40,6 +38,10 @@ public class Variable {
 
 	public String getName() {
 		return name;
+	}
+	
+	public String getBinaryValue() {
+		return binaryValue;
 	}
 
 	public String getMinRange() {

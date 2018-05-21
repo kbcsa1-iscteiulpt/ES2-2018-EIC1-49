@@ -133,7 +133,8 @@ public class SaveSection {
 			if (type.getDataType().equals(Type.BINARY)) {
 				for (int i = 0; i < numberOfRows; i++) {
 					String decisionVariableName = decisionVariableName(dtmDecisionVariables, i);
-					variablesList.add(new Variable(decisionVariableName));
+					String decisionVariableBinaryValue= decisionVariableBinaryValue(dtmDecisionVariables, i);
+					variablesList.add(new Variable(decisionVariableName, decisionVariableBinaryValue));
 				}
 			} else {
 				for (int i = 0; i < numberOfRows; i++) {
@@ -147,6 +148,13 @@ public class SaveSection {
 			}
 		}
 		return variablesList;
+	}
+
+	private String decisionVariableBinaryValue(DefaultTableModel dtmDecisionVariables, int i) {
+		String decisionVariableValueBinary= "";
+		if (dtmDecisionVariables.getValueAt(i, 1).toString() != null)
+			decisionVariableValueBinary= dtmDecisionVariables.getValueAt(i, 1).toString();
+		return decisionVariableValueBinary;
 	}
 
 	/**

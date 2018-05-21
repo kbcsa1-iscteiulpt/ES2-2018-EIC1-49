@@ -26,6 +26,7 @@ import problem.Variable;
 
 /**
  * This class represents the section of the problem decision variables.
+ * 
  * @author Diana nr 72898
  **/
 public class DecisionVariablesSection {
@@ -37,8 +38,9 @@ public class DecisionVariablesSection {
 	private JButton btnDecisionVariablesFinish;
 	private JFrame decisionVarFrame;
 	private Type dataType = null;
+	private Type previousDataType = null;
 	private boolean filled = false;
-
+	private AlgorithmSelectionSection algorithmSelection;
 	/**
 	 * Returns a panel with a JSpinner to select the number of decision variables
 	 * and button. When clicked, a new frame is displayed to write the decision
@@ -46,7 +48,8 @@ public class DecisionVariablesSection {
 	 * 
 	 **/
 
-	public JPanel decisionVarPanel(UserProblem problem, JFrame frame) {
+	public JPanel decisionVarPanel(UserProblem problem, JFrame frame, AlgorithmSelectionSection algorithmSelection) {
+		this.algorithmSelection = algorithmSelection;
 		JPanel pnlDecisionVar = new JPanel(new FlowLayout());
 		btnDecisionVariables = new JButton("Decision Variables");
 		btnDecisionVariables.setContentAreaFilled(false);
@@ -60,10 +63,16 @@ public class DecisionVariablesSection {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (dataType != null) {
-
 					if (filled == false) {
-						decisionVarFrame = new JFrame("Decision Variables");
-						setDecisionFrame(decisionVarFrame, problem);
+						if (previousDataType == null) {
+							decisionVarFrame = new JFrame("Decision Variables");
+							setDecisionFrame(decisionVarFrame, problem);
+							previousDataType = dataType;
+						} else if (!previousDataType.equals(dataType)) {
+							decisionVarFrame = new JFrame("Decision Variables");
+							setDecisionFrame(decisionVarFrame, problem);
+							previousDataType = dataType;
+						}
 					}
 					FrameSize.setFrame(decisionVarFrame, 0.5);
 					decisionVarFrame.setVisible(true);
@@ -126,7 +135,9 @@ public class DecisionVariablesSection {
 
 		if (dataType != null) {
 			dtmDecisionVariables.addColumn("Name");
-			if (!dataType.equals(Type.BINARY)) {
+			if (dataType.equals(Type.BINARY)) {
+				dtmDecisionVariables.addColumn("Value");
+			} else {
 				dtmDecisionVariables.addColumn("Minimum Value");
 				dtmDecisionVariables.addColumn("Maximum Value");
 				dtmDecisionVariables.addColumn("Restrictions");
@@ -177,17 +188,28 @@ public class DecisionVariablesSection {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				boolean varsReadyToCheck = true;
-				boolean varsReady = true;
+			boolean varsReady = true;
+			boolean varsReadyToCheck = true;
 				for (int i = 0; i < tblDecisionVariables.getRowCount(); i++) {
 					if (dataType.equals(Type.BINARY)) {
-						if (dtmDecisionVariables.getValueAt(i, 0).toString().equals("")) {
-							JOptionPane.showMessageDialog(null, "Please fill the variable name", "Warning",
+						if (dtmDecisionVariables.getValueAt(i, 0).toString().isEmpty()
+								|| dtmDecisionVariables.getValueAt(i, 1).toString().isEmpty()
+								|| dtmDecisionVariables.getValueAt(i, 0).toString().equals("")
+								|| dtmDecisionVariables.getValueAt(i, 1).toString().equals("")) {
+							JOptionPane.showMessageDialog(null, "Please fill the variable name and value", "Warning",
 									JOptionPane.WARNING_MESSAGE);
 							varsReady = false;
 							varsReadyToCheck = false;
 							break;
 						}
+						if (!isBinary(dtmDecisionVariables.getValueAt(i, 1).toString())) {
+							JOptionPane.showMessageDialog(null, "Remember that the variable value must be binary!",
+									"Warning", JOptionPane.WARNING_MESSAGE);
+							varsReady = false;
+							varsReadyToCheck = false;
+							break;
+						}
+
 					} else {
 						if (dtmDecisionVariables.getValueAt(i, 0).toString().equals("")
 								|| dtmDecisionVariables.getValueAt(i, 1).toString().equals("")
@@ -197,6 +219,26 @@ public class DecisionVariablesSection {
 							varsReady = false;
 							varsReadyToCheck = false;
 							break;
+						}
+						if (dataType.equals(Type.INTEGER)) {
+							if (!isInteger(dtmDecisionVariables.getValueAt(i, 1).toString())
+									|| !isInteger(dtmDecisionVariables.getValueAt(i, 2).toString())) {
+								JOptionPane.showMessageDialog(null,
+										"Remember that the variable values must be integer!", "Warning",
+										JOptionPane.WARNING_MESSAGE);
+								varsReady = false;
+								varsReadyToCheck = false;
+								break;
+							}
+						} else {
+							if (!isDouble(dtmDecisionVariables.getValueAt(i, 1).toString())
+									|| !isDouble(dtmDecisionVariables.getValueAt(i, 2).toString())) {
+								JOptionPane.showMessageDialog(null, "Remember that the variable values must be double!",
+										"Warning", JOptionPane.WARNING_MESSAGE);
+								varsReady = false;
+								varsReadyToCheck = false;
+								break;
+							}
 						}
 						if (varsReadyToCheck) {
 							for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
@@ -210,9 +252,17 @@ public class DecisionVariablesSection {
 									varsReady = false;
 									break;
 								}
+								if (maxValue < minValue) {
+									JOptionPane.showMessageDialog(null,
+											"The maximum value should be greater than the minimum value", "Warning",
+											JOptionPane.WARNING_MESSAGE);
+									varsReady = false;
+									break;
+								}
 							}
 						}
 					}
+				}
 
 					if (varsReady) {
 
@@ -221,7 +271,8 @@ public class DecisionVariablesSection {
 						}
 						if (dataType.equals(Type.BINARY)) {
 							for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
-								Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString());
+								Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
+										dtmDecisionVariables.getValueAt(j, 1).toString());
 								problem.addVariable(variable);
 							}
 						} else {
@@ -233,11 +284,53 @@ public class DecisionVariablesSection {
 								problem.addVariable(variable);
 							}
 						}
-					}
+					algorithmSelection.setNumberDecisionVariables(
+							Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
+					algorithmSelection.setDecisionVariablesGroupName(txtNameOfDecisionVariablesGroup.getText());
+
 					decisionVarFrame.dispose();
 				}
 			}
+
 		});
+	}
+
+	public boolean isInteger(String number) {
+		try {
+			Integer.parseInt(number);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	private boolean isDouble(String number) {
+		try {
+			Integer.parseInt(number);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	public boolean isBinary(String number) {
+		if (isInteger(number)) {
+			int copyOfInput = Integer.parseInt(number);
+			if (copyOfInput < 0) {
+				return false;
+			} else {
+				while (copyOfInput != 0) {
+					if (copyOfInput % 10 > 1) {
+						return false;
+					}
+					copyOfInput = copyOfInput / 10;
+				}
+				return true;
+			}
+		} else {
+			return false;
+		}
+
 	}
 
 	public JSpinner getSpnNumberOfDecisionVariables() {
@@ -261,6 +354,7 @@ public class DecisionVariablesSection {
 	}
 
 	public void setDataType(Type dataType) {
+		this.previousDataType = this.dataType;
 		this.dataType = dataType;
 	}
 

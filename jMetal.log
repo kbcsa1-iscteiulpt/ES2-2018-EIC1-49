@@ -1,37 +1,37 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-18T18:00:35</date>
-  <millis>1526662835417</millis>
+  <date>2018-05-21T16:38:45</date>
+  <millis>1526917125796</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>13</thread>
+  <thread>17</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-18T18:00:35</date>
-  <millis>1526662835439</millis>
+  <date>2018-05-21T16:38:45</date>
+  <millis>1526917125816</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
-  <thread>13</thread>
+  <thread>17</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-18T18:00:35</date>
-  <millis>1526662835446</millis>
+  <date>2018-05-21T16:38:45</date>
+  <millis>1526917125823</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>13</thread>
+  <thread>17</thread>
   <message> Running algorithm: NSGAII, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/MyProblemBinaryExternalViaJAR/data/NSGAII/BinaryProblem/FUN0.tsv</message>
 </record>
 </log>

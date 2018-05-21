@@ -140,7 +140,7 @@ public class Interface {
 		problemUserEmail(frame, initialPanel, support, adminEmail, helpSection);
 		problemTime(initialPanel);
 		problemType(initialPanel, decisionVariablesSection, algorithmSelectionSection);
-		problemDecisionVariables(initialPanel, frame);
+		problemDecisionVariables(initialPanel, frame, algorithmSelectionSection);
 
 		problemSave(initialPanel, typeVarSection);
 		problemCriteria(initialPanel);
@@ -194,8 +194,8 @@ public class Interface {
 	/**
 	 * Adds the decision variable panel to the initial frame
 	 **/
-	private void problemDecisionVariables(JPanel initialPanel, JFrame frame) {
-		initialPanel.add(decisionVariablesSection.decisionVarPanel(problem, frame));
+	private void problemDecisionVariables(JPanel initialPanel, JFrame frame, AlgorithmSelectionSection algorithmSelection) {
+		initialPanel.add(decisionVariablesSection.decisionVarPanel(problem, frame, algorithmSelection));
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class Interface {
 	 * Adds the algorithm selection panel to the initial frame
 	 **/
 	private void problemAlgorithmSelection(JPanel initialPanel) {
-		initialPanel.add(algorithmSelectionSection.algorithmSelection(nameDescriptionSection, emailSection, problem, typeVarSection, support, adminEmail));
+		initialPanel.add(algorithmSelectionSection.algorithmSelection(nameDescriptionSection, emailSection, timeOptimizationSection, problem, support, adminEmail));
 	}
 
 	public JButton getBtnReadProblem() {

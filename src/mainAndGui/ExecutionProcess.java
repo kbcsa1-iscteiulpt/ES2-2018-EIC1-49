@@ -44,7 +44,6 @@ import support.EmailHandler;
  **/
 public class ExecutionProcess {
 
-	private Type dataType;
 	private Config config = new Config();
 
 	/**
@@ -80,6 +79,7 @@ public class ExecutionProcess {
 			e1.printStackTrace();
 		}
 	}
+
 	/**
 	 * This method compiles the script .tex and shows the .pdf file
 	 **/
@@ -103,13 +103,16 @@ public class ExecutionProcess {
 	}
 
 	/**
-	 * Executes the optimization process according to the selected algorithm and calls the method to show the graphics and the .eps and .pdf files. 
+	 * Executes the optimization process according to the selected algorithm and
+	 * calls the method to show the graphics and the .eps and .pdf files.
+	 * 
+	 * @param dataType2
 	 **/
 	public void executeOptimization(UserProblem problem, NameDescriptionSection nameDescription, EmailSection email,
-			DecisionVariablesSection decisionVariables, EmailHandler emailHandler, String adminEmail) {
-		problem.setGroupName(decisionVariables.getTxtNameOfDecisionVariablesGroup().getText());
-		problem.setNumberVariables(
-				Integer.parseInt(decisionVariables.getSpnNumberOfDecisionVariables().getValue().toString()));
+			int decisionVariableNumber, String decisionVariableGroupName, EmailHandler emailHandler, String adminEmail,
+			Type dataType) {
+		problem.setGroupName(decisionVariableGroupName);
+		problem.setNumberVariables(decisionVariableNumber);
 		try {
 			switch (dataType) {
 			case DOUBLE:
@@ -149,10 +152,6 @@ public class ExecutionProcess {
 							+ "terminado, com sucesso ou devido � ocorr�ncia de erros.");
 		} catch (MessagingException e1) {
 		}
-	}
-	
-	public void setDataType(Type type) {
-		this.dataType = type;
 	}
 
 }

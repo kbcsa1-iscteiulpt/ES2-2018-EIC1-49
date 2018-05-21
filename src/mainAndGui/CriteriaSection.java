@@ -1,6 +1,7 @@
 package mainAndGui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -48,7 +49,7 @@ public class CriteriaSection {
 		btnCriteria = new JButton("Criteria to be optimized");
 		btnCriteria.setContentAreaFilled(false);
 		JFrame criteriaFrame = new JFrame("Criterias");
-		FrameSize.setFrame(criteriaFrame, 1);
+		FrameSize.setFrame(criteriaFrame, 0.75);
 		setCriteriaFrame(criteriaFrame, problem);
 		btnCriteria.addActionListener(new ActionListener() {
 
@@ -81,6 +82,7 @@ public class CriteriaSection {
 		pnlAddCriteria.add(btnAddCriteria);
 		pnlAddCriteria.add(btnRemoveCriteria);
 		pnlCriteriaList.add(lblInform);
+		pnlCriteriaList.add(jarPanel());
 		pnlCriteriaList.add(addCriteriaPanel());
 		pnlCriteriaFinish.add(btnCriteriaFinish);
 
@@ -88,6 +90,19 @@ public class CriteriaSection {
 		pnlCriteria.add(pnlCriteriaList);
 		pnlCriteria.add(pnlCriteriaFinish, BorderLayout.PAGE_END);
 		criteriaFrame.add(new JScrollPane(pnlCriteria));
+	}
+
+	private JPanel jarPanel() {
+		JPanel pnlAddJar = new JPanel();
+		JLabel lblJarPath = new JLabel("Jar Path");
+		JTextField txtJarPath = new JTextField();
+		txtJarPath.setColumns(30);
+		btnReadJar = new JButton("Add jar");
+		pnlAddJar.add(lblJarPath);
+		pnlAddJar.add(txtJarPath);
+		pnlAddJar.add(btnReadJar);
+		criteriaJarRead(txtJarPath, pnlAddJar);
+		return pnlAddJar;
 	}
 
 	/**
@@ -185,29 +200,21 @@ public class CriteriaSection {
 		JPanel pnlCriteria = new JPanel();
 		pnlCriteria.setName(Integer.toString(criteriaAdded));
 		JPanel pnlCriteriaName = new JPanel();
-		JPanel pnlCriteriaJar = new JPanel();
 		JPanel pnlCriteriaDataType = new JPanel();
-
-		JLabel lblCriteriaName = new JLabel("Criteria Name:");
 		txtCriteriaName = new JTextField();
-		JLabel lblJarPath = new JLabel("Jar Path");
-		JTextField txtJarPath = new JTextField();
 
+		
 		List<String> listOfComponents = new ArrayList<String>();
 		listOfComponents.add(txtCriteriaName.getText());
-		listOfComponents.add(txtJarPath.getText());
 		criteriaPanel.put(pnlCriteria.getName(), listOfComponents);
 
 		criteriaName(txtCriteriaName, pnlCriteria);
-		criteriaJarPath(txtJarPath, pnlCriteria);
-		btnReadJar = new JButton("Add jar");
-		criteriaJarRead(txtJarPath, pnlCriteria);
+		JPanel pnlCriteriaJar = new JPanel();
+		JLabel lblCriteriaName = new JLabel("Criteria Name:");
+		
 
 		pnlCriteriaName.add(lblCriteriaName);
 		pnlCriteriaName.add(txtCriteriaName);
-		pnlCriteriaJar.add(lblJarPath);
-		pnlCriteriaJar.add(txtJarPath);
-		pnlCriteriaJar.add(btnReadJar);
 		pnlCriteria.add(pnlCriteriaName);
 		pnlCriteria.add(pnlCriteriaJar);
 		pnlCriteria.add(pnlCriteriaDataType);
