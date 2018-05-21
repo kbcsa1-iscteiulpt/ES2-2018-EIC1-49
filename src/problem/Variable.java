@@ -51,12 +51,6 @@ public class Variable {
 				bits.set(i+bitIndex);
 		}
 		bitIndex+= bitString.length();
-		System.out.println("added bit "+ bits.get(0));
-		System.out.println("added bit "+ bits.get(1));
-		System.out.println("added bit "+ bits.get(2));
-		System.out.println("added bit "+ bits.get(3));
-		System.out.println("added bit "+ bits.get(4));
-		System.out.println("added bit "+ bits.get(5));
 	}
 	
 	
