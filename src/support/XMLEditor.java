@@ -73,7 +73,7 @@ public class XMLEditor {
 									varElement.getAttribute("binaryValue"));
 							for(int j=1;j<varList.getLength();j++) {
 								Element varAux = (Element) varList.item(j);
-//								System.out.println("hey"+varAux.getAttribute("binaryValue"));
+								System.out.println("hey"+varAux.getAttribute("binaryValue"));
 								var.addBits(varAux.getAttribute("binaryValue"));
 							}
 						}

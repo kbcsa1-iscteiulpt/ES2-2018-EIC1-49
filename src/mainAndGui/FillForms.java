@@ -42,10 +42,12 @@ public class FillForms {
 	 * Fills the decision variable table with the data from a XML file.
 	 **/
 	public void fillDecisionVariableForm(DecisionVariablesSection decisionVariables, UserProblem problem) {
-		if (!problem.getType().equals(Type.BINARY)) {
-			decisionVariables.getTxtNameOfDecisionVariablesGroup().setText(problem.getGroupName());
+		if(!problem.getType().equals(Type.BINARY)){
 			decisionVariables.getSpnNumberOfDecisionVariables().setValue(problem.getNumberVariables());
+		}else {
+			decisionVariables.getSpnNumberOfDecisionVariables().setValue(1);
 		}
+			decisionVariables.getTxtNameOfDecisionVariablesGroup().setText(problem.getGroupName());
 		dtmDecisionVariables = decisionVariables.getDtmDecisionVariables();
 		dtmDecisionVariables.setColumnCount(0);
 		tblDecisionVariables = decisionVariables.getTblDecisionVariables();
@@ -70,6 +72,7 @@ public class FillForms {
 				}
 			}
 		} else {
+			System.out.println(problem.getNumberVariables()+"+++++");
 			for (int i = 0; i < problem.getNumberVariables(); i++) {
 				if (i < variablesList.size()) {
 					tblDecisionVariables.setValueAt(variablesList.get(0).getName(), i, 0);
