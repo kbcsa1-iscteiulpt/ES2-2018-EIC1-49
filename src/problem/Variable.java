@@ -17,6 +17,7 @@ public class Variable {
 	private String restriction;
 
 	private BitSet bits = new BitSet();
+	private int bitIndex=0;
 	private String binaryValue;
 
 	public Variable(String name, String minRange, String maxRange, String restriction) {
@@ -30,11 +31,35 @@ public class Variable {
 	public Variable(String name, String binaryValue) {
 		this.name = name;
 		this.binaryValue = binaryValue;
+		System.out.println(binaryValue);
+		for(int i=0;i<binaryValue.length();i++) {
+			if(binaryValue.charAt(i) == '1')
+				bits.set(i);
+		}
+		System.out.println("bits "+bits.get(1));
+		bitIndex= binaryValue.length();
 	}
 
 	public BitSet getBits() {
 		return bits;
 	}
+	
+	public void addBits(String bitString) {
+		System.out.println("adding"+bitString);
+		for(int i=0; i<bitString.length();i++) {
+			if(bitString.charAt(i) == '1')
+				bits.set(i+bitIndex);
+		}
+		bitIndex+= bitString.length();
+		System.out.println("added bit "+ bits.get(0));
+		System.out.println("added bit "+ bits.get(1));
+		System.out.println("added bit "+ bits.get(2));
+		System.out.println("added bit "+ bits.get(3));
+		System.out.println("added bit "+ bits.get(4));
+		System.out.println("added bit "+ bits.get(5));
+	}
+	
+	
 
 	public String getName() {
 		return name;
