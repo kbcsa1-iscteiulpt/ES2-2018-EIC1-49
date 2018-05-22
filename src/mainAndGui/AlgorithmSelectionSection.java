@@ -140,33 +140,17 @@ public class AlgorithmSelectionSection {
 		JPanel pnlLoadAlgorithms = new JPanel();
 		JPanel pnlExecuteAlgorithms = new JPanel();
 		JTextField txtAlgorithmsPath = new JTextField();
-		txtAlgorithmsPath.setColumns(30);
+		txtAlgorithmsPath.setColumns(15);
 		JButton btnLoadAlgorithms = new JButton("Load Algorithms:");
 		btnLoadAlgorithms.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// JFileChooser fchUploadJar = new JFileChooser();
-				// if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-				// String jarPath = fchUploadJar.getSelectedFile().getPath();
-				// txtAlgorithmsPath.setText(jarPath);
-				// List<String> a =
-				// algorithmConfig.readAutomaticConf(fchUploadJar.getSelectedFile());
-				// }
-				if (algorithmsSelectedList.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Please select at least one algorithm", "Warning",
-							JOptionPane.WARNING_MESSAGE);
-				} else {
-					JFileChooser fchXMLSave = new JFileChooser();
-					fchXMLSave.setDialogTitle("Save");
-					fchXMLSave.setFileFilter(new FileNameExtensionFilter("txt Files", "txt"));
-					if (fchXMLSave.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-						String filePath = fchXMLSave.getSelectedFile().getPath();
-						if (!filePath.endsWith(".txt")) {
-							filePath += ".txt";
-						}
-						algorithmConfig.writeAutomaticConfig(algorithmsSelectedList, filePath);
-					}
+				JFileChooser fchUploadJar = new JFileChooser();
+				if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+					String jarPath = fchUploadJar.getSelectedFile().getPath();
+					txtAlgorithmsPath.setText(jarPath);
+					algorithmConfig.readAutomaticConf(fchUploadJar.getSelectedFile());
 				}
 			}
 		});
@@ -182,8 +166,13 @@ public class AlgorithmSelectionSection {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if (algorithmsSelectedList.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please select at least one algorithm", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+				} 
 				execute.executeOptimization(problem, nameDescription, email, decisionVariablesNumber,
-						decisionVariablesGroupName, emailHandler, adminEmail, dataType, criteriaSection, algorithmsSelectedList);
+						decisionVariablesGroupName, emailHandler, adminEmail, dataType, criteriaSection,
+						algorithmsSelectedList);
 			}
 		});
 		pnlTitleBeforeOptimization.add(lblBeforeOptimization);
