@@ -19,12 +19,10 @@ public class IntegerExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
   
-  public IntegerExperiment(UserProblem problem, /*List<String> selctedAlgorithms,*/ String jarPath ) throws IOException {
+  public IntegerExperiment(UserProblem problem, List<String> selectedAlgorithms, String jarPath ) throws IOException {
 	  
     String experimentBaseDirectory = "experimentBaseDirectory";
 
-    List<String> selectedAlgorithms = new ArrayList<String>();
-    selectedAlgorithms.add("SMSEMOA");
     List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem ,jarPath)));
 

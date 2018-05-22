@@ -171,8 +171,7 @@ public class AlgorithmSelectionSection {
 							JOptionPane.WARNING_MESSAGE);
 				} 
 				execute.executeOptimization(problem, nameDescription, email, decisionVariablesNumber,
-						decisionVariablesGroupName, emailHandler, adminEmail, dataType, criteriaSection,
-						algorithmsSelectedList);
+						decisionVariablesGroupName, emailHandler, adminEmail, dataType, criteriaSection, algorithmsSelectedList);
 			}
 		});
 		pnlTitleBeforeOptimization.add(lblBeforeOptimization);
