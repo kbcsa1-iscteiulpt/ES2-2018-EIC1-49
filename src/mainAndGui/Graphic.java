@@ -72,37 +72,40 @@ public class Graphic {
 			break;
 		}
 
-		File rsFolder = new File(rsPath);
-		File[] listOfrs = rsFolder.listFiles();
+		readAllFiles(".rs");
+		readAllFiles(".rf");
+		
+		
 
-		for (int i = 0; i < listOfrs.length; i++) {
-			File file = listOfrs[i];
-			if (file.isFile() && file.getName().endsWith(".rs")
-					&& file.getName().toUpperCase().contains(problem.getType().toString())
-					&& containsAlgorithm(file.getName())) {
-				readResults(file.getPath());
-				setContent(file.getName());
-			}
-		}
-
+	}
+	
+	/**
+	 * Reads all files from config path with given format
+	 * @param format
+	 */
+	public void readAllFiles(String format) {
 		File rfFolder = new File(rfPath);
 		File[] listOfrf = rfFolder.listFiles();
 
 		for (int i = 0; i < listOfrf.length; i++) {
 			File file = listOfrf[i];
-			if (file.isFile() && file.getName().endsWith(".rf")
+			if (file.isFile() && file.getName().endsWith(format)
 					&& file.getName().toUpperCase().contains(problem.getType().toString())
 					&& containsAlgorithm(file.getName())) {
 				readResults(file.getPath());
 				setContent(file.getName());
 			}
 		}
-
 	}
 
+	/**
+	 * Checks if filename contains algorithm
+	 * @param filename
+	 * @return boolean
+	 */
 	public boolean containsAlgorithm(String filename) {
 		for (String algorithm : algorithmsSelectedList) {
-			if (algorithm.contains(filename)) {
+			if (filename.contains(algorithm)) {
 				return true;
 			}
 		}
