@@ -183,7 +183,7 @@ public class AlgorithmSelectionSection {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				execute.executeOptimization(problem, nameDescription, email, decisionVariablesNumber,
-						decisionVariablesGroupName, emailHandler, adminEmail, dataType, criteriaSection);
+						decisionVariablesGroupName, emailHandler, adminEmail, dataType, criteriaSection, algorithmsSelectedList);
 			}
 		});
 		pnlTitleBeforeOptimization.add(lblBeforeOptimization);
