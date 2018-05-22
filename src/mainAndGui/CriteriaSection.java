@@ -55,7 +55,7 @@ public class CriteriaSection {
 		btnCriteria = new JButton("Criteria to be optimized");
 		btnCriteria.setContentAreaFilled(false);
 		JFrame criteriaFrame = new JFrame("Criterias");
-		FrameSize.setFrame(criteriaFrame, 0.75);
+		FrameSize.setFrame(criteriaFrame, 1);
 		setCriteriaFrame(criteriaFrame, problem);
 		btnCriteria.addActionListener(new ActionListener() {
 

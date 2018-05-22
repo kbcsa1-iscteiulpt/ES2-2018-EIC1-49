@@ -1,2 +1,2 @@
 Question: What kind of problems can this software optimize?;Answer:Any problem, if you can give us the solution you already have to compare
-Question:How can I upload my current solution?;Click on button \"Criterion\" to be optimzed and then you can upload your .jar file
+Question:How can I upload my current solution?;Click on button "Criteria" to be optimized and then you can upload your .jar file

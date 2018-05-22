@@ -75,7 +75,7 @@ public class DecisionVariablesSection {
 							previousDataType = dataType;
 						}
 					}
-					FrameSize.setFrame(decisionVarFrame, 0.5);
+					FrameSize.setFrame(decisionVarFrame, 1);
 					decisionVarFrame.setVisible(true);
 
 				} else {
