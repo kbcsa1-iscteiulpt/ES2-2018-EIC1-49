@@ -63,11 +63,13 @@ public class DecisionVariablesSection {
 			public void actionPerformed(ActionEvent e) {
 				if (dataType != null) {
 					if (filled == false) {
-						if (previousDataType == null) {
+						if (previousDataType == null || !previousDataType.equals(dataType)) {
 							decisionVarFrame = new JFrame("Decision Variables");
 							setDecisionFrame(decisionVarFrame, problem);
 							previousDataType = dataType;
-						} else if (!previousDataType.equals(dataType)) {
+						} 
+					}else {
+						if (previousDataType!= null && !previousDataType.equals(dataType)) {
 							decisionVarFrame = new JFrame("Decision Variables");
 							setDecisionFrame(decisionVarFrame, problem);
 							previousDataType = dataType;
@@ -75,7 +77,6 @@ public class DecisionVariablesSection {
 					}
 					FrameSize.setFrame(decisionVarFrame, 0.5);
 					decisionVarFrame.setVisible(true);
-					filled = false;
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Please, select the problem data type", "Warning",
