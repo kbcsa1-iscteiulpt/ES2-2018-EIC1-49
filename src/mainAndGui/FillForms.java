@@ -69,6 +69,7 @@ public class FillForms {
 					tblDecisionVariables.setValueAt(variablesList.get(i).getMinRange(), i, 1);
 					tblDecisionVariables.setValueAt(variablesList.get(i).getMaxRange(), i, 2);
 					tblDecisionVariables.setValueAt(variablesList.get(i).getRestriction(), i, 3);
+					problem.addVariable(new Variable(variablesList.get(i).getName(), variablesList.get(i).getMinRange(), variablesList.get(i).getMaxRange(), variablesList.get(i).getRestriction()));
 				}
 			}
 		} else {
@@ -77,6 +78,7 @@ public class FillForms {
 				if (i < variablesList.size()) {
 					tblDecisionVariables.setValueAt(variablesList.get(i).getName(), i, 0);
 					tblDecisionVariables.setValueAt(variablesList.get(i).getBinaryValue(), i, 1);
+					problem.addVariable(new Variable(variablesList.get(i).getName(), variablesList.get(i).getBinaryValue()));
 				}
 			}
 		}
