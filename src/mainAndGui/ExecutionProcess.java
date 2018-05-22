@@ -124,45 +124,45 @@ public class ExecutionProcess {
 			System.out.println("!"+problem.getVariables().get(i).getRestriction());
 		}
 		
-		try { 
-		 	switch (dataType) {
-			case DOUBLE:
-				new DoubleExperiment(problem,algorithmsSelectedList,criteriaSection.getTxtJarPath().getText());
-				break;
-			case INTEGER:
-				new IntegerExperiment(problem,algorithmsSelectedList,criteriaSection.getTxtJarPath().getText());
-				break;
-			case BINARY:
-				new BinaryExperiment(problem,algorithmsSelectedList,criteriaSection.getTxtJarPath().getText());
-				break;
-			default:
-				return; 
-			}
+//		try { 
+//		 	switch (dataType) {
+//			case DOUBLE:
+//				new DoubleExperiment(problem,algorithmsSelectedList,criteriaSection.getTxtJarPath().getText());
+//				break;
+//			case INTEGER:
+//				new IntegerExperiment(problem,algorithmsSelectedList,criteriaSection.getTxtJarPath().getText());
+//				break;
+//			case BINARY:
+//				new BinaryExperiment(problem,algorithmsSelectedList,criteriaSection.getTxtJarPath().getText());
+//				break;
+//			default:
+//				return; 
+//			}
 			showGraphic(problem, algorithmsSelectedList);
-			compileAndShowEps(problem);
-			compileAndShowPdf(problem);
-		} catch (IOException e2) {
-			try {
-				e2.printStackTrace();
-				emailHandler.sendEmail(adminEmail, email.getEmail().getText(), adminEmail, "There was a problem",
-						"There was a problem running the problem you requested, please try again.\r\n"
-								+ "If the problem continues, contact us so we can help");
-				return;
-			} catch (AddressException e1) {
-			} catch (MessagingException e1) {
-			}
-		}
-		try {
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			Date date = new Date();
-			String subject = "Otimiza��o em curso: " + nameDescription.getProblemName().getText() + " "
-					+ dateFormat.format(date);
-			emailHandler.sendEmail(adminEmail, email.getEmail().getText(), adminEmail, subject,
-					"Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
-							+ "sobre o progresso do processo de otimiza��o, quando o processo de otimiza��o tiver atingido 25%,\r\n"
-							+ "50%, 75% do total do (n�mero de avalia��es ou) tempo estimado, e tamb�m quando o processo tiver\r\n"
-							+ "terminado, com sucesso ou devido � ocorr�ncia de erros.");
-		} catch (MessagingException e1) {
-		}
+//			compileAndShowEps(problem);
+//			compileAndShowPdf(problem);
+//		} catch (IOException e2) {
+//			try {
+//				e2.printStackTrace();
+//				emailHandler.sendEmail(adminEmail, email.getEmail().getText(), adminEmail, "There was a problem",
+//						"There was a problem running the problem you requested, please try again.\r\n"
+//								+ "If the problem continues, contact us so we can help");
+//				return;
+//			} catch (AddressException e1) {
+//			} catch (MessagingException e1) {
+//			}
+//		}
+//		try {
+//			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//			Date date = new Date();
+//			String subject = "Otimiza��o em curso: " + nameDescription.getProblemName().getText() + " "
+//					+ dateFormat.format(date);
+//			emailHandler.sendEmail(adminEmail, email.getEmail().getText(), adminEmail, subject,
+//					"Muito obrigado por usar esta plataforma de otimiza��o. Ser� informado por email\r\n"
+//							+ "sobre o progresso do processo de otimiza��o, quando o processo de otimiza��o tiver atingido 25%,\r\n"
+//							+ "50%, 75% do total do (n�mero de avalia��es ou) tempo estimado, e tamb�m quando o processo tiver\r\n"
+//							+ "terminado, com sucesso ou devido � ocorr�ncia de erros.");
+//		} catch (MessagingException e1) {
+//		}
 	}
 }

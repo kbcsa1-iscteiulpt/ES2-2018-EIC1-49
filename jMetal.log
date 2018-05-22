@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
@@ -9,7 +9,7 @@
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>13</thread>
+  <thread>15</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
@@ -20,7 +20,7 @@
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
-  <thread>13</thread>
+  <thread>15</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
