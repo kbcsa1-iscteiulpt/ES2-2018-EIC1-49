@@ -61,7 +61,6 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	    try {
 			String line;
 //	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/Kursawe.jar" + " " + solutionString);
-	    	System.out.println(jarPath);
 			Process p = Runtime.getRuntime().exec("java -jar \""+ jarPath + "\" " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 
@@ -70,11 +69,9 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	        p.waitFor();
 	      }
 	      catch (Exception err) { err.printStackTrace(); }
-	    System.out.println("!!!"+evaluationResultString);
    		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
 	    // It is assumed that all evaluated criteria are returned in the same result string
 	    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-	    		System.out.println("??? "+individualEvaluationCriteria[i]);
 	    		solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 	    }	    
 	  }
