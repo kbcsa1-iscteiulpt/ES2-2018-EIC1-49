@@ -161,23 +161,17 @@ public class Graphic {
 			
 		if(format.equals(".rf")) {
 			for (int y = 0; y < yAxis.length; y++) {
-				if (y < problem.getCriterias().size() && x<problem.getVariables().size())
-					dataset.addValue(yAxis[y], problem.getCriterias().get(y).getName()
-							, problem.getVariables().get(x).getName());
-				else if(y < problem.getCriterias().size())
-					dataset.addValue(yAxis[y], "Variable " + x, problem.getCriterias().get(y).getName());
-				else
-					dataset.addValue(yAxis[y], "Variable " + x, "Criteria " + y);
+				if (y < problem.getCriterias().size() )
+					dataset.addValue(yAxis[y], "Solution "+(x+1), problem.getCriterias().get(y).getName());
+				else 
+					dataset.addValue(yAxis[y], "Solution "+(x+1), "Criteria "+(y+1));
 			}
 		}else if(format.equals(".rs")){
 			for (int y = 0; y < yAxis.length; y++) {
-				if (y < problem.getCriterias().size() && x<problem.getVariables().size())
-					dataset.addValue(yAxis[y], problem.getVariables().get(x).getName()
-							, problem.getCriterias().get(y).getName());
-				else if(y < problem.getCriterias().size())
-					dataset.addValue(yAxis[y],problem.getCriterias().get(y).getName(), "Variable " + x);
-				else
-					dataset.addValue(yAxis[y],  "Criteria " + y,"Variable " + x);
+				if ( x<problem.getVariables().size())
+					dataset.addValue(yAxis[y],"Solution "+(x+1)	, problem.getVariables().get(y).getName());
+				else 
+					dataset.addValue(yAxis[y],"Solution "+(x+1), "Variable " + (y+1));
 			}
 		}
 		}
