@@ -19,13 +19,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.apache.commons.io.FileUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
-import jUnitTests.AlgorithmConfigTest;
 import problem.UserProblem;
 import support.AlgorithmsConfig;
 import support.Config;
@@ -86,14 +83,14 @@ public class Graphic {
 	public void readAllFiles(String format) {
 		File rfFolder = new File(rfPath);
 		File[] listOfrf = rfFolder.listFiles();
-
+		
 		for (int i = 0; i < listOfrf.length; i++) {
 			File file = listOfrf[i];
 			if (file.isFile() && file.getName().endsWith(format)
 					&& file.getName().toUpperCase().contains(problem.getType().toString())
 					&& containsAlgorithm(file.getName())) {
 				readResults(file.getPath());
-				setContent(file.getName());
+				setContent(file.getName(),format);
 			}
 		}
 	}
@@ -115,10 +112,10 @@ public class Graphic {
 	/**
 	 * This method sets the panel content of the graphic with the results
 	 */
-	public void setContent(String title) {
+	public void setContent(String title,String format) {
 		JFrame algorithmFrame = new JFrame();
 		JPanel pnlChart = new JPanel(new BorderLayout());
-		JFreeChart lineChart = ChartFactory.createLineChart(title, "", "", createDataset(problem),
+		JFreeChart lineChart = ChartFactory.createLineChart(title, "", "", createDataset(problem,format),
 				PlotOrientation.VERTICAL, true, true, false);
 
 		ChartPanel chartPanel = new ChartPanel(lineChart);
@@ -156,18 +153,33 @@ public class Graphic {
 	 * 
 	 * @return dataset
 	 */
-	private DefaultCategoryDataset createDataset(UserProblem problem) {
+	private DefaultCategoryDataset createDataset(UserProblem problem,String format) {
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (int x = 0; x < xAxis.size(); x++) {
 			double[] yAxis = xAxis.get(x);
-
+			
+		if(format.equals(".rf")) {
 			for (int y = 0; y < yAxis.length; y++) {
-				if (y < problem.getCriterias().size())
+				if (y < problem.getCriterias().size() && x<problem.getVariables().size())
+					dataset.addValue(yAxis[y], problem.getCriterias().get(y).getName()
+							, problem.getVariables().get(x).getName());
+				else if(y < problem.getCriterias().size())
 					dataset.addValue(yAxis[y], "Variable " + x, problem.getCriterias().get(y).getName());
 				else
 					dataset.addValue(yAxis[y], "Variable " + x, "Criteria " + y);
 			}
+		}else if(format.equals(".rs")){
+			for (int y = 0; y < yAxis.length; y++) {
+				if (y < problem.getCriterias().size() && x<problem.getVariables().size())
+					dataset.addValue(yAxis[y], problem.getVariables().get(x).getName()
+							, problem.getCriterias().get(y).getName());
+				else if(y < problem.getCriterias().size())
+					dataset.addValue(yAxis[y],problem.getCriterias().get(y).getName(), "Variable " + x);
+				else
+					dataset.addValue(yAxis[y],  "Criteria " + y,"Variable " + x);
+			}
+		}
 		}
 
 		return dataset;
@@ -180,6 +192,7 @@ public class Graphic {
 	 */
 	public void readResults(String path) {
 		Scanner scanner = null;
+		xAxis = new ArrayList<double[]>();
 
 		if (Paths.get(path).toFile().exists()) {
 			try {
