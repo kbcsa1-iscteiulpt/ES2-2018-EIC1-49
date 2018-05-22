@@ -127,13 +127,13 @@ public class ExecutionProcess {
 		try { 
 		 	switch (dataType) {
 			case DOUBLE:
-				new DoubleExperiment(problem,criteriaSection.getTxtJarPath().getText());
+				new DoubleExperiment(problem,algorithmsSelectedList,criteriaSection.getTxtJarPath().getText());
 				break;
 			case INTEGER:
-				new IntegerExperiment(problem,criteriaSection.getTxtJarPath().getText());
+				new IntegerExperiment(problem,algorithmsSelectedList,criteriaSection.getTxtJarPath().getText());
 				break;
 			case BINARY:
-				new BinaryExperiment(problem,criteriaSection.getTxtJarPath().getText());
+				new BinaryExperiment(problem,algorithmsSelectedList,criteriaSection.getTxtJarPath().getText());
 				break;
 			default:
 				return; 
