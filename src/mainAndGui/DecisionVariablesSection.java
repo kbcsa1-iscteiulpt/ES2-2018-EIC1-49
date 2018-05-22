@@ -294,17 +294,18 @@ public class DecisionVariablesSection {
 				}
 
 				if (varsReady) {
-					problem.getVariables().clear();
 
 					if (tblDecisionVariables.getCellEditor() != null) {
 						tblDecisionVariables.getCellEditor().stopCellEditing();
 					}
 					if (dataType.equals(Type.BINARY)) {
-						for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
-							Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
-									dtmDecisionVariables.getValueAt(j, 1).toString());
-							problem.addVariable(variable);
+						Variable variable = new Variable(dtmDecisionVariables.getValueAt(0, 0).toString(),
+								dtmDecisionVariables.getValueAt(0, 1).toString());
+						for (int j = 1; j < tblDecisionVariables.getRowCount(); j++) {
+							variable.addBits(dtmDecisionVariables.getValueAt(j, 1).toString());
 						}
+						problem.addVariable(variable);
+						algorithmSelection.setNumberDecisionVariables(1);
 					} else {
 						for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
 							Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
@@ -313,12 +314,13 @@ public class DecisionVariablesSection {
 									dtmDecisionVariables.getValueAt(j, 3).toString());
 							problem.addVariable(variable);
 						}
+						algorithmSelection.setNumberDecisionVariables(
+								Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
 					}
 
-					algorithmSelection.setNumberDecisionVariables(
-							Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
+					
 					algorithmSelection.setDecisionVariablesGroupName(txtNameOfDecisionVariablesGroup.getText());
-
+					
 					decisionVarFrame.dispose();
 				}
 			}

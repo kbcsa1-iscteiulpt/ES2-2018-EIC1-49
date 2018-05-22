@@ -27,6 +27,7 @@ public class BinaryExperiment {
 
     List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
 //    System.out.println(problem.getVariables().get(0).getBinaryValue());
+    System.out.println("nº of bits: "+ problem.getVariables().get(0).getBits().length());
     problemList.add(new ExperimentProblem<>(new BinaryProblemEvaluator(problem, problem.getVariables().get(0).getBits().length(), jarPath)));
 
     List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = algorithmConf.configureBinaryAlgorithms(problemList,selectedAlgorithms);
@@ -51,7 +52,6 @@ public class BinaryExperiment {
     new GenerateLatexTablesWithStatistics(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
     
-  //  algorithmConf.applyRestrictions(problem.getVariables(), "../../experimentBaseDirectory/referenceFronts/BinaryProblem.rs");
   }
 
  

@@ -66,6 +66,7 @@ public class XMLEditor {
 
 						Element varElement = (Element) varList.item(i);
 						Variable var = null;
+						System.out.println("type: "+ prob.getAttribute("type"));
 						if (!prob.getAttribute("type").toUpperCase().equals("BINARY")) {
 							var = new Variable(varElement.getAttribute("variableName"),
 									varElement.getAttribute("variableMin"), varElement.getAttribute("variableMax"),
@@ -76,13 +77,12 @@ public class XMLEditor {
 									varElement.getAttribute("binaryValue"));
 							for(int j=1;j<varList.getLength();j++) {
 								Element varAux = (Element) varList.item(j);
-								System.out.println("hey"+varAux.getAttribute("binaryValue"));
 								var.addBits(varAux.getAttribute("binaryValue"));
 							}
 						}
 						
 						problemVariables.add(var);
-						System.out.println(problemVariables.size());
+						System.out.println("problemVariables size: "+problemVariables.size());
 						if(exit) break;
 
 					}

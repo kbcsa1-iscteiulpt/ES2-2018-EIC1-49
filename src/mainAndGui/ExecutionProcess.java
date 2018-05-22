@@ -63,7 +63,7 @@ public class ExecutionProcess {
 		String[] params = new String[2];
 		params[0] = config.getEpsRPath();
 		params[1] = config.getRPath()+problem.getType().toString()+config.getRFilename();
-		System.out.println(config.getRPath()+problem.getType().toString()+config.getRFilename());
+		System.out.println("?"+config.getRPath()+problem.getType().toString()+config.getRFilename());
 
 		String[] envp = new String[1];
 		envp[0] = config.getEpsEnviromentVar();
@@ -121,7 +121,7 @@ public class ExecutionProcess {
 		problem.setEmail(email.getEmail().getText());
 		
 		for (int i = 0; i < problem.getVariables().size(); i++) {
-			System.out.println(problem.getVariables().get(i).getRestriction());
+			System.out.println("!"+problem.getVariables().get(i).getRestriction());
 		}
 		
 		try { 

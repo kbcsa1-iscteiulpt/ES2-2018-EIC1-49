@@ -83,10 +83,10 @@ public class SaveSection {
 			DecisionVariablesSection decisionVariables, EmailSection email, TimeOptimizationSection timeOptimization,
 			TypeVarSection typeVar) {
 		String groupName = groupName(decisionVariables);
-		List<Variable> variablesList = createVariableList(decisionVariables);
+		
 
 		setProblem(nameDescriptionProblem, problem, decisionVariables, email, timeOptimization, typeVar, groupName,
-				variablesList);
+				problem.getVariables());
 	}
 
 	private String groupName(DecisionVariablesSection decisionVariables) {
@@ -115,8 +115,12 @@ public class SaveSection {
 				Integer.parseInt(timeOptimization.getSpnIdealNumberOfMinutes().getValue().toString())));
 		problem.setType(typeVar.getDataType());
 		problem.setGroupName(groupName);
+		if(typeVar.getDataType().equals(Type.BINARY)) {
+			problem.setNumberVariables(1);
+		}else {			
 		problem.setNumberVariables(
 				Integer.parseInt(decisionVariables.getSpnNumberOfDecisionVariables().getValue().toString()));
+		}
 		problem.setVariables(variablesList);
 	}
 

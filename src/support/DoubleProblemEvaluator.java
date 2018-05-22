@@ -39,17 +39,13 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	    List<Variable> variables = problem.getVariables() ;
 	    
 	    for (int i = 0; i < getNumberOfVariables(); i++) {
-	    	System.out.println(Double.parseDouble(variables.get(i).getMinRange()));
-	    	System.out.println(Double.parseDouble(variables.get(i).getMaxRange()));
-	    	lowerLimit.add(Double.parseDouble(variables.get(i).getMinRange()));
-	    	upperLimit.add(Double.parseDouble(variables.get(i).getMaxRange()));
+	    		lowerLimit.add(Double.parseDouble(variables.get(i).getMinRange()));
+	    		upperLimit.add(Double.parseDouble(variables.get(i).getMaxRange()));
 		}
 	    
 
 	    setLowerLimit(lowerLimit);
 	    setUpperLimit(upperLimit);	 
-	    System.out.println(getLowerBound(0));
-	    System.out.println(getUpperBound(0));
 	  }
 
 	  public void evaluate(DoubleSolution solution){
@@ -74,10 +70,12 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	        p.waitFor();
 	      }
 	      catch (Exception err) { err.printStackTrace(); }
+	    System.out.println("!!!"+evaluationResultString);
    		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
 	    // It is assumed that all evaluated criteria are returned in the same result string
 	    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
-	    	solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
+	    		System.out.println("??? "+individualEvaluationCriteria[i]);
+	    		solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 	    }	    
 	  }
 	}

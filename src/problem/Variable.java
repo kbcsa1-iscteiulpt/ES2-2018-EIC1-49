@@ -31,12 +31,11 @@ public class Variable {
 	public Variable(String name, String binaryValue) {
 		this.name = name;
 		this.binaryValue = binaryValue;
-		System.out.println(binaryValue);
+		System.out.println("created "+binaryValue);
 		for (int i = 0; i < binaryValue.length(); i++) {
 			if (binaryValue.charAt(i) == '1')
 				bits.set(i);
 		}
-		System.out.println("bits " + bits.get(1));
 		bitIndex = binaryValue.length();
 	}
 
@@ -45,12 +44,25 @@ public class Variable {
 	}
 
 	public void addBits(String bitString) {
-		System.out.println("adding" + bitString);
+		System.out.println("adding " + bitString);
 		for (int i = 0; i < bitString.length(); i++) {
 			if (bitString.charAt(i) == '1')
 				bits.set(i + bitIndex);
 		}
+		int aux = bitIndex +bitString.length();
+		updateBinaryValue(aux);
 		bitIndex += bitString.length();
+		
+	}
+
+	private void updateBinaryValue(int end) {
+		for(int i=bitIndex;i<end;i++) {
+			if(bits.get(i))
+				binaryValue+= '1';
+			else
+				binaryValue+= '0';
+				
+		}
 	}
 
 	public String getName() {

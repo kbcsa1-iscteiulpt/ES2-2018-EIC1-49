@@ -24,7 +24,6 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	private AlgorithmsConfig algorithmsConfig = new AlgorithmsConfig();
 	private String jarPath;
 	
-
 	  public IntegerProblemEvaluator(UserProblem problem,String jarPath) throws JMetalException {
 		this.problem= problem;
 		this.jarPath=jarPath;
