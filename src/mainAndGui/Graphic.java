@@ -20,10 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.io.FileUtils;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import org.apache.commons.io.FileUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.ui.ApplicationFrame;
@@ -41,7 +37,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * This class creates a frame that shows a graphic with the values of the rf and
  * rs files that contains the JMetal results.
  * 
- * @author Kevin Corrales nï¿½ 73529
+ * @author Kevin Corrales nº 73529
  **/
 public class Graphic {
 
@@ -51,32 +47,43 @@ public class Graphic {
 	private UserProblem problem;
 	private List<double[]> xAxis = new ArrayList<double[]>();
 	private Config config = Config.getInstance();
-	
+
 	private String rsPath;
 	private String rfPath;
 	private List<String> algorithmsSelectedList = new ArrayList<String>();
+	private AlgorithmsConfig algorithmConfig;
 
 	public Graphic(UserProblem problem, List<String> algorithmsSelectedList) {
 		this.problem = problem;
 		this.algorithmsSelectedList = algorithmsSelectedList;
 
-		switch(problem.getType()) {
-			case DOUBLE:
-				rsPath=config.getInstance().getrsPathDouble();
-				rfPath=config.getInstance().getrfPathDouble();
-				break;
-			case INTEGER:
-				rsPath=config.getInstance().getrsPathInteger();
-				rfPath=config.getInstance().getrfPathInteger();
-				break;
-			case BINARY:
-				rsPath=config.getInstance().getrsPathBinary();
-				rfPath=config.getInstance().getrfPathBinary();
-				break;
+		switch (problem.getType()) {
+		case DOUBLE:
+			rsPath = config.getInstance().getrsPathDouble();
+			rfPath = config.getInstance().getrfPathDouble();
+			break;
+		case INTEGER:
+			rsPath = config.getInstance().getrsPathInteger();
+			rfPath = config.getInstance().getrfPathInteger();
+			break;
+		case BINARY:
+			rsPath = config.getInstance().getrsPathBinary();
+			rfPath = config.getInstance().getrfPathBinary();
+			break;
 		}
-		
+
 		File rsFolder = new File(rsPath);
 		File[] listOfrs = rsFolder.listFiles();
+
+		for (int i = 0; i < listOfrs.length; i++) {
+			File file = listOfrs[i];
+			if (file.isFile() && file.getName().endsWith(".rs")
+					&& file.getName().toUpperCase().contains(problem.getType().toString())
+					&& containsAlgorithm(file.getName())) {
+				readResults(file.getPath());
+				setContent(file.getName());
+			}
+		}
 
 		File rfFolder = new File(rfPath);
 		File[] listOfrf = rfFolder.listFiles();
@@ -126,6 +133,64 @@ public class Graphic {
 					String filePath = fchXMLSave.getSelectedFile().getPath();
 					if (!filePath.endsWith(".txt")) {
 						filePath += ".txt";
+					}
+					algorithmConfig.writeAutomaticConfig(algorithmsSelectedList, filePath);
+				}
+			}
+		});
+		pnlChart.add(chartPanel);
+		pnlChart.add(btnSaveAlgorithms, BorderLayout.SOUTH);
+		algorithmFrame.add(pnlChart);
+		algorithmFrame.pack();
+		RefineryUtilities.centerFrameOnScreen(algorithmFrame);
+		algorithmFrame.setVisible(true);
+
+	}
+
+	/**
+	 * 
+	 * This method generates a dataset from the list that contains the results
+	 * 
+	 * @return dataset
+	 */
+	private DefaultCategoryDataset createDataset(UserProblem problem) {
+
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		for (int x = 0; x < xAxis.size(); x++) {
+			double[] yAxis = xAxis.get(x);
+
+			for (int y = 0; y < yAxis.length; y++) {
+				if (y < problem.getCriterias().size())
+					dataset.addValue(yAxis[y], "Variable " + x, problem.getCriterias().get(y).getName());
+				else
+					dataset.addValue(yAxis[y], "Variable " + x, "Criteria " + y);
+			}
+		}
+
+		return dataset;
+	}
+
+	/**
+	 * This method reads JMetal results from a file
+	 * 
+	 * @param path
+	 */
+	public void readResults(String path) {
+		Scanner scanner = null;
+
+		if (Paths.get(path).toFile().exists()) {
+			try {
+				File file = new File(path);
+				scanner = new Scanner(file);
+
+				while (scanner.hasNextLine()) {
+					String line = scanner.nextLine();
+					String[] splitLine = line.split(" ");
+					double[] yAxis = new double[splitLine.length];
+
+					for (int i = 0; i < splitLine.length; i++) {
+						if (!splitLine[i].equals("X"))
+							yAxis[i] = Double.parseDouble(splitLine[i]);
 					}
 					xAxis.add(yAxis);
 
