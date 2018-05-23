@@ -1,19 +1,24 @@
 package support;
 
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
-import org.uma.jmetal.solution.DoubleSolution;
-import org.uma.jmetal.util.experiment.Experiment;
-import org.uma.jmetal.util.experiment.ExperimentBuilder;
-import org.uma.jmetal.util.experiment.component.*;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
-import org.uma.jmetal.util.experiment.util.ExperimentProblem;
-
-import problem.UserProblem;
-
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
+import org.uma.jmetal.solution.DoubleSolution;
+import org.uma.jmetal.util.experiment.Experiment;
+import org.uma.jmetal.util.experiment.ExperimentBuilder;
+import org.uma.jmetal.util.experiment.component.ComputeQualityIndicators;
+import org.uma.jmetal.util.experiment.component.ExecuteAlgorithms;
+import org.uma.jmetal.util.experiment.component.GenerateBoxplotsWithR;
+import org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics;
+import org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions;
+import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
+import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+
+import problem.UserProblem;
 
 public class DoubleExperiment {
   private static final int INDEPENDENT_RUNS = 2;
@@ -48,8 +53,15 @@ public class DoubleExperiment {
     new GenerateLatexTablesWithStatistics(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
     
-//    algorithmConf.applyRestrictions(problem.getVariables(), "../../experimentBaseDirectory/referenceFronts/DoubleProblem.rs");
-    
+    File dir = new File("./experimentBaseDirectory/referenceFronts");
+    File[] directoryListing = dir.listFiles();
+    if (directoryListing != null) {
+      for (File file : directoryListing) {
+    	  if(file.getName().contains("Double")&& file.getName().endsWith(".rs")) {
+    		  algorithmConf.applyRestrictions(problem.getVariables(), "./experimentBaseDirectory/referenceFronts/" + file.getName());
+    	  }
+      }
+    } 
   }
 
 

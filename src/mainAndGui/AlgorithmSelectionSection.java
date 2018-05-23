@@ -63,7 +63,6 @@ public class AlgorithmSelectionSection {
 		this.email = email;
 		this.time = time;
 		this.criteriaSection = criteriaSection;
-
 		JPanel executeProcessPanel = new JPanel(new FlowLayout());
 		algorithmsList = new ArrayList<JCheckBox>();
 		algorithmsSelectedList = new ArrayList<String>();
@@ -89,27 +88,26 @@ public class AlgorithmSelectionSection {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// if (nameDescription.getProblemName().getText().isEmpty()
-				// || nameDescription.getProblemDescription().getText().isEmpty()
-				// || !email.getBtnWriteEmail().isEnabled() || dataType == null) {
-				// JOptionPane.showMessageDialog(null, "Please fill all fields!", "Warning",
-				// JOptionPane.WARNING_MESSAGE);
-				// } else if (problem.getVariables().isEmpty()) {
-				// JOptionPane.showMessageDialog(null, "Please fill the variable decisions
-				// table!","Warning",
-				// JOptionPane.WARNING_MESSAGE);
-				// } else if(problem.getCriterias().isEmpty()){
-				// JOptionPane.showMessageDialog(null, "Please fill the jar path!","Warning",
-				// JOptionPane.WARNING_MESSAGE);
-				// }else {
-				// if (timeCheck()) {
-				execute = new ExecutionProcess();
-				beforeOptimizationProcess = new JFrame("Select the algorithm");
-				FrameSize.setFrame(beforeOptimizationProcess, 0.5);
-				setBeforeOptimizationProcess(beforeOptimizationProcess, problem);
-				beforeOptimizationProcess.setVisible(true);
-				// }
-				// }
+				if (nameDescription.getProblemName().getText().isEmpty()
+						|| nameDescription.getProblemDescription().getText().isEmpty()
+						|| !email.getBtnWriteEmail().isEnabled() || dataType == null) {
+					JOptionPane.showMessageDialog(null, "Please fill all fields!", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+				} else if (problem.getVariables().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please fill the variable decisions table!", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+				} else if (problem.getCriterias().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Please fill the jar path!", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+				} else {
+					if (timeCheck()) {
+						execute = new ExecutionProcess();
+						beforeOptimizationProcess = new JFrame("Select the algorithm");
+						FrameSize.setFrame(beforeOptimizationProcess, 0.5);
+						setBeforeOptimizationProcess(beforeOptimizationProcess, problem);
+						beforeOptimizationProcess.setVisible(true);
+					}
+				}
 
 			}
 
@@ -169,9 +167,10 @@ public class AlgorithmSelectionSection {
 				if (algorithmsSelectedList.isEmpty()) {
 					JOptionPane.showMessageDialog(null, "Please select at least one algorithm", "Warning",
 							JOptionPane.WARNING_MESSAGE);
-				} 
+				}
 				execute.executeOptimization(problem, nameDescription, email, decisionVariablesNumber,
-						decisionVariablesGroupName, emailHandler, adminEmail, dataType, criteriaSection, algorithmsSelectedList);
+						decisionVariablesGroupName, emailHandler, dataType, criteriaSection,
+						algorithmsSelectedList, time);
 			}
 		});
 		pnlTitleBeforeOptimization.add(lblBeforeOptimization);

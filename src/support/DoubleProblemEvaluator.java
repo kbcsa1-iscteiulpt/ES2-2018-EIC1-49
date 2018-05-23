@@ -29,7 +29,7 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 		this.problem = problem;  
 		this.jarPath = jarPath;
 		  
-	    setNumberOfVariables(problem.getNumberVariables());
+		setNumberOfVariables(problem.getVariables().size());
 	    setNumberOfObjectives(2);
 	    setName("DoubleProblem");
 
@@ -42,7 +42,7 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	    		lowerLimit.add(Double.parseDouble(variables.get(i).getMinRange()));
 	    		upperLimit.add(Double.parseDouble(variables.get(i).getMaxRange()));
 		}
-	    
+	     
 
 	    setLowerLimit(lowerLimit);
 	    setUpperLimit(upperLimit);	 

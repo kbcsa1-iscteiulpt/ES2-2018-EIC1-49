@@ -28,7 +28,7 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 		this.problem= problem;
 		this.jarPath=jarPath;
 		  
-	    setNumberOfVariables(problem.getNumberVariables());
+	    setNumberOfVariables(problem.getVariables().size());
 	    setNumberOfObjectives(2);
 	    setName("IntegerProblem");
 
@@ -60,7 +60,7 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	    }
 	    try {
 			String line;
-	    	Process p = Runtime.getRuntime().exec("java -jar "+ jarPath + " " + solutionString);
+	    	Process p = Runtime.getRuntime().exec("java -jar \""+ jarPath + "\" " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 
 	    		{evaluationResultString+=line;}

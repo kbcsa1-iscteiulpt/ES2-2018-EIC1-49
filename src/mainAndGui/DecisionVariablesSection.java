@@ -266,7 +266,7 @@ public class DecisionVariablesSection {
 									if (!isDouble(dtmDecisionVariables.getValueAt(m, 1).toString())
 											|| !isDouble(dtmDecisionVariables.getValueAt(m, 2).toString())) {
 										JOptionPane.showMessageDialog(null,
-												"Remember that the variable values must be double!", "Warning",
+												"Remember that the variable values must be double (Line " + m +")!", "Warning",
 												JOptionPane.WARNING_MESSAGE);
 										varsReady = false;
 										varsReadyToCheck = false;
@@ -305,7 +305,7 @@ public class DecisionVariablesSection {
 							variable.addBits(dtmDecisionVariables.getValueAt(j, 1).toString());
 						}
 						problem.addVariable(variable);
-						algorithmSelection.setNumberDecisionVariables(1);
+						problem.setNumberVariables(1);
 					} else {
 						for (int j = 0; j < tblDecisionVariables.getRowCount(); j++) {
 							Variable variable = new Variable(dtmDecisionVariables.getValueAt(j, 0).toString(),
@@ -314,11 +314,10 @@ public class DecisionVariablesSection {
 									dtmDecisionVariables.getValueAt(j, 3).toString());
 							problem.addVariable(variable);
 						}
-						algorithmSelection.setNumberDecisionVariables(
-								Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
+						problem.setNumberVariables(Integer.parseInt(spnNumberOfDecisionVariables.getValue().toString()));
 					}
 
-					
+					problem.setGroupName(txtNameOfDecisionVariablesGroup.getText());
 					algorithmSelection.setDecisionVariablesGroupName(txtNameOfDecisionVariablesGroup.getText());
 					
 					decisionVarFrame.dispose();

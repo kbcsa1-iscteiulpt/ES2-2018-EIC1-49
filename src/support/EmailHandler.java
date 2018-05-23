@@ -16,6 +16,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.swing.JOptionPane;
 
 import org.jfree.chart.axis.SubCategoryAxis;
 
@@ -42,7 +43,7 @@ public class EmailHandler {
      * @throws AddressException if the email address parse failed
      * @throws MessagingException if the connection is dead or not in the connected state or if the message is not a MimeMessage
      */
-    public void sendEmail(String fromEmail, String ToEmail ,String ccEmail  ,String title, String message, boolean attach) throws AddressException, MessagingException {
+    public void sendEmail(String fromEmail, String ToEmail ,String ccEmail  ,String title, String message) throws AddressException, MessagingException {
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         
@@ -72,7 +73,6 @@ public class EmailHandler {
 
         // -- Set the FROM and TO fields --
         msg.setFrom(new InternetAddress(fromEmail)); 
-        System.out.println(ToEmail);
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(ToEmail, false));
 
         if (!ccEmail.equals("none")) {
@@ -84,14 +84,18 @@ public class EmailHandler {
         msg.setSentDate(new Date());
 
         SMTPTransport t = (SMTPTransport)session.getTransport("smtps");
-
-        t.connect("smtp.gmail.com",config.getEmailAdmin().split("@")[0],config.getEmailPassword());
+        try {
+        	t.connect("smtp.gmail.com",config.getEmailAdmin().split("@")[0],config.getEmailPassword());
+        }catch(Exception e) {
+        	JOptionPane.showMessageDialog(null,
+					"You don't seem to be connected to the internet", "Warning",
+					JOptionPane.WARNING_MESSAGE);
+        }
         t.sendMessage(msg, msg.getAllRecipients());      
         t.close();
     }
     
-    public void sendEmailWithAttachment(String fromEmail, String toEmail ,String ccEmail  ,String title, String messageBody, boolean attach) {
-
+    public void sendEmailWithAttachment(String fromEmail, String toEmail ,String ccEmail  ,String title, String messageBody) {
         final String username = config.getEmailAdmin();
         final String password = config.getEmailPassword();
 
@@ -127,7 +131,7 @@ public class EmailHandler {
 
             messageBodyPart = new MimeBodyPart();
             String file = "./tmp_240424042404.xml";
-            String fileName = "problemXML";
+            String fileName = "problemXML.xml";
             DataSource source = new FileDataSource(file);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(fileName);

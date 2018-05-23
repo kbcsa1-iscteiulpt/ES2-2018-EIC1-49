@@ -115,6 +115,7 @@ public class XMLEditor {
 	 * @param problem
 	 */
 	public void write(String path, UserProblem problem) {
+		System.out.println("2" + problem.getMax());
 		try {
 
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();

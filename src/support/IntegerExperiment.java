@@ -32,7 +32,7 @@ public class IntegerExperiment {
         new ExperimentBuilder<IntegerSolution, List<IntegerSolution>>("ProblemResultsINTEGER")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setExperimentBaseDirectory(experimentBaseDirectory)
+            .setExperimentBaseDirectory(experimentBaseDirectory) 
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
             .setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
@@ -47,7 +47,6 @@ public class IntegerExperiment {
     new GenerateLatexTablesWithStatistics(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
     
-    algorithmConf.applyRestrictions(problem.getVariables(), "../../experimentBaseDirectory/referenceFronts/IntegerProblem.rs");
   }
 
 

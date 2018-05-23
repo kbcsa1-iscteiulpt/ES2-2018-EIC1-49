@@ -85,7 +85,7 @@ public class AlgorithmsConfig {
 			numberOfVariables = problem.getNumberOfVariables();
 			tag=problemList.get(i).getTag();
 			
-			if(algorithmsID.contains("NGASAII")) {
+			if(algorithmsID.contains("NSGAII")) {
 				System.out.println("in");
 				buildDoubleNGASAII(problem,numberOfVariables,tag);
 			}
@@ -137,7 +137,7 @@ public class AlgorithmsConfig {
 		String tag;
 		
 		for (int i = 0; i < problemList.size(); i++) {
-			problem = problemList.get(i).getProblem();
+			problem = problemList.get(i).getProblem(); 
 			numberOfVariables = problem.getNumberOfVariables();
 			tag=problemList.get(i).getTag();
 			
@@ -644,16 +644,17 @@ public class AlgorithmsConfig {
 		String adminEmail = config.getEmailAdmin();
 		String subject = "Update on " + problem.getName() + " problem";
 		String content = "Your optimization process is currently at ";
-		int maxIterations = Config.getInstance().getMaxEvaluations() ;
+		int maxIterations = Config.getInstance().getMaxEvaluations() ; 
 		
 		try {
-			if(counter == (int)(maxIterations * 0.25) ) {
+			if(counter == (int)(maxIterations * 0.25) ) { 
+					System.out.println("teste ricardo " + adminEmail);
 					emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "25%");
-			}else if(counter == (int)(maxIterations* 0.5) ) {
+			}else if(counter == (int)(maxIterations  * 0.5) ) {
 				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "50%");
-			}else if(counter == (int)(maxIterations * 0.75) ) {
+			}else if(counter == (int)(maxIterations  * 0.75) ) {
 				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "75%");
-			}else if(counter == (int)(maxIterations) ) { 
+			}else if(counter == (int)(maxIterations ) ) { 
 				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,"The otimization of your problem is concluded");
 			}
 		} catch (AddressException e) {

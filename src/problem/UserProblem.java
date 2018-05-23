@@ -196,7 +196,7 @@ public class UserProblem {
 				";Ideal time:"+getIdeal().toString()+System.getProperty("line.separator")+
 				";Variable group name:"+getGroupName()+";Number of variables:"+getNumberVariables()+
 				System.getProperty("line.separator") + allVariables+
-				System.getProperty("line.separator") + allCriterias;
+				System.getProperty("line.separator") + allCriterias; 
 	}
 	
 	
