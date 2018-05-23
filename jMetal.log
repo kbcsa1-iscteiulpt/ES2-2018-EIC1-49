@@ -1,135 +1,125 @@
-<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-23T15:38:42</date>
-  <millis>1527086322275</millis>
+  <date>2018-05-23T19:20:35</date>
+  <millis>1527099635998</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>15</thread>
+  <thread>13</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-23T15:38:42</date>
-  <millis>1527086322291</millis>
+  <date>2018-05-23T19:20:36</date>
+  <millis>1527099636012</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
-  <thread>15</thread>
+  <thread>13</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-23T15:38:42</date>
-  <millis>1527086322293</millis>
+  <date>2018-05-23T19:20:36</date>
+  <millis>1527099636020</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>15</thread>
-  <message>Creating experimentBaseDirectory/ProblemResultsDOUBLE/data/NSGAII/DoubleProblem</message>
+  <thread>13</thread>
+  <message> Running algorithm: SMSEMOA, problem: DoubleProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsDOUBLE/data/SMSEMOA/DoubleProblem/FUN0.tsv</message>
 </record>
 <record>
-  <date>2018-05-23T15:38:42</date>
-  <millis>1527086322293</millis>
+  <date>2018-05-23T19:21:15</date>
+  <millis>1527099675319</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>15</thread>
-  <message> Running algorithm: NSGAII, problem: DoubleProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsDOUBLE/data/NSGAII/DoubleProblem/FUN0.tsv</message>
+  <thread>13</thread>
+  <message> Running algorithm: SMSEMOA, problem: DoubleProblem, run: 1, funFile: experimentBaseDirectory/ProblemResultsDOUBLE/data/SMSEMOA/DoubleProblem/FUN1.tsv</message>
 </record>
 <record>
-  <date>2018-05-23T15:39:34</date>
-  <millis>1527086374016</millis>
+  <date>2018-05-23T19:21:51</date>
+  <millis>1527099711446</millis>
   <sequence>4</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
-  <method>runAlgorithm</method>
-  <thread>15</thread>
-  <message> Running algorithm: NSGAII, problem: DoubleProblem, run: 1, funFile: experimentBaseDirectory/ProblemResultsDOUBLE/data/NSGAII/DoubleProblem/FUN1.tsv</message>
+  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
+  <method>run</method>
+  <thread>13</thread>
+  <message>Computing indicator: HV</message>
 </record>
 <record>
-  <date>2018-05-23T15:40:01</date>
-  <millis>1527086401695</millis>
+  <date>2018-05-23T19:21:51</date>
+  <millis>1527099711447</millis>
   <sequence>5</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.GenerateReferenceParetoSetAndFrontFromDoubleSolutions</class>
-  <method>createOutputDirectory</method>
-  <thread>15</thread>
-  <message>Creating experimentBaseDirectory/referenceFronts. Status = true</message>
+  <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
+  <method>run</method>
+  <thread>13</thread>
+  <message>RF: experimentBaseDirectory/referenceFronts/DoubleProblem.rf</message>
 </record>
 <record>
-  <date>2018-05-23T15:40:01</date>
-  <millis>1527086401723</millis>
+  <date>2018-05-23T19:21:51</date>
+  <millis>1527099711448</millis>
   <sequence>6</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
-  <method>run</method>
-  <thread>15</thread>
-  <message>Computing indicator: HV</message>
+  <method>resetFile</method>
+  <thread>13</thread>
+  <message>File experimentBaseDirectory/ProblemResultsDOUBLE/data/SMSEMOA/DoubleProblem/HV exist.</message>
 </record>
 <record>
-  <date>2018-05-23T15:40:01</date>
-  <millis>1527086401723</millis>
+  <date>2018-05-23T19:21:51</date>
+  <millis>1527099711450</millis>
   <sequence>7</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
-  <method>run</method>
-  <thread>15</thread>
-  <message>RF: experimentBaseDirectory/referenceFronts/DoubleProblem.rf</message>
+  <method>resetFile</method>
+  <thread>13</thread>
+  <message>File experimentBaseDirectory/ProblemResultsDOUBLE/data/SMSEMOA/DoubleProblem/HV is a file. Deleting file.</message>
 </record>
 <record>
-  <date>2018-05-23T15:40:01</date>
-  <millis>1527086401723</millis>
+  <date>2018-05-23T19:21:51</date>
+  <millis>1527099711451</millis>
   <sequence>8</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>resetFile</method>
-  <thread>15</thread>
-  <message>File experimentBaseDirectory/ProblemResultsDOUBLE/data/NSGAII/DoubleProblem/HV does NOT exist.</message>
+  <thread>13</thread>
+  <message>File succesfully deleted.</message>
 </record>
 <record>
-  <date>2018-05-23T15:40:01</date>
-  <millis>1527086401723</millis>
+  <date>2018-05-23T19:21:51</date>
+  <millis>1527099711454</millis>
   <sequence>9</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
-  <thread>15</thread>
-  <message>HV: 0.5316890757460843</message>
+  <thread>13</thread>
+  <message>HV: 0.6961795513792947</message>
 </record>
 <record>
-  <date>2018-05-23T15:40:01</date>
-  <millis>1527086401723</millis>
+  <date>2018-05-23T19:21:51</date>
+  <millis>1527099711457</millis>
   <sequence>10</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ComputeQualityIndicators</class>
   <method>run</method>
-  <thread>15</thread>
-  <message>HV: 0.7120734924217111</message>
+  <thread>13</thread>
+  <message>HV: 0.6331931763177939</message>
 </record>
-<record>
-  <date>2018-05-23T15:40:01</date>
-  <millis>1527086401755</millis>
-  <sequence>11</sequence>
-  <logger>org.uma.jmetal.util.JMetalLogger</logger>
-  <level>INFO</level>
-  <class>org.uma.jmetal.util.experiment.component.GenerateLatexTablesWithStatistics</class>
-  <method>generateLatexScript</method>
-  <thread>15</thread>
-  <message>Creating experimentBaseDirectory/ProblemResultsDOUBLE/latex directory</message>
-</record>
+</log>

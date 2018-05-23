@@ -603,36 +603,36 @@ public class AlgorithmsConfig {
 		Scanner in;
 		try {
 			in = new Scanner(new FileReader(path));
-			StringBuilder sb = new StringBuilder();
 			
 			while(in.hasNext()) {
-				fileVector = in.next().split(" ");
+				fileVector = in.nextLine().split(" ");
+				
 				for (int i = 0; i < fileVector.length; i++) {
+					System.out.print(fileVector[i]+",");
 					for (int j = 0; j < restrictions.get(i).length; j++) {
-						if(fileVector[i].trim() == restrictions.get(i)[j].trim() ){
+						if(fileVector[i].trim().equals(restrictions.get(i)[j].trim()) ){
 							fileVector[i]="x";
 						}
 					}
 				}
+				System.out.println();
 				fileOutputVector.add(fileVector);
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Problem rs file not found");
 		}
-		
+		try {
+		BufferedWriter writer = new BufferedWriter(new FileWriter(path));
 
 		for (int i = 0; i < fileOutputVector.size(); i++) {
 			for (int j = 0; j < fileOutputVector.get(i).length; j++) {
-				fileOutput +=  fileOutputVector.get(i)[j] ;
+				writer.write(fileOutputVector.get(i)[j]+ " ");
 			}
-			fileOutput += "\n";
+			writer.write("\n");
 		}
-		
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-			writer.write(fileOutput);
-			writer.close();
+			
+		writer.close();
 		} catch (IOException e) {
 			System.out.println("Problem rs file not found");
 		}
