@@ -53,15 +53,15 @@ public class DoubleExperiment {
     new GenerateLatexTablesWithStatistics(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
     
-    File dir = new File("./experimentBaseDirectory/referenceFronts");
-    File[] directoryListing = dir.listFiles();
-    if (directoryListing != null) {
-      for (File file : directoryListing) {
-    	  if(file.getName().contains("Double")&& file.getName().endsWith(".rs")) {
-    		  algorithmConf.applyRestrictions(problem.getVariables(), "./experimentBaseDirectory/referenceFronts/" + file.getName());
-    	  }
-      }
-    } 
+//    File dir = new File("./experimentBaseDirectory/referenceFronts");
+//    File[] directoryListing = dir.listFiles();
+//    if (directoryListing != null) {
+//      for (File file : directoryListing) {
+//    	  if(file.getName().contains("Double")&& file.getName().endsWith(".rs")) {
+//    		  algorithmConf.applyRestrictions(problem.getVariables(), "./experimentBaseDirectory/referenceFronts/" + file.getName());
+//    	  }
+//      }
+//    } 
   }
 
 
