@@ -114,12 +114,13 @@ public class ExecutionProcess {
 	 * calls the method to show the graphics and the .eps and .pdf files.
 	 * @param criteriaSection 
 	 * @param algorithmsSelectedList 
+	 * @param beforeOptimizationProcess 
 	 * 
 	 * @param dataType2
 	 **/
 	public void executeOptimization(UserProblem problem, NameDescriptionSection nameDescription, EmailSection email,
 			int decisionVariableNumber, String decisionVariableGroupName, EmailHandler emailHandler,
-			Type dataType, CriteriaSection criteriaSection, List<String> algorithmsSelectedList, TimeOptimizationSection time) {
+			Type dataType, CriteriaSection criteriaSection, List<String> algorithmsSelectedList, TimeOptimizationSection time, JFrame beforeOptimizationProcess) {
 		this.problem = problem;
 		problem.setGroupName(decisionVariableGroupName);
 		problem.setNumberVariables(decisionVariableNumber);
@@ -163,9 +164,10 @@ public class ExecutionProcess {
 			default:
 				return; 
 			}
-			showGraphic(problem, algorithmsSelectedList);
+		 	beforeOptimizationProcess.dispose();
 			compileAndShowEps(problem);
 			compileAndShowPdf(problem);
+			showGraphic(problem, algorithmsSelectedList);
 		} catch (IOException e2) {
 			try {
 				e2.printStackTrace();

@@ -69,8 +69,8 @@ public class Graphic {
 			break;
 		}
 
-		readAllFiles(".rs");
-		readAllFiles(".rf");
+		readAllFiles(rsPath,".rs");
+		readAllFiles(rfPath,".rf");
 		
 		
 
@@ -80,8 +80,8 @@ public class Graphic {
 	 * Reads all files from config path with given format
 	 * @param format
 	 */
-	public void readAllFiles(String format) {
-		File rfFolder = new File(rfPath);
+	public void readAllFiles(String path,String format) {
+		File rfFolder = new File(path);
 		File[] listOfrf = rfFolder.listFiles();
 		
 		for (int i = 0; i < listOfrf.length; i++) {
@@ -168,7 +168,7 @@ public class Graphic {
 			}
 		}else if(format.equals(".rs")){
 			for (int y = 0; y < yAxis.length; y++) {
-				if ( x<problem.getVariables().size())
+				if ( y<problem.getVariables().size())
 					dataset.addValue(yAxis[y],"Solution "+(x+1)	, problem.getVariables().get(y).getName());
 				else 
 					dataset.addValue(yAxis[y],"Solution "+(x+1), "Variable " + (y+1));

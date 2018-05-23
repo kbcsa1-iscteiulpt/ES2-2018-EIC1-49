@@ -148,7 +148,17 @@ public class AlgorithmSelectionSection {
 				if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					String jarPath = fchUploadJar.getSelectedFile().getPath();
 					txtAlgorithmsPath.setText(jarPath);
-					algorithmConfig.readAutomaticConf(fchUploadJar.getSelectedFile());
+					List<String> listSelectedAlgorithms = algorithmConfig.readAutomaticConf(fchUploadJar.getSelectedFile());
+					String[] splitted = listSelectedAlgorithms.get(0).split(";");
+					for(JCheckBox ch : algorithmsList) {
+						for(String algorithm : splitted) {
+							System.out.println(algorithm);
+							if(ch.getText().equals(algorithm)) {
+								ch.setSelected(true);
+								System.out.println(ch.getText());
+							}
+						}
+					}
 				}
 			}
 		});
@@ -170,7 +180,7 @@ public class AlgorithmSelectionSection {
 				}
 				execute.executeOptimization(problem, nameDescription, email, decisionVariablesNumber,
 						decisionVariablesGroupName, emailHandler, dataType, criteriaSection,
-						algorithmsSelectedList, time);
+						algorithmsSelectedList, time, beforeOptimizationProcess);
 			}
 		});
 		pnlTitleBeforeOptimization.add(lblBeforeOptimization);
