@@ -33,14 +33,15 @@ import org.w3c.dom.Node;
  * @author Gustavo Morais nº 73036
  *
  */
-public class Config {
+public class ConfigXML {
 	
 	private final String configPath = "./config.xml";
-	private static final Config INSTANCE = new Config();
+	private static final ConfigXML INSTANCE = new ConfigXML();
 	
-	//E-mail
+	//Administrator
 	private String emailAdmin;
 	private String emailPassword;
+	private String faqPath;
 	//JMetal
 	private int maxEvaluations;
 	private String experimentBaseDirectory;
@@ -64,11 +65,11 @@ public class Config {
 	private String pdfOpenPath;
 	
 		
-	public Config(){
+	public ConfigXML(){
 		readConfig();
 	}
 	
-	public static Config getInstance() {
+	public static ConfigXML getInstance() {
 		return INSTANCE;
 	}
 
@@ -149,6 +150,14 @@ public class Config {
 		return pdfOpenPath;
 	}
 	
+	public String getEmailPassword() {
+		return emailPassword;
+	}
+
+	public String getFaqPath() {
+		return faqPath;
+	}
+
 	
 
 	/**
@@ -179,8 +188,11 @@ public class Config {
 				
 				this.emailAdmin=administrator.getAttribute("email");
 				this.emailPassword=administrator.getAttribute("emailPassword");
+				this.faqPath=administrator.getAttribute("faqPath");
+				
 				this.maxEvaluations= Integer.parseInt(JMetal.getAttribute("maxEvaluations"));
 				this.experimentBaseDirectory=JMetal.getAttribute("experimentBaseDirectory");
+				
 				this.epsEnvironmentVar= EPS.getAttribute("epsEnvironmentVar");
 				this.pdfEnvironmentVar= PDF.getAttribute("pdfEnvironmentVar");
 				
@@ -214,7 +226,5 @@ public class Config {
 		
 	}
 
-	public String getEmailPassword() {
-		return emailPassword;
-	}
+	
 }

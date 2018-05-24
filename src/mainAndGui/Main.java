@@ -1,6 +1,6 @@
 package mainAndGui;
 
-import support.Config;
+import support.ConfigXML;
 
 public class Main {
 

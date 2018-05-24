@@ -25,7 +25,7 @@ import org.jfree.ui.RefineryUtilities;
 
 import problem.UserProblem;
 import support.AlgorithmsConfig;
-import support.Config;
+import support.ConfigXML;
 
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -43,7 +43,7 @@ public class Graphic {
 
 	private UserProblem problem;
 	private List<double[]> xAxis = new ArrayList<double[]>();
-	private Config config = Config.getInstance();
+	private ConfigXML config = ConfigXML.getInstance();
 
 	private String resultsPath;
 	private List<String> algorithmsSelectedList = new ArrayList<String>();

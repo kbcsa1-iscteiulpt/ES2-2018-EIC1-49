@@ -14,7 +14,7 @@ import problem.UserProblem;
 import problem.Time;
 import problem.Type;
 import problem.Variable;
-import support.Config;
+import support.ConfigXML;
 import support.XMLEditor;
 
 /**
@@ -53,7 +53,7 @@ public class XMLEditorTest {
 	@Test
 	public void readConfigTest() {
 
-		Config conf = new Config();
+		ConfigXML conf = new ConfigXML();
 		assertTrue(!conf.getEmailAdmin().equals(""));
 	}
 

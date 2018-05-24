@@ -9,7 +9,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import problem.UserProblem;
-import support.Config;
+import support.ConfigXML;
 import support.EmailHandler;
 import support.XMLEditor;
 
@@ -21,7 +21,7 @@ import support.XMLEditor;
 
 public class Interface {
 
-	private String adminEmail = Config.getInstance().getEmailAdmin();
+	private String adminEmail = ConfigXML.getInstance().getEmailAdmin();
 
 	private JFrame decisionFrame;
 	private JFrame readProblemFrame;

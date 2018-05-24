@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import sun.security.krb5.Config;
+import support.ConfigXML;
 import support.EmailHandler;
 
 /**
@@ -107,7 +109,9 @@ public class HelpSection {
 			}
 		});
 
-		Map<String, String> listFAQ = readFAQfile("./src/files/faq.txt");
+		
+		
+		Map<String, String> listFAQ = readFAQfile(ConfigXML.getInstance().getFaqPath());
 
 		for (String question : listFAQ.keySet()) {
 			pnlFAQ.add(addFAQPanel(question, listFAQ.get(question)));

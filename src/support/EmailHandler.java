@@ -27,7 +27,7 @@ import javax.mail.internet.AddressException;
 
 public class EmailHandler {
 	
-	private Config config = Config.getInstance();
+	private ConfigXML config = ConfigXML.getInstance();
 	
 	public EmailHandler() {
 		

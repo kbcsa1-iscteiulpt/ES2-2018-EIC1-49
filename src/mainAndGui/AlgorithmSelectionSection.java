@@ -23,13 +23,13 @@ import jUnitTests.AlgorithmConfigTest;
 import problem.Type;
 import problem.UserProblem;
 import support.AlgorithmsConfig;
-import support.Config;
+import support.ConfigXML;
 import support.EmailHandler;
 
 public class AlgorithmSelectionSection {
 	public JFrame beforeOptimizationProcess;
 	public JButton btnExecuteProcess;
-	public Config config;
+	public ConfigXML config;
 	public Type dataType;
 	public JCheckBox algorithmNSGAII;
 	public JCheckBox algorithmSMSEMOA;
