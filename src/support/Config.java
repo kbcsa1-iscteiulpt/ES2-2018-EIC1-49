@@ -43,12 +43,11 @@ public class Config {
 	private String emailPassword;
 	//JMetal
 	private int maxEvaluations;
-	private String rsPathInteger;
-	private String rsPathDouble;
-	private String rsPathBinary;
-	private String rfPathInteger;
-	private String rfPathDouble;
-	private String rfPathBinary;
+	private String experimentBaseDirectory;
+	private String resultsPathInteger;
+	private String resultsPathDouble;
+	private String resultsPathBinary;
+	
 	//EPS Compiler
 	private String epsRPath;
 	private String rPath;
@@ -86,28 +85,20 @@ public class Config {
 		return maxEvaluations;
 	}
 
-	public String getrsPathInteger() {
-		return rsPathInteger;
-	}
-
-	public String getrsPathDouble() {
-		return rsPathDouble;
-	}
-
-	public String getrsPathBinary() {
-		return rsPathBinary;
+	public String getExperimentBaseDirectory() {
+		return experimentBaseDirectory;
 	}
 	
-	public String getrfPathInteger() {
-		return rfPathInteger;
+	public String getResultsPathInteger() {
+		return resultsPathInteger;
 	}
 
-	public String getrfPathDouble() {
-		return rfPathDouble;
+	public String getResultsPathDouble() {
+		return resultsPathDouble;
 	}
 
-	public String getrfPathBinary() {
-		return rfPathBinary;
+	public String getResultsPathBinary() {
+		return resultsPathBinary;
 	}
 
 	public String getEpsRPath() {
@@ -189,6 +180,7 @@ public class Config {
 				this.emailAdmin=administrator.getAttribute("email");
 				this.emailPassword=administrator.getAttribute("emailPassword");
 				this.maxEvaluations= Integer.parseInt(JMetal.getAttribute("maxEvaluations"));
+				this.experimentBaseDirectory=JMetal.getAttribute("experimentBaseDirectory");
 				this.epsEnvironmentVar= EPS.getAttribute("epsEnvironmentVar");
 				this.pdfEnvironmentVar= PDF.getAttribute("pdfEnvironmentVar");
 				
@@ -196,12 +188,11 @@ public class Config {
 				Element epsPaths = (Element) EPS.getElementsByTagName("paths").item(0);
 				Element pdfPaths = (Element) PDF.getElementsByTagName("paths").item(0);
 				
-				this.rsPathInteger=jmetalPaths.getAttribute("rsPathInteger");
-				this.rsPathDouble=jmetalPaths.getAttribute("rsPathDouble");
-				this.rsPathBinary=jmetalPaths.getAttribute("rsPathBinary");
-				this.rfPathInteger=jmetalPaths.getAttribute("rfPathInteger");
-				this.rfPathDouble=jmetalPaths.getAttribute("rfPathDouble");
-				this.rfPathBinary=jmetalPaths.getAttribute("rfPathBinary");
+				this.experimentBaseDirectory=jmetalPaths.getAttribute("experimentBaseDirectory");
+				
+				this.resultsPathInteger=jmetalPaths.getAttribute("resultsPathInteger");
+				this.resultsPathDouble=jmetalPaths.getAttribute("resultsPathDouble");
+				this.resultsPathBinary=jmetalPaths.getAttribute("resultsPathBinary");
 				
 				this.epsDestinationPath= epsPaths.getAttribute("epsDestinationPath");
 				this.epsRPath= epsPaths.getAttribute("epsRPath");

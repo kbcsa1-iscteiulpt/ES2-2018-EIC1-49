@@ -45,8 +45,7 @@ public class Graphic {
 	private List<double[]> xAxis = new ArrayList<double[]>();
 	private Config config = Config.getInstance();
 
-	private String rsPath;
-	private String rfPath;
+	private String resultsPath;
 	private List<String> algorithmsSelectedList = new ArrayList<String>();
 	private AlgorithmsConfig algorithmConfig;
 
@@ -56,32 +55,25 @@ public class Graphic {
 
 		switch (problem.getType()) {
 		case DOUBLE:
-			rsPath = config.getInstance().getrsPathDouble();
-			rfPath = config.getInstance().getrfPathDouble();
+			resultsPath = config.getExperimentBaseDirectory()+"/"+config.getResultsPathDouble();
 			break;
 		case INTEGER:
-			rsPath = config.getInstance().getrsPathInteger();
-			rfPath = config.getInstance().getrfPathInteger();
+			resultsPath = config.getResultsPathInteger();
 			break;
 		case BINARY:
-			rsPath = config.getInstance().getrsPathBinary();
-			rfPath = config.getInstance().getrfPathBinary();
+			resultsPath = config.getResultsPathBinary();
 			break;
 		}
 
-		readAllFiles(rsPath,".rs");
-		readAllFiles(rfPath,".rf");
-		
-		
-
+		readAllFiles(".rs");
 	}
 	
 	/**
 	 * Reads all files from config path with given format
 	 * @param format
 	 */
-	public void readAllFiles(String path,String format) {
-		File rfFolder = new File(path);
+	public void readAllFiles(String format) {
+		File rfFolder = new File(resultsPath);
 		File[] listOfrf = rfFolder.listFiles();
 		
 		for (int i = 0; i < listOfrf.length; i++) {

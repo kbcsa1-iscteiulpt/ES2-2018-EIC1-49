@@ -23,10 +23,11 @@ import problem.UserProblem;
 public class DoubleExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
+  private Config config = Config.getInstance();
 
   public DoubleExperiment(UserProblem problem ,List<String> selectedAlgorithms  , String jarPath) throws IOException {
 	
-    String experimentBaseDirectory = "experimentBaseDirectory"; 
+    String experimentBaseDirectory = config.getExperimentBaseDirectory(); 
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new DoubleProblemEvaluator(problem,jarPath)));
 
@@ -41,7 +42,7 @@ public class DoubleExperiment {
             .setExperimentBaseDirectory(experimentBaseDirectory)
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
+            .setReferenceFrontDirectory(experimentBaseDirectory+"/"+config.getResultsPathDouble())
             .setIndicatorList(Arrays.asList(new PISAHypervolume<DoubleSolution>()))
             .setIndependentRuns(INDEPENDENT_RUNS)
             .setNumberOfCores(8)

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 	<administrator email="projetodees7@gmail.com" emailPassword="P@ssw0rd123"></administrator>
-	<jmetal maxEvaluations="250">
-		<paths rsPathInteger="./experimentBaseDirectory/referenceFronts" rsPathDouble="./experimentBaseDirectory/referenceFronts" rsPathBinary="./experimentBaseDirectory/referenceFronts" rfPathInteger="./experimentBaseDirectory/referenceFronts" rfPathDouble="./experimentBaseDirectory/referenceFronts" rfPathBinary="./experimentBaseDirectory/referenceFronts"></paths></jmetal>
+	<jmetal maxEvaluations="250" experimentBaseDirectory="experimentBaseDirectory">
+		<paths resultsPathInteger="./experimentBaseDirectory/referenceFronts" resultsPathBinary="./experimentBaseDirectory/referenceFronts" resultsPathDouble="./experimentBaseDirectory/referenceFronts"></paths></jmetal>
 	<eps epsEnvironmentVar="Path=C:\\Program Files\\R\\R-3.5.0\\bin\\x64">
 		<paths epsDestinationPath="C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files\\" rPath="C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\experimentBaseDirectory\\ProblemResults" epsRPath='C:\\Program Files\\R\\R-3.5.0\\bin\\x64\\Rscript.exe' epsOpenPath="C:\\Users\\ASUS\\git\\ES2-2018-EIC1-49\\src\\files\\HV.Boxplot.eps" rFilename="\\R\\HV.Boxplot.R"></paths></eps>
 	<pdf pdfEnvironmentVar="Path=C:\\Program Files\\MiKTeX 2.9\\miktex\\bin\\x64">
