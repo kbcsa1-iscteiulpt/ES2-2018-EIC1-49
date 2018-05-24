@@ -3,6 +3,8 @@ package mainAndGui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -20,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import resources.ResourceLoader;
 import support.EmailHandler;
 /**
  * This class represents the email section.
@@ -32,6 +35,7 @@ public class EmailSection {
 	private JButton btnMessageSend;
 	private JButton btnWriteEmail;
 	private JButton btnWriteEmailFAQ;
+	private ResourceLoader resourceLoader = new ResourceLoader();
 
 	/**
 	 * Returns a frame with two JTextField to fill and a button to send the email.
@@ -62,8 +66,9 @@ public class EmailSection {
 
 		btnMessageSend = new JButton("Send Message");
 		btnMessageSend.setContentAreaFilled(false);
-		ImageIcon icoSendMessage = new ImageIcon(((new ImageIcon("./src/images/send_message.png")).getImage())
-				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		Image imgSendMessage = Toolkit.getDefaultToolkit().getImage(resourceLoader.getClass().getResource("images/send_message.png"));
+		ImageIcon icoSendMessage= new ImageIcon(imgSendMessage.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		
 		btnMessageSend.setContentAreaFilled(false);
 		btnMessageSend.setIcon(icoSendMessage);
 		sendEmail(frame, support, adminEmail, sendEmailFrame, pnlSendEmail);

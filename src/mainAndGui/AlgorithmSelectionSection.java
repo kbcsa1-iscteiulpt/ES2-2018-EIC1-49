@@ -3,6 +3,8 @@ package mainAndGui;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import jUnitTests.AlgorithmConfigTest;
 import problem.Type;
 import problem.UserProblem;
+import resources.ResourceLoader;
 import support.AlgorithmsConfig;
 import support.Config;
 import support.EmailHandler;
@@ -55,6 +58,7 @@ public class AlgorithmSelectionSection {
 	private String decisionVariablesGroupName;
 	private TimeOptimizationSection time;
 	private CriteriaSection criteriaSection;
+	private ResourceLoader resourceLoader = new ResourceLoader();
 
 	public JPanel algorithmSelection(NameDescriptionSection nameDescription, EmailSection email,
 			TimeOptimizationSection time, UserProblem problem, EmailHandler support, String adminEmail,
@@ -67,8 +71,9 @@ public class AlgorithmSelectionSection {
 		algorithmsList = new ArrayList<JCheckBox>();
 		algorithmsSelectedList = new ArrayList<String>();
 		problem(nameDescription, email, problem, decisionVariables, support, adminEmail);
-		ImageIcon icoExecute = new ImageIcon(((new ImageIcon("./src/images/execute.png")).getImage())
-				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		Image imgExecute = Toolkit.getDefaultToolkit().getImage(resourceLoader.getClass().getResource("images/execute.png"));
+		ImageIcon icoExecute = new ImageIcon(imgExecute.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		
 		btnExecuteProcess.setContentAreaFilled(false);
 		btnExecuteProcess.setIcon(icoExecute);
 		executeProcessPanel.add(btnExecuteProcess);

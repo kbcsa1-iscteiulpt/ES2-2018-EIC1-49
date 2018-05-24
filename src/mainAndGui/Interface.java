@@ -49,7 +49,7 @@ public class Interface {
 	public Interface() {
 		decisionFrame = new JFrame("Problem to be optimized");
 		decisionFrame.setVisible(true);
-		FrameSize.setFrame(decisionFrame, 0.25);
+		FrameSize.setFrame(decisionFrame, 0.3);
 		setDecisionContent(decisionFrame);
 	}
 

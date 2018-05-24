@@ -2,6 +2,8 @@ package mainAndGui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -24,6 +26,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import problem.Criteria;
 import problem.UserProblem;
+import resources.ResourceLoader;
 
 /**
  * This class represents the criteria section.
@@ -40,7 +43,7 @@ public class CriteriaSection {
 	private JButton btnRemoveCriteria;
 	private JTextField txtCriteriaName;
 	private JTextField txtJarPath;
-
+	private ResourceLoader resourceLoader = new ResourceLoader();
 	public JTextField getTxtJarPath() {
 		return txtJarPath;
 	}
@@ -80,7 +83,6 @@ public class CriteriaSection {
 				"This platform assumes in the optimization process that optimizing means minimizing the optimization criteria expressed through the objective functions");
 		btnRemoveCriteria = new JButton("Remove criteria");
 		pnlCriteriaList.setLayout(new BoxLayout(pnlCriteriaList, BoxLayout.Y_AXIS));
-		JPanel pnlCriteriaFinish = new JPanel();
 		addCriteria(pnlCriteria, pnlCriteriaList);
 		removeCriteria(pnlCriteria, pnlCriteriaList);
 
@@ -90,11 +92,10 @@ public class CriteriaSection {
 		pnlCriteriaList.add(lblInform);
 		pnlCriteriaList.add(jarPanel());
 		pnlCriteriaList.add(addCriteriaPanel());
-		pnlCriteriaFinish.add(btnCriteriaFinish);
 
-		pnlCriteria.add(pnlAddCriteria, BorderLayout.PAGE_START);
+		pnlCriteria.add(pnlAddCriteria, BorderLayout.NORTH);
 		pnlCriteria.add(pnlCriteriaList);
-		pnlCriteria.add(pnlCriteriaFinish, BorderLayout.PAGE_END);
+		pnlCriteria.add(btnCriteriaFinish, BorderLayout.SOUTH);
 		criteriaFrame.add(new JScrollPane(pnlCriteria));
 	}
 
@@ -156,8 +157,9 @@ public class CriteriaSection {
 	private void criteriaFinish(UserProblem problem, JFrame criteriaFrame) {
 		btnCriteriaFinish = new JButton("Finish");
 		btnCriteriaFinish.setContentAreaFilled(false);
-		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
-				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
+		Image imgFinish = Toolkit.getDefaultToolkit().getImage(resourceLoader.getClass().getResource("images/finish.png"));
+		ImageIcon icoFinish = new ImageIcon(imgFinish.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		
 		btnCriteriaFinish.setContentAreaFilled(false);
 		btnCriteriaFinish.setIcon(icoFinish);
 		btnCriteriaFinish.addActionListener(new ActionListener() {

@@ -124,7 +124,7 @@ public class EmailHandler {
             if (!ccEmail.equals("none")) {
             	message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
             }
-
+            System.out.println(message.toString()+"+++++++++");
             MimeBodyPart messageBodyPart = new MimeBodyPart();
 
             Multipart multipart = new MimeMultipart();
@@ -136,7 +136,6 @@ public class EmailHandler {
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(fileName);
             multipart.addBodyPart(messageBodyPart);
-
             message.setContent(multipart);
 
             System.out.println("Sending");
@@ -146,7 +145,8 @@ public class EmailHandler {
             System.out.println("Done");
 
         } catch (MessagingException e) {
-            System.out.println("Problem sending email");
+        	e.printStackTrace();
+        	System.out.println("Problem sending email");
         }
      }
     }
