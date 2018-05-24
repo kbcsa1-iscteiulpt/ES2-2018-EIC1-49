@@ -23,7 +23,7 @@ import problem.UserProblem;
 public class DoubleExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
-  private Config config = Config.getInstance();
+  private ConfigXML config = ConfigXML.getInstance();
 
   public DoubleExperiment(UserProblem problem ,List<String> selectedAlgorithms  , String jarPath) throws IOException {
 	

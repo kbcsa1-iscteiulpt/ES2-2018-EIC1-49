@@ -23,6 +23,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import sun.security.krb5.Config;
+import support.ConfigXML;
 import org.apache.commons.io.FileUtils;
 
 import resources.ResourceLoader;
@@ -120,6 +122,8 @@ public class HelpSection {
 		
 		URL url = resourceLoader.getClass().getResource("files/faq.txt");
 		Map<String, String> listFAQ = readFAQfile(url);
+
+		Map<String, String> listFAQ = readFAQfile("./src/files/faq.txt");
 
 		for (String question : listFAQ.keySet()) {
 			pnlFAQ.add(addFAQPanel(question, listFAQ.get(question)));

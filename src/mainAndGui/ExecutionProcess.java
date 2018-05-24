@@ -28,7 +28,7 @@ import org.jfree.ui.RefineryUtilities;
 
 import problem.UserProblem;
 import support.BinaryExperiment;
-import support.Config;
+import support.ConfigXML;
 import support.DoubleExperiment;
 import support.IntegerExperiment;
 import support.XMLEditor;
@@ -36,7 +36,7 @@ import support.EmailHandler;
 import problem.Time;
 import problem.Type;
 import problem.UserProblem;
-import support.Config;
+import support.ConfigXML;
 import support.EmailHandler;
 
 /**
@@ -46,7 +46,7 @@ import support.EmailHandler;
  **/
 public class ExecutionProcess {
  
-	private Config config = Config.getInstance();
+	private ConfigXML config = ConfigXML.getInstance();
 	private XMLEditor xmlEditor = new XMLEditor();
 	private UserProblem problem;
 

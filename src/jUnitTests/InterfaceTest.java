@@ -13,7 +13,7 @@ import mainAndGui.DecisionVariablesSection;
 import mainAndGui.EmailSection;
 import mainAndGui.Interface;
 import mainAndGui.TypeVarSection;
-import support.Config;
+import support.ConfigXML;
 import support.XMLEditor;
 
 /**
