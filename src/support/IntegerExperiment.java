@@ -18,10 +18,11 @@ import java.util.List;
 public class IntegerExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
+  private Config config = Config.getInstance();
   
   public IntegerExperiment(UserProblem problem, List<String> selectedAlgorithms, String jarPath ) throws IOException {
 	  
-    String experimentBaseDirectory = "experimentBaseDirectory";
+    String experimentBaseDirectory = config.getExperimentBaseDirectory(); 
 
     List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem ,jarPath)));
@@ -35,7 +36,7 @@ public class IntegerExperiment {
             .setExperimentBaseDirectory(experimentBaseDirectory) 
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory(experimentBaseDirectory+"/referenceFronts")
+            .setReferenceFrontDirectory(experimentBaseDirectory+"/"+config.getResultsPathInteger())
             .setIndicatorList(Arrays.asList(new PISAHypervolume<IntegerSolution>()))
             .setIndependentRuns(INDEPENDENT_RUNS)
             .setNumberOfCores(8)
