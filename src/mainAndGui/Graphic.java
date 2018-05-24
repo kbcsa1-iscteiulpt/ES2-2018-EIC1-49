@@ -58,10 +58,10 @@ public class Graphic {
 			resultsPath = config.getExperimentBaseDirectory()+"/"+config.getResultsPathDouble();
 			break;
 		case INTEGER:
-			resultsPath = config.getResultsPathInteger();
+			resultsPath = config.getExperimentBaseDirectory()+"/"+config.getResultsPathInteger();
 			break;
 		case BINARY:
-			resultsPath = config.getResultsPathBinary();
+			resultsPath = config.getExperimentBaseDirectory()+"/"+config.getResultsPathBinary();
 			break;
 		}
 
