@@ -3,13 +3,20 @@ package mainAndGui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +25,9 @@ import javax.swing.JPanel;
 
 import sun.security.krb5.Config;
 import support.ConfigXML;
+import org.apache.commons.io.FileUtils;
+
+import resources.ResourceLoader;
 import support.EmailHandler;
 
 /**
@@ -28,7 +38,7 @@ public class HelpSection {
 	private JButton btnGoBack;
 	private JButton btnHelp;
 	private JButton btnWriteEmailFAQ = new JButton("Write Email");
-
+	private ResourceLoader resourceLoader = new ResourceLoader();
 	/**
 	 * Returns a panel with a question mark placed at the top-right and a return
 	 * button at the top-left of the frame. When the question mark is clicked, a new
@@ -52,10 +62,10 @@ public class HelpSection {
 	 **/
 	private void helpButton(JFrame frame, EmailSection email, EmailHandler support, String adminEmail) {
 		btnHelp = new JButton();
+		Image question_mark = Toolkit.getDefaultToolkit().getImage(resourceLoader.getClass().getResource("images/question_mark.png"));
+		ImageIcon icoQuestionMark= new ImageIcon(question_mark.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
 		
-		ImageIcon icoQuestion_mark = new ImageIcon(((new ImageIcon("./src/images/question_mark.png")).getImage())
-				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
-		btnHelp.setIcon(icoQuestion_mark);
+		btnHelp.setIcon(icoQuestionMark);
 		btnHelp.setContentAreaFilled(false);
 		btnHelp.setBorderPainted(false);
 		btnHelp.setFocusPainted(false);
@@ -77,8 +87,9 @@ public class HelpSection {
 	 **/
 	private void goBackButton(JFrame frame, JFrame decisionFrame) {
 		btnGoBack = new JButton();
-		ImageIcon icoGoBack = new ImageIcon(((new ImageIcon("./src/images/goBack.png")).getImage())
-				.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		Image goBack = Toolkit.getDefaultToolkit().getImage(resourceLoader.getClass().getResource("images/goBack.png"));
+		System.out.println(resourceLoader.getClass().getResource("images/goBack.png"));
+		ImageIcon icoGoBack = new ImageIcon(goBack.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
 		btnGoBack.setContentAreaFilled(false);
 		btnGoBack.setBorderPainted(false);
 		btnGoBack.setFocusPainted(false);
@@ -107,11 +118,11 @@ public class HelpSection {
 			public void actionPerformed(ActionEvent e) {
 				email.setEmailFrame(helpFrame, support, adminEmail);
 			}
-		});
+		});;
+		
+		URL url = resourceLoader.getClass().getResource("files/faq.txt");
+		Map<String, String> listFAQ = readFAQfile(url);
 
-		
-		
-		Map<String, String> listFAQ = readFAQfile(ConfigXML.getInstance().getFaqPath());
 
 		for (String question : listFAQ.keySet()) {
 			pnlFAQ.add(addFAQPanel(question, listFAQ.get(question)));
@@ -126,13 +137,18 @@ public class HelpSection {
 	/**
 	 * Reads FAQ from .txt file
 	 **/
-	private Map<String, String> readFAQfile(String s) {
+	private Map<String, String> readFAQfile(URL s) {
 		Scanner scanner = null;
 		Map<String, String> listFAQ = new HashMap<String, String>();
 		try {
-			scanner = new Scanner(new File(s));
+			File file = new File("faqTeste.txt");
+			try {
+				FileUtils.copyURLToFile(s, file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			scanner = new Scanner(file);
 			String line = "";
-
 			while (scanner.hasNext()) {
 				line = scanner.nextLine();
 				String[] tokens = line.split(";");

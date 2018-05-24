@@ -2,6 +2,8 @@ package mainAndGui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
@@ -23,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import problem.Type;
 import problem.UserProblem;
 import problem.Variable;
+import resources.ResourceLoader;
 
 /**
  * This class represents the section of the problem decision variables.
@@ -41,7 +44,7 @@ public class DecisionVariablesSection {
 	private Type previousDataType = null;
 	private boolean filled = false;
 	private AlgorithmSelectionSection algorithmSelection;
-
+	private ResourceLoader resourceLoader = new ResourceLoader();
 	/**
 	 * Returns a panel with a JSpinner to select the number of decision variables
 	 * and button. When clicked, a new frame is displayed to write the decision
@@ -114,8 +117,9 @@ public class DecisionVariablesSection {
 
 		btnDecisionVariablesFinish = new JButton("Finish");
 		btnDecisionVariablesFinish.setContentAreaFilled(false);
-		ImageIcon icoFinish = new ImageIcon(((new ImageIcon("./src/images/finish.png")).getImage())
-				.getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH));
+		Image imgFinish = Toolkit.getDefaultToolkit().getImage(resourceLoader.getClass().getResource("images/finish.png"));
+		ImageIcon icoFinish = new ImageIcon(imgFinish.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+		
 		btnDecisionVariablesFinish.setIcon(icoFinish);
 		decisionVariablesFinish(problem, decisionVarFrame);
 
