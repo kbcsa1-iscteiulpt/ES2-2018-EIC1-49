@@ -123,7 +123,6 @@ public class HelpSection {
 		URL url = resourceLoader.getClass().getResource("files/faq.txt");
 		Map<String, String> listFAQ = readFAQfile(url);
 
-		Map<String, String> listFAQ = readFAQfile("./src/files/faq.txt");
 
 		for (String question : listFAQ.keySet()) {
 			pnlFAQ.add(addFAQPanel(question, listFAQ.get(question)));
