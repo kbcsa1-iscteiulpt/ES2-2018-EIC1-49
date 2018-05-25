@@ -22,7 +22,7 @@ public class IntegerExperiment {
   
   public IntegerExperiment(UserProblem problem, List<String> selectedAlgorithms, String jarPath ) throws IOException {
 	  
-    String experimentBaseDirectory = config.getExperimentBaseDirectory(); 
+    String experimentBaseDirectory = "experimentBaseDirectory"; 
 
     List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
     problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem ,jarPath)));

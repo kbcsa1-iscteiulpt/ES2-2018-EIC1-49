@@ -55,16 +55,17 @@ public class Graphic {
 
 		switch (problem.getType()) {
 		case DOUBLE:
-			resultsPath = config.getExperimentBaseDirectory()+"/"+config.getResultsPathDouble();
+			resultsPath = "experimentBaseDirectory/"+config.getResultsPathDouble();
+			readAllFiles(".rf");
 			break;
 		case INTEGER:
-			resultsPath = config.getExperimentBaseDirectory()+"/"+config.getResultsPathInteger();
+			resultsPath = "experimentBaseDirectory/"+config.getResultsPathInteger();
 			break;
 		case BINARY:
-			resultsPath = config.getExperimentBaseDirectory()+"/"+config.getResultsPathBinary();
+			resultsPath = "experimentBaseDirectory/"+config.getResultsPathBinary();
 			break;
 		}
-
+		System.out.println(resultsPath + "+++++++++");
 		readAllFiles(".rs");
 	}
 	

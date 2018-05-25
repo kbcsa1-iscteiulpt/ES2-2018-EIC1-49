@@ -28,14 +28,14 @@ public class FillForms {
 		txtFilePathXML.setText(filePath);
 		nameDescriptionProblem.getProblemName().setText(problem.getName());
 		nameDescriptionProblem.getProblemDescription().setText(problem.getDescription());
-		email.getEmail().setText(problem.getEmail());
+		email.getEmail().setText(problem.getEmail()); 
 		typeVar.getCmbVariableDataTypes().setSelectedIndex(problem.getType().ordinal());
 		timeOptimization.getSpnMaxNumberOfDays().setValue(problem.getMax().getDays());
 		timeOptimization.getSpnMaxNumberOfHours().setValue(problem.getMax().getHours());
 		timeOptimization.getSpnMaxNumberOfMinutes().setValue(problem.getMax().getMinutes());
 		timeOptimization.getSpnIdealNumberOfDays().setValue(problem.getIdeal().getDays());
-		timeOptimization.getSpnIdealNumberOfDays().setValue(problem.getIdeal().getHours());
-		timeOptimization.getSpnIdealNumberOfDays().setValue(problem.getIdeal().getMinutes());
+		timeOptimization.getSpnIdealNumberOfHours().setValue(problem.getIdeal().getHours());
+		timeOptimization.getSpnIdealNumberOfMinutes().setValue(problem.getIdeal().getMinutes());
 	}
 
 	/**

@@ -137,7 +137,7 @@ public class EmailHandler {
 
             messageBodyPart = new MimeBodyPart();
             String file = "./tmp_240424042404.xml";
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 			Date date = new Date();
 			String fileName = nameDescription.getProblemName().getText() + " " + dateFormat.format(date);
 			

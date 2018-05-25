@@ -138,7 +138,7 @@ public class ExecutionProcess {
 	
 		xmlEditor.write("./tmp_240424042404.xml", problem);
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 		Date date = new Date();
 		String subject = "Otimizacao em curso: " + nameDescription.getProblemName().getText() + " "
 				+ dateFormat.format(date);

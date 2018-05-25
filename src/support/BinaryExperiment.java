@@ -22,7 +22,7 @@ public class BinaryExperiment {
   
   public BinaryExperiment(UserProblem problem, List<String> selectedAlgorithms  ,String jarPath) throws IOException {
 	  
-    String experimentBaseDirectory = config.getExperimentBaseDirectory(); 
+    String experimentBaseDirectory = "experimentBaseDirectory"; 
 
     List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
     System.out.println("nº of bits: "+ problem.getVariables().get(0).getBits().length());
