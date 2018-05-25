@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -140,22 +141,30 @@ public class HelpSection {
 	private Map<String, String> readFAQfile(URL s) {
 		Scanner scanner = null;
 		Map<String, String> listFAQ = new HashMap<String, String>();
+		File file = new File("faqTeste.txt");
 		try {
-			File file = new File("faqTeste.txt");
 			try {
 				FileUtils.copyURLToFile(s, file);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			scanner = new Scanner(file);
+			
 			String line = "";
 			while (scanner.hasNext()) {
 				line = scanner.nextLine();
 				String[] tokens = line.split(";");
 				listFAQ.put(tokens[0], tokens[1]);
 			}
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			scanner.close();
+			file.delete();
 		}
 
 		return listFAQ;
