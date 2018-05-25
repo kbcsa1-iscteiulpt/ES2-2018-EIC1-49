@@ -17,6 +17,12 @@ import problem.Type;
 import problem.UserProblem;
 import problem.Variable;
 
+/**
+ * JUnit test cases for Graphic
+ * 
+ * @author Kevin Corrales nr 73529
+ *
+ */
 public class GraphicTest {
 
 	@Test
@@ -27,23 +33,23 @@ public class GraphicTest {
 		l.add(v1);
 		l.add(v2);
 
+		List<String> algorithmsSelectedList = new ArrayList<String>();
+		algorithmsSelectedList.add("algorithm");
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH-mm-ss");
 		Date current = new Date();  
 		UserProblem problem = new UserProblem("problemName", "problemDescription", "email",dateFormat.format(current)
 				, new Time(2, 2, 2),new Time(3, 3, 3), Type.INTEGER, "decisionVariablesGroupName", 2, l);
-		Graphic chart = new Graphic(problem);
+		Graphic chart = new Graphic(problem,algorithmsSelectedList);
 
 		problem.setType(Type.BINARY);
-		chart = new Graphic(problem);
+		chart = new Graphic(problem,algorithmsSelectedList);
 
 		problem.setType(Type.DOUBLE);
-		chart = new Graphic(problem);
+		chart = new Graphic(problem,algorithmsSelectedList);
 
-		chart.readResults("./src/jUnitTests/graphic.rs");
-		chart.setContent();
-		chart.pack();
-		RefineryUtilities.centerFrameOnScreen(chart);
-		chart.setVisible(true);
+		chart.readResults("./src/jUnitTests/double.algorithm.rs");
+		chart.setContent("JUnit",".rs");
 	}
 
 }
