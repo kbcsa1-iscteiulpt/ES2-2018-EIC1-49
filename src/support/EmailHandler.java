@@ -21,7 +21,13 @@ import javax.swing.JOptionPane;
 import org.jfree.chart.axis.SubCategoryAxis;
 
 import java.security.Security;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import com.sun.mail.smtp.SMTPTransport;
+
+import mainAndGui.NameDescriptionSection;
+
 import java.util.Date;
 import javax.mail.internet.AddressException;
 
@@ -95,7 +101,7 @@ public class EmailHandler {
         t.close();
     }
     
-    public void sendEmailWithAttachment(String fromEmail, String toEmail ,String ccEmail  ,String title, String messageBody) {
+    public void sendEmailWithAttachment(String fromEmail, String toEmail ,String ccEmail  ,String title, String messageBody, NameDescriptionSection nameDescription) {
         final String username = config.getEmailAdmin();
         final String password = config.getEmailPassword();
 
@@ -131,7 +137,10 @@ public class EmailHandler {
 
             messageBodyPart = new MimeBodyPart();
             String file = "./tmp_240424042404.xml";
-            String fileName = "problemXML.xml";
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			Date date = new Date();
+			String fileName = nameDescription.getProblemName().getText() + " " + dateFormat.format(date);
+			
             DataSource source = new FileDataSource(file);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(fileName);

@@ -146,7 +146,7 @@ public class ExecutionProcess {
 					"Muito obrigado por usar esta plataforma de otimizacaoo. Sera informado por email\r\n"
 							+ "sobre o progresso do processo de otimizacao, quando o processo de otimizacao tiver atingido 25%,\r\n"
 							+ "50%, 75% do total do (numero de avaliacoes ou) tempo estimado, e tambem quando o processo tiver\r\n"
-							+ "terminado, com sucesso ou devido a ocorrencia de erros.");
+							+ "terminado, com sucesso ou devido a ocorrencia de erros.", nameDescription);
 		File tmp_xml = new File("./tmp_240424042404.xml");
 		tmp_xml.delete();
 //		

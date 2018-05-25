@@ -2,7 +2,11 @@ package mainAndGui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -27,7 +31,7 @@ public class SaveSection {
 
 	private JButton btnSaveToXML;
 	private TypeVarSection type;
-
+	private String fileName;
 	/**
 	 * Returns a panel with a JButton that saves the configuration to a XML file.
 	 **/
@@ -61,6 +65,11 @@ public class SaveSection {
 				} else {
 					JFileChooser fchXMLSave = new JFileChooser();
 					fchXMLSave.setDialogTitle("Save");
+
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					Date date = new Date();
+					fileName = nameDescriptionProblem.getProblemName().getText() + " " + dateFormat.format(date);
+					fchXMLSave.setSelectedFile(new File(fileName));
 					fchXMLSave.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
 					if (fchXMLSave.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 						saveProblem(nameDescriptionProblem, problem, decisionVariables, email, timeOptimization, type);
@@ -83,7 +92,6 @@ public class SaveSection {
 			DecisionVariablesSection decisionVariables, EmailSection email, TimeOptimizationSection timeOptimization,
 			TypeVarSection typeVar) {
 		String groupName = groupName(decisionVariables);
-		
 
 		setProblem(nameDescriptionProblem, problem, decisionVariables, email, timeOptimization, typeVar, groupName,
 				problem.getVariables());
@@ -115,11 +123,11 @@ public class SaveSection {
 				Integer.parseInt(timeOptimization.getSpnIdealNumberOfMinutes().getValue().toString())));
 		problem.setType(typeVar.getDataType());
 		problem.setGroupName(groupName);
-		if(typeVar.getDataType().equals(Type.BINARY)) {
+		if (typeVar.getDataType().equals(Type.BINARY)) {
 			problem.setNumberVariables(1);
-		}else {			
-		problem.setNumberVariables(
-				Integer.parseInt(decisionVariables.getSpnNumberOfDecisionVariables().getValue().toString()));
+		} else {
+			problem.setNumberVariables(
+					Integer.parseInt(decisionVariables.getSpnNumberOfDecisionVariables().getValue().toString()));
 		}
 		problem.setVariables(variablesList);
 	}
@@ -137,7 +145,7 @@ public class SaveSection {
 			if (type.getDataType().equals(Type.BINARY)) {
 				for (int i = 0; i < numberOfRows; i++) {
 					String decisionVariableName = decisionVariableName(dtmDecisionVariables, i);
-					String decisionVariableBinaryValue= decisionVariableBinaryValue(dtmDecisionVariables, i);
+					String decisionVariableBinaryValue = decisionVariableBinaryValue(dtmDecisionVariables, i);
 					variablesList.add(new Variable(decisionVariableName, decisionVariableBinaryValue));
 				}
 			} else {
@@ -155,9 +163,9 @@ public class SaveSection {
 	}
 
 	private String decisionVariableBinaryValue(DefaultTableModel dtmDecisionVariables, int i) {
-		String decisionVariableValueBinary= "";
+		String decisionVariableValueBinary = "";
 		if (dtmDecisionVariables.getValueAt(i, 1).toString() != null)
-			decisionVariableValueBinary= dtmDecisionVariables.getValueAt(i, 1).toString();
+			decisionVariableValueBinary = dtmDecisionVariables.getValueAt(i, 1).toString();
 		return decisionVariableValueBinary;
 	}
 
@@ -171,7 +179,6 @@ public class SaveSection {
 			decisionVariableName = dtmDecisionVariables.getValueAt(i, 0).toString();
 		return decisionVariableName;
 	}
-
 
 	/**
 	 * Checks if the decision variable minumum value was filled, if it was, returns
@@ -212,5 +219,5 @@ public class SaveSection {
 	public JButton getBtnSaveToXML() {
 		return btnSaveToXML;
 	}
-	
+
 }
