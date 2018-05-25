@@ -15,12 +15,9 @@ import org.w3c.dom.Node;
  * 		- email of the administrator
  * 		- email password of the administrador
  * 		- maximum jmetal evaluations
- * 		- Path of the rs file from the integer evaluation
- * 		- Path of the rf file from the integer evaluation
- * 		- Path of the rs file from the double evaluation
- * 		- Path of the rf file from the double evaluation
- * 		- Path of the rs file from the binary evaluation
- * 		- Path of the rf file from the binary evaluation
+ * 		- Path of the results file from the integer evaluation
+ * 		- Path of the results file from the integer evaluation
+ * 		- Path of the results file from the double evaluation
  * 		- Path of the compiler .exe file to convert R file to EPS
  * 		- Path of the R file
  * 		- Path of the EPS environment variable
