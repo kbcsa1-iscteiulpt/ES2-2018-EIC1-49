@@ -127,7 +127,7 @@ public class XMLEditor {
 			probTag.setAttribute("name", problem.getName());
 			probTag.setAttribute("description", problem.getDescription());
 			probTag.setAttribute("email", problem.getEmail());
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH-mm-ss");
 			Date current = new Date();  
 			probTag.setAttribute("creationDate", dateFormat.format(current));
 			probTag.setAttribute("type", problem.getType().toString());

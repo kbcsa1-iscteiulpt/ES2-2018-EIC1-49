@@ -27,7 +27,7 @@ public class GraphicTest {
 		l.add(v1);
 		l.add(v2);
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH-mm-ss");
 		Date current = new Date();  
 		UserProblem problem = new UserProblem("problemName", "problemDescription", "email",dateFormat.format(current)
 				, new Time(2, 2, 2),new Time(3, 3, 3), Type.INTEGER, "decisionVariablesGroupName", 2, l);

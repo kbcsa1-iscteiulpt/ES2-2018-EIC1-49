@@ -66,7 +66,7 @@ public class SaveSection {
 					JFileChooser fchXMLSave = new JFileChooser();
 					fchXMLSave.setDialogTitle("Save");
 
-					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 					Date date = new Date();
 					fileName = nameDescriptionProblem.getProblemName().getText() + " " + dateFormat.format(date)+".xml";
 					fchXMLSave.setSelectedFile(new File(fileName));
