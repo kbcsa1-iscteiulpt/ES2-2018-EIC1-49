@@ -36,15 +36,14 @@ import org.w3c.dom.Node;
 public class ConfigXML {
 	
 	private final String configPath = "./config.xml";
+
 	private static final ConfigXML INSTANCE = new ConfigXML();
 	
 	//Administrator
 	private String emailAdmin;
 	private String emailPassword;
-	private String faqPath;
 	//JMetal
 	private int maxEvaluations;
-	private String experimentBaseDirectory;
 	private String resultsPathInteger;
 	private String resultsPathDouble;
 	private String resultsPathBinary;
@@ -86,9 +85,6 @@ public class ConfigXML {
 		return maxEvaluations;
 	}
 
-	public String getExperimentBaseDirectory() {
-		return experimentBaseDirectory;
-	}
 	
 	public String getResultsPathInteger() {
 		return resultsPathInteger;
@@ -154,11 +150,6 @@ public class ConfigXML {
 		return emailPassword;
 	}
 
-	public String getFaqPath() {
-		return faqPath;
-	}
-
-	
 
 	/**
 	 * Reads a XML file from the received path and creates a Configuration (Config Class) 
@@ -188,10 +179,8 @@ public class ConfigXML {
 				
 				this.emailAdmin=administrator.getAttribute("email");
 				this.emailPassword=administrator.getAttribute("emailPassword");
-				this.faqPath=administrator.getAttribute("faqPath");
 				
 				this.maxEvaluations= Integer.parseInt(JMetal.getAttribute("maxEvaluations"));
-				this.experimentBaseDirectory=JMetal.getAttribute("experimentBaseDirectory");
 				
 				this.epsEnvironmentVar= EPS.getAttribute("epsEnvironmentVar");
 				this.pdfEnvironmentVar= PDF.getAttribute("pdfEnvironmentVar");
@@ -199,8 +188,6 @@ public class ConfigXML {
 				Element jmetalPaths = (Element) JMetal.getElementsByTagName("paths").item(0);
 				Element epsPaths = (Element) EPS.getElementsByTagName("paths").item(0);
 				Element pdfPaths = (Element) PDF.getElementsByTagName("paths").item(0);
-				
-				this.experimentBaseDirectory=jmetalPaths.getAttribute("experimentBaseDirectory");
 				
 				this.resultsPathInteger=jmetalPaths.getAttribute("resultsPathInteger");
 				this.resultsPathDouble=jmetalPaths.getAttribute("resultsPathDouble");

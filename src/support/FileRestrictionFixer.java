@@ -19,7 +19,7 @@ public class FileRestrictionFixer {
 		
 		String oldFullPath="";
 		for(String path : paths) {
-			String fullPath="./"+config.getExperimentBaseDirectory()+"/"+path;
+			String fullPath="./experimentBaseDirectory/"+path;
 			if(oldFullPath.equals(fullPath)) {
 				File dir = new File(fullPath);
 			    File[] directoryListing = dir.listFiles();
