@@ -23,10 +23,12 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	private UserProblem problem;
 	private AlgorithmUtils algorithmsUtils = new AlgorithmUtils();
 	private String jarPath;
+	private int numOfAlgorithms ;
 	
-	  public IntegerProblemEvaluator(UserProblem problem,String jarPath) throws JMetalException {
+	  public IntegerProblemEvaluator(UserProblem problem,String jarPath,int numOfAlgorithms) throws JMetalException {
 		this.problem= problem;
 		this.jarPath=jarPath;
+		this.numOfAlgorithms=numOfAlgorithms;
 		  
 	    setNumberOfVariables(problem.getVariables().size());
 	    setNumberOfObjectives(2);
@@ -50,7 +52,7 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 
 	  public void evaluate(IntegerSolution solution){
 		  
-		algorithmsUtils.otimizationEmails(problem,counter);
+		algorithmsUtils.otimizationEmails(problem,counter,numOfAlgorithms);
 		counter ++;
 		  
 	    String solutionString ="";

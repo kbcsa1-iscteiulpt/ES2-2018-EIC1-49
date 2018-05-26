@@ -20,11 +20,13 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 		private UserProblem problem;
 		private AlgorithmUtils algorithmsUtils = new AlgorithmUtils();
 		private String jarPath;
+		private int numOfAlgorithms;
 	  
 
-	  public BinaryProblemEvaluator(UserProblem problem, int numberOfBits , String jarPath) throws JMetalException {
+	  public BinaryProblemEvaluator(UserProblem problem, int numberOfBits , String jarPath, int numOfAlgorithms) throws JMetalException {
 		this.problem = problem;  
 		this.jarPath = jarPath;
+		this.numOfAlgorithms = numOfAlgorithms;
 		  
 		setNumberOfVariables(numberOfBits);
 	    setNumberOfObjectives(2);
@@ -49,7 +51,7 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  @Override
 	  public void evaluate(BinarySolution solution){
 		  
-		algorithmsUtils.otimizationEmails(problem,counter);
+		algorithmsUtils.otimizationEmails(problem,counter,numOfAlgorithms);
 		counter ++;
 
 	    String solutionString ="";

@@ -30,7 +30,7 @@ public class DoubleExperiment {
 	
     String experimentBaseDirectory = "experimentBaseDirectory";
     List<ExperimentProblem<DoubleSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new DoubleProblemEvaluator(problem,jarPath)));
+    problemList.add(new ExperimentProblem<>(new DoubleProblemEvaluator(problem,jarPath,selectedAlgorithms.size())));
 
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList = algorithmConf.configureDoubleAlgorithms(problemList,selectedAlgorithms);
     		

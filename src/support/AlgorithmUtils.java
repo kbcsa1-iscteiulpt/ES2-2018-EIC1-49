@@ -138,7 +138,7 @@ public class AlgorithmUtils {
 		}
 	}
 	
-	public void otimizationEmails(UserProblem problem,int counter) {
+	public void otimizationEmails(UserProblem problem,int counter, int numOfAlgorithms) {
 		
 		EmailHandler emailHandler = new EmailHandler();
 		String adminEmail = config.getEmailAdmin();
@@ -147,14 +147,14 @@ public class AlgorithmUtils {
 		int maxIterations = ConfigXML.getInstance().getMaxEvaluations() ; 
 		
 		try {
-			if(counter == (int)(maxIterations * 0.25) ) { 
+			if(counter == (int)(maxIterations * numOfAlgorithms * 0.25) ) { 
 					System.out.println("teste ricardo " + adminEmail);
 					emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "25%");
-			}else if(counter == (int)(maxIterations  * 0.5) ) {
+			}else if(counter == (int)(maxIterations * numOfAlgorithms  * 0.5) ) {
 				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "50%");
-			}else if(counter == (int)(maxIterations  * 0.75) ) {
+			}else if(counter == (int)(maxIterations * numOfAlgorithms  * 0.75) ) {
 				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "75%");
-			}else if(counter == (int)(maxIterations ) ) { 
+			}else if(counter == (int)(maxIterations * numOfAlgorithms ) ) { 
 				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,"The otimization of your problem is concluded");
 			}
 		} catch (AddressException e) {

@@ -23,11 +23,13 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	private UserProblem problem;
 	private AlgorithmUtils algorithmsConfig = new AlgorithmUtils();
 	private String jarPath;
+	private int numOfAlgorithms;
 	
 
-	  public DoubleProblemEvaluator( UserProblem problem,String jarPath) {
+	  public DoubleProblemEvaluator( UserProblem problem,String jarPath, int numOfAlgorithms) {
 		this.problem = problem;  
 		this.jarPath = jarPath;
+		this.numOfAlgorithms = numOfAlgorithms;
 		  
 		setNumberOfVariables(problem.getVariables().size());
 	    setNumberOfObjectives(2);
@@ -50,7 +52,7 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 
 	  public void evaluate(DoubleSolution solution){
 		  
-		algorithmsConfig.otimizationEmails(problem,counter);
+		algorithmsConfig.otimizationEmails(problem,counter,numOfAlgorithms);
 		counter ++;
 		
 	    String solutionString ="";

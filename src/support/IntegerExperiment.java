@@ -25,7 +25,7 @@ public class IntegerExperiment {
     String experimentBaseDirectory = "experimentBaseDirectory"; 
 
     List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem ,jarPath)));
+    problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem ,jarPath,selectedAlgorithms.size())));
 
     List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = algorithmConf.configureIntegerAlgorithms(problemList,selectedAlgorithms);
 
