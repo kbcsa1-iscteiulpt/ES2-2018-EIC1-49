@@ -1,52 +1,48 @@
-<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
 <record>
-  <date>2018-05-24T00:05:34.756409800Z</date>
-  <millis>1527120334756</millis>
-  <nanos>409800</nanos>
+  <date>2018-05-26T15:33:51</date>
+  <millis>1527345231276</millis>
   <sequence>0</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.JMetalLogger</class>
   <method>configureLoggers</method>
-  <thread>17</thread>
+  <thread>13</thread>
   <message>Loggers configured with null</message>
 </record>
 <record>
-  <date>2018-05-24T00:05:34.813539600Z</date>
-  <millis>1527120334813</millis>
-  <nanos>539600</nanos>
+  <date>2018-05-26T15:33:51</date>
+  <millis>1527345231289</millis>
   <sequence>1</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
   <method>run</method>
-  <thread>17</thread>
+  <thread>13</thread>
   <message>ExecuteAlgorithms: Preparing output directory</message>
 </record>
 <record>
-  <date>2018-05-24T00:05:34.827212Z</date>
-  <millis>1527120334827</millis>
-  <nanos>212000</nanos>
+  <date>2018-05-26T15:33:51</date>
+  <millis>1527345231300</millis>
   <sequence>2</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>17</thread>
-  <message>Creating /ProblemResultsDOUBLE/data/SMSEMOA/DoubleProblem</message>
+  <thread>13</thread>
+  <message> Running algorithm: MOCell, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/MOCell/BinaryProblem/FUN0.tsv</message>
 </record>
 <record>
-  <date>2018-05-24T00:05:34.827212Z</date>
-  <millis>1527120334827</millis>
-  <nanos>212000</nanos>
+  <date>2018-05-26T15:33:51</date>
+  <millis>1527345231300</millis>
   <sequence>3</sequence>
   <logger>org.uma.jmetal.util.JMetalLogger</logger>
   <level>INFO</level>
   <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
   <method>runAlgorithm</method>
-  <thread>17</thread>
-  <message> Running algorithm: SMSEMOA, problem: DoubleProblem, run: 0, funFile: /ProblemResultsDOUBLE/data/SMSEMOA/DoubleProblem/FUN0.tsv</message>
+  <thread>31</thread>
+  <message> Running algorithm: NSGAII, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/NSGAII/BinaryProblem/FUN0.tsv</message>
 </record>
 </log>

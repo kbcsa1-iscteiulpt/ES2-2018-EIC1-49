@@ -24,7 +24,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.ui.RefineryUtilities;
 
 import problem.UserProblem;
-import support.AlgorithmsConfig;
+import support.AlgorithmUtils;
 import support.ConfigXML;
 
 import org.jfree.chart.plot.PlotOrientation;
@@ -34,7 +34,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * This class creates a frame that shows a graphic with the values of the rf and
  * rs files that contains the JMetal results.
  * 
- * @author Kevin Corrales nº 73529
+ * @author Kevin Corrales nï¿½ 73529
  **/
 public class Graphic {
 
@@ -47,7 +47,7 @@ public class Graphic {
 
 	private String resultsPath;
 	private List<String> algorithmsSelectedList = new ArrayList<String>();
-	private AlgorithmsConfig algorithmConfig;
+	private AlgorithmUtils algorithmUtils;
 
 	public Graphic(UserProblem problem, List<String> algorithmsSelectedList) {
 		this.problem = problem;
@@ -133,7 +133,7 @@ public class Graphic {
 					if (!filePath.endsWith(".txt")) {
 						filePath += ".txt";
 					}
-					algorithmConfig.writeAutomaticConfig(algorithmsSelectedList, filePath);
+					algorithmUtils.writeAutomaticConfig(algorithmsSelectedList, filePath);
 				}
 			}
 		});

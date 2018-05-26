@@ -18,7 +18,7 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  
 	  private int counter = 0 ;
 		private UserProblem problem;
-		private AlgorithmsUtils algorithmsUtils = new AlgorithmsUtils();
+		private AlgorithmUtils algorithmsUtils = new AlgorithmUtils();
 		private String jarPath;
 	  
 

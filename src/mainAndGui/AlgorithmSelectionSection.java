@@ -19,13 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import jUnitTests.AlgorithmConfigTest;
 import problem.Type;
 import problem.UserProblem;
 import resources.ResourceLoader;
-import support.AlgorithmsConfig;
+import support.AlgorithmUtils;
 import support.ConfigXML;
 import support.EmailHandler;
 
@@ -51,7 +48,6 @@ public class AlgorithmSelectionSection {
 	public EmailSection email;
 	public DecisionVariablesSection decisionVariables;
 	public EmailHandler emailHandler = new EmailHandler();
-	public AlgorithmsConfig algorithmConfig = new AlgorithmsConfig();
 	public String adminEmail;
 	private ExecutionProcess execute;
 	private int decisionVariablesNumber;
@@ -59,6 +55,7 @@ public class AlgorithmSelectionSection {
 	private TimeOptimizationSection time;
 	private CriteriaSection criteriaSection;
 	private ResourceLoader resourceLoader = new ResourceLoader();
+	private AlgorithmUtils algorithmUtils = new AlgorithmUtils();
 
 	public JPanel algorithmSelection(NameDescriptionSection nameDescription, EmailSection email,
 			TimeOptimizationSection time, UserProblem problem, EmailHandler support, String adminEmail,
@@ -153,7 +150,7 @@ public class AlgorithmSelectionSection {
 				if (fchUploadJar.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					String jarPath = fchUploadJar.getSelectedFile().getPath();
 					txtAlgorithmsPath.setText(jarPath);
-					List<String> listSelectedAlgorithms = algorithmConfig.readAutomaticConf(fchUploadJar.getSelectedFile());
+					List<String> listSelectedAlgorithms = algorithmUtils.readAutomaticConf(fchUploadJar.getSelectedFile());
 					String[] splitted = listSelectedAlgorithms.get(0).split(";");
 					for(JCheckBox ch : algorithmsList) {
 						for(String algorithm : splitted) {

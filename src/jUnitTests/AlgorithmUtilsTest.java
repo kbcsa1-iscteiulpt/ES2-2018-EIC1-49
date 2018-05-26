@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.ArrayList; 
 import java.util.List; 
  
-import org.junit.Test; 
- 
-import support.AlgorithmsConfig; 
+import org.junit.Test;
+
+import support.AlgorithmUtils;
 import support.DoubleExperiment; 
 
 /** 
@@ -14,8 +14,8 @@ import support.DoubleExperiment;
  * @author Gustavo Morais n� 73036 
  **/ 
  
-public class AlgorithmConfigTest { 
-  AlgorithmsConfig ac = new AlgorithmsConfig(); 
+public class AlgorithmUtilsTest { 
+  AlgorithmUtils ac = new AlgorithmUtils(); 
    
   @Test 
   public void writeAlgorithmConfigurationTest(){ 
@@ -23,9 +23,7 @@ public class AlgorithmConfigTest {
     algorithmIDs.add("SMSEMOA"); 
      
     String fileName = "algoConfig"; 
-     
-     
-     
+        
     ac.writeAutomaticConfig(algorithmIDs, fileName); 
   } 
    

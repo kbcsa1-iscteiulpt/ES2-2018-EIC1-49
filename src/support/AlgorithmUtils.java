@@ -15,13 +15,10 @@ import javax.mail.internet.AddressException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.uma.jmetal.solution.BinarySolution;
-import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
-
 import problem.UserProblem;
 import problem.Variable;
 
-public class AlgorithmsUtils {
+public class AlgorithmUtils {
 	
 	private ConfigXML config = ConfigXML.getInstance();
 	

@@ -21,7 +21,7 @@ import problem.Variable;
 public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	private int counter = 0 ;
 	private UserProblem problem;
-	private AlgorithmsUtils algorithmsConfig = new AlgorithmsUtils();
+	private AlgorithmUtils algorithmsConfig = new AlgorithmUtils();
 	private String jarPath;
 	
 
