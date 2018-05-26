@@ -18,7 +18,7 @@ import java.util.List;
 public class IntegerExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static IntegerAlgorithmsConfig algorithmConf = new IntegerAlgorithmsConfig();
-  private Config config = Config.getInstance();
+  private ConfigXML config = ConfigXML.getInstance();
   
   public IntegerExperiment(UserProblem problem, List<String> selectedAlgorithms, String jarPath ) throws IOException {
 	  

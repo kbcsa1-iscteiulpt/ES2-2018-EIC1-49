@@ -14,7 +14,7 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 public class DoubleAlgorithmsConfig {
 	
-	private Config config = Config.getInstance();
+	private ConfigXML config = ConfigXML.getInstance();
 	private final int maxEvaluations = config.getMaxEvaluations();
 	
 	private List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> doubleAlgorithms = new ArrayList<>();

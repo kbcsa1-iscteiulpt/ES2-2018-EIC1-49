@@ -23,7 +23,7 @@ import problem.Variable;
 
 public class AlgorithmsUtils {
 	
-	private Config config = Config.getInstance();
+	private ConfigXML config = ConfigXML.getInstance();
 	
 
 	
@@ -140,7 +140,7 @@ public class AlgorithmsUtils {
 		String adminEmail = config.getEmailAdmin();
 		String subject = "Update on " + problem.getName() + " problem";
 		String content = "Your optimization process is currently at ";
-		int maxIterations = Config.getInstance().getMaxEvaluations() ; 
+		int maxIterations = ConfigXML.getInstance().getMaxEvaluations() ; 
 		
 		try {
 			if(counter == (int)(maxIterations * 0.25) ) { 

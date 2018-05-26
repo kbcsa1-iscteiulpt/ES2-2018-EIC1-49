@@ -21,7 +21,7 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 public class BinaryAlgorithmsConfig {
 	
 
-	private Config config = Config.getInstance();
+	private ConfigXML config = ConfigXML.getInstance();
 	private final int maxEvaluations = config.getMaxEvaluations();
 	
 	private List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> binaryAlgorithms = new ArrayList<>();

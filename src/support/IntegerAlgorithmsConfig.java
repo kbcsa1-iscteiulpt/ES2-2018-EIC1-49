@@ -15,7 +15,7 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 public class IntegerAlgorithmsConfig {
 	
-	private Config config = Config.getInstance();
+	private ConfigXML config = ConfigXML.getInstance();
 	private final int maxEvaluations = config.getMaxEvaluations();
 	
 	private List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> integerAlgorithms = new ArrayList<>();
