@@ -21,7 +21,7 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	
 	private int counter = 0 ;
 	private UserProblem problem;
-	private AlgorithmsConfig algorithmsConfig = new AlgorithmsConfig();
+	private AlgorithmsUtils algorithmsUtils = new AlgorithmsUtils();
 	private String jarPath;
 	
 	  public IntegerProblemEvaluator(UserProblem problem,String jarPath) throws JMetalException {
@@ -50,7 +50,7 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 
 	  public void evaluate(IntegerSolution solution){
 		  
-		algorithmsConfig.otimizationEmails(problem,counter);
+		algorithmsUtils.otimizationEmails(problem,counter);
 		counter ++;
 		  
 	    String solutionString ="";

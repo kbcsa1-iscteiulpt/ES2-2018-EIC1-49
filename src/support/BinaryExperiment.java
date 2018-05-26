@@ -17,8 +17,8 @@ import java.util.List;
 
 public class BinaryExperiment {
   private static final int INDEPENDENT_RUNS = 2;
-  private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
-  private ConfigXML config = ConfigXML.getInstance();
+  private static BinaryAlgorithmsConfig algorithmConf = new BinaryAlgorithmsConfig();
+  private Config config = Config.getInstance();
   
   public BinaryExperiment(UserProblem problem, List<String> selectedAlgorithms  ,String jarPath) throws IOException {
 	  

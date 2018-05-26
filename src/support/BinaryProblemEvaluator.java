@@ -18,7 +18,7 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  
 	  private int counter = 0 ;
 		private UserProblem problem;
-		private AlgorithmsConfig algorithmsConfig = new AlgorithmsConfig();
+		private AlgorithmsUtils algorithmsUtils = new AlgorithmsUtils();
 		private String jarPath;
 	  
 
@@ -49,7 +49,7 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  @Override
 	  public void evaluate(BinarySolution solution){
 		  
-		algorithmsConfig.otimizationEmails(problem,counter);
+		algorithmsUtils.otimizationEmails(problem,counter);
 		counter ++;
 
 	    String solutionString ="";

@@ -22,8 +22,8 @@ import problem.UserProblem;
 
 public class DoubleExperiment {
   private static final int INDEPENDENT_RUNS = 2;
-  private static AlgorithmsConfig algorithmConf = new AlgorithmsConfig();
-  private ConfigXML config = ConfigXML.getInstance();
+  private static DoubleAlgorithmsConfig algorithmConf = new DoubleAlgorithmsConfig();
+  private Config config = Config.getInstance();
 
   public DoubleExperiment(UserProblem problem ,List<String> selectedAlgorithms  , String jarPath) throws IOException {
 	
