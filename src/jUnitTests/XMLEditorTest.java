@@ -18,9 +18,9 @@ import support.ConfigXML;
 import support.XMLEditor;
 
 /**
- * JUnit test cases for XML_Editor
+ * JUnit test cases for XMLEditor
  * 
- * @author Kevin Corrales n� 73529
+ * @author Kevin Corrales nr 73529
  *
  */
 public class XMLEditorTest {
