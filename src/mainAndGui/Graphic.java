@@ -56,7 +56,7 @@ public class Graphic {
 		switch (problem.getType()) {
 		case DOUBLE:
 			resultsPath = "experimentBaseDirectory/"+config.getResultsPathDouble();
-			readAllFiles(".rf");
+			readAllFiles(".rs");
 			break;
 		case INTEGER:
 			resultsPath = "experimentBaseDirectory/"+config.getResultsPathInteger();
@@ -66,7 +66,7 @@ public class Graphic {
 			break;
 		}
 		System.out.println(resultsPath + "+++++++++");
-		readAllFiles(".rs");
+		readAllFiles(".rf");
 	}
 	
 	/**
@@ -74,14 +74,20 @@ public class Graphic {
 	 * @param format
 	 */
 	public void readAllFiles(String format) {
+		System.out.println(format+" format");
 		File rfFolder = new File(resultsPath);
 		File[] listOfrf = rfFolder.listFiles();
 		
 		for (int i = 0; i < listOfrf.length; i++) {
 			File file = listOfrf[i];
+			System.out.println(file.isFile());
+			System.out.println(file.getName().endsWith(format));
+			System.out.println(file.getName().toUpperCase().contains(problem.getType().toString()));
+			System.out.println(containsAlgorithm(file.getName()));
 			if (file.isFile() && file.getName().endsWith(format)
 					&& file.getName().toUpperCase().contains(problem.getType().toString())
 					&& containsAlgorithm(file.getName())) {
+				System.out.println(file.getPath()+"pppppppppppp");
 				readResults(file.getPath());
 				setContent(file.getName(),format);
 			}
