@@ -11,6 +11,8 @@ public class FrameSize {
 	/**
 	 * Defines the size of the given frame. The second parameter indicates the
 	 * number that the screen is multiplied by.
+	 * @param frame
+	 * @param size
 	 **/
 	public static void setFrame(JFrame frame, double size) {
 		double frameWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();

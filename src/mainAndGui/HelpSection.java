@@ -10,10 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -24,8 +21,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import sun.security.krb5.Config;
-import support.ConfigXML;
 import org.apache.commons.io.FileUtils;
 
 import resources.ResourceLoader;
@@ -33,6 +28,7 @@ import support.EmailHandler;
 
 /**
  * This class represents the help section.
+ * 
  * @author Diana nr 72898
  **/
 public class HelpSection {
@@ -40,56 +36,77 @@ public class HelpSection {
 	private JButton btnHelp;
 	private JButton btnWriteEmailFAQ = new JButton("Write Email");
 	private ResourceLoader resourceLoader = new ResourceLoader();
+
 	/**
 	 * Returns a panel with a question mark placed at the top-right and a return
 	 * button at the top-left of the frame. When the question mark is clicked, a new
 	 * frame is displayed to show the FAQ. When the return symbol is clicked, it
 	 * returns to the initial decision panel.
+	 * @param frame
+	 * @param decisionFrame
+	 * @param email
+	 * @param emailHandler
+	 * @param adminEmail
+	 * @return pnlHelp
 	 **/
 
-	public JPanel getHelpPanel(JFrame frame, JFrame decisionFrame, EmailSection email, EmailHandler support,
+	public JPanel getHelpPanel(JFrame frame, JFrame decisionFrame, EmailSection email, EmailHandler emailHandler,
 			String adminEmail) {
 		JPanel pnlHelp = new JPanel(new BorderLayout());
 		goBackButton(frame, decisionFrame);
-		helpButton(frame, email, support, adminEmail);
+		helpButton(frame, email, emailHandler, adminEmail);
 		pnlHelp.add(btnGoBack, BorderLayout.LINE_START);
 		pnlHelp.add(btnHelp, BorderLayout.LINE_END);
 		return pnlHelp;
 	}
-	
-	
+
 	/**
-	 * Creates a question mark icon placed at the top-right that is a button. When clicked, shows the help frame with FAQs.
+	 * Creates a question mark icon placed at the top-right that is a button. When
+	 * clicked, shows the help frame with FAQs.
+	 * @param frame
+	 * @param email
+	 * @param emailHandler
+	 * @param adminEmail
 	 **/
-	private void helpButton(JFrame frame, EmailSection email, EmailHandler support, String adminEmail) {
+	private void helpButton(JFrame frame, EmailSection email, EmailHandler emailHandler, String adminEmail) {
 		btnHelp = new JButton();
-		Image question_mark = Toolkit.getDefaultToolkit().getImage(resourceLoader.getClass().getResource("images/question_mark.png"));
-		ImageIcon icoQuestionMark= new ImageIcon(question_mark.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
-		
+		Image question_mark = Toolkit.getDefaultToolkit()
+				.getImage(resourceLoader.getClass().getResource("images/question_mark.png"));
+		ImageIcon icoQuestionMark = new ImageIcon(question_mark.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
+
 		btnHelp.setIcon(icoQuestionMark);
 		btnHelp.setContentAreaFilled(false);
 		btnHelp.setBorderPainted(false);
 		btnHelp.setFocusPainted(false);
 		btnHelp.setToolTipText("Help and FAQs");
-		setBtnHelpAction(frame, email, support, adminEmail);
+		setBtnHelpAction(frame, email, emailHandler, adminEmail);
 	}
 
-
-	private void setBtnHelpAction(JFrame frame, EmailSection email, EmailHandler support, String adminEmail) {
+	/**
+	 * Opens a new frame when the button is clicked 
+	 * @param frame
+	 * @param email
+	 * @param emailHandler
+	 * @param adminEmail
+	 **/
+	private void setBtnHelpAction(JFrame frame, EmailSection email, EmailHandler emailHandler, String adminEmail) {
 		btnHelp.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame helpFrame = new JFrame("Help Section");
 				FrameSize.setFrame(helpFrame, 0.5);
-				setHelpFrame(frame, helpFrame, email, support, adminEmail);
+				setHelpFrame(frame, helpFrame, email, emailHandler, adminEmail);
 				helpFrame.setVisible(true);
 			}
 		});
 	}
 
 	/**
-	 * Creates a return icon placed at the top-left that is a button. When clicked, returns to the previous frame.
+	 * Creates a return icon placed at the top-left that is a button. When clicked,
+	 * returns to the previous frame.
+	 * @param frame
+	 * @param decisionFrame
 	 **/
 	private void goBackButton(JFrame frame, JFrame decisionFrame) {
 		btnGoBack = new JButton();
@@ -112,8 +129,14 @@ public class HelpSection {
 
 	/**
 	 * Adds content to the Help frame
+	 * @param frame
+	 * @param helpFrame
+	 * @param email
+	 * @param emailHandler
+	 * @param adminEmail
 	 **/
-	private void setHelpFrame(JFrame frame, JFrame helpFrame, EmailSection email, EmailHandler support, String adminEmail) {
+	private void setHelpFrame(JFrame frame, JFrame helpFrame, EmailSection email, EmailHandler emailHandler,
+			String adminEmail) {
 		JPanel pnlHelp = new JPanel(new BorderLayout());
 		JPanel pnlFAQ = new JPanel(new GridLayout(6, 0));
 		JPanel pnlSendEmail = new JPanel();
@@ -122,13 +145,13 @@ public class HelpSection {
 		btnWriteEmailFAQ.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				email.setEmailFrame(helpFrame, support, adminEmail);
+				email.setEmailFrame(helpFrame, emailHandler, adminEmail);
 			}
-		});;
-		
+		});
+		;
+
 		URL url = resourceLoader.getClass().getResource("files/faq.txt");
 		Map<String, String> listFAQ = readFAQfile(url);
-
 
 		for (String question : listFAQ.keySet()) {
 			pnlFAQ.add(addFAQPanel(question, listFAQ.get(question)));
@@ -142,31 +165,31 @@ public class HelpSection {
 
 	/**
 	 * Reads FAQ from .txt file
+	 * @param url
+	 * @return listFAQ
 	 **/
-	private Map<String, String> readFAQfile(URL s) {
+	private Map<String, String> readFAQfile(URL url) {
 		Scanner scanner = null;
 		Map<String, String> listFAQ = new HashMap<String, String>();
 		File file = new File("faqTeste.txt");
 		try {
 			try {
-				FileUtils.copyURLToFile(s, file);
+				FileUtils.copyURLToFile(url, file);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			scanner = new Scanner(file);
-			
+
 			String line = "";
 			while (scanner.hasNext()) {
 				line = scanner.nextLine();
 				String[] tokens = line.split(";");
 				listFAQ.put(tokens[0], tokens[1]);
 			}
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
+		} finally {
 			scanner.close();
 			file.delete();
 		}
@@ -177,6 +200,9 @@ public class HelpSection {
 
 	/**
 	 * Returns a panel with a question and an answer.
+	 * @param question
+	 * @param answer
+	 * @return pnlFAQ
 	 **/
 	private JPanel addFAQPanel(String question, String answer) {
 		JPanel pnlFAQ = new JPanel(new GridLayout(2, 0));
@@ -201,5 +227,4 @@ public class HelpSection {
 		return btnWriteEmailFAQ;
 	}
 
-	
 }

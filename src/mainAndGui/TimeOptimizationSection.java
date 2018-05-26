@@ -6,8 +6,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+
 /**
- * This class represents the ideal and max time of the problem selection section.
+ * This class represents the ideal and max time of the problem selection
+ * section.
+ * 
  * @author Diana nr 72898
  **/
 public class TimeOptimizationSection {
@@ -22,6 +25,7 @@ public class TimeOptimizationSection {
 	/**
 	 * Returns a panel with a JSpinner for user to select the maximum time to wait
 	 * for the optimization.
+	 * @return pnlMaxTime
 	 **/
 	public JPanel maxTimePanel() {
 		JPanel pnlMaxTime = new JPanel(new FlowLayout());
@@ -48,6 +52,7 @@ public class TimeOptimizationSection {
 	/**
 	 * Returns a panel with a JSpinner for user to select the ideal time to wait for
 	 * the optimization.
+	 * @return pnlIdealTime
 	 **/
 	public JPanel idealTimePanel() {
 		JPanel pnlIdealTime = new JPanel(new FlowLayout());

@@ -21,15 +21,22 @@ public class FillForms {
 
 	/**
 	 * Fills the form with the data from a XML file.
+	 * @param filePath
+	 * @param nameDescriptionProblem
+	 * @param problem
+	 * @param email
+	 * @param type
+	 * @param timeOptimization
+	 * @param txtFilePathXML
 	 **/
 	public void fillInicialForm(String filePath, NameDescriptionSection nameDescriptionProblem, UserProblem problem,
-			EmailSection email, TypeVarSection typeVar, TimeOptimizationSection timeOptimization,
+			EmailSection email, TypeSection type, TimeOptimizationSection timeOptimization,
 			JTextField txtFilePathXML) {
 		txtFilePathXML.setText(filePath);
 		nameDescriptionProblem.getProblemName().setText(problem.getName());
 		nameDescriptionProblem.getProblemDescription().setText(problem.getDescription());
 		email.getEmail().setText(problem.getEmail()); 
-		typeVar.getCmbVariableDataTypes().setSelectedIndex(problem.getType().ordinal());
+		type.getCmbTypes().setSelectedIndex(problem.getType().ordinal());
 		timeOptimization.getSpnMaxNumberOfDays().setValue(problem.getMax().getDays());
 		timeOptimization.getSpnMaxNumberOfHours().setValue(problem.getMax().getHours());
 		timeOptimization.getSpnMaxNumberOfMinutes().setValue(problem.getMax().getMinutes());
@@ -40,6 +47,8 @@ public class FillForms {
 
 	/**
 	 * Fills the decision variable table with the data from a XML file.
+	 * @param decisionVariables
+	 * @param problem
 	 **/
 	public void fillDecisionVariableForm(DecisionVariablesSection decisionVariables, UserProblem problem) {
 		if(!problem.getType().equals(Type.BINARY)){

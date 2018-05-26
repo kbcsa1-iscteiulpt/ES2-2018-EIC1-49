@@ -10,12 +10,18 @@ import problem.Type;
 public class SaveProcess {
 	/**
 	* Saves the problem with the data given by the fields that were filled.
+	* @param nameDescriptionProblem
+	* @param problem
+	* @param decisionVariables
+	* @param email
+	* @param timeOptimization
+	* @param type
 	*/
 	public void saveProblem(NameDescriptionSection nameDescriptionProblem, UserProblem problem,
 			DecisionVariablesSection decisionVariables, EmailSection email, TimeOptimizationSection timeOptimization,
-			TypeVarSection typeVar) {
+			TypeSection type) {
 		String groupName = groupName(decisionVariables);
-		setProblem(nameDescriptionProblem, problem, decisionVariables, email, timeOptimization, typeVar, groupName,
+		setProblem(nameDescriptionProblem, problem, decisionVariables, email, timeOptimization, type, groupName,
 				problem.getVariables());
 	}
 
@@ -29,10 +35,18 @@ public class SaveProcess {
 
 	/**
 	* Sets the problem with the data given by the fields
+	* @param nameDescriptionProblem
+	* @param problem
+	* @param decisionVariables
+	* @param email
+	* @param timeOptimization
+	* @param type
+	* @param groupName
+	* @param variablesList
 	*/
 	public void setProblem(NameDescriptionSection nameDescriptionProblem, UserProblem problem,
 			DecisionVariablesSection decisionVariables, EmailSection email, TimeOptimizationSection timeOptimization,
-			TypeVarSection typeVar, String groupName, List<Variable> variablesList)
+			TypeSection type, String groupName, List<Variable> variablesList)
 			throws java.lang.NumberFormatException {
 		problem.setName(nameDescriptionProblem.getProblemName().getText());
 		problem.setDescription(nameDescriptionProblem.getProblemDescription().getText());
@@ -43,9 +57,9 @@ public class SaveProcess {
 		problem.setIdeal(new Time(Integer.parseInt(timeOptimization.getSpnIdealNumberOfDays().getValue().toString()),
 				Integer.parseInt(timeOptimization.getSpnIdealNumberOfHours().getValue().toString()),
 				Integer.parseInt(timeOptimization.getSpnIdealNumberOfMinutes().getValue().toString())));
-		problem.setType(typeVar.getDataType());
+		problem.setType(type.getType());
 		problem.setGroupName(groupName);
-		if (typeVar.getDataType().equals(Type.BINARY)) {
+		if (type.getType().equals(Type.BINARY)) {
 			problem.setNumberVariables(1);
 		} else {
 			problem.setNumberVariables(

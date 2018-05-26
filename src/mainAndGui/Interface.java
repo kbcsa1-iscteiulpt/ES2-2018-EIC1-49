@@ -34,7 +34,7 @@ public class Interface {
 	private HelpSection helpSection = new HelpSection();
 	private TimeOptimizationSection timeOptimizationSection = new TimeOptimizationSection();
 	private NameDescriptionSection nameDescriptionSection = new NameDescriptionSection();
-	private TypeVarSection typeVarSection = new TypeVarSection();
+	private TypeSection typeVarSection = new TypeSection();
 	private DecisionVariablesSection decisionVariablesSection = new DecisionVariablesSection();
 	private CriteriaSection criteriaSection = new CriteriaSection();
 	private SaveSection saveSection = new SaveSection();
@@ -181,7 +181,7 @@ public class Interface {
 	 * Adds the type problem panel to the initial frame
 	 **/
 	private void problemType(JPanel initialPanel, DecisionVariablesSection decisionVariable, AlgorithmSelectionSection algorithmSelection) {
-		initialPanel.add(typeVarSection.setVarType(decisionVariable, problem, algorithmSelection));
+		initialPanel.add(typeVarSection.setType(decisionVariable, problem, algorithmSelection));
 	}
 	/**
 	 * Adds the ideal and maximum time for optimization panel to the initial frame
@@ -201,7 +201,7 @@ public class Interface {
 	/**
 	 * Adds the save problem panel to the initial frame
 	 **/
-	private void problemSave(JPanel initialPanel, TypeVarSection typeVarSection) {
+	private void problemSave(JPanel initialPanel, TypeSection typeVarSection) {
 		initialPanel
 				.add(saveSection.savePanel(nameDescriptionSection, emailSection, problem, xml, decisionVariablesSection, timeOptimizationSection, typeVarSection));
 	}
@@ -248,7 +248,7 @@ public class Interface {
 		return readSection;
 	}
 
-	public TypeVarSection getProblemDataTypeSection() {
+	public TypeSection getProblemDataTypeSection() {
 		return typeVarSection;
 	}
 

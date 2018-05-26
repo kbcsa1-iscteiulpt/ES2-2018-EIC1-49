@@ -19,6 +19,7 @@ public class NameDescriptionSection {
 
 	/**
 	 * Returns a panel with a JTextField for user to fill with the problem's name.
+	 * @return pnlProblemName
 	 **/
 	public JPanel problemNamePanel() {
 		JPanel pnlProblemName = new JPanel();
@@ -37,6 +38,7 @@ public class NameDescriptionSection {
 	/**
 	 * Returns a panel with a JTextField for user to fill with the problem's
 	 * description.
+	 * @return pnlProblemDescription
 	 **/
 	public JPanel problemDescriptionPanel() {
 		JPanel pnlProblemDescription = new JPanel(new FlowLayout());

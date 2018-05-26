@@ -22,10 +22,17 @@ public class ReadSection {
 	/**
 	 * Returns the panel with a button that reads a problem from a XML file and writes the respective path.
 	 * When clicked, reads a XML file and fills the form the data from a XML file
-	 * @param problemDataTypeSection 
+	 * @param nameDescriptionProblem
+	 * @param email
+	 * @param problem
+	 * @param xml
+	 * @param type
+	 * @param decisionVariables
+	 * @param timeOptimization
+	 * @return pnlRead
 	 **/
 	public JPanel readPanel(NameDescriptionSection nameDescriptionProblem, EmailSection email,
-			UserProblem problem, XMLEditor xml, TypeVarSection problemDataTypeSection, DecisionVariablesSection decisionVariables,
+			UserProblem problem, XMLEditor xml, TypeSection type, DecisionVariablesSection decisionVariables,
 			TimeOptimizationSection timeOptimization) {
 		JPanel pnlRead = new JPanel();
 		btnReadXML = new JButton("Read from a XML File:");
@@ -33,7 +40,7 @@ public class ReadSection {
 		btnReadXML.setToolTipText("Read a XML file. This action will replace the fields already filled");
 		txtFilePathXML = new JTextField();
 		txtFilePathXML.setEditable(false);
-		readFromFile(nameDescriptionProblem, email, problem, xml, problemDataTypeSection, decisionVariables, timeOptimization, pnlRead);
+		readFromFile(nameDescriptionProblem, email, problem, xml, type, decisionVariables, timeOptimization, pnlRead);
 		pnlRead.add(btnReadXML);
 		pnlRead.add(txtFilePathXML);
 		return pnlRead;
@@ -41,9 +48,17 @@ public class ReadSection {
 
 	/**
 	 * Reads a XML file and fills the from with the data from a XML file 
+	 * @param nameDescriptionProblem
+	 * @param email
+	 * @param problem
+	 * @param xml
+	 * @param type
+	 * @param decisionVariables
+	 * @param timeOptimization
+	 * @param pnlRead
 	 **/
 	private void readFromFile(NameDescriptionSection nameDescriptionProblem, EmailSection email, UserProblem problem,
-			XMLEditor xml, TypeVarSection problemDataTypeSection, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization,
+			XMLEditor xml, TypeSection type, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization,
 			JPanel pnlRead) {
 		btnReadXML.addActionListener(new ActionListener() {
 
@@ -55,7 +70,7 @@ public class ReadSection {
 					pnlRead.add(txtFilePathXML);
 					pnlRead.revalidate();
 					fillForms.fillInicialForm(filePath, nameDescriptionProblem, xml.read(filePath), email,
-							problemDataTypeSection, timeOptimization, txtFilePathXML);
+							type, timeOptimization, txtFilePathXML);
 					fillForms.fillDecisionVariableForm(decisionVariables, xml.read(filePath));
 				}
 			}

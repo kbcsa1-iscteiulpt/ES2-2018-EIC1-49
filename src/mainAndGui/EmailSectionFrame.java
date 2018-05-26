@@ -26,22 +26,15 @@ public class EmailSectionFrame {
 	private JButton btnMessageSend;
 	private ResourceLoader resourceLoader = new ResourceLoader();
 
-	public JTextField getTxtMessageTitle() {
-		return txtMessageTitle;
-	}
-
-	public JTextArea getTxaMessageBody() {
-		return txaMessageBody;
-	}
-
-	public JButton getBtnMessageSend() {
-		return btnMessageSend;
-	}
-
 	/**
 	* Returns a frame with two JTextField to fill and a button to send the email. One with the subject of the email and the other with the email body.
+	* @param frame
+	* @param emailHandler
+	* @param adminEmail
+	* @param txtEmail
+	* @return sendEmailFrame
 	*/
-	public JFrame setEmailFrame(JFrame frame, EmailHandler support, String adminEmail, JTextField thisTxtEmail) {
+	public JFrame setEmailFrame(JFrame frame, EmailHandler emailHandler, String adminEmail, JTextField txtEmail) {
 		JFrame sendEmailFrame = new JFrame("Email");
 		FrameSize.setFrame(sendEmailFrame, 0.5);
 		JPanel pnlSendEmail = new JPanel(new BorderLayout());
@@ -66,7 +59,7 @@ public class EmailSectionFrame {
 		ImageIcon icoSendMessage = new ImageIcon(imgSendMessage.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
 		btnMessageSend.setContentAreaFilled(false);
 		btnMessageSend.setIcon(icoSendMessage);
-		sendEmail(frame, support, adminEmail, sendEmailFrame, pnlSendEmail, thisTxtEmail);
+		sendEmail(frame, emailHandler, adminEmail, sendEmailFrame, pnlSendEmail, txtEmail);
 		pnlMessageSend.add(btnMessageSend, BorderLayout.SOUTH);
 		pnlSendEmail.add(pnlMessageTitle, BorderLayout.NORTH);
 		pnlSendEmail.add(pnlMessageBody, BorderLayout.CENTER);
@@ -78,9 +71,15 @@ public class EmailSectionFrame {
 
 	/**
 	* Closes the email frame and sends the intended email, if the operation fails shows a warning message.
+	* @param frame
+	* @param emailHandler
+	* @param adminEmail
+	* @param sendEmailFrame
+	* @param pnlSendEmail
+	* @param txtEmail
 	*/
-	public void sendEmail(JFrame frame, EmailHandler support, String adminEmail, JFrame sendEmailFrame,
-			JPanel pnlSendEmail, final JTextField thisTxtEmail) {
+	public void sendEmail(JFrame frame, EmailHandler emailHandler, String adminEmail, JFrame sendEmailFrame,
+			JPanel pnlSendEmail, JTextField txtEmail) {
 		btnMessageSend.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -90,8 +89,8 @@ public class EmailSectionFrame {
 				} else {
 					try {
 						sendEmailFrame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-						String subject = "From: " + thisTxtEmail.getText() + "  " + txtMessageTitle.getText();
-						support.sendEmail(thisTxtEmail.getText(), adminEmail, "none", subject,
+						String subject = "From: " + txtEmail.getText() + "  " + txtMessageTitle.getText();
+						emailHandler.sendEmail(txtEmail.getText(), adminEmail, "none", subject,
 								txaMessageBody.getText());
 					} catch (MessagingException e1) {
 						JOptionPane.showMessageDialog(pnlSendEmail, "Error sending email, connection issue!", "Warning",
@@ -100,5 +99,17 @@ public class EmailSectionFrame {
 				}
 			}
 		});
+	}
+	
+	public JTextField getTxtMessageTitle() {
+		return txtMessageTitle;
+	}
+
+	public JTextArea getTxaMessageBody() {
+		return txaMessageBody;
+	}
+
+	public JButton getBtnMessageSend() {
+		return btnMessageSend;
 	}
 }

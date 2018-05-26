@@ -44,8 +44,13 @@ public class EmailSection {
 	/**
 	 * Returns a panel with a JTextField to fill with user's email. When the button
 	 * is clicked, a new frame is displayed to write and send the email.
+	 * @param frame
+	 * @param emailHandler
+	 * @param adminEmail
+	 * @param help
+	 * @return pnlEmail
 	 **/
-	public JPanel emailPanel(JFrame frame, EmailHandler support, String adminEmail, HelpSection help) {
+	public JPanel emailPanel(JFrame frame, EmailHandler emailHandler, String adminEmail, HelpSection help) {
 		btnWriteEmailFAQ = help.getBtnWriteEmailFAQ();
 		JPanel pnlEmail = new JPanel(new FlowLayout());
 		JLabel lblEmailMandatory = new JLabel("*");
@@ -64,7 +69,7 @@ public class EmailSection {
 		btnWriteEmail.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				emailSectionFrame.setEmailFrame(frame, support, adminEmail, txtEmail);
+				emailSectionFrame.setEmailFrame(frame, emailHandler, adminEmail, txtEmail);
 			}
 		});
 		pnlEmail.add(lblEmailMandatory);

@@ -12,7 +12,7 @@ import mainAndGui.CriteriaSection;
 import mainAndGui.DecisionVariablesSection;
 import mainAndGui.EmailSection;
 import mainAndGui.Interface;
-import mainAndGui.TypeVarSection;
+import mainAndGui.TypeSection;
 import support.ConfigXML;
 import support.XMLEditor;
 
@@ -33,7 +33,7 @@ public class InterfaceTest {
 	
 		decVarSection = interfaceTest.getDecisionVariablesSection();
 		decVarSection.getBtnDecisionVariables().doClick();
-		interfaceTest.getProblemDataTypeSection().setDataType(1);
+		interfaceTest.getProblemDataTypeSection().setType(1);
 		decVarSection.getBtnDecisionVariables().doClick();
 		decVarSection.getTxtNameOfDecisionVariablesGroup().setText("Group name");
 		decVarSection.getSpnNumberOfDecisionVariables().setValue(1);
