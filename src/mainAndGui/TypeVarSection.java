@@ -30,6 +30,14 @@ public class TypeVarSection {
 		String[] variableDataTypes = {"Binary", "Double", "Integer" };
 		cmbVariableDataTypes = new JComboBox<>(variableDataTypes);
 		cmbVariableDataTypes.setSelectedIndex(-1);
+		setCmbVariableDataTypesAction(decisionVariables, problem, algorithmSelection);
+		pnlVarType.add(lblTypeMandatory);
+		pnlVarType.add(lblVarType);
+		pnlVarType.add(cmbVariableDataTypes);
+		return pnlVarType;
+	}
+	private void setCmbVariableDataTypesAction(DecisionVariablesSection decisionVariables, UserProblem problem,
+			AlgorithmSelectionSection algorithmSelection) {
 		cmbVariableDataTypes.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -47,10 +55,6 @@ public class TypeVarSection {
 				}
 			}
 		});
-		pnlVarType.add(lblTypeMandatory);
-		pnlVarType.add(lblVarType);
-		pnlVarType.add(cmbVariableDataTypes);
-		return pnlVarType;
 	}
 	public Type getDataType() {
 		return dataType;

@@ -61,7 +61,6 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	    
 	    try {
 			String line;
-//	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/OneZeroMax.jar" + " " + solutionString);
 	    	Process p = Runtime.getRuntime().exec("java -jar \""+ jarPath + "\" " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 

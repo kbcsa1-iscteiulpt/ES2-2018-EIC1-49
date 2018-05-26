@@ -29,6 +29,7 @@ import support.XMLEditor;
  **/
 public class SaveSection {
 
+	private SaveProcess saveProcess = new SaveProcess();
 	private JButton btnSaveToXML;
 	private TypeVarSection type;
 	private String fileName;
@@ -38,7 +39,7 @@ public class SaveSection {
 	public JPanel savePanel(NameDescriptionSection nameDescriptionProblem, EmailSection email, UserProblem problem,
 			XMLEditor xml, DecisionVariablesSection decisionVariables, TimeOptimizationSection timeOptimization,
 			TypeVarSection type) {
-		this.type = type;
+		 this.type = type;
 		JPanel pnlSave = new JPanel();
 		saveXMLProblem(nameDescriptionProblem, email, problem, xml, decisionVariables, timeOptimization);
 		btnSaveToXML.setToolTipText("Save your problem into a XML file");
@@ -63,23 +64,29 @@ public class SaveSection {
 					JOptionPane.showMessageDialog(null, "Please fill all the mandatory fields", "Warning",
 							JOptionPane.WARNING_MESSAGE);
 				} else {
-					JFileChooser fchXMLSave = new JFileChooser();
-					fchXMLSave.setDialogTitle("Save");
+					chooseFileToSave(nameDescriptionProblem, email, problem, xml, decisionVariables, timeOptimization);
+				}
+			}
 
-					DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-					Date date = new Date();
-					fileName = nameDescriptionProblem.getProblemName().getText() + " " + dateFormat.format(date)+".xml";
-					fchXMLSave.setSelectedFile(new File(fileName));
-					fchXMLSave.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
-					if (fchXMLSave.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-						saveProblem(nameDescriptionProblem, problem, decisionVariables, email, timeOptimization, type);
-						String filePath = fchXMLSave.getSelectedFile().getPath();
-						if (!filePath.endsWith(".xml")) {
-							filePath += ".xml";
-						}
-						System.out.println(problem);
-						xml.write(filePath, problem);
+			private void chooseFileToSave(NameDescriptionSection nameDescriptionProblem, EmailSection email,
+					UserProblem problem, XMLEditor xml, DecisionVariablesSection decisionVariables,
+					TimeOptimizationSection timeOptimization) {
+				JFileChooser fchXMLSave = new JFileChooser();
+				fchXMLSave.setDialogTitle("Save");
+
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+				Date date = new Date();
+				fileName = nameDescriptionProblem.getProblemName().getText() + " " + dateFormat.format(date)+".xml";
+				fchXMLSave.setSelectedFile(new File(fileName));
+				fchXMLSave.setFileFilter(new FileNameExtensionFilter("XML Files", "xml"));
+				if (fchXMLSave.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+					saveProcess.saveProblem(nameDescriptionProblem, problem, decisionVariables, email, timeOptimization, type);
+					String filePath = fchXMLSave.getSelectedFile().getPath();
+					if (!filePath.endsWith(".xml")) {
+						filePath += ".xml";
 					}
+					System.out.println(problem);
+					xml.write(filePath, problem);
 				}
 			}
 		});
@@ -91,45 +98,7 @@ public class SaveSection {
 	public void saveProblem(NameDescriptionSection nameDescriptionProblem, UserProblem problem,
 			DecisionVariablesSection decisionVariables, EmailSection email, TimeOptimizationSection timeOptimization,
 			TypeVarSection typeVar) {
-		String groupName = groupName(decisionVariables);
-
-		setProblem(nameDescriptionProblem, problem, decisionVariables, email, timeOptimization, typeVar, groupName,
-				problem.getVariables());
-	}
-
-	private String groupName(DecisionVariablesSection decisionVariables) {
-		String groupName = "";
-		if (decisionVariables.getTxtNameOfDecisionVariablesGroup() != null) {
-			groupName = decisionVariables.getTxtNameOfDecisionVariablesGroup().getText();
-		}
-		return groupName;
-	}
-
-	/**
-	 * Sets the problem with the data given by the fields
-	 **/
-	private void setProblem(NameDescriptionSection nameDescriptionProblem, UserProblem problem,
-			DecisionVariablesSection decisionVariables, EmailSection email, TimeOptimizationSection timeOptimization,
-			TypeVarSection typeVar, String groupName, List<Variable> variablesList)
-			throws java.lang.NumberFormatException {
-		problem.setName(nameDescriptionProblem.getProblemName().getText());
-		problem.setDescription(nameDescriptionProblem.getProblemDescription().getText());
-		problem.setEmail(email.getEmail().getText());
-		problem.setMax(new Time(Integer.parseInt(timeOptimization.getSpnMaxNumberOfDays().getValue().toString()),
-				Integer.parseInt(timeOptimization.getSpnMaxNumberOfHours().getValue().toString()),
-				Integer.parseInt(timeOptimization.getSpnMaxNumberOfMinutes().getValue().toString())));
-		problem.setIdeal(new Time(Integer.parseInt(timeOptimization.getSpnIdealNumberOfDays().getValue().toString()),
-				Integer.parseInt(timeOptimization.getSpnIdealNumberOfHours().getValue().toString()),
-				Integer.parseInt(timeOptimization.getSpnIdealNumberOfMinutes().getValue().toString())));
-		problem.setType(typeVar.getDataType());
-		problem.setGroupName(groupName);
-		if (typeVar.getDataType().equals(Type.BINARY)) {
-			problem.setNumberVariables(1);
-		} else {
-			problem.setNumberVariables(
-					Integer.parseInt(decisionVariables.getSpnNumberOfDecisionVariables().getValue().toString()));
-		}
-		problem.setVariables(variablesList);
+		saveProcess.saveProblem(nameDescriptionProblem, problem, decisionVariables, email, timeOptimization, typeVar);
 	}
 
 	/**

@@ -172,6 +172,29 @@ public class AlgorithmSelectionSection {
 
 		btnExecuteAlgorithms = new JButton("Start the optimization process");
 		btnExecuteAlgorithms.setContentAreaFilled(false);
+		setBtnExecuteAlgorithmsAction(beforeOptimizationProcess, problem);
+		addToPanel(beforeOptimizationProcess, pnlBeforeOptimization, pnlTitleBeforeOptimization, pnlAlgorithms,
+				pnlLoadExecuteAlgorithms, pnlLoadAlgorithms, pnlExecuteAlgorithms, txtAlgorithmsPath, btnLoadAlgorithms,
+				lblBeforeOptimization);
+	}
+
+	private void addToPanel(JFrame beforeOptimizationProcess, JPanel pnlBeforeOptimization,
+			JPanel pnlTitleBeforeOptimization, JPanel pnlAlgorithms, JPanel pnlLoadExecuteAlgorithms,
+			JPanel pnlLoadAlgorithms, JPanel pnlExecuteAlgorithms, JTextField txtAlgorithmsPath,
+			JButton btnLoadAlgorithms, JLabel lblBeforeOptimization) {
+		pnlTitleBeforeOptimization.add(lblBeforeOptimization);
+		pnlLoadAlgorithms.add(btnLoadAlgorithms);
+		pnlLoadAlgorithms.add(txtAlgorithmsPath);
+		pnlLoadAlgorithms.add(btnExecuteAlgorithms);
+		pnlLoadExecuteAlgorithms.add(pnlLoadAlgorithms);
+		pnlLoadExecuteAlgorithms.add(pnlExecuteAlgorithms, BorderLayout.SOUTH);
+		pnlBeforeOptimization.add(pnlTitleBeforeOptimization, BorderLayout.NORTH);
+		pnlBeforeOptimization.add(pnlAlgorithms);
+		pnlBeforeOptimization.add(pnlLoadExecuteAlgorithms, BorderLayout.SOUTH);
+		beforeOptimizationProcess.add(pnlBeforeOptimization);
+	}
+
+	private void setBtnExecuteAlgorithmsAction(JFrame beforeOptimizationProcess, UserProblem problem) {
 		btnExecuteAlgorithms.addActionListener(new ActionListener() {
 
 			@Override
@@ -185,16 +208,6 @@ public class AlgorithmSelectionSection {
 						algorithmsSelectedList, time, beforeOptimizationProcess);
 			}
 		});
-		pnlTitleBeforeOptimization.add(lblBeforeOptimization);
-		pnlLoadAlgorithms.add(btnLoadAlgorithms);
-		pnlLoadAlgorithms.add(txtAlgorithmsPath);
-		pnlLoadAlgorithms.add(btnExecuteAlgorithms);
-		pnlLoadExecuteAlgorithms.add(pnlLoadAlgorithms);
-		pnlLoadExecuteAlgorithms.add(pnlExecuteAlgorithms, BorderLayout.SOUTH);
-		pnlBeforeOptimization.add(pnlTitleBeforeOptimization, BorderLayout.NORTH);
-		pnlBeforeOptimization.add(pnlAlgorithms);
-		pnlBeforeOptimization.add(pnlLoadExecuteAlgorithms, BorderLayout.SOUTH);
-		beforeOptimizationProcess.add(pnlBeforeOptimization);
 	}
 
 	private void setPnlAlgorithms(JPanel pnlAlgorithms) {

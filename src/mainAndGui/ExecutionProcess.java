@@ -60,56 +60,6 @@ public class ExecutionProcess {
 	}
 
 	/**
-	 * This method compiles the script .R and shows the .eps file
-	 **/
-	public void compileAndShowEps(UserProblem problem) {
-		String[] params = new String[2];
-		params[0] = config.getEpsRPath();
-		params[1] = config.getRPath()+problem.getType().toString()+config.getRFilename();
-		System.out.println("?"+config.getRPath()+problem.getType().toString()+config.getRFilename());
-
-		String[] envp = new String[1];
-		envp[0] = config.getEpsEnviromentVar();
-		Process p;
-		try {
-			p = Runtime.getRuntime().exec(params, envp, new File(config.getEpsDestinationPath()));
-			p.waitFor();
-
-			Runtime.getRuntime().exec("open " + config.getEpsOpenPath());
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-	}
-
-	/**
-	 * This method compiles the script .tex and shows the .pdf file
-	 **/
-	public void compileAndShowPdf(UserProblem problem) {
-		String[] params = new String[2];
-		params[0] = config.getPdflatexPath();
-		params[1] = config.getLatexPath()+problem.getType().toString()+config.getLatexFilename()+problem.getType().toString()+".tex";
-
-		String[] envp = new String[1];
-		System.out.println("--------");
-		System.out.println(params[0]);
-		System.out.println(params[1]);
-		envp[0] = config.getPdfEnviromentVar();
-		System.out.println(envp[0]);
-		try {
-			Process p = Runtime.getRuntime().exec(params, envp, new File(config.getPdfDestinationPath()));
-			p.waitFor();
-
-			Runtime.getRuntime().exec("open " + config.getPdfOpenPath()+problem.getType().toString()+".pdf");
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
-	}
-
-	/**
 	 * Executes the optimization process according to the selected algorithm and
 	 * calls the method to show the graphics and the .eps and .pdf files.
 	 * @param criteriaSection 
@@ -165,8 +115,8 @@ public class ExecutionProcess {
 				return; 
 			}
 		 	beforeOptimizationProcess.dispose();
-			compileAndShowEps(problem);
-			compileAndShowPdf(problem);
+			config.compileAndShowEps(problem);
+			config.compileAndShowPdf(problem);
 			showGraphic(problem, algorithmsSelectedList);
 		} catch (IOException e2) {
 			try {

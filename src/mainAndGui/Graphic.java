@@ -65,9 +65,10 @@ public class Graphic {
 			resultsPath = "experimentBaseDirectory/"+config.getResultsPathBinary();
 			break;
 		}
-		System.out.println(resultsPath + "+++++++++");
+		System.out.println( "passou +++++++++");
 		readAllFiles(".rf");
 	}
+	
 	
 	/**
 	 * Reads all files from config path with given format
@@ -80,14 +81,9 @@ public class Graphic {
 		
 		for (int i = 0; i < listOfrf.length; i++) {
 			File file = listOfrf[i];
-			System.out.println(file.isFile());
-			System.out.println(file.getName().endsWith(format));
-			System.out.println(file.getName().toUpperCase().contains(problem.getType().toString()));
-			System.out.println(containsAlgorithm(file.getName()));
 			if (file.isFile() && file.getName().endsWith(format)
 					&& file.getName().toUpperCase().contains(problem.getType().toString())
 					&& containsAlgorithm(file.getName())) {
-				System.out.println(file.getPath()+"pppppppppppp");
 				readResults(file.getPath());
 				setContent(file.getName(),format);
 			}

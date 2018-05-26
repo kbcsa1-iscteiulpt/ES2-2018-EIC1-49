@@ -1,13 +1,14 @@
 package support;
 
 import java.io.File;
-
+import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import problem.UserProblem;
 
 /**
  * Class that represents system configuration
@@ -208,6 +209,53 @@ public class ConfigXML {
 	    }
 		
 		
+	}
+
+	/**
+	 * This method compiles the script .R and shows the .eps file
+	 */
+	public void compileAndShowEps(UserProblem problem) {
+		String[] params = new String[2];
+		params[0] = getEpsRPath();
+		params[1] = getRPath() + problem.getType().toString() + getRFilename();
+		System.out.println("?" + getRPath() + problem.getType().toString() + getRFilename());
+		String[] envp = new String[1];
+		envp[0] = getEpsEnviromentVar();
+		Process p;
+		try {
+			p = Runtime.getRuntime().exec(params, envp, new File(getEpsDestinationPath()));
+			p.waitFor();
+			Runtime.getRuntime().exec("open " + getEpsOpenPath());
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	/**
+	 * This method compiles the script .tex and shows the .pdf file
+	 */
+	public void compileAndShowPdf(UserProblem problem) {
+		String[] params = new String[2];
+		params[0] = getPdflatexPath();
+		params[1] = getLatexPath() + problem.getType().toString() + getLatexFilename() + problem.getType().toString()
+				+ ".tex";
+		String[] envp = new String[1];
+		System.out.println("--------");
+		System.out.println(params[0]);
+		System.out.println(params[1]);
+		envp[0] = getPdfEnviromentVar();
+		System.out.println(envp[0]);
+		try {
+			Process p = Runtime.getRuntime().exec(params, envp, new File(getPdfDestinationPath()));
+			p.waitFor();
+			Runtime.getRuntime().exec("open " + getPdfOpenPath() + problem.getType().toString() + ".pdf");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	

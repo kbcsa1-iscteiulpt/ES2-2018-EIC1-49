@@ -71,6 +71,11 @@ public class HelpSection {
 		btnHelp.setBorderPainted(false);
 		btnHelp.setFocusPainted(false);
 		btnHelp.setToolTipText("Help and FAQs");
+		setBtnHelpAction(frame, email, support, adminEmail);
+	}
+
+
+	private void setBtnHelpAction(JFrame frame, EmailSection email, EmailHandler support, String adminEmail) {
 		btnHelp.addActionListener(new ActionListener() {
 
 			@Override
