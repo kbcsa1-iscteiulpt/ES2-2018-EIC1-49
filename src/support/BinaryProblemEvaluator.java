@@ -26,7 +26,7 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 		this.problem = problem;  
 		this.jarPath = jarPath;
 		  
-		setNumberOfVariables(problem.getNumberVariables());
+		setNumberOfVariables(numberOfBits);
 	    setNumberOfObjectives(2);
 	    setName("BinaryProblem");
 	    bits = numberOfBits ;
@@ -35,9 +35,9 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  
 	  @Override
 	  protected int getBitsPerVariable(int index) {
-	  	if (index != 0) {
-	  		throw new JMetalException("Problem BinaryProblem has only a variable. Index = " + index) ;
-	  	}
+//	  	if (index != 0) {
+//	  		throw new JMetalException("Problem BinaryProblem has only a variable. Index = " + index) ;
+//	  	}
 	  	return bits ;
 	  }
 
@@ -60,7 +60,7 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	    try {
 			String line;
 //	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/OneZeroMax.jar" + " " + solutionString);
-	    	Process p = Runtime.getRuntime().exec("java -jar "+ jarPath + " " + solutionString);
+	    	Process p = Runtime.getRuntime().exec("java -jar \""+ jarPath + "\" " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 
 	    		{evaluationResultString+=line;}
