@@ -43,7 +43,7 @@ public class BinaryAlgorithmsConfig {
 			problem = problemList.get(i).getProblem();
 			tag=problemList.get(i).getTag();
 			
-			if(algorithmsID.contains("NGASAII"))
+			if(algorithmsID.contains("NSGAII"))
 				buildBinaryNGASAII(problem,tag);
 			
 			if(algorithmsID.contains("SMSEMOA"))
