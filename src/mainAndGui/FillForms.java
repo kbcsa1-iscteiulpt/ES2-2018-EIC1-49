@@ -12,7 +12,7 @@ import problem.Variable;
 /**
  * This class fills the forms with a problem read from a XML file.
  * 
- * @author Diana nr 72898
+ * @author Kevin Corrales nr 73529,Diana nr 72898
  **/
 public class FillForms {
 

@@ -52,8 +52,8 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 
 	  public void evaluate(DoubleSolution solution){
 		  
+		  counter ++;
 		algorithmsConfig.otimizationEmails(problem,counter,numOfAlgorithms);
-		counter ++;
 		
 	    String solutionString ="";
 	    String evaluationResultString ="";

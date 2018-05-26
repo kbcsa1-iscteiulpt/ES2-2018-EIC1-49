@@ -52,8 +52,8 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 
 	  public void evaluate(IntegerSolution solution){
 		  
+		  counter ++;
 		algorithmsUtils.otimizationEmails(problem,counter,numOfAlgorithms);
-		counter ++;
 		  
 	    String solutionString ="";
 	    String evaluationResultString ="";

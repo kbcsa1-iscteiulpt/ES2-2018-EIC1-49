@@ -51,8 +51,8 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  @Override
 	  public void evaluate(BinarySolution solution){
 		  
+		  counter ++;
 		algorithmsUtils.otimizationEmails(problem,counter,numOfAlgorithms);
-		counter ++;
 
 	    String solutionString ="";
 	    String evaluationResultString ="";

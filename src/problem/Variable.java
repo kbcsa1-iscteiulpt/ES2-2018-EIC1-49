@@ -8,6 +8,9 @@ import java.util.BitSet;
  * restricted values of the variable
  * 
  * @author Kevin Corrales nr 73529
+ * 
+ * Bits handler
+ * @author Gustavo Morais
  *
  */
 public class Variable {
@@ -31,7 +34,6 @@ public class Variable {
 	public Variable(String name, String binaryValue) {
 		this.name = name;
 		this.binaryValue = binaryValue;
-		System.out.println("created "+binaryValue);
 		for (int i = 0; i < binaryValue.length(); i++) {
 			if (binaryValue.charAt(i) == '1')
 				bits.set(i);
@@ -44,7 +46,6 @@ public class Variable {
 	}
 
 	public void addBits(String bitString) {
-		System.out.println("adding " + bitString);
 		for (int i = 0; i < bitString.length(); i++) {
 			if (bitString.charAt(i) == '1')
 				bits.set(i + bitIndex);

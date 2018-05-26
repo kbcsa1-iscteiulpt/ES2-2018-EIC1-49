@@ -4,10 +4,10 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
@@ -30,8 +30,7 @@ public class XMLEditor {
 	/**
 	 * Reads a XML file from the received path and creates a Problem(Class)
 	 * 
-	 * @param path
-	 *            of xml file
+	 * @param path of xml file
 	 * @return Problem
 	 */
 	public UserProblem read(String path) {
@@ -61,30 +60,25 @@ public class XMLEditor {
 
 					List<Variable> problemVariables = new ArrayList<Variable>();
 					NodeList varList = variables.getElementsByTagName("variable");
-					boolean exit=false;
+					
 					for (int i = 0; i < varList.getLength(); i++) {
-
 						Element varElement = (Element) varList.item(i);
-						Variable var = null;
-						System.out.println("type: "+ prob.getAttribute("type"));
+						Variable var ;
 						if (!prob.getAttribute("type").toUpperCase().equals("BINARY")) {
 							var = new Variable(varElement.getAttribute("variableName"),
 									varElement.getAttribute("variableMin"), varElement.getAttribute("variableMax"),
 									varElement.getAttribute("variableRestriction"));
 						} else {
-							exit=true;
+							// Else made by Gustavo Morais
 							var = new Variable(varElement.getAttribute("variableName"),
 									varElement.getAttribute("binaryValue"));
 							for(int j=1;j<varList.getLength();j++) {
 								Element varAux = (Element) varList.item(j);
 								var.addBits(varAux.getAttribute("binaryValue"));
 							}
+							break;
 						}
-						
 						problemVariables.add(var);
-						System.out.println("problemVariables size: "+problemVariables.size());
-						if(exit) break;
-
 					}
 
 					problem = new UserProblem(prob.getAttribute("name"), prob.getAttribute("description"),
@@ -101,7 +95,7 @@ public class XMLEditor {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "This file doesn't exist");
 		}
 
 		return problem;
@@ -110,12 +104,10 @@ public class XMLEditor {
 	/**
 	 * Writes the Problem into XML file
 	 * 
-	 * @param path
-	 *            of file
+	 * @param path of file
 	 * @param problem
 	 */
 	public void write(String path, UserProblem problem) {
-		System.out.println("2" + problem.getMax());
 		try {
 
 			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -134,7 +126,6 @@ public class XMLEditor {
 			doc.appendChild(probTag);
 
 			// Problem elements
-
 			Element timeTag = doc.createElement("time");
 			probTag.appendChild(timeTag);
 
@@ -181,10 +172,10 @@ public class XMLEditor {
 
 			System.out.println("File saved!");
 
-		} catch (ParserConfigurationException pce) {
-			pce.printStackTrace();
+		} catch (ParserConfigurationException pce ) {
+			JOptionPane.showMessageDialog(null, "Error occurred while saving file");
 		} catch (TransformerException tfe) {
-			tfe.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error occurred while saving file");
 		}
 	}
 

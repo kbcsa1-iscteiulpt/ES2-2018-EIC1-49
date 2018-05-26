@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
@@ -387,3 +388,254 @@
   <message>HV: 0.0</message>
 </record>
 </log>
+=======
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+<<<<<<< Updated upstream
+  <date>2018-05-26T15:33:51</date>
+  <millis>1527345231276</millis>
+=======
+  <date>2018-05-25T23:26:37.490858400Z</date>
+  <millis>1527290797490</millis>
+  <nanos>858400</nanos>
+>>>>>>> Stashed changes
+  <sequence>0</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.JMetalLogger</class>
+  <method>configureLoggers</method>
+  <thread>13</thread>
+  <message>Loggers configured with null</message>
+</record>
+<record>
+<<<<<<< Updated upstream
+  <date>2018-05-26T15:33:51</date>
+  <millis>1527345231289</millis>
+=======
+  <date>2018-05-25T23:26:37.543599300Z</date>
+  <millis>1527290797543</millis>
+  <nanos>599300</nanos>
+>>>>>>> Stashed changes
+  <sequence>1</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
+  <method>run</method>
+  <thread>13</thread>
+  <message>ExecuteAlgorithms: Preparing output directory</message>
+</record>
+<record>
+<<<<<<< Updated upstream
+  <date>2018-05-26T15:33:51</date>
+  <millis>1527345231300</millis>
+=======
+  <date>2018-05-25T23:26:37.557266200Z</date>
+  <millis>1527290797557</millis>
+  <nanos>266200</nanos>
+>>>>>>> Stashed changes
+  <sequence>2</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+<<<<<<< Updated upstream
+  <thread>13</thread>
+  <message> Running algorithm: MOCell, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/MOCell/BinaryProblem/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-26T15:33:51</date>
+  <millis>1527345231300</millis>
+=======
+  <thread>17</thread>
+  <message>Creating experimentBaseDirectory/ProblemResultsBINARY/data/PAES/BinaryProblem</message>
+</record>
+<record>
+  <date>2018-05-25T23:26:37.559219700Z</date>
+  <millis>1527290797559</millis>
+  <nanos>219700</nanos>
+  <sequence>5</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>17</thread>
+  <message> Running algorithm: PAES, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/PAES/BinaryProblem/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T23:26:37.558243500Z</date>
+  <millis>1527290797558</millis>
+  <nanos>243500</nanos>
+>>>>>>> Stashed changes
+  <sequence>3</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+<<<<<<< Updated upstream
+  <thread>31</thread>
+  <message> Running algorithm: NSGAII, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/NSGAII/BinaryProblem/FUN0.tsv</message>
+=======
+  <thread>32</thread>
+  <message>Creating experimentBaseDirectory/ProblemResultsBINARY/data/SPEA2/BinaryProblem</message>
+</record>
+<record>
+  <date>2018-05-25T23:26:37.558243500Z</date>
+  <millis>1527290797558</millis>
+  <nanos>243500</nanos>
+  <sequence>4</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>33</thread>
+  <message>Creating experimentBaseDirectory/ProblemResultsBINARY/data/MOCell/BinaryProblem</message>
+</record>
+<record>
+  <date>2018-05-25T23:26:37.562150400Z</date>
+  <millis>1527290797562</millis>
+  <nanos>150400</nanos>
+  <sequence>6</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>34</thread>
+  <message>Creating experimentBaseDirectory/ProblemResultsBINARY/data/SMSEMOA/BinaryProblem</message>
+</record>
+<record>
+  <date>2018-05-25T23:26:37.564103Z</date>
+  <millis>1527290797564</millis>
+  <nanos>103000</nanos>
+  <sequence>7</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>35</thread>
+  <message>Creating experimentBaseDirectory/ProblemResultsBINARY/data/RandomSearch/BinaryProblem</message>
+</record>
+<record>
+  <date>2018-05-25T23:26:37.565079200Z</date>
+  <millis>1527290797565</millis>
+  <nanos>79200</nanos>
+  <sequence>8</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>33</thread>
+  <message> Running algorithm: MOCell, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/MOCell/BinaryProblem/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T23:26:37.570938200Z</date>
+  <millis>1527290797570</millis>
+  <nanos>938200</nanos>
+  <sequence>9</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>34</thread>
+  <message> Running algorithm: SMSEMOA, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/SMSEMOA/BinaryProblem/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T23:26:37.571915600Z</date>
+  <millis>1527290797571</millis>
+  <nanos>915600</nanos>
+  <sequence>10</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>35</thread>
+  <message> Running algorithm: RandomSearch, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/RandomSearch/BinaryProblem/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T23:26:37.572892300Z</date>
+  <millis>1527290797572</millis>
+  <nanos>892300</nanos>
+  <sequence>11</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>32</thread>
+  <message> Running algorithm: SPEA2, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/SPEA2/BinaryProblem/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T23:28:26.775079600Z</date>
+  <millis>1527290906775</millis>
+  <nanos>79600</nanos>
+  <sequence>12</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.component.ExecuteAlgorithms</class>
+  <method>run</method>
+  <thread>17</thread>
+  <message>ExecuteAlgorithms: Preparing output directory</message>
+</record>
+<record>
+  <date>2018-05-25T23:28:26.776057100Z</date>
+  <millis>1527290906776</millis>
+  <nanos>57100</nanos>
+  <sequence>13</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>17</thread>
+  <message> Running algorithm: PAES, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/PAES/BinaryProblem/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T23:28:26.776057100Z</date>
+  <millis>1527290906776</millis>
+  <nanos>57100</nanos>
+  <sequence>16</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>35</thread>
+  <message> Running algorithm: MOCell, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/MOCell/BinaryProblem/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T23:28:26.776057100Z</date>
+  <millis>1527290906776</millis>
+  <nanos>57100</nanos>
+  <sequence>15</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>33</thread>
+  <message> Running algorithm: RandomSearch, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/RandomSearch/BinaryProblem/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T23:28:26.776057100Z</date>
+  <millis>1527290906776</millis>
+  <nanos>57100</nanos>
+  <sequence>14</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>34</thread>
+  <message> Running algorithm: SPEA2, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/SPEA2/BinaryProblem/FUN0.tsv</message>
+</record>
+<record>
+  <date>2018-05-25T23:28:26.776057100Z</date>
+  <millis>1527290906776</millis>
+  <nanos>57100</nanos>
+  <sequence>17</sequence>
+  <logger>org.uma.jmetal.util.JMetalLogger</logger>
+  <level>INFO</level>
+  <class>org.uma.jmetal.util.experiment.util.ExperimentAlgorithm</class>
+  <method>runAlgorithm</method>
+  <thread>36</thread>
+  <message> Running algorithm: SMSEMOA, problem: BinaryProblem, run: 0, funFile: experimentBaseDirectory/ProblemResultsBINARY/data/SMSEMOA/BinaryProblem/FUN0.tsv</message>
+>>>>>>> Stashed changes
+</record>
+</log>
+>>>>>>> Stashed changes

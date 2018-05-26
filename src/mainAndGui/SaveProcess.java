@@ -7,6 +7,13 @@ import problem.Variable;
 import problem.Time;
 import problem.Type;
 
+
+/**
+ * Process of saving a file
+ * 
+ * @author Kevin Corrales nr 73529, Diana Lopes nr 72898
+ *
+ */
 public class SaveProcess {
 	/**
 	* Saves the problem with the data given by the fields that were filled.

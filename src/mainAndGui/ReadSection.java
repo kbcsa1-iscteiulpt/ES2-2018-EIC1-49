@@ -12,7 +12,7 @@ import support.XMLEditor;
 
 /**
  * This class represents the read file section.
- * @author Diana nr 72898
+ * @author Kevin Corrales nr 73529,Diana nr 72898
  **/
 public class ReadSection {
 	private JButton btnReadXML;

@@ -28,7 +28,7 @@ import problem.UserProblem;
  * 		- Path of the PDF environment variable
  * 		- Path of the PDF file result (after compiling)
  * 
- * @author Gustavo Morais nº 73036
+ * @author Kevin Corrales nr 73529, Gustavo Morais nº 73036
  *
  */
 public class ConfigXML {
@@ -215,15 +215,13 @@ public class ConfigXML {
 	 * This method compiles the script .R and shows the .eps file
 	 */
 	public void compileAndShowEps(UserProblem problem) {
-		String[] params = new String[2];
-		params[0] = getEpsRPath();
-		params[1] = getRPath() + problem.getType().toString() + getRFilename();
-		System.out.println("?" + getRPath() + problem.getType().toString() + getRFilename());
-		String[] envp = new String[1];
-		envp[0] = getEpsEnviromentVar();
-		Process p;
+		String[] params = new String[] {
+					getEpsRPath(),
+					getRPath() + problem.getType().toString() + getRFilename()
+				};
+		String[] envp = new String[] {getEpsEnviromentVar()};
 		try {
-			p = Runtime.getRuntime().exec(params, envp, new File(getEpsDestinationPath()));
+			Process p = Runtime.getRuntime().exec(params, envp, new File(getEpsDestinationPath()));
 			p.waitFor();
 			Runtime.getRuntime().exec("open " + getEpsOpenPath());
 		} catch (IOException e1) {
@@ -237,16 +235,11 @@ public class ConfigXML {
 	 * This method compiles the script .tex and shows the .pdf file
 	 */
 	public void compileAndShowPdf(UserProblem problem) {
-		String[] params = new String[2];
-		params[0] = getPdflatexPath();
-		params[1] = getLatexPath() + problem.getType().toString() + getLatexFilename() + problem.getType().toString()
-				+ ".tex";
-		String[] envp = new String[1];
-		System.out.println("--------");
-		System.out.println(params[0]);
-		System.out.println(params[1]);
-		envp[0] = getPdfEnviromentVar();
-		System.out.println(envp[0]);
+		String[] params = new String[] {
+					getPdflatexPath(),
+					getLatexPath() + problem.getType().toString() + getLatexFilename() + problem.getType().toString()
+				+ ".tex"};
+		String[] envp = new String[] {getPdfEnviromentVar()};
 		try {
 			Process p = Runtime.getRuntime().exec(params, envp, new File(getPdfDestinationPath()));
 			p.waitFor();
