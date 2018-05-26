@@ -40,7 +40,7 @@ public class IntegerAlgorithmsConfig {
 			numberOfVariables = problem.getNumberOfVariables();
 			tag=problemList.get(i).getTag();
 			
-			if(algorithmsID.contains("NGASAII"))
+			if(algorithmsID.contains("NSGAII"))
 				buildIntegerNGASAII(problem,numberOfVariables,tag);
 			
 			if(algorithmsID.contains("SMSEMOA")) {

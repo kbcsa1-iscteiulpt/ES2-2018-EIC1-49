@@ -23,6 +23,7 @@ import problem.UserProblem;
 public class DoubleExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static DoubleAlgorithmsConfig algorithmConf = new DoubleAlgorithmsConfig();
+  private static AlgorithmsUtils algorithmUtils = new AlgorithmsUtils();
   private ConfigXML config = ConfigXML.getInstance();
 
   public DoubleExperiment(UserProblem problem ,List<String> selectedAlgorithms  , String jarPath) throws IOException {
@@ -53,15 +54,15 @@ public class DoubleExperiment {
     new GenerateLatexTablesWithStatistics(experiment).run() ;
     new GenerateBoxplotsWithR<>(experiment).setRows(1).setColumns(1).run() ;
     
-//    File dir = new File("./experimentBaseDirectory/referenceFronts");
-//    File[] directoryListing = dir.listFiles();
-//    if (directoryListing != null) {
-//      for (File file : directoryListing) {
-//    	  if(file.getName().contains("Double")&& file.getName().endsWith(".rs")) {
-//    		  algorithmConf.applyRestrictions(problem.getVariables(), "./experimentBaseDirectory/referenceFronts/" + file.getName());
-//    	  }
-//      }
-//    } 
+    File dir = new File("./experimentBaseDirectory/referenceFronts");
+    File[] directoryListing = dir.listFiles();
+    if (directoryListing != null) {
+      for (File file : directoryListing) {
+    	  if(file.getName().contains("Double")&& file.getName().endsWith(".rs")) {
+    		  algorithmUtils.applyRestrictions(problem.getVariables(), "./experimentBaseDirectory/referenceFronts/" + file.getName());
+    	  }
+      }
+    } 
   }
 
 

@@ -82,7 +82,14 @@ public class AlgorithmsUtils {
 	
 	
 	
-//	TODO
+	/**
+	 * This method will apply restrictions to the rs files, switching the variables on witch the restrictions apply 
+	 * by an x     
+	 * 
+	 * @param variable - Variable from witch to extract the restrictions
+	 * @param path - path to the file on witch to apply the restrictions
+	 * 
+	 * */
 	public void applyRestrictions(List<Variable> variables ,String path) {
 		List<String[]> restrictions = new ArrayList<String[]>();
 		List<String[]> fileOutputVector = new ArrayList<String[]>();
