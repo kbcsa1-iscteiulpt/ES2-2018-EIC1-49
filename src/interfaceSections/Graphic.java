@@ -23,7 +23,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.ui.RefineryUtilities;
 
-import jMetal.AlgorithmUtils;
+import jMetal.AlgorithmUtils ;
 import problem.UserProblem;
 import support.ConfigXML;
 
