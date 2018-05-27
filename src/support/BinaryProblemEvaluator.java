@@ -11,7 +11,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.BitSet;
 
-
+/**
+ * 
+ * @author Gustavo
+ *
+ */
 @SuppressWarnings("serial")
 public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  private int bits ;
@@ -37,9 +41,6 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	  
 	  @Override
 	  protected int getBitsPerVariable(int index) {
-//	  	if (index != 0) {
-//	  		throw new JMetalException("Problem BinaryProblem has only a variable. Index = " + index) ;
-//	  	}
 	  	return bits ;
 	  }
 
@@ -70,7 +71,6 @@ public class BinaryProblemEvaluator extends AbstractBinaryProblem {
 	      }
 	      catch (Exception err) { err.printStackTrace(); }
    		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
-	    // It is assumed that all evaluated criteria are returned in the same result string
 	    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
 	    	solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 	    }	    	    

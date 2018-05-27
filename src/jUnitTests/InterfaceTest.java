@@ -76,31 +76,7 @@ public class InterfaceTest {
 		criteriaSection.getBtnRemoveCriteria().doClick();
 		criteriaSection.getTxtCriteriaName().setText("Criteria test");
 		criteriaSection.getBtnReadJar().doClick();
-		criteriaSection.getBtnCriteriaFinish().doClick();
-		
-		
-		
-//		JButton btnCriteria = interfaceTest.getCriteriaButton();
-//		btnCriteria.doClick();
-//		
-//		JButton btnAddCriteria = interfaceTest.getAddCriteriaButton();
-//		btnAddCriteria.doClick();
-//		
-//		JButton btnCriteriaFinish = interfaceTest.getCriteriaFinishButton();
-//		btnCriteriaFinish.doClick();
-//		
-//		
-//		JButton btnReadJar = interfaceTest.getReadJarButton();
-//		btnReadJar.doClick();
-//		
-//		JButton btnExecuteProcess = interfaceTest.getExecuteProcessButton();
-//		btnExecuteProcess.doClick();
-//		
-//		
-//		JButton btnSave = interfaceTest.getSaveButton();
-//		btnSave.doClick();
-//		
-		
+		criteriaSection.getBtnCriteriaFinish().doClick();	
 	}
 	
 

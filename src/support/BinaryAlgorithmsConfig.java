@@ -23,6 +23,11 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
+/**
+ * 
+ * @author Ricardo
+ *
+ */
 public class BinaryAlgorithmsConfig {
 	
 
@@ -81,12 +86,12 @@ public class BinaryAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildBinarySPEA2(Problem<BinarySolution> problem, String tag) {
-		Algorithm<List<BinarySolution>> algorithm7 = new SPEA2Builder<>(problem,
+		Algorithm<List<BinarySolution>> algorithm = new SPEA2Builder<>(problem,
 				new SinglePointCrossover(1.0),
 				new BitFlipMutation(1.0 / ((BinaryProblemEvaluator) problem).getNumberOfBits(0)))
 				.setMaxIterations(maxEvaluations)
 				.build();
-		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm7, "SPEA2", tag));
+		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "SPEA2", tag));
 	}
 	
 	/**
@@ -97,7 +102,7 @@ public class BinaryAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildBinaryMOCHC(Problem<BinarySolution> problem, String tag) {
-		Algorithm<List<BinarySolution>> algorithm4 = new MOCHCBuilder((BinaryProblem) problem)
+		Algorithm<List<BinarySolution>> algorithm = new MOCHCBuilder((BinaryProblem) problem)
 				.setMaxEvaluations(maxEvaluations)
 				.setCrossover(new HUXCrossover(1.0))
 				.setNewGenerationSelection(new RankingAndCrowdingSelection<BinarySolution>(100))
@@ -105,7 +110,7 @@ public class BinaryAlgorithmsConfig {
 				.setParentSelection(new RandomSelection<BinarySolution>())
 				.setEvaluator(new SequentialSolutionListEvaluator<BinarySolution>())
 				.build();
-		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm4, "MOCH", tag));
+		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "MOCH", tag));
 	}
 	
 	/**
@@ -116,10 +121,10 @@ public class BinaryAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildBinaryRandomSearch(Problem<BinarySolution> problem, String tag) {
-		Algorithm<List<BinarySolution>> algorithm6 = new RandomSearchBuilder<>(problem)
+		Algorithm<List<BinarySolution>> algorithm = new RandomSearchBuilder<>(problem)
 				.setMaxEvaluations(maxEvaluations)
 				.build();
-		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm6, "RandomSearch", tag));
+		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "RandomSearch", tag));
 	}
 	
 	/**
@@ -130,13 +135,13 @@ public class BinaryAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildBinaryPAES(Problem<BinarySolution> problem, String tag) {
-		Algorithm<List<BinarySolution>> algorithm5 = new PAESBuilder<>(problem)
+		Algorithm<List<BinarySolution>> algorithm = new PAESBuilder<>(problem)
 				.setMaxEvaluations(maxEvaluations)
 				.setArchiveSize(100)
 				.setBiSections(2)
 				.setMutationOperator(new BitFlipMutation(1.0 / ((BinaryProblemEvaluator) problem).getNumberOfBits(0)))
 				.build();
-		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm5, "PAES", tag));
+		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "PAES", tag));
 	}
 	
 	/**
@@ -147,12 +152,12 @@ public class BinaryAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildBinaryMOCell(Problem<BinarySolution> problem,String tag) {
-		Algorithm<List<BinarySolution>> algorithm3 = new MOCellBuilder<>(problem,
+		Algorithm<List<BinarySolution>> algorithm = new MOCellBuilder<>(problem,
 				new SinglePointCrossover(1.0),
 				new BitFlipMutation(1.0 / ((BinaryProblemEvaluator) problem).getNumberOfBits(0)))
 				.setMaxEvaluations(maxEvaluations)
 				.build();
-		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm3, "MOCell", tag));
+		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "MOCell", tag));
 	}
 	
 	/**
@@ -163,11 +168,11 @@ public class BinaryAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildBinarySMSEMOA(Problem<BinarySolution> problem,String tag) {
-		Algorithm<List<BinarySolution>> algorithm2 = new SMSEMOABuilder<>(problem,
+		Algorithm<List<BinarySolution>> algorithm = new SMSEMOABuilder<>(problem,
 				new SinglePointCrossover(1.0), new BitFlipMutation(1.0 / ((BinaryProblemEvaluator) problem).getNumberOfBits(0)))
 				.setMaxEvaluations(maxEvaluations)
 				.build();      
-		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm2, "SMSEMOA", tag));
+		binaryAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "SMSEMOA", tag));
 	}
 	
 	/**

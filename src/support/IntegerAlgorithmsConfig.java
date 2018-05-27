@@ -16,6 +16,11 @@ import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
+/**
+ * 
+ * @author Ricardo,Gustavo
+ *
+ */
 public class IntegerAlgorithmsConfig {
 	
 	private ConfigXML config = ConfigXML.getInstance();
@@ -47,7 +52,6 @@ public class IntegerAlgorithmsConfig {
 				buildIntegerNGASAII(problem,numberOfVariables,tag);
 			
 			if(algorithmsID.contains("SMSEMOA")) {
-				System.out.println("in");
 				buildIntegerSMSEMOA(problem,numberOfVariables,tag);
 			}	
 			
@@ -72,10 +76,10 @@ public class IntegerAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildIntegerRandomSearch(Problem<IntegerSolution> problem, String tag) {
-		Algorithm<List<IntegerSolution>> algorithm5 = new RandomSearchBuilder<>(problem)
+		Algorithm<List<IntegerSolution>> algorithm = new RandomSearchBuilder<>(problem)
 				.setMaxEvaluations(maxEvaluations)
 				.build();
-		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm5, "RandomSearch", tag));
+		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "RandomSearch", tag));
 
 	}
 	
@@ -88,12 +92,12 @@ public class IntegerAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildIntegerPAES(Problem<IntegerSolution> problem, int numberOfVariables, String tag) {
-		Algorithm<List<IntegerSolution>> algorithm4 = new PAESBuilder<>(problem)
+		Algorithm<List<IntegerSolution>> algorithm = new PAESBuilder<>(problem)
 				.setMaxEvaluations(maxEvaluations).setArchiveSize(100)
 				.setBiSections(2)
 				.setMutationOperator(new IntegerPolynomialMutation(1/numberOfVariables, 20.0))
 				.build();
-		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm4, "PAES", tag)); 	
+		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "PAES", tag)); 	
 	}
 	
 	/**
@@ -105,12 +109,12 @@ public class IntegerAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildIntegerMOCell(Problem<IntegerSolution> problem, int numberOfVariables, String tag) {
-		Algorithm<List<IntegerSolution>> algorithm3 = new MOCellBuilder<>(problem,
+		Algorithm<List<IntegerSolution>> algorithm = new MOCellBuilder<>(problem,
 				new IntegerSBXCrossover(0.9, 20.0), 
 				new IntegerPolynomialMutation(1/numberOfVariables, 20.0))
 				.setMaxEvaluations(maxEvaluations)
 				.build();
-		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm3, "MOCell", tag));    
+		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "MOCell", tag));    
 	}
 	
 	/**
@@ -122,12 +126,12 @@ public class IntegerAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildIntegerSMSEMOA(Problem<IntegerSolution> problem, int numberOfVariables, String tag) {
-		Algorithm<List<IntegerSolution>> algorithm2 = new SMSEMOABuilder<>(problem,
+		Algorithm<List<IntegerSolution>> algorithm = new SMSEMOABuilder<>(problem,
 				new IntegerSBXCrossover(0.9, 20.0),
 				new IntegerPolynomialMutation(1/numberOfVariables, 20.0))
 				.setMaxEvaluations(maxEvaluations)
 				.build();      
-		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm2, "SMSEMOA", tag));
+		integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "SMSEMOA", tag));
 	}
 	
 	/**
@@ -139,14 +143,14 @@ public class IntegerAlgorithmsConfig {
 	 * 
 	 * */
 	private void buildIntegerNGASAII(Problem<IntegerSolution> problem, int numberOfVariables, String tag) {
-		 Algorithm<List<IntegerSolution>> algorithm1 = new NSGAIIBuilder<>(
+		 Algorithm<List<IntegerSolution>> algorithm = new NSGAIIBuilder<>(
 	              problem,
 	              new IntegerSBXCrossover(0.9, 20.0),
 	              new IntegerPolynomialMutation(1/numberOfVariables, 20.0))
 	              .setMaxEvaluations(maxEvaluations)
 	              .setPopulationSize(100)
 	              .build();
-		 integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm1, "NSGAII", tag));
+		 integerAlgorithms.add(new ExperimentAlgorithm<>(algorithm, "NSGAII", tag));
 	}
 	
 	

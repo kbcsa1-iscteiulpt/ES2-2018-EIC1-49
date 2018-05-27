@@ -16,7 +16,11 @@ import org.uma.jmetal.solution.DoubleSolution;
 import problem.UserProblem;
 import problem.Variable;
 
-
+/**
+ * 
+ * @author Ricardo
+ *
+ */
 @SuppressWarnings("serial")
 public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	private int counter = 0 ;
@@ -62,7 +66,6 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	    }
 	    try {
 			String line;
-//	    	Process p = Runtime.getRuntime().exec("java -jar /Users/gustavomorais/Downloads/Kursawe.jar" + " " + solutionString);
 			Process p = Runtime.getRuntime().exec("java -jar \""+ jarPath + "\" " + solutionString);
 	    	BufferedReader brinput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 	    	while ((line = brinput.readLine()) != null) 
@@ -72,7 +75,6 @@ public class DoubleProblemEvaluator extends AbstractDoubleProblem {
 	      }
 	      catch (Exception err) { err.printStackTrace(); }
    		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
-	    // It is assumed that all evaluated criteria are returned in the same result string
 	    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
 	    		solution.setObjective(i, Double.parseDouble(individualEvaluationCriteria[i]));
 	    }	    

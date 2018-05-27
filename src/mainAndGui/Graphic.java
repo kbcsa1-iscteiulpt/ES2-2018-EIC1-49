@@ -65,7 +65,6 @@ public class Graphic {
 			resultsPath = "experimentBaseDirectory/"+config.getResultsPathBinary();
 			break;
 		}
-		System.out.println( "passou +++++++++");
 		readAllFiles(".rf");
 	}
 	
@@ -75,7 +74,6 @@ public class Graphic {
 	 * @param format
 	 */
 	public void readAllFiles(String format) {
-		System.out.println(format+" format");
 		File rfFolder = new File(resultsPath);
 		File[] listOfrf = rfFolder.listFiles();
 		

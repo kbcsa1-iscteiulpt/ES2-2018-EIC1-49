@@ -12,9 +12,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/* Implementa��o de um problema do tipo Integer que executa o .jar externo
-   NMMin.jar e pode ser usado como um dos problema de teste indicados 
-   no encunciado do trabalho */
+/** 
+   * @author Ricardo, Gustavo
+   */
 
 @SuppressWarnings("serial")
 public class IntegerProblemEvaluator extends AbstractIntegerProblem {
@@ -72,7 +72,6 @@ public class IntegerProblemEvaluator extends AbstractIntegerProblem {
 	      catch (Exception err) { err.printStackTrace(); }
 	    
    		String[] individualEvaluationCriteria = evaluationResultString.split("\\s+");
-	    // It is assumed that all evaluated criteria are returned in the same result string
 	    for (int i = 0; i < solution.getNumberOfObjectives(); i++) {
 		    solution.setObjective(i, Integer.parseInt(individualEvaluationCriteria[i]));    
 	    }	    

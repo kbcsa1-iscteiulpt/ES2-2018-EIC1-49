@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 
+ * @author Ricardo,Gustavo
+ *
+ */
 public class IntegerExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static IntegerAlgorithmsConfig algorithmConf = new IntegerAlgorithmsConfig();

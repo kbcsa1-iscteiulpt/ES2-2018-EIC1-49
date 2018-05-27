@@ -113,7 +113,6 @@ public class SaveSection {
 			if (!filePath.endsWith(".xml")) {
 				filePath += ".xml";
 			}
-			System.out.println(problem);
 			xml.write(filePath, problem);
 		}
 	}

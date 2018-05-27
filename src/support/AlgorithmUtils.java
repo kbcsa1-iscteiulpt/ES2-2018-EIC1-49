@@ -18,21 +18,24 @@ import javax.swing.JOptionPane;
 import problem.UserProblem;
 import problem.Variable;
 
+/**
+ * 
+ * @author Ricardo
+ *
+ */
 public class AlgorithmUtils {
 	
 	private ConfigXML config = ConfigXML.getInstance();
-	
 
 	
 	/**
 	 * This method will write a configuration of algorithms in a file so the users can just read the algorithms to use in a experiment    
 	 * 
-	 * @param algorithmIDs - algorithms to include in the conf file 
-	 * @param path - name of the file to write the automatic conf
+	 * @param algorithmIDs - algorithms to include in the config file 
+	 * @param path - name of the file to write the automatic configuration
 	 * 
 	 * */
 	public void writeAutomaticConfig(List<String> algorithmIDs, String path ) {
-//		String userHomeFolder = System.getProperty("user.home");
 		File textFile = new File(path );
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(textFile));
@@ -43,7 +46,6 @@ public class AlgorithmUtils {
 
 			out.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -69,7 +71,6 @@ public class AlgorithmUtils {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			scanner.close();
@@ -91,12 +92,10 @@ public class AlgorithmUtils {
 		List<String[]> restrictions = new ArrayList<String[]>();
 		List<String[]> fileOutputVector = new ArrayList<String[]>();
 		String[] fileVector = new String[0];
-		String fileOutput ="";
 		
 		
 		
 		for (int i = 0; i < variables.size(); i++) {
-			System.out.println(variables.get(i).getRestriction());
 			restrictions.add(variables.get(i).getRestriction().split(";"));
 		}
 		
@@ -108,14 +107,12 @@ public class AlgorithmUtils {
 				fileVector = in.nextLine().split(" ");
 				
 				for (int i = 0; i < fileVector.length; i++) {
-					System.out.print(fileVector[i]+",");
 					for (int j = 0; j < restrictions.get(i).length; j++) {
 						if(fileVector[i].trim().equals(restrictions.get(i)[j].trim()) ){
 							fileVector[i]="x";
 						}
 					}
 				}
-				System.out.println();
 				fileOutputVector.add(fileVector);
 			}
 			in.close();
@@ -148,7 +145,6 @@ public class AlgorithmUtils {
 		
 		try {
 			if(counter == (int)(maxIterations * numOfAlgorithms * 0.25) ) { 
-					System.out.println("teste ricardo " + adminEmail);
 					emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "25%");
 			}else if(counter == (int)(maxIterations * numOfAlgorithms  * 0.5) ) {
 				emailHandler.sendEmail(adminEmail, problem.getEmail(),adminEmail,subject,content + "50%");

@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 
+ * @author Ricardo,Gustavo
+ *
+ */
 public class BinaryExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static BinaryAlgorithmsConfig algorithmConf = new BinaryAlgorithmsConfig();
@@ -25,7 +30,6 @@ public class BinaryExperiment {
     String experimentBaseDirectory = "experimentBaseDirectory"; 
 
     List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
-    System.out.println("nº of bits: "+ problem.getVariables().get(0).getBits().length());
     problemList.add(new ExperimentProblem<>(new BinaryProblemEvaluator(problem, problem.getVariables().get(0).getBits().length(), jarPath,selectedAlgorithms.size())));
 
     List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = algorithmConf.configureBinaryAlgorithms(problemList,selectedAlgorithms);

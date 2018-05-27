@@ -213,6 +213,7 @@ public class ConfigXML {
 
 	/**
 	 * This method compiles the script .R and shows the .eps file
+	 * @param Problem
 	 */
 	public void compileAndShowEps(UserProblem problem) {
 		String[] params = new String[] {
@@ -233,6 +234,7 @@ public class ConfigXML {
 
 	/**
 	 * This method compiles the script .tex and shows the .pdf file
+	 * @param Problem
 	 */
 	public void compileAndShowPdf(UserProblem problem) {
 		String[] params = new String[] {

@@ -82,7 +82,6 @@ public class FillForms {
 				}
 			}
 		} else {
-			System.out.println(problem.getNumberVariables()+"+++++");
 			for (int i = 0; i < problem.getNumberVariables(); i++) {
 				if (i < variablesList.size()) {
 					tblDecisionVariables.setValueAt(variablesList.get(i).getName(), i, 0);

@@ -20,6 +20,11 @@ import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import problem.UserProblem;
 
+/**
+ * 
+ * @author Ricardo
+ *
+ */
 public class DoubleExperiment {
   private static final int INDEPENDENT_RUNS = 2;
   private static DoubleAlgorithmsConfig algorithmConf = new DoubleAlgorithmsConfig();
@@ -35,7 +40,6 @@ public class DoubleExperiment {
     List<ExperimentAlgorithm<DoubleSolution, List<DoubleSolution>>> algorithmList = algorithmConf.configureDoubleAlgorithms(problemList,selectedAlgorithms);
     		
     
-    System.out.println(experimentBaseDirectory+"/"+config.getResultsPathDouble());
     Experiment<DoubleSolution, List<DoubleSolution>> experiment =
         new ExperimentBuilder<DoubleSolution, List<DoubleSolution>>("ProblemResultsDOUBLE")
             .setAlgorithmList(algorithmList)

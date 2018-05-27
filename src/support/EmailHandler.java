@@ -5,7 +5,6 @@ import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -18,8 +17,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 
-import org.jfree.chart.axis.SubCategoryAxis;
-
 import java.security.Security;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,6 +28,11 @@ import mainAndGui.NameDescriptionSection;
 import java.util.Date;
 import javax.mail.internet.AddressException;
 
+/**
+ * 
+ * @author Ricardo
+ *
+ */
 public class EmailHandler {
 	
 	private ConfigXML config = ConfigXML.getInstance();
@@ -62,19 +64,11 @@ public class EmailHandler {
         props.setProperty("mail.smtp.socketFactory.port", "465");
         props.setProperty("mail.smtps.auth", "true");
 
-        /*
-        If set to false, the QUIT command is sent and the connection is immediately closed. If set 
-        to true (the default), causes the transport to wait for the response to the QUIT command.
-
-        ref :   http://java.sun.com/products/javamail/javadocs/com/sun/mail/smtp/package-summary.html
-                http://forum.java.sun.com/thread.jspa?threadID=5205249
-                smtpsend.java - demo program from javamail
-        */
+      
         props.put("mail.smtps.quitwait", "false");
 
         Session session = Session.getInstance(props, null);
 
-        // -- Create a new message --
         final MimeMessage msg = new MimeMessage(session);
 
         // -- Set the FROM and TO fields --
@@ -130,7 +124,6 @@ public class EmailHandler {
             if (!ccEmail.equals("none")) {
             	message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
             }
-            System.out.println(message.toString()+"+++++++++");
             MimeBodyPart messageBodyPart = new MimeBodyPart();
 
             Multipart multipart = new MimeMultipart();

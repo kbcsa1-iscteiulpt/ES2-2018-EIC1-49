@@ -111,7 +111,6 @@ public class HelpSection {
 	private void goBackButton(JFrame frame, JFrame decisionFrame) {
 		btnGoBack = new JButton();
 		Image goBack = Toolkit.getDefaultToolkit().getImage(resourceLoader.getClass().getResource("images/goBack.png"));
-		System.out.println(resourceLoader.getClass().getResource("images/goBack.png"));
 		ImageIcon icoGoBack = new ImageIcon(goBack.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
 		btnGoBack.setContentAreaFilled(false);
 		btnGoBack.setBorderPainted(false);

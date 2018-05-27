@@ -154,10 +154,8 @@ public class AlgorithmSelectionSection {
 					String[] splitted = listSelectedAlgorithms.get(0).split(";");
 					for(JCheckBox ch : algorithmsList) {
 						for(String algorithm : splitted) {
-							System.out.println(algorithm);
 							if(ch.getText().equals(algorithm)) {
 								ch.setSelected(true);
-								System.out.println(ch.getText());
 							}
 						}
 					}

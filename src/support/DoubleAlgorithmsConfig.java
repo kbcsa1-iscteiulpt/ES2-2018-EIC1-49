@@ -21,6 +21,11 @@ import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
+/**
+ * 
+ * @author Ricardo
+ *
+ */
 public class DoubleAlgorithmsConfig {
 	
 	private ConfigXML config = ConfigXML.getInstance();
@@ -42,42 +47,33 @@ public class DoubleAlgorithmsConfig {
 		Problem<DoubleSolution> problem ;
 		int numberOfVariables;
 		String tag;
-		System.out.println(algorithmsID.get(0));
 		for (int i = 0; i < problemList.size(); i++) {
 			problem = problemList.get(i).getProblem();
 			numberOfVariables = problem.getNumberOfVariables();
 			tag=problemList.get(i).getTag();
 			
 			if(algorithmsID.contains("NSGAII")) {
-				System.out.println("in");
 				buildDoubleNGASAII(problem,numberOfVariables,tag);
 			}
 			if(algorithmsID.contains("SMSEMOA")) {
-				System.out.println("in");
 				buildDoubleSMSEMOA(problem,numberOfVariables,tag);
 			}
 			if(algorithmsID.contains("GDE3")) {
-				System.out.println("in");
 				buildDoubleGDE3(problem,tag);
 			}
 			if(algorithmsID.contains("IBEA")) {
-				System.out.println("in");
 				buildDoubleIBEA(problem,tag);
 			}
 			if(algorithmsID.contains("MOCell")) {
-				System.out.println("in");
 				buildDoubleMOCell(problem, numberOfVariables, tag);
 			}
 			if(algorithmsID.contains("MOEAD")) {
-				System.out.println("in");
 				buildDoubleMOEAD(problem,tag);
 			}
 			if(algorithmsID.contains("PAES")) {
-				System.out.println("in");
 				buildDoublePAES(problem,numberOfVariables,tag);
 			}
 			if(algorithmsID.contains("RandomSearch")) {
-				System.out.println("in");
 				buildDoubleRandomSearch(problem,tag);
 			}	
 		}
