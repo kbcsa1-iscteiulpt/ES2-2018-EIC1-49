@@ -32,7 +32,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  * This class creates a frame that shows a graphic with the values of the rf and
- * rs files that contains the JMetal results.
+ * rs files that contains the JMetal results. 
  * 
  * @author Kevin Corrales nr 73529
  **/
