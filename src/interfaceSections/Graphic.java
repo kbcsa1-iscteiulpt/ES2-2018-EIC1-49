@@ -47,7 +47,7 @@ public class Graphic {
 
 	private String resultsPath;
 	private List<String> algorithmsSelectedList = new ArrayList<String>();
-	private AlgorithmUtils algorithmUtils;
+	private AlgorithmUtils algorithmUtils = new AlgorithmUtils();
 
 	public Graphic(UserProblem problem, List<String> algorithmsSelectedList) {
 		this.problem = problem;
