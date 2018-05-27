@@ -1,0 +1,38 @@
+Sprint 1 (4/3 - 18/3)
+
+O que correu bem:
+- Todos perceberam o que tinham que fazer nas reuniões realizadas;
+- Todos disponíveis para ajudar uns aos outros;
+
+O que correu mal:
+- Problema na versão do projeto usada na apresentação para avaliação;
+- Discordância no design da interface;
+______________________________________________________________________________________________________
+Sprint 2 (19/3 - 20/4)
+
+O que correu bem:
+- Coordenação da equipa;
+- Todos disponíveis para ajudar uns aos outros;
+
+O que correu mal:
+- Iniciamos o sprint sem primeiro tirar dúvidas, o que causou que tivemos que refazer certas partes;
+- Poucas reuniões;
+______________________________________________________________________________________________________
+Sprint 3 (21/4 - 11/5)
+
+O que correu bem:
+- Ao contrário do sprint passado, decidimos esclarecer as dúvidas todas antes de iniciar sprint, poupou-nos bastante tempo;
+
+O que correu mal:
+- Elementos do grupo iniciaram o sprint tarde o que provocou transferir tarefas para o próximo sprint;
+______________________________________________________________________________________________________
+Sprint 4 (12/5 - 27/5)
+
+O que correu bem:
+- Notável dedicação em terminar o projeto por parte da Diana;
+
+O que correu mal:
+- Houve várias distrações ao trabalhar em grupo o que provocou atraso;
+- Dificuldade em conciliar o código back e front end;
+- Pouca preocupação na soluções de problemas no binário por parte do Gustavo;
+- Pouco interesse em completar o projeto por parte do Gustavo e Ricardo: não completaram o JDoc , não tiveram cuidado com as mensagens System.out, não eliminaram comentários desnecessários e não realizaram code smells;
