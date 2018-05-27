@@ -61,6 +61,7 @@ public class XMLEditor {
 					List<Variable> problemVariables = new ArrayList<Variable>();
 					NodeList varList = variables.getElementsByTagName("variable");
 					
+					boolean exit=false;
 					for (int i = 0; i < varList.getLength(); i++) {
 						Element varElement = (Element) varList.item(i);
 						Variable var ;
@@ -70,15 +71,16 @@ public class XMLEditor {
 									varElement.getAttribute("variableRestriction"));
 						} else {
 							// Else made by Gustavo Morais
+							exit=true;
 							var = new Variable(varElement.getAttribute("variableName"),
 									varElement.getAttribute("binaryValue"));
 							for(int j=1;j<varList.getLength();j++) {
 								Element varAux = (Element) varList.item(j);
 								var.addBits(varAux.getAttribute("binaryValue"));
 							}
-							break;
 						}
 						problemVariables.add(var);
+						if(exit)break;
 					}
 
 					problem = new UserProblem(prob.getAttribute("name"), prob.getAttribute("description"),
