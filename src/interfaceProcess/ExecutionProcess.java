@@ -1,8 +1,18 @@
-package mainAndGui;
+package interfaceProcess;
 
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFrame;
+
+import interfaceSections.CriteriaSection;
+import interfaceSections.EmailSection;
+import interfaceSections.Graphic;
+import interfaceSections.NameDescriptionSection;
+import interfaceSections.TimeOptimizationSection;
+import jMetal.BinaryExperiment;
+import jMetal.DoubleExperiment;
+import jMetal.IntegerExperiment;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,10 +22,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 import problem.UserProblem;
-import support.BinaryExperiment;
 import support.ConfigXML;
-import support.DoubleExperiment;
-import support.IntegerExperiment;
 import support.XMLEditor;
 import support.EmailHandler;
 import problem.Time;

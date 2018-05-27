@@ -1,4 +1,4 @@
-package support;
+package jMetal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,8 @@ import org.uma.jmetal.solution.BinarySolution;
 import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
 import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
+
+import support.ConfigXML;
 
 /**
  * 

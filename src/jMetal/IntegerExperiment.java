@@ -1,7 +1,7 @@
-package support;
+ package jMetal;
 
 import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
-import org.uma.jmetal.solution.BinarySolution;
+import org.uma.jmetal.solution.IntegerSolution;
 import org.uma.jmetal.util.experiment.Experiment;
 import org.uma.jmetal.util.experiment.ExperimentBuilder;
 import org.uma.jmetal.util.experiment.component.*;
@@ -9,6 +9,7 @@ import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import problem.UserProblem;
+import support.ConfigXML;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,30 +21,29 @@ import java.util.List;
  * @author Ricardo,Gustavo
  *
  */
-public class BinaryExperiment {
+public class IntegerExperiment {
   private static final int INDEPENDENT_RUNS = 2;
-  private static BinaryAlgorithmsConfig algorithmConf = new BinaryAlgorithmsConfig();
+  private static IntegerAlgorithmsConfig algorithmConf = new IntegerAlgorithmsConfig();
   private ConfigXML config = ConfigXML.getInstance();
   
-  public BinaryExperiment(UserProblem problem, List<String> selectedAlgorithms  ,String jarPath) throws IOException {
+  public IntegerExperiment(UserProblem problem, List<String> selectedAlgorithms, String jarPath ) throws IOException {
 	  
     String experimentBaseDirectory = "experimentBaseDirectory"; 
 
-    List<ExperimentProblem<BinarySolution>> problemList = new ArrayList<>();
-    problemList.add(new ExperimentProblem<>(new BinaryProblemEvaluator(problem, problem.getVariables().get(0).getBits().length(), jarPath,selectedAlgorithms.size())));
+    List<ExperimentProblem<IntegerSolution>> problemList = new ArrayList<>();
+    problemList.add(new ExperimentProblem<>(new IntegerProblemEvaluator(problem ,jarPath,selectedAlgorithms.size())));
 
-    List<ExperimentAlgorithm<BinarySolution, List<BinarySolution>>> algorithmList = algorithmConf.configureBinaryAlgorithms(problemList,selectedAlgorithms);
+    List<ExperimentAlgorithm<IntegerSolution, List<IntegerSolution>>> algorithmList = algorithmConf.configureIntegerAlgorithms(problemList,selectedAlgorithms);
 
-
-    Experiment<BinarySolution, List<BinarySolution>> experiment =
-        new ExperimentBuilder<BinarySolution, List<BinarySolution>>("ProblemResultsBINARY")
+    Experiment<IntegerSolution, List<IntegerSolution>> experiment =
+        new ExperimentBuilder<IntegerSolution, List<IntegerSolution>>("ProblemResultsINTEGER")
             .setAlgorithmList(algorithmList)
             .setProblemList(problemList)
-            .setExperimentBaseDirectory(experimentBaseDirectory)
+            .setExperimentBaseDirectory(experimentBaseDirectory) 
             .setOutputParetoFrontFileName("FUN")
             .setOutputParetoSetFileName("VAR")
-            .setReferenceFrontDirectory(experimentBaseDirectory+"/"+config.getResultsPathBinary())
-            .setIndicatorList(Arrays.asList(new PISAHypervolume<BinarySolution>()))
+            .setReferenceFrontDirectory(experimentBaseDirectory+"/"+config.getResultsPathInteger())
+            .setIndicatorList(Arrays.asList(new PISAHypervolume<IntegerSolution>()))
             .setIndependentRuns(INDEPENDENT_RUNS)
             .setNumberOfCores(8)
             .build();
@@ -56,6 +56,5 @@ public class BinaryExperiment {
     
   }
 
- 
 
 }

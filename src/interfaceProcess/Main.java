@@ -1,4 +1,4 @@
-package mainAndGui;
+package interfaceProcess;
 
 public class Main {
 

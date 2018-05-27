@@ -1,4 +1,4 @@
-package mainAndGui;
+package interfaceSections;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
+import interfaceProcess.SaveProcess;
 import problem.Type;
 import problem.UserProblem;
 import problem.Variable;

@@ -1,4 +1,4 @@
-package mainAndGui;
+package interfaceSections;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -19,10 +19,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import interfaceProcess.ExecutionProcess;
+import interfaceProcess.FrameSize;
+import jMetal.AlgorithmUtils;
 import problem.Type;
 import problem.UserProblem;
 import resources.ResourceLoader;
-import support.AlgorithmUtils;
 import support.ConfigXML;
 import support.EmailHandler;
 

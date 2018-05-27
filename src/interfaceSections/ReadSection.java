@@ -1,4 +1,4 @@
-package mainAndGui;
+package interfaceSections;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +7,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import interfaceProcess.FillForms;
 import problem.UserProblem;
 import support.XMLEditor;
 

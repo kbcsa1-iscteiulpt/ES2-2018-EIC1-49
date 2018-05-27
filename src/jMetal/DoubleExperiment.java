@@ -1,4 +1,4 @@
-package support;
+package jMetal;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +19,7 @@ import org.uma.jmetal.util.experiment.util.ExperimentAlgorithm;
 import org.uma.jmetal.util.experiment.util.ExperimentProblem;
 
 import problem.UserProblem;
+import support.ConfigXML;
 
 /**
  * 

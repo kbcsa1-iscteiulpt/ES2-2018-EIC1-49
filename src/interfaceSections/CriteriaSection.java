@@ -1,7 +1,6 @@
-package mainAndGui;
+package interfaceSections;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -24,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import interfaceProcess.FrameSize;
 import problem.Criteria;
 import problem.UserProblem;
 import resources.ResourceLoader;

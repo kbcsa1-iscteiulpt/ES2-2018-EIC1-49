@@ -1,4 +1,4 @@
-package mainAndGui;
+package interfaceSections;
 
 import org.jfree.chart.ChartPanel;
 
@@ -23,8 +23,8 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.ui.RefineryUtilities;
 
+import jMetal.AlgorithmUtils;
 import problem.UserProblem;
-import support.AlgorithmUtils;
 import support.ConfigXML;
 
 import org.jfree.chart.plot.PlotOrientation;

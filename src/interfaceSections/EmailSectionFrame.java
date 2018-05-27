@@ -1,7 +1,10 @@
-package mainAndGui;
+package interfaceSections;
 
 
 import javax.swing.JTextField;
+
+import interfaceProcess.FrameSize;
+
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import resources.ResourceLoader;

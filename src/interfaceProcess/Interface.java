@@ -1,4 +1,4 @@
-package mainAndGui;
+package interfaceProcess;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,6 +8,17 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import interfaceSections.AlgorithmSelectionSection;
+import interfaceSections.CriteriaSection;
+import interfaceSections.DecisionVariablesSection;
+import interfaceSections.EmailSection;
+import interfaceSections.HelpSection;
+import interfaceSections.NameDescriptionSection;
+import interfaceSections.ReadSection;
+import interfaceSections.SaveSection;
+import interfaceSections.TimeOptimizationSection;
+import interfaceSections.TypeSection;
 import problem.UserProblem;
 import support.ConfigXML;
 import support.EmailHandler;

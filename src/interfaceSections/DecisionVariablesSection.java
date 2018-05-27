@@ -1,4 +1,4 @@
-package mainAndGui;
+package interfaceSections;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -22,6 +22,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import interfaceProcess.FrameSize;
 import problem.Type;
 import problem.UserProblem;
 import problem.Variable;

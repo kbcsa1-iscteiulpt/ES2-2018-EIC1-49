@@ -1,4 +1,4 @@
-package mainAndGui;
+package interfaceSections;
 
 import java.awt.FlowLayout;
 

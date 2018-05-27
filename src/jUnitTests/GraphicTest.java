@@ -1,6 +1,5 @@
 package jUnitTests;
 
-import static org.junit.Assert.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -8,10 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.jfree.ui.RefineryUtilities;
 import org.junit.Test;
 
-import mainAndGui.Graphic;
+import interfaceSections.Graphic;
 import problem.Time;
 import problem.Type;
 import problem.UserProblem;

@@ -1,20 +1,13 @@
 package jUnitTests;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.junit.Test;
 
-import mainAndGui.CriteriaSection;
-import mainAndGui.DecisionVariablesSection;
-import mainAndGui.EmailSection;
-import mainAndGui.Interface;
-import mainAndGui.TypeSection;
-import support.ConfigXML;
-import support.XMLEditor;
+import interfaceProcess.Interface;
+import interfaceSections.CriteriaSection;
+import interfaceSections.DecisionVariablesSection;
+import interfaceSections.EmailSection;
 
 /**
  * This is a jUnitTestCase that tests the interface

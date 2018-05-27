@@ -6,8 +6,7 @@ import java.util.List;
  
 import org.junit.Test;
 
-import support.AlgorithmUtils;
-import support.DoubleExperiment; 
+import jMetal.AlgorithmUtils; 
 
 /** 
  * This is a jUnitTestCase that tests the automatic Configuration for algorithms 

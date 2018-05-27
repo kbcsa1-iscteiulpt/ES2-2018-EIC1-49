@@ -1,4 +1,4 @@
-package mainAndGui;
+package interfaceSections;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 
 import org.apache.commons.io.FileUtils;
 
+import interfaceProcess.FrameSize;
 import resources.ResourceLoader;
 import support.EmailHandler;
 

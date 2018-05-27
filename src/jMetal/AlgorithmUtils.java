@@ -1,4 +1,4 @@
-package support;
+package jMetal;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 
 import problem.UserProblem;
 import problem.Variable;
+import support.ConfigXML;
+import support.EmailHandler;
 
 /**
  * 

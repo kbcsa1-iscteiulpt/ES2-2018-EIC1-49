@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 
 import com.sun.mail.smtp.SMTPTransport;
 
-import mainAndGui.NameDescriptionSection;
+import interfaceSections.NameDescriptionSection;
 
 import java.util.Date;
 import javax.mail.internet.AddressException;

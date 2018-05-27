@@ -1,8 +1,14 @@
-package mainAndGui;
+package interfaceProcess;
 
 
 import problem.UserProblem;
 import java.util.List;
+
+import interfaceSections.DecisionVariablesSection;
+import interfaceSections.EmailSection;
+import interfaceSections.NameDescriptionSection;
+import interfaceSections.TimeOptimizationSection;
+import interfaceSections.TypeSection;
 import problem.Variable;
 import problem.Time;
 import problem.Type;

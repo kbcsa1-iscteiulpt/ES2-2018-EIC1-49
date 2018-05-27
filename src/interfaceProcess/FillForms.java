@@ -1,10 +1,15 @@
-package mainAndGui;
+package interfaceProcess;
 
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import interfaceSections.DecisionVariablesSection;
+import interfaceSections.EmailSection;
+import interfaceSections.NameDescriptionSection;
+import interfaceSections.TimeOptimizationSection;
+import interfaceSections.TypeSection;
 import problem.Type;
 import problem.UserProblem;
 import problem.Variable;
