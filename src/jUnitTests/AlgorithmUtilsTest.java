@@ -10,7 +10,7 @@ import jMetal.AlgorithmUtils;
 
 /** 
  * This is a jUnitTestCase that tests the automatic Configuration for algorithms 
- * @author Gustavo Morais n� 73036 
+ * @author Kevin Corrales nr 73529 
  **/ 
  
 public class AlgorithmUtilsTest { 
