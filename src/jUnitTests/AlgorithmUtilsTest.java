@@ -21,18 +21,14 @@ public class AlgorithmUtilsTest {
     List<String> algorithmIDs = new ArrayList<String>(); 
     algorithmIDs.add("SMSEMOA"); 
      
-    String fileName = "algoConfig"; 
+    String fileName = "src/jUnitTests/algoConfig"; 
         
     ac.writeAutomaticConfig(algorithmIDs, fileName); 
+    
+    ac.readAutomaticConf(new File(fileName)); 
   } 
    
-  @Test 
-  public void readAlgorithmConfigurationTest() { 
-    String userHomeFolder = System.getProperty("user.home/"); 
-    File textFile = new File(userHomeFolder, "algoConfig.txt"); 
-     
-    ac.readAutomaticConf(textFile); 
-  } 
+
    
 } 
 
