@@ -180,17 +180,13 @@ public class Graphic {
 	 * @param path
 	 */
 	public void readResults(String path) {
-		Scanner scanner = null;
 		xAxis = new ArrayList<double[]>();
-
+		Scanner scanner=null;
 		if (Paths.get(path).toFile().exists()) {
 			try {
-				File file = new File(path);
-				scanner = new Scanner(file);
-
+				scanner = new Scanner(new File(path));
 				while (scanner.hasNextLine()) {
-					String line = scanner.nextLine();
-					String[] splitLine = line.split(" ");
+					String[] splitLine = scanner.nextLine().split(" ");
 					double[] yAxis = new double[splitLine.length];
 
 					for (int i = 0; i < splitLine.length; i++) {
